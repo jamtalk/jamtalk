@@ -577,137 +577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
-  asset: {fileID: 11400000, guid: 4e5763aae226eb049961e4edb0031c6e, type: 2}
-  sprites:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 0
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000170000001800000019000000
-    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000170000001800000019000000
-    _values:
-    - {fileID: 21300000, guid: b27a02a003fa9764cafdb0e032b6dd31, type: 3}
-    - {fileID: 21300000, guid: 8daef96a5cba5e2468f43f05cba798ed, type: 3}
-    - {fileID: 21300000, guid: 677b3c2743558fc48a7184ef60801de3, type: 3}
-    - {fileID: 21300000, guid: b2a5cb53802109d4c808dfafdc390114, type: 3}
-    - {fileID: 21300000, guid: babb337a8b46bdf4cbd6d5a035c108bc, type: 3}
-    - {fileID: 21300000, guid: 6240f15d649f40b43a6568e77157ce06, type: 3}
-    - {fileID: 21300000, guid: ae40ed24935ad9d4bbd749afc6f42f83, type: 3}
-    - {fileID: 21300000, guid: 1d12ef5bfa5ae044ea65300d85a9d144, type: 3}
-    - {fileID: 21300000, guid: ab83edbd1b960d244970cb43d7df5ee6, type: 3}
-    - {fileID: 21300000, guid: 491d3a366e1e1444996e0cd4b8667114, type: 3}
-    - {fileID: 21300000, guid: 61422837198e54d459c292e5ccd38e4b, type: 3}
-    - {fileID: 21300000, guid: c87d07683dd59e947bf4a1407727d587, type: 3}
-    - {fileID: 21300000, guid: 5bae1f43437288a46b1db682d065b174, type: 3}
-    - {fileID: 21300000, guid: c1ef0f94966b0a8448c591c4c9051976, type: 3}
-    - {fileID: 21300000, guid: 36245f448ce0515488a866476ba49610, type: 3}
-    - {fileID: 21300000, guid: ee30af1bb81811d4f9b403ea80bad5ad, type: 3}
-    - {fileID: 21300000, guid: f8b89064770513e4b976b110df940d6b, type: 3}
-    - {fileID: 21300000, guid: f7d22ace49e297847a271af5ff852a96, type: 3}
-    - {fileID: 21300000, guid: 2515a292907487644ad96bc3a77b5add, type: 3}
-    - {fileID: 21300000, guid: 3ec4961c57995ca45bb5900fb886eeb7, type: 3}
-    - {fileID: 21300000, guid: fdd0c93950aa5ac49a240f08cfd3c886, type: 3}
-    - {fileID: 21300000, guid: 31fcda1a7bf6fc7468b336ed5f07e98d, type: 3}
-    - {fileID: 21300000, guid: 882e0cdf3a866b340ac83eee549d3b72, type: 3}
-    - {fileID: 21300000, guid: 6ad141251fde2af4f8dc1d5f3f43cdd4, type: 3}
-    - {fileID: 21300000, guid: 7ba947ce94c58334d8100ede866c8249, type: 3}
-    - {fileID: 21300000, guid: 4c7568142e6a4b74683103b66beb93e2, type: 3}
-  clipPhanics:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 0
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000170000001800000019000000
-    _keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000170000001800000019000000
-    _values:
-    - {fileID: 8300000, guid: 2fba878d0034abe4b8443106f5a227b2, type: 3}
-    - {fileID: 8300000, guid: 23a0e9aac2ddc194881047201db6f73d, type: 3}
-    - {fileID: 8300000, guid: fc7c271d88bfc7349bed348a2556224a, type: 3}
-    - {fileID: 8300000, guid: 09e5d373d47026041bf5b66777f3c3db, type: 3}
-    - {fileID: 8300000, guid: aad8a5e7450883149a442378149cbe78, type: 3}
-    - {fileID: 8300000, guid: ddb86e38e70750440ab4b305bd2e75f7, type: 3}
-    - {fileID: 8300000, guid: de2b388ccb9efa34781c23258f2da97d, type: 3}
-    - {fileID: 8300000, guid: 9a1948ba5b9faa849bc8292dcf1d59c9, type: 3}
-    - {fileID: 8300000, guid: ee4c16cb704094a41a2895932229ff09, type: 3}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  clipResult:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 0
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: 
-    _keys: 
-    _values: []
   currentClickCount: 0
   imageAlphabet: {fileID: 1432315689}
   buttonEgg: {fileID: 1487812933}
@@ -824,6 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1244900530}
   - component: {fileID: 1244900531}
+  - component: {fileID: 1244900532}
   m_Layer: 5
   m_Name: Egg
   m_TagString: Untagged
@@ -917,9 +787,105 @@ MonoBehaviour:
     - {fileID: 424943672}
     - {fileID: 58429074}
     - {fileID: 246934477}
-  audioPlayer: {fileID: 0}
-  shakeClip: {fileID: 0}
-  crackClip: {fileID: 0}
+  audioPlayer: {fileID: 1244900532}
+  shakeClip: {fileID: 8300000, guid: 0f7bfd605658ad8419088e54691dd96b, type: 3}
+  crackClip: {fileID: 8300000, guid: fe3a644e0ff104f498b48fe842de1e04, type: 3}
+--- !u!82 &1244900532
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244900529}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1270215402
 GameObject:
   m_ObjectHideFlags: 0

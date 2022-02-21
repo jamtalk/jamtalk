@@ -23,6 +23,8 @@ public class AssetImporter : ScriptableObject
     private AudioClip[] clipAct3;
     [SerializeField]
     private AudioClip[] clipWords;
+    [SerializeField]
+    private AudioClip clipCorrect;
 
     [Header("Sprites")]
     [SerializeField]
@@ -74,6 +76,7 @@ public class AssetImporter : ScriptableObject
     public AudioClip GetClipAct2(eAlphabet alphabet) => clipAlphabetAct2[(int)alphabet];
     public AudioClip GetClipAct3(string word) => clipAct3.ToList().Find(x => x.name == clipAct3Metadata[word]);
     public AudioClip GetClipWord(string word) => clipWords.ToList().Find(x => x.name == clipWordMetadata[word]);
+    public AudioClip GetClipCorrectEffect() => clipCorrect;
 
     //SpriteGetter
     public Sprite[] GetSpriteAlphabet(eAlphbetStyle contents, eAlphbetType type)
@@ -130,6 +133,7 @@ public class AssetImporter : ScriptableObject
     }
     public Sprite GetSpriteAlphabet(eAlphbetStyle style, eAlphbetType type, eAlphabet alphabet) => GetSpriteAlphabet(style, type)[(int)alphabet];
     public Sprite[] GetSpriteWord(eAlphabet alphbet) => spriteWords.Where(x => x.name.First().ToString().ToUpper() == alphbet.ToString().ToUpper()).ToArray();
+    public Sprite[] GetSpriteWord() => spriteWords;
     public Sprite GetSpriteWord(string word) => spriteWords.ToList().Find(x => x.name == word);
 
     private void Awake()

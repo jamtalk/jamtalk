@@ -4,12 +4,8 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine.UI;
 
-public class JT_PL1_102 : SingleAnswerContents
+public class JT_PL1_102 : BaseContents
 {
-    public AssetImporter asset;
-    public SerializableDictionaryBase<eAlphabet, Sprite> sprites;
-    public SerializableDictionaryBase<eAlphabet, AudioClip> clipPhanics;
-    public SerializableDictionaryBase<eAlphabet, AudioClip> clipResult;
     protected override eContents contents => eContents.JT_PL1_102;
     public int ClickCount => 10;
     public int currentClickCount = 0;
@@ -21,7 +17,7 @@ public class JT_PL1_102 : SingleAnswerContents
     public AudioSource audioPlayer;
     private void Awake()
     {
-        imageAlphabet.sprite = sprites[GameManager.Instance.currentAlphabet];
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Card, eAlphbetType.Upper);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
         egg.onBroken += ShowResult;
@@ -30,9 +26,9 @@ public class JT_PL1_102 : SingleAnswerContents
     private void OnClickEgg()
     {
         if (!CheckOver())
-            PlayAudio(clipPhanics[GameManager.Instance.currentAlphabet]);
+            PlayAudio(GameManager.Instance.GetClipPhanics());
         else
-            PlayAudio(clipResult[GameManager.Instance.currentAlphabet]);
+            PlayAudio(GameManager.Instance.GetClipAlphbet());
 
         currentClickCount += 1;
         if (CheckOver())
