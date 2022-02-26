@@ -27,4 +27,6 @@ public class GameManager : MonoSingleton<GameManager>
     public Sprite[] GetSpriteWord(eAlphabet alphabet) => assets.GetSpriteWord(alphabet);
     public Sprite[] GetSpriteWord() => assets.GetSpriteWord(currentAlphabet);
     public Sprite GetSpriteWord(string word) => assets.GetSpriteWord(word);
+
+    public string[] GetWords() => assets.GetWords();
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,28 +23,29 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
 {
     public List<TQuestion> questions;
     protected abstract int QuestionCount { get; }
-    protected int currentQuestion = 0;
+    protected int currentQuestionIndex = 0;
+    protected TQuestion currentQuestion => questions[currentQuestionIndex];
     public AudioSinglePlayer audioPlayer;
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
     protected virtual void Awake()
     {
         questions = MakeQuestion();
-        currentQuestion = 0;
-        ShowQuestion(questions[currentQuestion]);
+        currentQuestionIndex = 0;
+        ShowQuestion(questions[currentQuestionIndex]);
     }
     protected virtual void AddAnswer(TAnswer answer)
     {
-        var question = questions[currentQuestion];
+        var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
         if (CheckOver())
             ShowResult();
         else
         {
             if (question.isCorrect)
-                audioPlayer.Play(GameManager.Instance.GetClipCorrectEffect());
-            currentQuestion += 1;
-            ShowQuestion(questions[currentQuestion]);
+                audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
+            currentQuestionIndex += 1;
+            ShowQuestion(questions[currentQuestionIndex]);
         }
     }
     protected override eGameResult GetResult()
@@ -65,18 +67,17 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
     protected override void AddAnswer(TAnswer answer)
     {
-        var question = questions[currentQuestion];
-        question.SetAnswer(answer);
+        currentQuestion.SetAnswer(answer);
         if (CheckOver())
         {
             ShowResult();
         }
-        else if(question.isCompleted)
+        else if(currentQuestion.isCompleted)
         {
-            if (question.isCorrect)
-                audioPlayer.Play(GameManager.Instance.GetClipCorrectEffect());
-            currentQuestion += 1;
-            ShowQuestion(questions[currentQuestion]);
+            if (currentQuestion.isCorrect)
+                audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
+            currentQuestionIndex += 1;
+            ShowQuestion(questions[currentQuestionIndex]);
         }
     }
 }
@@ -116,32 +117,40 @@ public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 }
 public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
 {
+    public TAnswer[] RandomQuestions => correct.Union(questions)
+        .OrderBy(x => Guid.NewGuid().ToString())
+        .ToArray();
     public int correctCount { get; protected set; }
     public TAnswer[] correct { get; protected set; }
     public TAnswer[] questions { get; protected set; }
 
     protected List<TAnswer> currentAnswers;
 
-    protected MultiQuestion(int correctCount, TAnswer[] correct, TAnswer[] questions):base()
+    protected MultiQuestion(TAnswer[] correct, TAnswer[] questions):base()
     {
         currentAnswers = new List<TAnswer>();
-        this.correctCount = correctCount;
+        this.correctCount = correct.Length;
         this.correct = correct;
         this.questions = questions;
     }
 
-    protected override bool CheckCorrect(TAnswer answer)
-    {
-        currentAnswers.Add(answer);
-        if (correctCount == currentAnswers.Count)
-            return currentAnswers.Where(x => !correct.Contains(x)).Count() > 0;
-        else
-            return false;
-    }
     public override void SetAnswer(TAnswer answer)
     {
+        currentAnswers.Add(answer);
         isCorrect = CheckCorrect(answer);
         isCompleted = correctCount == currentAnswers.Count;
+        if (isCompleted)
+        {
+            isCorrect = true;
+            for(int i = 0;i < currentAnswers.Count; i++)
+            {
+                if (!CheckCorrect(currentAnswers[i]))
+                {
+                    isCorrect = false;
+                    break;
+                }
+            }
+        }
     }
 }
 #endregion

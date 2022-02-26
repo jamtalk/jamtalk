@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using System;
 using Random = UnityEngine.Random;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class JT_PL1_106 : SingleAnswerContents<Question106, string>
 {
@@ -13,29 +15,26 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
 
     public DoubleClickButton[] buttonQuestions;
     public ImageButton buttonPhanics;
-
+    public Sprite spritePop;
+    public AudioClip clipPop;
 
     protected override List<Question106> MakeQuestion()
     {
         var questions = new List<Question106>();
-        var correctWord = GameManager.Instance.GetSpriteWord()
-            .Select(x=>x.name)
-            .OrderBy(x=>Random.Range(0f,100f))
+        var correctWord = GameManager.Instance.GetWords()
+            .Where(x=>x.First().ToString().ToUpper()==GameManager.Instance.currentAlphabet.ToString())
+            .OrderBy(x => Guid.NewGuid().ToString()).ToArray()
             .Take(QuestionCount)
             .ToArray();
-
-        var questionWords = Enum.GetNames(typeof(eAlphabet))
-            .Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x))
-            .Where(x => x != GameManager.Instance.currentAlphabet)
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Take(QuestionCount)
-            .Select(x => GameManager.Instance.GetSpriteWord(x).Select(y => y.name))
-            .Select(x => x.Take(4).ToArray())
-            .ToArray();
-
-        for(int i = 0;i < QuestionCount; i++)
-            questions.Add(new Question106(correctWord[i], questionWords[i]));
-
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            var tmp = GameManager.Instance.GetWords()
+                .Where(x => x.First().ToString().ToUpper() != GameManager.Instance.currentAlphabet.ToString())
+                .OrderBy(x => Guid.NewGuid().ToString()).ToArray()
+                .Take(4)
+                .ToArray();
+            questions.Add(new Question106(correctWord[i], tmp));
+        }
         return questions;
     }
 
@@ -68,7 +67,18 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
 
         button.onClick.AddListener(() =>
         {
-            AddAnswer(button.image.sprite.name);
+            button.GetComponent<Image>().sprite = spritePop;
+            button.image.gameObject.SetActive(false);
+            audioPlayer.Play(1f,clipPop);
+            var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
+            tween.SetLoops(2,LoopType.Yoyo);
+            tween.SetEase(Ease.Linear);
+            tween.onComplete += () =>
+            {
+                button.image.gameObject.SetActive(true);
+                AddAnswer(button.image.sprite.name);
+            };
+            tween.Play();
         });
     }
 }

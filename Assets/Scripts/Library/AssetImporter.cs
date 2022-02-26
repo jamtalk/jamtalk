@@ -136,6 +136,9 @@ public class AssetImporter : ScriptableObject
     public Sprite[] GetSpriteWord() => spriteWords;
     public Sprite GetSpriteWord(string word) => spriteWords.ToList().Find(x => x.name == word);
 
+    //StringGetter
+    public string[] GetWords() => clipWordMetadata.Keys.ToArray().Where(x=>spriteWords.Select(y=>y.name).Contains(x)).ToArray();
+
     private void Awake()
     {
         var words = Resources.Load<TextAsset>("Words").text.Split('\n')

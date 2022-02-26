@@ -29,7 +29,6 @@ public class PopupResult : BasePopup
         {
             case eGameResult.Perfect:
                 imageResult.sprite = spritePerfect;
-                source.Play();
                 break;
             case eGameResult.Greate:
                 imageResult.sprite = spriteGreate;
@@ -38,6 +37,7 @@ public class PopupResult : BasePopup
                 imageResult.sprite = spriteFail[Random.Range(0, spriteFail.Length)];
                 break;
         }
+        source.Play();
     }
     private void OnClickNext()
     {

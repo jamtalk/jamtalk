@@ -418,7 +418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1007348226}
-  button: {fileID: 996451419}
   spriteNormal: {fileID: 21300000, guid: 7263efa3dde1b91448c66067fc7e376b, type: 3}
   spriteSelected: {fileID: 21300000, guid: 5bb989211ab921c45be239bd5445970f, type: 3}
   onClick:
@@ -637,7 +636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1410948489}
-  button: {fileID: 1176130484}
   spriteNormal: {fileID: 21300000, guid: 7263efa3dde1b91448c66067fc7e376b, type: 3}
   spriteSelected: {fileID: 21300000, guid: 5bb989211ab921c45be239bd5445970f, type: 3}
   onClick:
@@ -863,7 +861,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1775453660}
-  button: {fileID: 1186361555}
   spriteNormal: {fileID: 21300000, guid: 7263efa3dde1b91448c66067fc7e376b, type: 3}
   spriteSelected: {fileID: 21300000, guid: 5bb989211ab921c45be239bd5445970f, type: 3}
   onClick:
@@ -925,7 +922,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 310362195}
-  button: {fileID: 1292100988}
   spriteNormal: {fileID: 21300000, guid: 7263efa3dde1b91448c66067fc7e376b, type: 3}
   spriteSelected: {fileID: 21300000, guid: 5bb989211ab921c45be239bd5445970f, type: 3}
   onClick:
@@ -1417,6 +1413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  questions: []
   audioPlayer: {fileID: 1976610220}
   buttonQuestions:
   - {fileID: 1186361558}
@@ -1425,6 +1422,8 @@ MonoBehaviour:
   - {fileID: 1947512248}
   - {fileID: 996451418}
   buttonPhanics: {fileID: 1310763492}
+  spritePop: {fileID: 21300000, guid: 43bb6cb59aa491541aa592d45d6bf6de, type: 3}
+  clipPop: {fileID: 8300000, guid: 81aab9bc3721b4a4bb695e6739cd9bc1, type: 3}
 --- !u!1 &1775453658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,7 +1710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1344396028}
-  button: {fileID: 1947512249}
   spriteNormal: {fileID: 21300000, guid: 7263efa3dde1b91448c66067fc7e376b, type: 3}
   spriteSelected: {fileID: 21300000, guid: 5bb989211ab921c45be239bd5445970f, type: 3}
   onClick:

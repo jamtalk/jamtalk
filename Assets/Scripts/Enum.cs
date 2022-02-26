@@ -130,3 +130,8 @@ public enum eGameResult
     Greate,
     Fail
 }
+public enum eRocketDirection
+{
+    Vertical,
+    Horizontal
+}
