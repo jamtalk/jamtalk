@@ -19,7 +19,8 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public AudioClip GetClipAlphbet(eAlphabet alphabet) => assets.GetClipAlphabet(alphabet);
     public AudioClip GetClipAlphbet()=> GetClipAlphbet(currentAlphabet);
-    public AudioClip GetClipPhanics()=> assets.GetClipPhanics(currentAlphabet);
+    public AudioClip GetClipPhanics(eAlphabet alphabet) => assets.GetClipPhanics(alphabet);
+    public AudioClip GetClipPhanics()=> GetClipPhanics(currentAlphabet);
     public AudioClip GetClipAct1(eAlphabet alphabet) => assets.GetClipAct1(alphabet);
     public AudioClip GetClipAct2(eAlphabet alphabet) => assets.GetClipAct2(alphabet);
     public AudioClip GetClipAct1()=> GetClipAct1(currentAlphabet);
@@ -28,6 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipWord(string word) => assets.GetClipWord(word);
     public AudioClip GetClipCorrectEffect() => assets.GetClipCorrectEffect();
     public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type, eAlphabet alphbet) => assets.GetSpriteAlphabet(style, type, alphbet);
+    public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type, string word) => assets.GetSpriteAlphabet(style, type, ParsingAlphabet(word));
     public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type) => GetAlphbetSprite(style, type, currentAlphabet);
     public Sprite[] GetAlphbetSprites(eAlphbetStyle style, eAlphbetType type) => assets.GetSpriteAlphabet(style, type);
     public Sprite[] GetSpriteWord(eAlphabet alphabet) => assets.GetSpriteWord(alphabet);
@@ -37,4 +39,5 @@ public class GameManager : MonoSingleton<GameManager>
     public string[] GetWords() => assets.GetWords();
     public string[] GetWords(eAlphabet alphabet) => GetWords().Where(x => x.First().ToString().ToUpper() == alphabet.ToString()).ToArray();
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
+    public eAlphabet ParsingAlphabet(string word) => (eAlphabet)Enum.Parse(typeof(eAlphabet), word.First().ToString().ToUpper());
 }

@@ -11,7 +11,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     protected override int QuestionCount => 2;
 
     protected override eContents contents => eContents.JT_PL1_111;
-    public Rocket rocket;
+    public TextRocket rocket;
     public TextButton[] buttons;
     public Button buttonRocket;
 

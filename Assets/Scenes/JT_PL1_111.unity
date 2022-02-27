@@ -748,12 +748,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 652548407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5efae93eb153774499d005b2282de585, type: 3}
+  m_Script: {fileID: 11500000, guid: 32a4fd9b7d9de0f40a657942dbad49c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
   mask: {fileID: 2094901407}
-  value: {fileID: 1449815015}
+  valueUI: {fileID: 1449815015}
   audioPlayer: {fileID: 1036569291}
   clipMove: {fileID: 8300000, guid: d703c163947bfe44cb42f13051c43cef, type: 3}
   clipStop: {fileID: 8300000, guid: 52a54ecb70caffa4bbe3140fda33d49e, type: 3}

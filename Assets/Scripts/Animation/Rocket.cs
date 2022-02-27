@@ -3,13 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Rocket : MonoBehaviour
+public abstract class Rocket<TUI,TValue> : MonoBehaviour
 {
     public eRocketDirection direction;
     public GameObject mask;
-    public Text value;
+    public TUI valueUI;
 
     public AudioSinglePlayer audioPlayer;
     public AudioClip clipMove;
@@ -22,17 +21,17 @@ public class Rocket : MonoBehaviour
     private float horizontalStartPoint => Screen.width / 2f;
     private float horizontalMiddlePoint => rt.sizeDelta.x / -2f;
     private float horizontalEndPoint => Screen.width / -2f - rt.sizeDelta.x;
-    private float verticalStartPoint => rt.sizeDelta.y/-2f;
-    private float verticalMiddlePoint => Screen.height / 2f - rt.sizeDelta.y / 2f;
-    private float verticalEndPoint => Screen.height + rt.sizeDelta.y / 2f;
+    private float verticalStartPoint => Screen.height/-2f + rt.sizeDelta.y / -2f;
+    private float verticalMiddlePoint => rt.sizeDelta.y / 2f;
+    private float verticalEndPoint => Screen.height / 2f + rt.sizeDelta.y;
     public void Init()
     {
         switch (direction)
         {
             case eRocketDirection.Vertical:
-                rt.pivot = new Vector2(0f, 0f);
-                rt.anchorMin = new Vector2(.5f, 0);
-                rt.anchorMax = new Vector2(.5f, 0);
+                rt.pivot = new Vector2(0f, 1f);
+                rt.anchorMin = new Vector2(0f, .5f);
+                rt.anchorMax = new Vector2(0f, .5f);
                 break;
             case eRocketDirection.Horizontal:
                 rt.pivot = new Vector2(0f, 1f);
@@ -123,9 +122,9 @@ public class Rocket : MonoBehaviour
         audioPlayer.Play(clipMove);
         tween.Play();
     }
-    public void Away(string value, TweenCallback onLeave=null)
+    public void Away(TValue value, TweenCallback onLeave=null)
     {
-        this.value.text = value;
+        SetValue(value);
         mask.gameObject.SetActive(true);
 
         Tween tween = null;
@@ -146,4 +145,5 @@ public class Rocket : MonoBehaviour
         tween.Play();
 
     }
+    protected abstract void SetValue(TValue value);
 }

@@ -817,6 +817,33 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d5f89d9a287a9de41be93dd8059adb99, type: 3}
   - {fileID: 21300000, guid: cbc08a5553d7697408715993af815629, type: 3}
   - {fileID: 21300000, guid: 4ce0b135a79e2334c9d4f12f518693e2, type: 3}
+  spriteAlphabetWhite:
+  - {fileID: 21300000, guid: db0072849ec50de4e9f630fd4bea62bf, type: 3}
+  - {fileID: 21300000, guid: 1fcd3da7cffbd234e972c760e7dccb97, type: 3}
+  - {fileID: 21300000, guid: 57ed0b4acd1391d46b4097e3d2935375, type: 3}
+  - {fileID: 21300000, guid: f8673a08f42ebbd4e90d4b79bde0f491, type: 3}
+  - {fileID: 21300000, guid: c85b01eb8bb9d574b81ee02e5e0d7f3d, type: 3}
+  - {fileID: 21300000, guid: f0f7eeea8da1acc45b15a38484fdec33, type: 3}
+  - {fileID: 21300000, guid: 3ade222a4b107fd41b2dcf29b83331e8, type: 3}
+  - {fileID: 21300000, guid: 9531fcfa82afafc45bb31f4e248f2702, type: 3}
+  - {fileID: 21300000, guid: 8adc7409e5dde67488dcc4cf40bb3305, type: 3}
+  - {fileID: 21300000, guid: 20cdbf770a935544d9d1ed42c81f4789, type: 3}
+  - {fileID: 21300000, guid: 97005454eb78bd24d8b0eb2cf7737a73, type: 3}
+  - {fileID: 21300000, guid: 66de6c75874c1514b87f498bc84ebfab, type: 3}
+  - {fileID: 21300000, guid: 92e83cb2e60dd584bb31635b7bc902ee, type: 3}
+  - {fileID: 21300000, guid: ac71bbc4bac2cb04e87834dab5a53573, type: 3}
+  - {fileID: 21300000, guid: 1caf84dfc6b287b43be18c685590477f, type: 3}
+  - {fileID: 21300000, guid: 3bbbe117a55926c488e13c61d8e3e365, type: 3}
+  - {fileID: 21300000, guid: 741cc4c85fe9bdc4399132a160184004, type: 3}
+  - {fileID: 21300000, guid: 3720fcf66e26274429152c2a11123c29, type: 3}
+  - {fileID: 21300000, guid: 5de601ae91251fd42a677810b616e13c, type: 3}
+  - {fileID: 21300000, guid: afc3ceca2880c7b42b7dbe8dc9dea879, type: 3}
+  - {fileID: 21300000, guid: af2a730587b075742bfc16e733bb1221, type: 3}
+  - {fileID: 21300000, guid: 13fd9e7e4a2704d458c29fb29fa68348, type: 3}
+  - {fileID: 21300000, guid: 606ca622b339aa1419656bc28183b333, type: 3}
+  - {fileID: 21300000, guid: dbd8239231dbeb04488be14bd3adc1a4, type: 3}
+  - {fileID: 21300000, guid: 374867a75b5858b4381ddaca196ecafc, type: 3}
+  - {fileID: 21300000, guid: 9069e54b49736fe43afeb6a8bccc841a, type: 3}
   spriteWords:
   - {fileID: 21300000, guid: 6dd513e3dc8242f42bc9195083548d71, type: 3}
   - {fileID: 21300000, guid: ff4f88386107c9c4b9bec27ba76438a8, type: 3}
@@ -1321,7 +1348,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 1
+      isExpanded: 0
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -1336,7 +1363,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 1
+    isExpanded: 0
     _keyValues:
     - airplane
     - apple

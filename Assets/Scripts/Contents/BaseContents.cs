@@ -103,7 +103,7 @@ public abstract class Question<TAnswer>
 }
 public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 {
-    public TAnswer[] RandomQuestions => new TAnswer[] { correct }.Union(questions)
+    public virtual TAnswer[] RandomQuestions => new TAnswer[] { correct }.Union(questions)
         .OrderBy(x => Guid.NewGuid().ToString())
         .ToArray();
     public TAnswer correct { get; protected set; }
@@ -120,7 +120,7 @@ public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 }
 public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
 {
-    public TAnswer[] RandomQuestions => correct.Union(questions)
+    public virtual TAnswer[] RandomQuestions => correct.Union(questions)
         .OrderBy(x => Guid.NewGuid().ToString())
         .ToArray();
     public int correctCount { get; protected set; }
