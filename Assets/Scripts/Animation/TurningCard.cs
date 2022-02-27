@@ -13,6 +13,7 @@ public class TurningCard : MonoBehaviour
     [Header("Buttons")]
     public Button buttonFront;
     public Button buttonBack;
+    public event Action onClick;
     [Header("Clips")]
     public AudioClip clipFront;
     public AudioClip clipBack;
@@ -40,10 +41,11 @@ public class TurningCard : MonoBehaviour
         buttonFront.onClick.RemoveAllListeners();
         buttonBack.onClick.RemoveAllListeners();
         buttonBack.interactable = alwaysBackDisable;
+        buttonFront.interactable = alwaysFrontDisable;
         buttonFront.onClick.AddListener(() => Turnning(duration,callback));
         buttonBack.onClick.AddListener(() => Turnning(duration, callback));
     }
-    public void SetFront()
+    public virtual void SetFront()
     {
         _isFront = true;
         buttonFront.interactable = !alwaysFrontDisable;
@@ -51,7 +53,7 @@ public class TurningCard : MonoBehaviour
         front.rotation = Quaternion.Euler(0, 0, 0);
         back.rotation = Quaternion.Euler(0, -90f, 0);
     }
-    public void SetBack()
+    public virtual void SetBack()
     {
         _isFront = false;
         buttonFront.interactable = !alwaysFrontDisable;
@@ -60,7 +62,7 @@ public class TurningCard : MonoBehaviour
         back.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    public void Turnning(float duration=1f, TweenCallback onCompleted = null)
+    public virtual void Turnning(float duration=1f, TweenCallback onCompleted = null)
     {
         if (seq != null)
             seq.Kill();
@@ -70,13 +72,13 @@ public class TurningCard : MonoBehaviour
         else
             TurnningFront(duration,onCompleted);
     }
-    private void TurnningBack(float duration, TweenCallback onCompleted = null)
+    protected virtual void TurnningBack(float duration, TweenCallback onCompleted = null)
     {
         SetFront();
         _isFront = false;
         buttonFront.interactable = false;
         buttonBack.interactable = false;
-        Debug.Log("µÚµ¹±â");
+        onClick?.Invoke();
         seq = DOTween.Sequence();
 
         var frontTween = front.DORotate(new Vector3(0, -90,0), duration / 2f);
@@ -99,6 +101,7 @@ public class TurningCard : MonoBehaviour
         _isFront = true;
         buttonFront.interactable = false;
         buttonBack.interactable = false;
+        onClick?.Invoke();
         seq = DOTween.Sequence();
 
         var frontTween = front.DORotate(new Vector3(0, 0, 0), duration / 2f);

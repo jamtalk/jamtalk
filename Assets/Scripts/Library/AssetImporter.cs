@@ -66,16 +66,21 @@ public class AssetImporter : ScriptableObject
     [SerializeField]
     private Sprite[] spriteWords;
 
+    [SerializeField]
     private SerializableDictionaryBase<string, string> clipWordMetadata = new SerializableDictionaryBase<string, string>();
+    [SerializeField]
     private SerializableDictionaryBase<string, string> clipAct3Metadata = new SerializableDictionaryBase<string, string>();
-
     //Audio Getter
     public AudioClip GetClipAlphabet(eAlphabet alphabet) => clipAlphabet[(int)alphabet];
     public AudioClip GetClipPhanics(eAlphabet alphabet) => clipPhanics[(int)alphabet];
     public AudioClip GetClipAct1(eAlphabet alphabet) => clipAlphabetAct1[(int)alphabet];
     public AudioClip GetClipAct2(eAlphabet alphabet) => clipAlphabetAct2[(int)alphabet];
-    public AudioClip GetClipAct3(string word) => clipAct3.ToList().Find(x => x.name == clipAct3Metadata[word]);
-    public AudioClip GetClipWord(string word) => clipWords.ToList().Find(x => x.name == clipWordMetadata[word]);
+    public AudioClip GetClipAct3(string word)
+    {
+        var key = int.Parse(clipAct3Metadata[word].Split('-').Last());
+        return clipAct3.ToList().Find(x => int.Parse(x.name.Split('-').Last()) == key);
+    }
+    public AudioClip GetClipWord(string word) => clipWords.Where(x => x.name == clipWordMetadata[word]).First();
     public AudioClip GetClipCorrectEffect() => clipCorrect;
 
     //SpriteGetter
@@ -147,8 +152,23 @@ public class AssetImporter : ScriptableObject
             .Select(x=>x.ToArray());
         foreach(var data in words)
         {
-            clipWordMetadata.Add(data[0], data[1].Replace(" ",""));
+            clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
             clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
         }
     }
+    //private void OnEnable()
+    //{
+    //    var words = Resources.Load<TextAsset>("Words").text.Split('\n')
+    //        .Where(x => !string.IsNullOrEmpty(x))
+    //        .Select(x => x.Split(','))
+    //        .Select(x => x.ToArray());
+    //    clipWordMetadata.Clear();
+    //    clipAct3Metadata.Clear();
+    //    foreach (var data in words)
+    //    {
+    //        Debug.Log(string.Join(",", data));
+    //        clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
+    //        clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
+    //    }
+    //}
 }

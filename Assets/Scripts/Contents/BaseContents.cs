@@ -103,6 +103,9 @@ public abstract class Question<TAnswer>
 }
 public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 {
+    public TAnswer[] RandomQuestions => new TAnswer[] { correct }.Union(questions)
+        .OrderBy(x => Guid.NewGuid().ToString())
+        .ToArray();
     public TAnswer correct { get; protected set; }
     public TAnswer[] questions { get; protected set; }
 
