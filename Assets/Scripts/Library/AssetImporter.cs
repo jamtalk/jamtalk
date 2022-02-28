@@ -150,15 +150,17 @@ public class AssetImporter : ScriptableObject
 
     private void Awake()
     {
-        var words = Resources.Load<TextAsset>("Words").text.Split('\n')
-            .Where(x => !string.IsNullOrEmpty(x))
-            .Select(x => x.Split(','))
-            .Select(x=>x.ToArray());
-        foreach(var data in words)
-        {
-            clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
-            clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
-        }
+        //clipWordMetadata.Clear();
+        //clipAct3Metadata.Clear();
+        //var words = Resources.Load<TextAsset>("Words").text.Split('\n')
+        //    .Where(x => !string.IsNullOrEmpty(x))
+        //    .Select(x => x.Split(','))
+        //    .Select(x=>x.ToArray());
+        //foreach(var data in words)
+        //{
+        //    clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
+        //    clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
+        //}
     }
     //private void OnEnable()
     //{
