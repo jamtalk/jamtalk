@@ -1,5 +1,6 @@
 public enum eSceneName
 {
+    Test,
     JT_PL1_102,
     JT_PL1_103,
     JT_PL1_104,
@@ -19,6 +20,7 @@ public enum eSceneName
     JT_PL1_118,
     JT_PL1_119,
     JT_PL1_120,
+    JT_PL1_121,
 }
 
 public enum eContents
@@ -42,6 +44,7 @@ public enum eContents
     JT_PL1_118,
     JT_PL1_119,
     JT_PL1_120,
+    JT_PL1_121,
 }
 
 public enum eAlphabet

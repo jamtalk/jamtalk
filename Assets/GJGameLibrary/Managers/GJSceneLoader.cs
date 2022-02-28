@@ -29,7 +29,7 @@ namespace GJGameLibrary
         public void LoadScene(eSceneName nextScene) => StartCoroutine(LoadSceneAsyc(nextScene));
         IEnumerator LoadSceneAsyc(eSceneName scene)
         {
-            PopupManager.Instance.ShowLoading();
+            //PopupManager.Instance.ShowLoading();
             AsyncOperation op = SceneManager.LoadSceneAsync(scene.ToString());
             op.allowSceneActivation = false;
             op.completed += Op_completed;
@@ -42,7 +42,7 @@ namespace GJGameLibrary
                 {
                     op.allowSceneActivation = true;
                     Debug.Log(bgm[scene]);
-                    SoundManager.Instance.SetBGMClip(bgm[scene]);
+                    //SoundManager.Instance.SetBGMClip(bgm[scene]);
                     yield break;
                 }
             }
@@ -50,7 +50,7 @@ namespace GJGameLibrary
 
         private void Op_completed(AsyncOperation obj)
         {
-            PopupManager.Instance.Clear();
+            //PopupManager.Instance.Clear();
         }
     }
 }

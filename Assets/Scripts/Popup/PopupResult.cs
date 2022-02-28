@@ -41,14 +41,10 @@ public class PopupResult : BasePopup
     }
     private void OnClickNext()
     {
-        if (result == eGameResult.Perfect)
-            SetResult(eGameResult.Greate);
-        else
-            SetResult(eGameResult.Perfect);
+        GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
     }
     private void OnClickPre()
     {
-
-        SetResult(eGameResult.Fail);
+        GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
     }
 }
