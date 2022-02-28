@@ -139,3 +139,8 @@ public enum eRocketDirection
     Vertical,
     Horizontal
 }
+public enum eCharactorDirection
+{
+    ToLeft,
+    ToRight,
+}
