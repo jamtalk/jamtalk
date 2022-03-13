@@ -35,6 +35,8 @@ public class GameManager : MonoSingleton<GameManager>
     public Sprite[] GetSpriteWord(eAlphabet alphabet) => assets.GetSpriteWord(alphabet);
     public Sprite[] GetSpriteWord() => assets.GetSpriteWord(currentAlphabet);
     public Sprite GetSpriteWord(string word) => assets.GetSpriteWord(word);
+    public string[] GetSentances() => assets.GetSentances();
+    public string[] GetSentances(eAlphabet alphabet) => assets.GetSentances(alphabet);
 
     public string[] GetWords() => assets.GetWords();
     public string[] GetWords(eAlphabet alphabet) => GetWords().Where(x => x.First().ToString().ToUpper() == alphabet.ToString()).ToArray();

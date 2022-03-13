@@ -65,6 +65,7 @@ public class AudioSinglePlayer : MonoBehaviour
     IEnumerator OnOverRoutine(float duration,Action onOver)
     {
         yield return new WaitForSeconds(duration);
+        Stop();
         onOver?.Invoke();
     }
 } 

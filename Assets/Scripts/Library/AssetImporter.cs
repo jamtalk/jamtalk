@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.IO;
+using System.Text.RegularExpressions;
 
 [CreateAssetMenu(fileName = "AssetImporter.asset", menuName = "Assets Importer")]
 public class AssetImporter : ScriptableObject
@@ -72,6 +73,9 @@ public class AssetImporter : ScriptableObject
     private SerializableDictionaryBase<string, string> clipWordMetadata = new SerializableDictionaryBase<string, string>();
     [SerializeField]
     private SerializableDictionaryBase<string, string> clipAct3Metadata = new SerializableDictionaryBase<string, string>();
+    [SerializeField]
+    private SerializableDictionaryBase<eAlphabet, string> sentances = new SerializableDictionaryBase<eAlphabet, string>();
+
     //Audio Getter
     public AudioClip GetClipAlphabet(eAlphabet alphabet) => clipAlphabet[(int)alphabet];
     public AudioClip GetClipPhanics(eAlphabet alphabet) => clipPhanics[(int)alphabet];
@@ -147,6 +151,8 @@ public class AssetImporter : ScriptableObject
 
     //StringGetter
     public string[] GetWords() => clipWordMetadata.Keys.ToArray().Where(x=>spriteWords.Select(y=>y.name).Contains(x)).ToArray();
+    public string[] GetSentances() => sentances.Values.SelectMany(x => x.Split(',')).ToArray();
+    public string[] GetSentances(eAlphabet alphabet) => sentances[alphabet].Split(',');
 
     private void Awake()
     {
@@ -162,19 +168,43 @@ public class AssetImporter : ScriptableObject
         //    clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
         //}
     }
-    //private void OnEnable()
-    //{
-    //    var words = Resources.Load<TextAsset>("Words").text.Split('\n')
-    //        .Where(x => !string.IsNullOrEmpty(x))
-    //        .Select(x => x.Split(','))
-    //        .Select(x => x.ToArray());
-    //    clipWordMetadata.Clear();
-    //    clipAct3Metadata.Clear();
-    //    foreach (var data in words)
-    //    {
-    //        Debug.Log(string.Join(",", data));
-    //        clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
-    //        clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
-    //    }
-    //}
+    private void OnEnable()
+    {
+        var tmpDic = new Dictionary<eAlphabet, List<string>>();
+        var tmp = Resources.Load<TextAsset>("Sentence").text.Split('\n')
+            .Where(x => !string.IsNullOrEmpty(x))
+            .Select(x => x.Split(','));
+        foreach (var item in tmp)
+        {
+            var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), item[0]);
+            if (!tmpDic.ContainsKey(alphabet))
+                tmpDic.Add(alphabet, new List<string>());
+            var value = item[1].Split(' ').Select(x => Regex.Replace(x, @"[^a-zA-Z0-9가-힣]", "", RegexOptions.Singleline)).ToList();
+            tmpDic[alphabet].Add(string.Join(" ",value));
+        }
+        sentances.Clear();
+        foreach (var item in tmpDic)
+        {
+            sentances.Add(item.Key, string.Join(",", item.Value));
+        }
+        //var log = sentances
+        //    .Select(x => string.Format("----{0}----\n{1}", x.Key, string.Join("\n", x.Value)));
+        //Debug.Log(string.Join("\n", log));
+        //foreach (var item in tmpDic)
+        //{
+        //    sentances.Add(item.Key, item.Value.ToArray());
+        //}
+        //var words = Resources.Load<TextAsset>("Words").text.Split('\n')
+        //    .Where(x => !string.IsNullOrEmpty(x))
+        //    .Select(x => x.Split(','))
+        //    .Select(x => x.ToArray());
+        //clipWordMetadata.Clear();
+        //clipAct3Metadata.Clear();
+        //foreach (var data in words)
+        //{
+        //    Debug.Log(string.Join(",", data));
+        //    clipWordMetadata.Add(data[0], data[1].Replace(" ", ""));
+        //    clipAct3Metadata.Add(data[0], data[2].Replace(" ", ""));
+        //}
+    }
 }
