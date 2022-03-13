@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JT_PL1_107 : BaseContents
 {
+    public CanvasScaler scaler;
     public DropSpaceShip_107[] drops;
     public DragKnob_107[] drags;
     public AudioSinglePlayer audioPlayer;
@@ -14,6 +16,7 @@ public class JT_PL1_107 : BaseContents
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
     private void Awake()
     {
+        scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         var words = GameManager.Instance.GetWords()
             .Where(x => x.First().ToString().ToUpper() == GameManager.Instance.currentAlphabet.ToString())
             .Take(drops.Length)

@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 529222806}
   point: {fileID: 1390565930}
@@ -1725,6 +1726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1971774193}
   point: {fileID: 1259310327}
@@ -2527,6 +2529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1075671116}
   point: {fileID: 1143819093}
@@ -2734,6 +2737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1493673519}
   point: {fileID: 1447267180}
@@ -3131,7 +3135,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 2960, y: 1440}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -3149,9 +3153,9 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1836606555}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -3193,6 +3197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  scaler: {fileID: 1580109401}
   drops:
   - {fileID: 39031940}
   - {fileID: 1162785758}
