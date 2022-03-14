@@ -170,23 +170,23 @@ public class AssetImporter : ScriptableObject
     }
     private void OnEnable()
     {
-        var tmpDic = new Dictionary<eAlphabet, List<string>>();
-        var tmp = Resources.Load<TextAsset>("Sentence").text.Split('\n')
-            .Where(x => !string.IsNullOrEmpty(x))
-            .Select(x => x.Split(','));
-        foreach (var item in tmp)
-        {
-            var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), item[0]);
-            if (!tmpDic.ContainsKey(alphabet))
-                tmpDic.Add(alphabet, new List<string>());
-            var value = item[1].Split(' ').Select(x => Regex.Replace(x, @"[^a-zA-Z0-9가-힣]", "", RegexOptions.Singleline)).ToList();
-            tmpDic[alphabet].Add(string.Join(" ",value));
-        }
-        sentances.Clear();
-        foreach (var item in tmpDic)
-        {
-            sentances.Add(item.Key, string.Join(",", item.Value));
-        }
+        //var tmpDic = new Dictionary<eAlphabet, List<string>>();
+        //var tmp = Resources.Load<TextAsset>("Sentence").text.Split('\n')
+        //    .Where(x => !string.IsNullOrEmpty(x))
+        //    .Select(x => x.Split(','));
+        //foreach (var item in tmp)
+        //{
+        //    var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), item[0]);
+        //    if (!tmpDic.ContainsKey(alphabet))
+        //        tmpDic.Add(alphabet, new List<string>());
+        //    var value = item[1].Split(' ').Select(x => Regex.Replace(x, @"[^a-zA-Z0-9가-힣]", "", RegexOptions.Singleline)).ToList();
+        //    tmpDic[alphabet].Add(string.Join(" ",value));
+        //}
+        //sentances.Clear();
+        //foreach (var item in tmpDic)
+        //{
+        //    sentances.Add(item.Key, string.Join(",", item.Value));
+        //}
         //var log = sentances
         //    .Select(x => string.Format("----{0}----\n{1}", x.Key, string.Join("\n", x.Value)));
         //Debug.Log(string.Join("\n", log));
