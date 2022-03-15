@@ -1,23 +1,26 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+
 public interface IParam
 {
-    Dictionary<string, string> ToParam();
+    WWWForm GetForm();
 }
 public abstract class Param : IParam
 {
-    public abstract Dictionary<string, string> ToParam();
+    public abstract WWWForm GetForm();
 }
 public abstract class ActParam : Param
 {
     protected abstract eAPIAct act { get; }
-
-    public override Dictionary<string, string> ToParam()
+    public override WWWForm GetForm()
     {
-        var param = new Dictionary<string, string>();
-        param.Add("act", act.ToString());
-        return param;
+        var form = new WWWForm();
+        form.AddField("act", act.ToString());
+        return form;
     }
+
 }
 public abstract class UserParam : ActParam
 {
@@ -27,10 +30,10 @@ public abstract class UserParam : ActParam
     {
         this.user_id = user_id;
     }
-    public override Dictionary<string, string> ToParam()
+    public override WWWForm GetForm()
     {
-        var param = base.ToParam();
-        param.Add("user_id", user_id.ToString());
-        return param;
+        var form = new WWWForm();
+        form.AddField("user_id", user_id.ToString());
+        return form;
     }
 }
