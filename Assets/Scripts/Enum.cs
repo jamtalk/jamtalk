@@ -148,3 +148,16 @@ public enum eCharactorDirection
     ToLeft,
     ToRight,
 }
+public enum eAPIAct
+{
+    register,       //회원가입
+    memberinfo,     //회원정보수정
+    exists,         //아이디중복검사
+    member,         //회원정보조회
+    login,          //로그인
+    memberout,      //회원탈퇴
+    board,          //게시판조회
+    couponreg,      //쿠폰생성
+    edulog,         //학습기록
+    edulog_view,    //학습기록 조회
+}
