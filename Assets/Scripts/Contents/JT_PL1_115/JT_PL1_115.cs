@@ -14,9 +14,11 @@ public class JT_PL1_115 : BaseContents
     protected override eContents contents => eContents.JT_PL1_115;
 
     protected override bool CheckOver() => !cards.Select(x => x.card.IsFornt).Contains(false);
+    protected override int GetTotalScore() => cards.Where(x => x.card.IsFornt).Count();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         var questions = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
             .Take(4)

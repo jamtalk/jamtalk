@@ -10,13 +10,43 @@ public abstract class BaseContents : MonoBehaviour
     [SerializeField]
     private GameObject popupResult;
     protected abstract eContents contents { get; }
+    protected eAlphbetType type = eAlphbetType.Upper;
     protected virtual eGameResult GetResult() => eGameResult.Perfect;
+    private float time;
+    private DateTime startTime;
+    private DateTime endTime;
     protected virtual void ShowResult()
     {
+        endTime = DateTime.Now;
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
         result.SetResult(GetResult());
+        RequestManager.Instance.RequestAct(param, response =>
+        {
+            Debug.Log("저장 완료");
+        });
+    }
+    protected virtual EduLogParam param => new EduLogParam(
+        "",
+        DateTime.Now,
+        contents,
+        GameManager.Instance.currentAlphabet,
+        type,
+        GetLevel(),
+        DateTime.Now,
+        endTime - startTime,
+        GetTotalScore(),
+        GetCorrectScore(),
+        GetDuration()
+        );
+    protected virtual void Awake()
+    {
+        startTime = DateTime.Now;
     }
     protected abstract bool CheckOver();
+    protected virtual int GetLevel() => 1;
+    protected abstract int GetTotalScore();
+    protected virtual int GetCorrectScore()=>GetTotalScore();
+    protected virtual float GetDuration()=>100f;
 }
 public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     where TQuestion : Question<TAnswer>
@@ -28,8 +58,9 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     public AudioSinglePlayer audioPlayer;
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         questions = MakeQuestion();
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
@@ -60,6 +91,9 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     }
     protected abstract void ShowQuestion(TQuestion question);
     protected abstract List<TQuestion> MakeQuestion();
+    protected override int GetTotalScore() => QuestionCount;
+    protected override int GetCorrectScore() => questions.Where(x => x.isCorrect).Count();
+    protected override float GetDuration() => (float)questions.Where(x => x.isCompleted).Count() / (float)QuestionCount;
 }
 public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerContents<TQuestion,TAnswer>
     where TQuestion:MultiQuestion<TAnswer>

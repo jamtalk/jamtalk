@@ -22,9 +22,11 @@ public class JT_PL1_116 : BaseContents
     private int currentIndex=0;
 
     private List<AlphabetButton> selected = new List<AlphabetButton>();
+    protected override int GetTotalScore() => upper.Length;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         for (int i = 0; i < buttonPlayer.Length; i++)
             buttonPlayer[i].onClick.AddListener(PlayWord);
 

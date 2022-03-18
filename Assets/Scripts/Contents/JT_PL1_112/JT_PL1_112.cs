@@ -12,8 +12,10 @@ public class JT_PL1_112 : BaseContents
     protected override eContents contents => eContents.JT_PL1_112;
 
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
-    private void Awake()
+    protected override int GetTotalScore() => toggles.Length;
+    protected override void Awake()
     {
+        base.Awake();
         var corrects = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
             .OrderBy(x=>x)

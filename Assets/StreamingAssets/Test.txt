@@ -2,9 +2,20 @@ Request Success : True
 HasResult : True
 ---Result---
 {
-  "commonMsg": {
-    "message": "Internal server error: please contact our organization",
-    "status": 5000
+  "code": "400",
+  "msg": "empty request",
+  "request": {
+    "user_id": "tabletasd123-asdasdfkjb1-asdas1",
+    "app_token": "",
+    "regdate": "2022-03-18 19:10:44",
+    "contents_title": "JT_PL1_104",
+    "alphabet": "A",
+    "level": "1",
+    "end_time": "2022-03-18 19:10:44",
+    "timespan": "00:00:07.0984476",
+    "total_score": "1",
+    "correct_score": "1",
+    "due": "100.00"
   }
 }
 ---------

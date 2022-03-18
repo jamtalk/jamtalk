@@ -15,10 +15,12 @@ public class JT_PL1_105 : BaseContents
     private string[] questions;
     private string currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_105;
-
     protected override bool CheckOver() => currentIndex == questionCount;
-    private void Awake()
+    protected override int GetTotalScore() => questionCount;
+    protected override float GetDuration() => (float)(currentIndex + 1f) / (float)questionCount;
+    protected override void Awake()
     {
+        base.Awake();
         currentIndex = 0;
         questions = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))

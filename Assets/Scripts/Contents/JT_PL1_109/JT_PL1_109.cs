@@ -19,8 +19,10 @@ public class JT_PL1_109 : BaseContents
     protected override eContents contents => eContents.JT_PL1_109;
 
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
-    private void Awake()
+    protected override int GetTotalScore() => questions.Length;
+    protected override void Awake()
     {
+        base.Awake();
         var words = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(buttonsQuestion.Length)

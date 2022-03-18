@@ -15,8 +15,10 @@ public class JT_PL1_117 : BaseContents
     public eAlphabet currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_117;
     protected override bool CheckOver() => board.GetBingoCount() >= BingoCount || questions.Length==currentIndex;
-    private void Awake()
+    protected override int GetTotalScore() => BingoCount;
+    protected override void Awake()
     {
+        base.Awake();
         board.onClick += OnClick;
         scoreBoard.onFailed += ShowResult;
 

@@ -51,10 +51,8 @@ public partial class RequestManager : MonoSingleton<RequestManager>
                 var response = new ResponseData(success, data);
                 if (success)
                 {
-                    File.WriteAllText(Application.streamingAssetsPath + "/Test.txt", response.GetLog());
-                    Debug.LogFormat(
-                        response.GetLog());
-                    //onResponse.Invoke(response);
+                    Debug.Log(data.ToString());
+                    onResponse.Invoke(response);
                 }
             }
         }

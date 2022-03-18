@@ -17,9 +17,10 @@ public class JT_PL1_110 : BaseContents
     protected override eContents contents => eContents.JT_PL1_110;
 
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
-    private void Awake()
+    protected override int GetTotalScore() => 1;
+    protected override void Awake()
     {
-        //word = "aasdsadasdsad";
+        base.Awake();
         word = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();

@@ -10,13 +10,14 @@ public class JT_PL1_102 : BaseContents
     public int ClickCount => 10;
     public int currentClickCount = 0;
     protected override bool CheckOver() => currentClickCount == ClickCount;
-    
+    protected override int GetTotalScore() => 1;
     public Image imageAlphabet;
     public Button buttonEgg;
     public Egg egg;
     public AudioSource audioPlayer;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Card, eAlphbetType.Upper);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;

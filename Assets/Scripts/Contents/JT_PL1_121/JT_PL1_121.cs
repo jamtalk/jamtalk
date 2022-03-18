@@ -24,9 +24,11 @@ public class JT_PL1_121 : BaseContents
     protected override eContents contents => eContents.JT_PL1_121;
 
     protected override bool CheckOver() => index == questionCount;
+    protected override int GetTotalScore() => questionCount;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         words = GameManager.Instance.GetSentances(GameManager.Instance.currentAlphabet)
             .OrderBy(x=>Random.Range(0f,100f))
             .Take(questionCount)

@@ -12,9 +12,9 @@ public class JT_PL1_107 : BaseContents
     public DragKnob_107[] drags;
     public AudioSinglePlayer audioPlayer;
     protected override eContents contents => eContents.JT_PL1_107;
-
+    protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
-    private void Awake()
+    protected override void Awake()
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         var words = GameManager.Instance.GetWords()

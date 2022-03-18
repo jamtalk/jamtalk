@@ -14,8 +14,10 @@ public class JT_PL1_103 : BaseContents
     private eAlphabet question => GameManager.Instance.currentAlphabet;
 
     protected override bool CheckOver() => true;
-    private void Awake()
+    protected override int GetTotalScore() => 1;
+    protected override void Awake()
     {
+        base.Awake();
         button.onClick.AddListener(PlayAudio);
         image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, eAlphbetType.Upper, question);
         image.preserveAspect = true;
