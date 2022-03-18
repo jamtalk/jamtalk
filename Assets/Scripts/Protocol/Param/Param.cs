@@ -33,7 +33,7 @@ public abstract class UserParam : ActParam
     }
     public override WWWForm GetForm()
     {
-        var form = new WWWForm();
+        var form = base.GetForm();
         form.AddField("user_id", user_id);
         return form;
     }
@@ -71,6 +71,7 @@ public class EduLogParam : UserParam
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
+        form.AddField("act", act.ToString());
         form.AddField("app_token", app_token);
         form.AddField("regdate", regdate.ToString("yyyy-MM-dd H:mm:ss"));
         form.AddField("contents_title", contents_title.ToString());
