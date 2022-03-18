@@ -6,19 +6,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler
+public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBeginDragHandler
 {
     public bool resetOnAwake;
-
+    public bool intractable;
     [Header("Canvas")]
     public RawImage canvas;
     public Color canvasColor;
+    public AudioSource audioPlayer;
 
     [Header("Brush")]
     [Range(1,512)]
     public int brushSize;
     public Color brushColor;
-
     public RectTransform rectTransfrom => GetComponent<RectTransform>();
     public Texture2D texture
     {
@@ -58,11 +58,16 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!intractable)
+            return;
         PaintingPixel(ConvertPixelPosition(eventData.position));
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (audioPlayer != null)
+            audioPlayer.Stop();
+
         onPaintingEnd?.Invoke();
     }
 
@@ -97,5 +102,11 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler
         Vector2 targetPos = new Vector2((Screen.width - rectTransfrom.sizeDelta.x) / -2, (Screen.height - rectTransfrom.sizeDelta.y) / -2);
         targetPos += pos - rectTransfrom.anchoredPosition;
         return targetPos;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(audioPlayer!= null)
+            audioPlayer.Play();
     }
 }

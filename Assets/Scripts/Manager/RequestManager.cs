@@ -53,9 +53,6 @@ public partial class RequestManager : MonoSingleton<RequestManager>
                 {
                     File.WriteAllText(Application.streamingAssetsPath + "/Test.txt", response.GetLog());
                     Debug.LogFormat(
-                        "---Response---\n" +
-                        "{0}" +
-                        "-----------\n",
                         response.GetLog());
                     //onResponse.Invoke(response);
                 }
