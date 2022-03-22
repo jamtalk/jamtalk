@@ -37,6 +37,14 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
 
             return (Texture2D)canvas.texture;
         }
+        set
+        {
+            var colors = value.GetPixels32();
+            var texture = new Texture2D(value.width, value.height);
+            texture.SetPixels32(colors);
+            texture.Apply();
+            canvas.texture = texture;
+        }
     }
 
     public event Action onPainting;

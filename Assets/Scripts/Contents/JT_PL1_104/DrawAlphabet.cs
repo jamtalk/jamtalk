@@ -36,6 +36,7 @@ public class DrawAlphabet : MonoBehaviour
         stroke = 0;
         image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, type, alphabet);
         image.preserveAspect = true;
+        paintingCanvas.texture = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Gray, type, alphabet).texture;
         Path = pathData.GetPath(alphabet, type);
         SetArrow();
     }

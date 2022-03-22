@@ -124,6 +124,10 @@ public enum eAlphbetStyle
     /// 120
     /// </summary>
     White,
+    /// <summary>
+    /// 104
+    /// </summary>
+    Gray,
 }
 
 public enum eAlphbetType

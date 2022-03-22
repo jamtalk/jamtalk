@@ -68,6 +68,10 @@ public class AssetImporter : ScriptableObject
     private Sprite[] spriteAlphabetWhite;
     [SerializeField]
     private Sprite[] spriteWords;
+    [SerializeField]
+    private Sprite[] spriteAlphabetGrayUpper;
+    [SerializeField]
+    private Sprite[] spriteAlphabetGrayLower;
 
     [SerializeField]
     private SerializableDictionaryBase<string, string> clipWordMetadata = new SerializableDictionaryBase<string, string>();
@@ -140,6 +144,11 @@ public class AssetImporter : ScriptableObject
                     return spriteAlphabetYellowLower;
             case eAlphbetStyle.White:
                 return spriteAlphabetWhite;
+            case eAlphbetStyle.Gray:
+                if (type == eAlphbetType.Upper)
+                    return spriteAlphabetGrayUpper;
+                else 
+                    return spriteAlphabetGrayLower;
             default:
                 return null;
         }
