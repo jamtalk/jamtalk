@@ -26,7 +26,7 @@ public class DropSapceShip_114 : MonoBehaviour
     {
         rtObject.anchoredPosition = Vector2.zero;
     }
-    public void OutObject(eAlphabet alphabet, TweenCallback onCompleted)
+    public void OutObject(eAlphabet alphabet, Action onCompleted)
     {
         SetInner();
         this.alphabet = alphabet;
@@ -36,7 +36,10 @@ public class DropSapceShip_114 : MonoBehaviour
         float duration = 2f;
         beamPlayer.Play(duration);
         var tween = rtObject.DOAnchorPosY(0, duration);
-        tween.onComplete += onCompleted;
+        tween.onComplete += () =>
+        {
+            alphbetPlayer.Play(GameManager.Instance.GetClipAlphbet(alphabet), onCompleted);
+        };
     }
     public void InObject(Sprite sprite)
     {
