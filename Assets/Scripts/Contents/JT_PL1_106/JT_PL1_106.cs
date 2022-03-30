@@ -48,6 +48,17 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
             buttonQuestions[i].SetSprite(sprites[i]);
             AddDoubleClickListener(buttonQuestions[i]);
         }
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics());
+        buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Brown, eAlphbetType.Upper));
+        buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics()));
+    }
+    private void ResetQuestion()
+    {
+        for (int i = 0; i < buttonQuestions.Length; i++)
+        {
+            buttonQuestions[i].isOn = false;
+        }
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics());
         buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Brown, eAlphbetType.Upper));
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics()));
     }
@@ -67,19 +78,31 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
 
         button.onClick.AddListener(() =>
         {
-            button.GetComponent<Image>().sprite = spritePop;
-            button.image.gameObject.SetActive(false);
-            audioPlayer.Play(1f,clipPop);
-            var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
-            tween.SetLoops(2,LoopType.Yoyo);
-            tween.SetEase(Ease.Linear);
-            tween.onComplete += () =>
+            if(currentQuestion.correct == button.image.sprite.name)
             {
-                button.image.gameObject.SetActive(true);
-                AddAnswer(button.image.sprite.name);
-            };
-            tween.Play();
+                button.GetComponent<Image>().sprite = spritePop;
+                button.image.gameObject.SetActive(false);
+                audioPlayer.Play(1f, clipPop);
+                var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
+                tween.SetLoops(2, LoopType.Yoyo);
+                tween.SetEase(Ease.Linear);
+                tween.onComplete += () =>
+                {
+                    AddAnswer(button.image.sprite.name);
+                    if(!CheckOver())
+                        button.image.gameObject.SetActive(true);
+                };
+                tween.Play();
+            }
+            else
+            {
+                ResetQuestion();
+            }
         });
+    }
+    protected override void ShowResult()
+    {
+        audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), base.ShowResult);
     }
 }
 [Serializable]
