@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JT_PL1_103 : BaseContents
 {
     public Image image;
     public Button button;
     public AudioSinglePlayer audioPlayer;
+    public STTButton buttonSTT;
+
+    private Tween buttonTween;
 
     protected override eContents contents => eContents.JT_PL1_105;
     private eAlphabet value;
@@ -29,18 +33,42 @@ public class JT_PL1_103 : BaseContents
         STTManager.Instance.onError -= OnSTTError;
         STTManager.Instance.onStarted += OnSTTStarted;
     }
+    private void PlayButtonTween()
+    {
+        if(buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+        buttonTween.SetEase(Ease.Linear);
+        buttonTween.SetLoops(-1,LoopType.Yoyo);
+        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+        buttonTween.Play();
+    }
     private void OnSTTStarted()
     {
         audioPlayer.Stop();
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
     }
     private void PlayAudio()
     {
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(question));
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics(question),PlayButtonTween);
     }
+    
     private void OnSTTResult(string result)
     {
         if (question.ToString().ToLower() == result.ToLower())
-            audioPlayer.Play(1f, GameManager.Instance.GetClipAct1(question), ShowResult);
+            audioPlayer.Play(1f, GameManager.Instance.GetClipAct2(question), ShowResult);
     }
     private void OnSTTError(string message)
     {
