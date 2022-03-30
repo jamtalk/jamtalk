@@ -48,13 +48,13 @@ public class DrawAlphabet : MonoBehaviour
         SetArrow();
         if (index == Path[stroke].path.Length)
         {
-            paintingCanvas.intractable = false;
+            //paintingCanvas.intractable = false;
             arrow.gameObject.SetActive(false);
         }
         else
         {
             var dis = Vector2.Distance(mousePos, Path[stroke].path[index]);
-            if (dis < 30f)
+            if (dis < 75f)
             {
                 index += 1;
                 OnPainting();
@@ -74,7 +74,7 @@ public class DrawAlphabet : MonoBehaviour
             {
                 SetArrow();
                 arrow.gameObject.SetActive(true);
-                paintingCanvas.intractable = true;
+                //paintingCanvas.intractable = true;
             }
         }
         else

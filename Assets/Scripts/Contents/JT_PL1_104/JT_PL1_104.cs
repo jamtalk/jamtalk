@@ -24,7 +24,7 @@ public class JT_PL1_104 : BaseContents
     protected override void ShowResult()
     {
         mask.gameObject.SetActive(false);
-        audioPlayer.Play(GameManager.Instance.GetClipAct1(), base.ShowResult);
+        audioPlayer.Play(GameManager.Instance.GetClipAct2(), base.ShowResult);
     }
 
     private void OnDisable()
