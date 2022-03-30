@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-
 public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     public CanvasScaler scaler;
@@ -15,9 +14,10 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
     public Image line;
     private RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
-    private string currentValue;
+    public string currentValue;
     public event Action onDrop;
-    private bool intractable = true;
+    public bool intractable = true;
+    public bool isConnected = false;
     public void Init(string value)
     {
         intractable = true;
@@ -73,6 +73,7 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
     private void SetCover(Vector2 position)
     {
         intractable = false;
+        isConnected = true;
 
         var dis = Vector2.Distance(FactorPos(line_rt.position), FactorPos(position));
         var size = cover.sizeDelta;

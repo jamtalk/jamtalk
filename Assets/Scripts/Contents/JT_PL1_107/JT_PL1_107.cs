@@ -28,9 +28,18 @@ public class JT_PL1_107 : BaseContents
         for (int i = 0; i < words.Length; i++)
         {
             drops[i].Init(words[i]);
-            drops[i].onClick += PlayAudio;
             drags[i].Init(words[i]);
+
+            drops[i].onClick += PlayAudio;
+
             drags[i].onDrop += () =>
+            {
+                if (CheckOver())
+                    ShowResult();
+                else
+                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+            };
+            drops[i].onDrop += () =>
             {
                 if (CheckOver())
                     ShowResult();
@@ -43,5 +52,9 @@ public class JT_PL1_107 : BaseContents
     private void PlayAudio(string word)
     {
         audioPlayer.Play(GameManager.Instance.GetClipWord(word));
+    }
+    protected override void ShowResult()
+    {
+        audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), base.ShowResult);
     }
 }
