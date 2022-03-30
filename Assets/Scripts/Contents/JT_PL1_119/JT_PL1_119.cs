@@ -8,6 +8,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
 {
     public ButtonExitnction[] buttons;
     public Image imageAlphabet;
+    public Button buttonSound;
     protected override int QuestionCount => 5;
 
     protected override eContents contents => eContents.JT_PL1_119;
@@ -16,6 +17,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
         base.Awake();
         for(int i = 0;i < buttons.Length; i++)
             AddButtonListener(buttons[i]);
+        buttonSound.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet)));
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet));
     }
     private void AddButtonListener(ButtonExitnction button)
     {
