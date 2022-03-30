@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class JT_PL1_115 : BaseContents
@@ -51,25 +52,31 @@ public class JT_PL1_115 : BaseContents
                 {
                     if (CheckOver())
                     {
-                        ShowResult();
+                        audioPlayer.Play(GameManager.Instance.GetClipAct2(value),ShowResult);
                     }
                     else
                     {
-                        selected[0].ShowStar();
-                        selected[1].ShowStar();
-                        audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
-                        SetCardIntracable(true);
+                        audioPlayer.Play(GameManager.Instance.GetClipAct2(value), ()=>
+                        {
+                            selected[0].ShowStar();
+                            selected[1].ShowStar();
+                            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                            selected.Clear();
+                            SetCardIntracable(true);
+                        });
                     }
                 }
                 else
                 {
+                    audioPlayer.Play(GameManager.Instance.GetClipPhanics(value));
                     selected[0].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected[1].card.Turnning(onCompleted: () => SetCardIntracable(true));
+                    selected.Clear();
                 }
-                selected.Clear();
             }
             else
             {
+                audioPlayer.Play(GameManager.Instance.GetClipPhanics(value));
                 SetCardIntracable(true);
             }
         };
