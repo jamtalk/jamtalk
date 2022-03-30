@@ -58,6 +58,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, string>
 
     protected override void ShowQuestion(Question118 question)
     {
+        audioPlayer.Play(GameManager.Instance.GetClipAct3(question.correct));
         buttonQuestion.onClick.RemoveAllListeners();
         buttonQuestion.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipAct3(question.correct)));
 
