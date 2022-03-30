@@ -7,29 +7,33 @@ using UnityEngine.UI;
 public class JT_PL1_102 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL1_102;
-    public int ClickCount => 10;
+    public int ClickCount => 3;
     public int currentClickCount = 0;
     protected override bool CheckOver() => currentClickCount == ClickCount;
     protected override int GetTotalScore() => 1;
     public Image imageAlphabet;
     public Button buttonEgg;
     public Egg egg;
-    public AudioSource audioPlayer;
+    public AudioSinglePlayer audioPlayer;
     protected override void Awake()
     {
         base.Awake();
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Card, eAlphbetType.Upper);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
-        egg.onBroken += ShowResult;
+        egg.onBroken += OnBorken;
         buttonEgg.onClick.AddListener(OnClickEgg);
+    }
+    private void OnBorken()
+    {
+        audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), ShowResult);
     }
     private void OnClickEgg()
     {
         if (!CheckOver())
-            PlayAudio(GameManager.Instance.GetClipPhanics());
+            audioPlayer.Play(GameManager.Instance.GetClipPhanics());
         else
-            PlayAudio(GameManager.Instance.GetClipAlphbet());
+            audioPlayer.Play(GameManager.Instance.GetClipAlphbet());
 
         currentClickCount += 1;
         if (CheckOver())
@@ -38,15 +42,5 @@ public class JT_PL1_102 : BaseContents
             egg.SetCrack();
         else
             egg.Shake();
-    }
-    private void PlayAudio(AudioClip clip)
-    {
-        if (audioPlayer.isPlaying)
-            audioPlayer.Stop();
-
-        if (audioPlayer.clip != clip)
-            audioPlayer.clip = clip;
-
-        audioPlayer.Play();
     }
 }

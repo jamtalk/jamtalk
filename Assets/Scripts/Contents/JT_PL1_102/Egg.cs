@@ -26,7 +26,6 @@ public class Egg : MonoBehaviour
     }
     public void Break()
     {
-        PlayAudio(GameManager.Instance.GetClipCorrectEffect());
         imageEgg.gameObject.SetActive(false);
         var seq = DOTween.Sequence();
         foreach(var pice in pices)
