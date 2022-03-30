@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ public class JT_PL1_105 : BaseContents
     public AlphabetImage105 alphabetImage;
     public Image image;
     public AudioSinglePlayer audioPlayer;
+    public Button[] buttonAudio;
+    public STTButton buttonSTT;
+    private Tween buttonTween;
 
     private int questionCount => 4;
     private int currentIndex = 0;
@@ -27,10 +31,35 @@ public class JT_PL1_105 : BaseContents
             .Take(questionCount)
             .ToArray();
 
+        for (int i = 0; i < buttonAudio.Length; i++)
+            buttonAudio[i].onClick.AddListener(() =>
+            {
+                if (buttonTween != null)
+                {
+                    buttonTween.Kill();
+                    buttonTween = null;
+                }
+                audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion), PlayButtonTween);
+            });
+
         STTManager.Instance.onResult += OnSTTResult;
         STTManager.Instance.onError += OnSTTError;
 
         ShowQuestion();
+    }
+
+    private void PlayButtonTween()
+    {
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+        buttonTween.SetEase(Ease.Linear);
+        buttonTween.SetLoops(-1, LoopType.Yoyo);
+        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+        buttonTween.Play();
     }
     private void OnDisable()
     {
@@ -46,7 +75,13 @@ public class JT_PL1_105 : BaseContents
     {
         alphabetImage.Init(GameManager.Instance.ParsingAlphabet(currentQuestion));
         image.sprite = GameManager.Instance.GetSpriteWord(currentQuestion);
-        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion));
+
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion), PlayButtonTween);
         image.preserveAspect = true;
     }
     private void OnSTTResult(string result)
