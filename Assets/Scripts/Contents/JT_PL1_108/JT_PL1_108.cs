@@ -19,8 +19,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
         base.Awake();
         buttonAudio.onClick.AddListener(() =>
         {
-            var currentWord = currentQuestion.correct[currentQuestion.currentIndex];
-            audioPlayer.Play(GameManager.Instance.GetClipWord(currentWord));
+            audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
         });
     }
     protected override eGameResult GetResult() => eGameResult.Perfect;
@@ -63,11 +62,23 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
         card.onClick += (value) =>
         {
             if (currentQuestion.correct[currentQuestion.currentIndex] == value)
+            {
                 AddAnswer(value);
-            else
-                card.turnner.Turnning();
+            }
+        };
+        card.checkVaild += (value) =>
+        {
+            var vaild = value == currentQuestion.correct[currentQuestion.currentIndex];
+            audioPlayer.Play(GameManager.Instance.GetClipWord(value));
+            return vaild;
         };
     }
+    //protected override void AddAnswer(string answer)
+    //{
+    //    base.AddAnswer(answer);
+    //    if(!CheckOver())
+    //        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
+    //}
 
     IEnumerator TurrningCards()
     {
@@ -84,6 +95,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
         {
             cards[i].turnner.buttonFront.interactable = true;
         }
+        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
     }
 }
 public class Question108 : MultiQuestion<string>

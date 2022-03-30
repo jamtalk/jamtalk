@@ -42,8 +42,18 @@ public class TurningCard : MonoBehaviour
         buttonBack.onClick.RemoveAllListeners();
         buttonBack.interactable = alwaysBackDisable;
         buttonFront.interactable = alwaysFrontDisable;
-        buttonFront.onClick.AddListener(() => Turnning(duration,callback));
-        buttonBack.onClick.AddListener(() => Turnning(duration, callback));
+        buttonFront.onClick.AddListener(() =>
+        {
+            onClick?.Invoke();
+            if (!alwaysFrontDisable)
+                Turnning(duration, callback);
+        });
+        buttonBack.onClick.AddListener(() =>
+        {
+            onClick?.Invoke();
+            if (!alwaysBackDisable)
+                Turnning(duration, callback);
+        });
     }
     public virtual void SetFront()
     {
@@ -66,7 +76,6 @@ public class TurningCard : MonoBehaviour
     {
         if (seq != null)
             seq.Kill();
-
         if (_isFront)
             TurnningBack(duration,onCompleted);
         else
@@ -78,7 +87,6 @@ public class TurningCard : MonoBehaviour
         _isFront = false;
         buttonFront.interactable = false;
         buttonBack.interactable = false;
-        onClick?.Invoke();
         seq = DOTween.Sequence();
 
         var frontTween = front.DORotate(new Vector3(0, -90,0), duration / 2f);
@@ -101,7 +109,6 @@ public class TurningCard : MonoBehaviour
         _isFront = true;
         buttonFront.interactable = false;
         buttonBack.interactable = false;
-        onClick?.Invoke();
         seq = DOTween.Sequence();
 
         var frontTween = front.DORotate(new Vector3(0, 0, 0), duration / 2f);
