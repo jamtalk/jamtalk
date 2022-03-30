@@ -62,7 +62,7 @@ public class Charactor113 : MonoBehaviour
     public void Away()
     {
         eventSystem.enabled = false;
-        var tween = rt.DOAnchorPosX(endPosition, 2f);
+        var tween = rt.DOAnchorPosX(endPosition, 4f);
         tween.onComplete += () =>
         {
             anim.Stop();
