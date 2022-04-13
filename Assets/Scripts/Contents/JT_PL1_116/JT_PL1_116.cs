@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL1_116 : BaseContents
 {
+    public EventSystem eventSystem;
+    public AnswerImage116 answerImage;
     public AlphabetButton[] upper;
     public AlphabetButton[] lower;
     public Button[] buttonPlayer;
@@ -54,7 +57,6 @@ public class JT_PL1_116 : BaseContents
     }
     private void PlayWord()
     {
-        Debug.Log(words[currentIndex]);
         var clip = GameManager.Instance.GetClipAct3(words[currentIndex]);
         Debug.Log(clip);
         audioPlayer.Play(clip);
@@ -71,15 +73,22 @@ public class JT_PL1_116 : BaseContents
             {
                 if (selected[0].value == alphabets[currentIndex] &&  selected[1].value == alphabets[currentIndex])
                 {
-                    currentIndex += 1;
-                    if (CheckOver())
+                    var clip = GameManager.Instance.GetClipAct3(words[currentIndex]);
+                    answerImage.Show(GameManager.Instance.GetSpriteWord(words[currentIndex]));
+                    audioPlayer.Play(clip,()=>
                     {
-                        ShowResult();
-                    }
-                    else
-                    {
-                        PlayWord();
-                    }
+                        answerImage.gameObject.SetActive(false);
+                        eventSystem.enabled = true;
+                        currentIndex += 1;
+                        if (CheckOver())
+                        {
+                            ShowResult();
+                        }
+                        else
+                        {
+                            PlayWord();
+                        }
+                    });
                 }
                 else
                 {
