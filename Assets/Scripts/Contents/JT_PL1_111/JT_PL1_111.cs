@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class JT_PL1_111 : MultiAnswerContents<Question111, string>
 {
     protected override int QuestionCount => 2;
+    public GameObject finger;
 
     protected override eContents contents => eContents.JT_PL1_111;
     public TextRocket rocket;
-    public TextButton[] buttons;
+    public TextButton111[] buttons;
     public Button buttonRocket;
 
     protected override void Awake()
@@ -71,12 +72,13 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
         var rt = button.GetComponent<RectTransform>();
         button.onClick += (value) =>
         {
+            PlayWord(value);
             if (currentQuestion.currentCorrect == value)
             {
+                finger.gameObject.SetActive(false);
+
                 for (int i = 0; i < buttons.Length; i++)
                     buttons[i].button.interactable = false;
-
-                PlayCurrentWord();
 
                 var seq = DOTween.Sequence();
 
@@ -111,16 +113,22 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     }
     private void PlayCurrentWord()
     {
-        var clip = GameManager.Instance.GetClipWord(currentQuestion.currentCorrect);
+        PlayWord(currentQuestion.currentCorrect);
+    }
+    private void PlayWord(string word)
+    {
+        var clip = GameManager.Instance.GetClipWord(word);
         audioPlayer.Play(clip);
     }
     private void CallRokect()
     {
+        finger.gameObject.SetActive(false);
         rocket.Call(() =>
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
             PlayCurrentWord();
+            finger.gameObject.SetActive(true);
         });
     }
 }

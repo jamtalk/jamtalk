@@ -14,7 +14,7 @@ public class TextButton : MonoBehaviour
     {
         button.onClick.AddListener(() => onClick?.Invoke(value));
     }
-    public void Init(string value)
+    public virtual void Init(string value)
     {
         this.value = value;
         text.text = value;
