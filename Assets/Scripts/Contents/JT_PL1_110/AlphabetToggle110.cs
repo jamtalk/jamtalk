@@ -11,6 +11,8 @@ public class AlphabetToggle110 : MonoBehaviour
     [SerializeField]
     private Toggle toggle;
     [SerializeField]
+    private Image background;
+    [SerializeField]
     private Image[] images;
     [SerializeField]
     private Dropable110 drop;
@@ -47,6 +49,7 @@ public class AlphabetToggle110 : MonoBehaviour
             images[i].sprite = sprite;
             images[i].preserveAspect = true;
         }
+        background.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonYellow, type, alphabet);
         drag.Init(alphabet, this);
         drop.Init(alphabet, this);
     }
