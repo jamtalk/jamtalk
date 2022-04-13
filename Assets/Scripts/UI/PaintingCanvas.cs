@@ -16,8 +16,9 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
     public AudioSource audioPlayer;
 
     [Header("Brush")]
-    [Range(1,512)]
-    public int brushSize;
+    //[Range(1, 512)]
+    //public int brushSize;
+    public Texture2D brushTexture;
     public Color brushColor;
     public RectTransform rectTransfrom => GetComponent<RectTransform>();
     public Texture2D texture
@@ -39,7 +40,6 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
         }
         set
         {
-            Debug.Log("??");
             var texture = new Texture2D(value.width, value.height);
             for (int i = 0; i < texture.width; i++)
                 for (int j = 0; j < texture.height; j++)
@@ -88,19 +88,39 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
         var width = (int)rectTransfrom.sizeDelta.x;
         var hegiht = (int)rectTransfrom.sizeDelta.y;
         bool isPainted = false;
-        for (int i = x - brushSize; i<=x+brushSize; i++)
+        //var brushSize = 100;
+        //for (int i = x - brushSize / 2; i <= x + brushSize / 2; i++)
+        //{
+        //    if (i < 0 || i > width)
+        //        continue;
+        //    for (int j = y - brushSize / 2; j <= y + brushSize / 2; j++)
+        //    {
+        //        if (j < 0 || j > hegiht)
+        //            continue;
+
+        //        texture.SetPixel(i, j, brushColor);
+        //        isPainted = true;
+        //    }
+        //}
+        for (int i = 0; i < brushTexture.width; i++)
         {
-            if (i < 0 || i > width)
+            var posX = x - brushTexture.width / 2 + i;
+            if (posX < 0 || posX > width)
                 continue;
-            for(int j=  y-brushSize; j <= y+brushSize; j++)
+            for (int j = 0; j < brushTexture.height; j++)
             {
-                if (j < 0 || j > hegiht)
+                var posY = y - brushTexture.height / 2 + j;
+                if (posY < 0 || posY > hegiht)
                     continue;
 
-                texture.SetPixel(i, j, brushColor);
+                if (brushTexture.GetPixel(i, j).a < 0.1f)
+                    continue;
+
+                texture.SetPixel(posX, posY, brushColor);
                 isPainted = true;
             }
         }
+
         if (isPainted)
         {
             texture.Apply();
