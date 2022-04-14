@@ -29,6 +29,7 @@ public class BingoButton : MonoBehaviour
     {
         this.value = value;
         isOn = false;
+        button.interactable = true;
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(style, eAlphbetType.Upper, value);
         imageStamp.gameObject.SetActive(false);
         imageAlphabet.gameObject.SetActive(true);
@@ -41,6 +42,7 @@ public class BingoButton : MonoBehaviour
         Debug.LogFormat("{0} : {1}",name,controller == null);
         if (controller.currentQuestion == value)
         {
+            button.interactable = false;
             Stamping(() => onClick?.Invoke(value));
         }
         else

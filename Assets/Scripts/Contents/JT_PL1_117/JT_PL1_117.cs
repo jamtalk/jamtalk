@@ -7,14 +7,14 @@ public class JT_PL1_117 : BaseContents
 {
     public BingoBoard board;
     public BingoScoreBoard scoreBoard;
-    public int BingoCount=>3;
+    public int BingoCount=>1;
     public AudioSinglePlayer audioPlayer;
     //¹®Á¦
     public int currentIndex = 0;
     public eAlphabet[] questions;
     public eAlphabet currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_117;
-    protected override bool CheckOver() => board.GetBingoCount() >= BingoCount || questions.Length==currentIndex;
+    protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
     protected override int GetTotalScore() => BingoCount;
     protected override void Awake()
     {
