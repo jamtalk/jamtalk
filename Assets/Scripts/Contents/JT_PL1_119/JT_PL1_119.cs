@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL1_119 : SingleAnswerContents<Question119, string>
 {
+    public EventSystem eventSystem;
     public ButtonExitnction[] buttons;
-    public Image imageAlphabet;
-    public Button buttonSound;
+    public Image imageAlphabetUpper;
+    public Image imageAlphabetLower;
+    public Button[] buttonSound;
+    public GameObject finger;
     protected override int QuestionCount => 5;
 
     protected override eContents contents => eContents.JT_PL1_119;
@@ -17,21 +21,33 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
         base.Awake();
         for(int i = 0;i < buttons.Length; i++)
             AddButtonListener(buttons[i]);
-        buttonSound.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet)));
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet));
+        for(int i = 0;i < buttonSound.Length; i++)
+            buttonSound[i].onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet)));
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet),()=> finger.SetActive(true));
     }
     private void AddButtonListener(ButtonExitnction button)
     {
         button.onClick += (value) =>
         {
+            eventSystem.enabled = false;
+            finger.gameObject.SetActive(false);
             if (currentQuestion.correct == value)
-            {
                 button.Exitnction();
-                audioPlayer.Play(GameManager.Instance.GetClipWord(value), () =>
+            else
+                button.Incorrect();
+            audioPlayer.Play(GameManager.Instance.GetClipWord(value), () =>
+            {
+                eventSystem.enabled = true;
+                if (currentQuestion.correct == value)
                 {
+                    button.Exitnction();
                     AddAnswer(value);
-                });
-            }
+                }
+                else
+                {
+                    finger.gameObject.SetActive(true);
+                }
+            });
         };
     }
 
@@ -56,7 +72,9 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
 
     protected override void ShowQuestion(Question119 question)
     {
-        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Yellow, eAlphbetType.Upper, question.correct);
+        finger.SetActive(true);
+        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Yellow, eAlphbetType.Upper, question.correct);
+        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Yellow, eAlphbetType.Lower, question.correct);
         var questions = question.RandomQuestions;
         for(int i = 0;i < buttons.Length; i++)
         {
