@@ -9,6 +9,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
 {
     public DropSapceShip_114 ship;
     public DragObject_114[] drags;
+    public GameObject finger;
     protected override int QuestionCount => 4;
 
     protected override eContents contents => eContents.JT_PL1_114;
@@ -23,7 +24,18 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
         };
         for(int i = 0; i< drags.Length; i++)
         {
-            drags[i].onDrop += () => SetIntractable(false);
+            drags[i].onDrop += () =>
+            {
+                SetIntractable(false);
+            };
+            drags[i].onDrag += () =>
+            {
+                finger.gameObject.SetActive(false);
+            };
+            drags[i].onAnswer += (correct) =>
+            {
+                finger.gameObject.SetActive(!correct);
+            };
         }
     }
     protected override List<Question114> MakeQuestion()
@@ -54,7 +66,11 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
     protected override void ShowQuestion(Question114 question)
     {
         ship.SetInner();
-        ship.OutObject(question.alphabet, () => SetIntractable(true));
+        ship.OutObject(question.alphabet, () =>
+        {
+            finger.gameObject.SetActive(true);
+            SetIntractable(true);
+        });
         var questions = question.questions.Union(new string[] { question.correct })
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .ToArray();

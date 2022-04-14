@@ -16,7 +16,7 @@ public class DropSapceShip_114 : MonoBehaviour
     public eAlphabet alphabet;
     public void Awake()
     {
-        button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetClipAlphbet(alphabet)));
+        button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetClipAct2(alphabet)));
     }
     public void SetInner()
     {
@@ -38,7 +38,7 @@ public class DropSapceShip_114 : MonoBehaviour
         var tween = rtObject.DOAnchorPosY(0, duration);
         tween.onComplete += () =>
         {
-            alphbetPlayer.Play(GameManager.Instance.GetClipAlphbet(alphabet), onCompleted);
+            alphbetPlayer.Play(GameManager.Instance.GetClipAct2(alphabet), onCompleted);
         };
     }
     public void InObject(Sprite sprite)

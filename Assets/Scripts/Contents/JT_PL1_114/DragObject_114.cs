@@ -13,6 +13,8 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     public Button button;
     public RectTransform rt => GetComponent<RectTransform>();
     public event Action onDrop;
+    public event Action<bool> onAnswer;
+    public event Action onDrag;
     public bool intracable;
     public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), image.sprite.name.First().ToString().ToUpper());
     private void Awake()
@@ -30,6 +32,7 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
         if (!intracable)
             return;
         rt.position = eventData.position;
+        onDrag?.Invoke();
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -44,12 +47,14 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
         if(components.Count()>0)
         {
             var component = components.First();
-            if(component.alphabet == alphabet)
+            var correct = component.alphabet == alphabet;
+            if (correct)
             {
                 gameObject.SetActive(false);
                 onDrop?.Invoke();
                 component.InObject(image.sprite);
             }
+            onAnswer?.Invoke(correct);
         }
 
         rt.anchoredPosition = Vector2.zero;
