@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class JT_PL1_109 : BaseContents
 {
-    public ImageButton[] buttonsQuestion;
+    private int questionCount => 4;
     public AlphabetDragToggle109[] toggles;
     public AudioSinglePlayer audioPlayer;
     public AudioSinglePlayer alphabetPlayer;
     private Question109[] questions;
     private int currentIndex = 0;
     public Image[] correct;
+    public ImageButton questionButton;
     private Question109 currentQuestion => questions[currentIndex];
-    private ImageButton currentButton => buttonsQuestion[currentIndex];
 
     protected override eContents contents => eContents.JT_PL1_109;
 
@@ -22,26 +22,20 @@ public class JT_PL1_109 : BaseContents
     protected override int GetTotalScore() => questions.Length;
     protected override void Awake()
     {
+        var max = GameManager.Instance.GetWords().OrderByDescending(x => x.Length).First();
         base.Awake();
         var words = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(buttonsQuestion.Length)
+            .Take(questionCount)
             .ToArray();
 
         questions = words.Select(x => new Question109(x)).ToArray();
-
-        for(int i = 0;i < buttonsQuestion.Length; i++)
-        {
-            var word = questions[i].word;
-            buttonsQuestion[i].name = word;
-            buttonsQuestion[i].SetSprite(GameManager.Instance.GetSpriteWord(word));
-            AddQuestionButtonListener(buttonsQuestion[i], i);
-        }
 
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].onEndDrag += OnEndDrag;
 
         ShowQuestion();
+        questionButton.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.word)));
     }
     private void ShowQuestion()
     {
@@ -51,13 +45,12 @@ public class JT_PL1_109 : BaseContents
         alphabetPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.word));
         for(int i = 0;i < correct.Length; i++)
         {
-            Debug.LogFormat("{0}/{1}", i, word.Length);
             if (word.Length > i)
             {
-                var type = eAlphbetType.Lower;
+                var type = i > 0 ? eAlphbetType.Lower : eAlphbetType.Upper;
                 var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word[i].ToString().ToUpper());
                 correct[i].gameObject.SetActive(true);
-                correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonYellow, type, eAlphabet);
+                correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, type, eAlphabet);
                 correct[i].preserveAspect = true;
             }
             else
@@ -65,14 +58,7 @@ public class JT_PL1_109 : BaseContents
                 correct[i].gameObject.SetActive(false);
             }
         }
-    }
-    private void AddQuestionButtonListener(ImageButton button, int index)
-    {
-        button.button.onClick.AddListener(() =>
-        {
-            currentIndex = index;
-            ShowQuestion();
-        });
+        questionButton.image.sprite = GameManager.Instance.GetSpriteWord(word);
     }
     private void OnEndDrag()
     {
@@ -99,7 +85,6 @@ public class JT_PL1_109 : BaseContents
             }
             if (result)
             {
-                currentButton.button.interactable = false;
                 currentQuestion.isCompleted = true;
                 if (CheckOver())
                 {
@@ -128,10 +113,8 @@ public class JT_PL1_109 : BaseContents
 }
 public class Question109
 {
-    private int width=>7;
+    private int width=>11;
     private int height=>5;
-
-
     public eAlphabet[] alphabets;
     public string word;
     public bool isCompleted;
@@ -146,7 +129,6 @@ public class Question109
         var incorrects = GameManager.Instance.alphabets
             .Where(x => !wordAlphabets.Contains(x))
             .ToArray();
-        Debug.LogFormat("단어 : {0}({1})\n{2}\n({3})", word, word.Length, string.Join(", ", incorrects), incorrects.Length);
 
         var alphabetList = new List<eAlphabet>();
         for(int i = 0;i < width*height; i++)
@@ -162,21 +144,55 @@ public class Question109
         alphabets = alphabetList
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
-
-        var correctPosition = GetVaildPositions(word.Length)
-            .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-
-        for(int i = 0;i < wordAlphabets.Length; i++)
+        var vaildPos = new List<int[]>();
+        //세로 정답지 추가
+        if (word.Length < height)
         {
-            var pos = GetIndex(correctPosition);
-            Debug.LogFormat("{0} : {1}", correctPosition, pos);
-            alphabets[pos] = wordAlphabets[i];
-            if (correctPosition.x + 1 < width)
-                correctPosition.x += 1;
-            else
-                correctPosition.y += 1;
+            for(int i = 0;i < width; i++)
+            {
+                for(int j= 0; j < height-word.Length; j++)
+                {
+                    var tmp = new List<int>();
+                    for(int k = 0; k < word.Length; k++)
+                    {
+                        tmp.Add(GetIndex(new Vector2(i, j + k)));
+                    }
+                    vaildPos.Add(tmp.ToArray());
+                }
+            }
         }
+        //가로 정답지 추가
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width - word.Length; j++)
+            {
+                var tmp = new List<int>();
+                for (int k = 0; k < word.Length; k++)
+                {
+                    tmp.Add(GetIndex(new Vector2(j + k, i)));
+                }
+                vaildPos.Add(tmp.ToArray());
+            }
+        }
+        var selectPos = vaildPos
+            .OrderByDescending(x => Random.Range(0f, 100f))
+            .First();
+        for(int i = 0;i < selectPos.Length; i++)
+            alphabets[selectPos[i]] = wordAlphabets[i];
+
+        //var correctPosition = GetVaildPositions(word.Length)
+        //    .OrderBy(x => Random.Range(0f, 100f))
+        //    .First();
+
+        //for (int i = 0; i < wordAlphabets.Length; i++)
+        //{
+        //    var pos = GetIndex(correctPosition);
+        //    alphabets[pos] = wordAlphabets[i];
+        //    if (correctPosition.x + 1 < width)
+        //        correctPosition.x += 1;
+        //    else
+        //        correctPosition.y += 1;
+        //}
     }
     private int GetIndex(Vector2 pos) => (int)pos.y * width + (int)pos.x;
     private int GetMax(int x, int y)
