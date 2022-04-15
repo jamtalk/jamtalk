@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
+    public DropKnobPoint107 pointKnob;
     public CanvasScaler scaler;
     public bool isConnected = false;
     public bool intractable = true;
@@ -20,6 +21,11 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Action<string> onClick;
     public event Action onDrop;
     public string currentValue { get; private set; }
+    private void Awake()
+    {
+        pointKnob.onDrag += OnDrag;
+        pointKnob.onEndDrag += OnEndDrag;
+    }
     public void Init(string value)
     {
         currentValue = value;
@@ -46,6 +52,13 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
         caster.Raycast(eventData, results);
         var drop = results
             .Select(x => x.gameObject.GetComponent<DragKnob_107>())
+            .Union(results.Select(x => {
+                var point = x.gameObject.GetComponent<DragKnobPoint107>();
+                if (point != null)
+                    return point.Parent;
+                else
+                    return null;
+            }))
             .Where(x => x != null)
             .Where(x => x.currentValue == currentValue)
             .ToList();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL1_107 : BaseContents
@@ -58,3 +59,4 @@ public class JT_PL1_107 : BaseContents
         audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), base.ShowResult);
     }
 }
+

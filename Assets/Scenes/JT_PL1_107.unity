@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 1693914998}
   scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 529222806}
@@ -313,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e89964eef1955f41a661226eb1abe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 198664901}
   scaler: {fileID: 1580109401}
   isConnected: 0
   intractable: 1
@@ -528,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e89964eef1955f41a661226eb1abe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 1366936101}
   scaler: {fileID: 1580109401}
   isConnected: 0
   intractable: 1
@@ -800,6 +803,7 @@ GameObject:
   - component: {fileID: 198664898}
   - component: {fileID: 198664900}
   - component: {fileID: 198664899}
+  - component: {fileID: 198664901}
   m_Layer: 5
   m_Name: Point
   m_TagString: Untagged
@@ -865,6 +869,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198664897}
   m_CullTransparentMesh: 1
+--- !u!114 &198664901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198664897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12e15fc2d8cd95438a7f8c4c89f4403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 39031940}
 --- !u!1 &209761688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e89964eef1955f41a661226eb1abe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 812340981}
   scaler: {fileID: 1580109401}
   isConnected: 0
   intractable: 1
@@ -2290,6 +2308,7 @@ GameObject:
   - component: {fileID: 749735842}
   - component: {fileID: 749735844}
   - component: {fileID: 749735843}
+  - component: {fileID: 749735845}
   m_Layer: 5
   m_Name: Knob
   m_TagString: Untagged
@@ -2354,6 +2373,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749735841}
   m_CullTransparentMesh: 1
+--- !u!114 &749735845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749735841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b850032f5188a15429da0527638a2ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 1236135183}
 --- !u!1 &756106153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e89964eef1955f41a661226eb1abe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 1809951332}
   scaler: {fileID: 1580109401}
   isConnected: 0
   intractable: 1
@@ -2508,6 +2541,7 @@ GameObject:
   - component: {fileID: 812340978}
   - component: {fileID: 812340980}
   - component: {fileID: 812340979}
+  - component: {fileID: 812340981}
   m_Layer: 5
   m_Name: Point
   m_TagString: Untagged
@@ -2573,6 +2607,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812340977}
   m_CullTransparentMesh: 1
+--- !u!114 &812340981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812340977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12e15fc2d8cd95438a7f8c4c89f4403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 306352728}
 --- !u!1 &840931509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,6 +2826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 1282724601}
   scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1971774193}
@@ -3677,6 +3725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 749735845}
   scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1075671116}
@@ -3847,6 +3896,7 @@ GameObject:
   - component: {fileID: 1282724598}
   - component: {fileID: 1282724600}
   - component: {fileID: 1282724599}
+  - component: {fileID: 1282724601}
   m_Layer: 5
   m_Name: Knob
   m_TagString: Untagged
@@ -3911,6 +3961,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282724597}
   m_CullTransparentMesh: 1
+--- !u!114 &1282724601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282724597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b850032f5188a15429da0527638a2ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 953046655}
 --- !u!1 &1308406806
 GameObject:
   m_ObjectHideFlags: 0
@@ -3963,6 +4026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4cb38473091e43b90776b3f43d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointKnob: {fileID: 1936017132}
   scaler: {fileID: 1580109401}
   caster: {fileID: 1580109400}
   image: {fileID: 1493673519}
@@ -4177,6 +4241,7 @@ GameObject:
   - component: {fileID: 1366936098}
   - component: {fileID: 1366936100}
   - component: {fileID: 1366936099}
+  - component: {fileID: 1366936101}
   m_Layer: 5
   m_Name: Point
   m_TagString: Untagged
@@ -4242,6 +4307,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366936097}
   m_CullTransparentMesh: 1
+--- !u!114 &1366936101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366936097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12e15fc2d8cd95438a7f8c4c89f4403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 110947850}
 --- !u!1 &1390565929
 GameObject:
   m_ObjectHideFlags: 0
@@ -4755,6 +4833,7 @@ GameObject:
   - component: {fileID: 1693914995}
   - component: {fileID: 1693914997}
   - component: {fileID: 1693914996}
+  - component: {fileID: 1693914998}
   m_Layer: 5
   m_Name: Knob
   m_TagString: Untagged
@@ -4819,6 +4898,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693914994}
   m_CullTransparentMesh: 1
+--- !u!114 &1693914998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693914994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b850032f5188a15429da0527638a2ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 26478241}
 --- !u!1 &1809951328
 GameObject:
   m_ObjectHideFlags: 0
@@ -4830,6 +4922,7 @@ GameObject:
   - component: {fileID: 1809951329}
   - component: {fileID: 1809951331}
   - component: {fileID: 1809951330}
+  - component: {fileID: 1809951332}
   m_Layer: 5
   m_Name: Point
   m_TagString: Untagged
@@ -4895,6 +4988,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809951328}
   m_CullTransparentMesh: 1
+--- !u!114 &1809951332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809951328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12e15fc2d8cd95438a7f8c4c89f4403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 756106156}
 --- !u!1 &1832925391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,6 +5247,7 @@ GameObject:
   - component: {fileID: 1936017129}
   - component: {fileID: 1936017131}
   - component: {fileID: 1936017130}
+  - component: {fileID: 1936017132}
   m_Layer: 5
   m_Name: Knob
   m_TagString: Untagged
@@ -5205,6 +5312,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936017128}
   m_CullTransparentMesh: 1
+--- !u!114 &1936017132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936017128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b850032f5188a15429da0527638a2ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 1308406808}
 --- !u!1 &1971774191
 GameObject:
   m_ObjectHideFlags: 0

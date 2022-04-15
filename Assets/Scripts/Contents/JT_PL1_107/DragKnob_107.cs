@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+    public DragKnobPoint107 pointKnob;
     public CanvasScaler scaler;
     public GraphicRaycaster caster;
     public Image image;
@@ -18,6 +19,11 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
     public event Action onDrop;
     public bool intractable = true;
     public bool isConnected = false;
+    private void Awake()
+    {
+        pointKnob.onDrag += OnDrag;
+        pointKnob.onEndDrag += OnEndDrag;
+    }
     public void Init(string value)
     {
         intractable = true;
@@ -40,6 +46,13 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
         caster.Raycast(eventData, results);
         var drop = results
             .Select(x => x.gameObject.GetComponent<DropSpaceShip_107>())
+            .Union(results.Select(x => {
+                var point = x.gameObject.GetComponent<DropKnobPoint107>();
+                if (point != null)
+                    return point.Parent;
+                else
+                    return null;
+            }))
             .Where(x => x != null)
             .Where(x => x.currentValue == currentValue)
             .ToList();
