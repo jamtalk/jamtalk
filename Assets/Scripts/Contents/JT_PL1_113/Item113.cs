@@ -5,19 +5,29 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Linq;
-
-public class Item113 : MonoBehaviour, IDragHandler, IEndDragHandler
+using System;
+using Random = UnityEngine.Random;
+public class Item113 : MonoBehaviour
 {
+    public Button button => GetComponent<Button>();
     private bool intractable=true;
     public GraphicRaycaster caster;
     private RectTransform rt => GetComponent<RectTransform>();
     public Image product;
     public Text textValue;
-    public event System.Action onThrowing; 
-    public event System.Action onThrowed;
+    public event Action<Item113> onClick;
     public eAlphabet value { get; private set; }
+    private void Awake()
+    {
+        button.onClick.AddListener(() =>
+        {
+            onClick?.Invoke(this);
+        });
+    }
     public void Init(eAlphabet? value, Sprite product)
     {
+        onClick = null;
+        button.interactable = value != null;
         ResetPosition();
         gameObject.SetActive(true);
         this.product.sprite = product;
@@ -34,14 +44,6 @@ public class Item113 : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             textValue.text = string.Empty;
         }
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (!intractable)
-            return;
-
-        rt.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -88,10 +90,10 @@ public class Item113 : MonoBehaviour, IDragHandler, IEndDragHandler
         var scaleTween = rt.DOScale(0, duration);
         seq.Insert(0, scaleTween);
 
-        seq.onComplete += ResetPosition;
-        seq.onComplete += () => onThrowed?.Invoke();
-        seq.Play();
-        onThrowing?.Invoke();
+        //seq.onComplete += ResetPosition;
+        //seq.onComplete += () => onThrowed?.Invoke();
+        //seq.Play();
+        //onThrowing?.Invoke();
     }
     public void ResetPosition()
     {

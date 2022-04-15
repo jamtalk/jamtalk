@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Charactor113 : MonoBehaviour
 {
+    public GameObject finger;
     public EventSystem eventSystem;
     public eCharactorDirection direction;
     public Button button => GetComponent<Button>();
@@ -44,6 +45,7 @@ public class Charactor113 : MonoBehaviour
     }
     public void Call()
     {
+        finger.SetActive(false);
         product.gameObject.SetActive(false);
         eventSystem.enabled = false;
         SetStartPosition();
@@ -55,12 +57,15 @@ public class Charactor113 : MonoBehaviour
             movePlayer.Stop();
             clapPlayer.Play(GameManager.Instance.GetClipPhanics(value));
             eventSystem.enabled = true;
+
+            finger.SetActive(true);
         };
         movePlayer.Play();
         tween.Play();
     }
     public void Away()
     {
+        finger.SetActive(false);
         eventSystem.enabled = false;
         var tween = rt.DOAnchorPosX(endPosition, 4f);
         tween.onComplete += () =>
