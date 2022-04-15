@@ -9,7 +9,7 @@ using UnityEngine;
 public class VoiceRecorder : MonoBehaviour
 {
     public AudioSource source => GetComponent<AudioSource>();
-    public string deviceName;
+    private string deviceName;
     public AudioClip clip
     {
         get => source.clip;
