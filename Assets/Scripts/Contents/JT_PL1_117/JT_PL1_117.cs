@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class JT_PL1_117 : BaseContents
 {
     public BingoBoard board;
     public BingoScoreBoard scoreBoard;
     public int BingoCount=>1;
+    public RectTransform bingo;
     public AudioSinglePlayer audioPlayer;
     //¹®Á¦
     public int currentIndex = 0;
@@ -40,6 +42,16 @@ public class JT_PL1_117 : BaseContents
             return eGameResult.Greate;
         else
             return eGameResult.Perfect;
+    }
+    protected override void ShowResult()
+    {
+        bingo.gameObject.SetActive(true);
+        
+        var tween = bingo.DOScale(1.5f, .5f);
+        tween.SetEase(Ease.Linear);
+        tween.SetLoops(2, LoopType.Yoyo);
+        tween.onComplete += () => base.ShowResult();
+        tween.Play();
     }
     public void OnClick(eAlphabet value)
     {
