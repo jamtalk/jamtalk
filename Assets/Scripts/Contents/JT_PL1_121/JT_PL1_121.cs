@@ -9,9 +9,15 @@ using UnityEngine.UI;
 public class JT_PL1_121 : BaseContents
 {
     public RectTransform sentanceParent;
-    public GameObject baseWord;
-    public List<SiteWord121> elements = new List<SiteWord121>();
-    public Sprite[] siteWords;
+    public RectTransform throwingParent;
+    public GameObject prefabWordElement;
+    public GameObject prefabDragWordElement;
+    public List<WordElement121> elements = new List<WordElement121>();
+    private List<DragWordElement121> throwingElements = new List<DragWordElement121>();
+    private List<WordElement121> UnionElements => elements.Union(
+        throwingElements.Select(x => x.GetComponent<WordElement121>()))
+        .ToList();
+
     public UIThrower110 thrower;
     private int index = 0;
     [SerializeField]
@@ -34,10 +40,9 @@ public class JT_PL1_121 : BaseContents
             .Take(questionCount)
             .ToArray();
         index = 0;
-        Init(currentSentance);
-        Debug.Log(GameManager.Instance.GetSentances().Select(x => x.Split(' ').Length).Max());
+        StartCoroutine(Init(currentSentance));
     }
-    private void Init(string sentance)
+    private IEnumerator Init(string sentance)
     {
         Clear();
         elements.Clear();
@@ -45,21 +50,58 @@ public class JT_PL1_121 : BaseContents
         var list = new List<RectTransform>();
         for(int i = 0;i < words.Length; i++)
         {
-            var sprite = siteWords.ToList().Find(x => x.name.ToLower() == words[i].ToLower());
-            var component = Instantiate(baseWord, sentanceParent).GetComponent<SiteWord121>();
-            component.onCorrect += OnCorrect;
-            component.Init(sprite==null? siteWords[0]:sprite);
-            elements.Add(component);
-            list.Add(component.throwingElement);
+            var element = Instantiate(prefabWordElement, sentanceParent).GetComponent<WordElement121>();
+            element.Init(words[i]);
+            element.visible = false;
+            elements.Add(element);
         }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(sentanceParent);
+        for(int i = 0;i < elements.Count; i++)
+        {
+            var element = Instantiate(prefabDragWordElement, throwingParent).GetComponent<DragWordElement121>();
+            element.Init(elements[i].value);
+            element.visible = true;
+            throwingElements.Add(element);
+            list.Add(element.GetComponent<RectTransform>());
+            element.onDrop += OnDrop;
+        }
+        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < UnionElements.Count; i++)
+            UnionElements[i].SetSize();
+        for(int i = 0;i < elements.Count; i++)
+        {
+            var size = throwingElements[i].GetComponent<RectTransform>().sizeDelta;
+            size.y = elements[i].GetComponent<RectTransform>().sizeDelta.y;
+            throwingElements[i].GetComponent<RectTransform>().sizeDelta = size;
+            throwingElements[i].transform.position = elements[i].transform.position;
+        }
+        yield return new WaitForEndOfFrame();
+        throwingParent.GetComponent<HorizontalLayoutGroup>().enabled = false;
         thrower.Init(list.ToArray());
         eventSystem.enabled = false;
         thrower.Throwing(delay:3f,rotating:false,onTrowed:()=>
         {
             eventSystem.enabled = true;
+            for (int i = 0; i < throwingElements.Count; i++)
+                throwingElements[i].SetDefaultPosition();
         });
     }
+
+    private void OnDrop(WordElement121 target)
+    {
+        target.visible = true;
+        if (!elements.Select(x => x.visible).Contains(false))
+        {
+            index += 1;
+            audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect(), () =>
+            {
+                if (CheckOver())
+                    ShowResult();
+                else
+                    StartCoroutine(Init(currentSentance));
+            });
+        }
+    }
+
     private void Clear()
     {
         var targets = new List<GameObject>();
@@ -68,19 +110,6 @@ public class JT_PL1_121 : BaseContents
         for (int i = 0; i < targets.Count; i++)
             Destroy(targets[i]);
         targets.Clear();
-    }
-    private void OnCorrect(string word)
-    {
-        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-        {
-            if (!elements.Select(x => x.isCorrect).Contains(false))
-            {
-                index += 1;
-                if (CheckOver())
-                    ShowResult();
-                else
-                    Init(currentSentance);
-            }
-        });
+        throwingParent.GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 }

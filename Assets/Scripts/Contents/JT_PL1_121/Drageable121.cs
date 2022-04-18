@@ -30,22 +30,22 @@ public class Drageable121 : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        var caster = FindObjectOfType<GraphicRaycaster>();
-        var result = new List<RaycastResult>();
-        caster.Raycast(eventData, result);
-        var components = result
-            .Select(x => x.gameObject.GetComponent<SiteWord121>())
-            .Where(x=>x!=null);
-        if (components.Count() > 0)
-        {
-            var target = components.First();
-            if (target.GetInstanceID() == value)
-                CorrectPosition();
-            else
-                IncorrectPosition();
-        }
-        else
-            IncorrectPosition();
+        //var caster = FindObjectOfType<GraphicRaycaster>();
+        //var result = new List<RaycastResult>();
+        //caster.Raycast(eventData, result);
+        //var components = result
+        //    .Select(x => x.gameObject.GetComponent<SiteWord121>())
+        //    .Where(x=>x!=null);
+        //if (components.Count() > 0)
+        //{
+        //    var target = components.First();
+        //    if (target.GetInstanceID() == value)
+        //        CorrectPosition();
+        //    else
+        //        IncorrectPosition();
+        //}
+        //else
+        //    IncorrectPosition();
     }
 
     private void CorrectPosition()

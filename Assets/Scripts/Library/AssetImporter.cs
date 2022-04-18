@@ -188,8 +188,8 @@ public class AssetImporter : ScriptableObject
         //    var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), item[0]);
         //    if (!tmpDic.ContainsKey(alphabet))
         //        tmpDic.Add(alphabet, new List<string>());
-        //    var value = item[1].Split(' ').Select(x => Regex.Replace(x, @"[^a-zA-Z0-9가-힣]", "", RegexOptions.Singleline)).ToList();
-        //    tmpDic[alphabet].Add(string.Join(" ",value));
+        //    var value = item[1].Split(' ').ToList();
+        //    tmpDic[alphabet].Add(string.Join(" ", value));
         //}
         //sentances.Clear();
         //foreach (var item in tmpDic)
