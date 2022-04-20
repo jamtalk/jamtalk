@@ -111,12 +111,12 @@ private void SetContext()
 }
 public class STTResult
 {
-    public bool Successed;
-    public string value;
-
-    public STTResult(bool successed, string value)
+    public class STTMessage
     {
-        Successed = successed;
-        this.value = value;
+        public string message;
+        public int status;
     }
+    public bool IsSuccessed => commonMsg.message == "Success";
+    public STTMessage commonMsg;
+    public string result;
 }

@@ -12,6 +12,7 @@ public class JT_PL1_105 : BaseContents
     public AudioSinglePlayer audioPlayer;
     public Button[] buttonAudio;
     public STTButton buttonSTT;
+    public Text value;
     private Tween buttonTween;
 
     private int questionCount => 4;
@@ -34,17 +35,11 @@ public class JT_PL1_105 : BaseContents
         for (int i = 0; i < buttonAudio.Length; i++)
             buttonAudio[i].onClick.AddListener(() =>
             {
-                if (buttonTween != null)
-                {
-                    buttonTween.Kill();
-                    buttonTween = null;
-                }
                 audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion), PlayButtonTween);
             });
-
-        STTManager.Instance.onResult += OnSTTResult;
-        STTManager.Instance.onError += OnSTTError;
-
+        
+        buttonSTT.onSTT += OnSTTResult;
+        buttonSTT.onRecord += STTButtonAnimating;
         ShowQuestion();
     }
 
@@ -63,13 +58,8 @@ public class JT_PL1_105 : BaseContents
     }
     private void OnDisable()
     {
-        STTManager.Instance.onResult -= OnSTTResult;
-        STTManager.Instance.onError -= OnSTTError;
-        STTManager.Instance.onStarted += OnSTTStarted;
-    }
-    private void OnSTTStarted()
-    {
-        audioPlayer.Stop();
+        buttonSTT.onSTT -= OnSTTResult;
+        buttonSTT.onRecord -= STTButtonAnimating;
     }
     private void ShowQuestion()
     {
@@ -86,7 +76,8 @@ public class JT_PL1_105 : BaseContents
     }
     private void OnSTTResult(string result)
     {
-        if(currentQuestion.ToLower() == result.ToLower())
+        value.text = result;
+        if (currentQuestion.ToLower() == result.ToLower())
         {
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
             {
@@ -97,6 +88,16 @@ public class JT_PL1_105 : BaseContents
                     ShowQuestion();
             });
         }
+    }
+    private void STTButtonAnimating(bool activate)
+    {
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+        if (!activate)
+            PlayButtonTween();
     }
     private void OnSTTError(string message)
     {

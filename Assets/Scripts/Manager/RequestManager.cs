@@ -33,6 +33,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
     {
         using (UnityWebRequest www = UnityWebRequest.Post(url, param.GetForm()))
         {
+            //www.SetRequestHeader("Content-Type", "multipart/form-data; boundary=<calculated when request is sent>");
             yield return www.SendWebRequest();
             object data = null;
             bool success = true;

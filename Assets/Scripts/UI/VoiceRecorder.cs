@@ -8,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class VoiceRecorder : MonoBehaviour
 {
+    public event Action<bool, string> onSTT;
+    public bool isRecording { get; private set; } = false;
     public AudioSource source => GetComponent<AudioSource>();
     private string deviceName;
     public AudioClip clip
@@ -25,7 +27,7 @@ public class VoiceRecorder : MonoBehaviour
         {
             Debug.Log("녹음 시작");
             deviceName = Microphone.devices[0];
-            source.clip = Microphone.Start(deviceName, false, 5, 44100);
+            source.clip = Microphone.Start(deviceName, false, 5, 8000);
             source.Play();
         }
     }
@@ -36,8 +38,10 @@ public class VoiceRecorder : MonoBehaviour
         Microphone.End(deviceName);
         var param = new STTParam(clip);
         RequestManager.Instance.RequestSTT(param, (response) =>
-         {
-         });
+        {
+            var result = response.GetResult<STTResult>();
+            onSTT?.Invoke(result.IsSuccessed, result.result);
+        });
     }
     public void Play()
     {

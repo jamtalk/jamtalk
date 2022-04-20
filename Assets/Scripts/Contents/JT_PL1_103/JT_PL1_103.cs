@@ -10,7 +10,7 @@ public class JT_PL1_103 : BaseContents
     public Button button;
     public AudioSinglePlayer audioPlayer;
     public STTButton buttonSTT;
-
+    public Text valueText;
     private Tween buttonTween;
 
     protected override eContents contents => eContents.JT_PL1_105;
@@ -25,26 +25,30 @@ public class JT_PL1_103 : BaseContents
         button.onClick.AddListener(PlayAudio);
         image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, eAlphbetType.Upper, question);
         image.preserveAspect = true;
+        buttonSTT.onRecord += PlayButtonTween;
+        buttonSTT.onSTT += OnSTTResult;
         PlayAudio();
     }
     private void OnDisable()
     {
-        STTManager.Instance.onResult -= OnSTTResult;
-        STTManager.Instance.onError -= OnSTTError;
-        STTManager.Instance.onStarted += OnSTTStarted;
+        buttonSTT.onRecord -= PlayButtonTween;
+        buttonSTT.onSTT -= OnSTTResult;
     }
-    private void PlayButtonTween()
+    private void PlayButtonTween(bool activate)
     {
         if(buttonTween != null)
         {
             buttonTween.Kill();
             buttonTween = null;
         }
-        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
-        buttonTween.SetEase(Ease.Linear);
-        buttonTween.SetLoops(-1,LoopType.Yoyo);
-        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
-        buttonTween.Play();
+        if (!activate)
+        {
+            buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+            buttonTween.SetEase(Ease.Linear);
+            buttonTween.SetLoops(-1, LoopType.Yoyo);
+            buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+            buttonTween.Play();
+        }
     }
     private void OnSTTStarted()
     {
@@ -62,11 +66,12 @@ public class JT_PL1_103 : BaseContents
             buttonTween.Kill();
             buttonTween = null;
         }
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(question),PlayButtonTween);
+        audioPlayer.Play(GameManager.Instance.GetClipPhanics(question),()=>PlayButtonTween(false));
     }
     
     private void OnSTTResult(string result)
     {
+        valueText.text = result;
         if (question.ToString().ToLower() == result.ToLower())
             audioPlayer.Play(1f, GameManager.Instance.GetClipAct2(question), ShowResult);
     }
