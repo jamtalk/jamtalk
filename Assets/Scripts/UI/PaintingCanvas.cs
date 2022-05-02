@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBeginDragHandler
+public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPointerDownHandler
 {
     public bool resetOnAwake;
     public bool intractable;
@@ -74,35 +74,48 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
             return;
         if (lastPos != Vector2.zero)
         {
+
             var mousePos = eventData.position;
-            var pixel = brushTexture.width/2f;
+            var pixel = brushTexture.width / 2f;
             var direction = (mousePos - lastPos).normalized * pixel;
             var targetPos = lastPos;
             var dis = Vector2.Distance(targetPos, mousePos);
             var count = 0;
             Debug.Log(direction);
-            while (dis > pixel)
+            //while (dis > pixel)
+            //{
+            //    Debug.Log(dis);
+            //    targetPos += direction;
+            //    count += 1;
+            //    dis = Vector2.Distance(targetPos, mousePos);
+            //    PaintingPixel(ConvertPixelPosition(targetPos));
+            //}
+            for(var pos = ConvertPixelPosition( lastPos+direction);Vector2.Distance(targetPos, mousePos)<pixel; pos += direction)
             {
-                Debug.Log(dis);
-                targetPos += direction;
-                count += 1;
-                dis = Vector2.Distance(targetPos, mousePos);
-                PaintingPixel(ConvertPixelPosition(targetPos));
+                PaintingPixel(pos);
             }
 
+
+            //var interpolatedPosition = Interpolation.GetInterpolation(ConvertPixelPosition(lastPos), ConvertPixelPosition(eventData.position), texture.width / 3f);
+            //for (int i = 0; i < interpolatedPosition.Length; i++)
+            //    PaintingPixel(ConvertPixelPosition(interpolatedPosition[i]));
         }
         lastPos = eventData.position;
         PaintingPixel(ConvertPixelPosition(eventData.position));
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (audioPlayer != null)
+            audioPlayer.Play();
+    }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (audioPlayer != null)
             audioPlayer.Stop();
 
         onPaintingEnd?.Invoke();
     }
-
     private void PaintingPixel(Vector2 pixcelPos)
     {
         var x = (int)pixcelPos.x;
@@ -156,9 +169,4 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
         return targetPos;
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if(audioPlayer!= null)
-            audioPlayer.Play();
-    }
 }

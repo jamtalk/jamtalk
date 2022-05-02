@@ -29,11 +29,12 @@ public class STTParam : Param
     private byte[] ConvertFile(AudioClip clip)
     {
 
-		var path = Path.Combine(Application.streamingAssetsPath + "/TMP/", "Recording.wav");
-		//var file = WavUtility.FromAudioClip(clip,out path,saveAsFile:false);
+		var path = Path.Combine(Application.persistentDataPath + "/", "Recording.wav");
+		Debug.Log(path);
+		var file = WavUtility.FromAudioClip(clip,out path,saveAsFile:false);
 		//Save(path, clip);
-		ExportClipData(clip, path);
-		var file = File.ReadAllBytes(path);
+		//ExportClipData(clip, path);
+		//var file = File.ReadAllBytes(path);
 		Debug.Log(file.Length / 1024+"KB");
         return file;
     }

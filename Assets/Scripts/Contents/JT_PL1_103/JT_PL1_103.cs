@@ -73,7 +73,7 @@ public class JT_PL1_103 : BaseContents
     {
         valueText.text = result;
         if (question.ToString().ToLower() == result.ToLower())
-            audioPlayer.Play(1f, GameManager.Instance.GetClipAct2(question), ShowResult);
+            audioPlayer.Play(GameManager.Instance.GetClipAct2(question), ShowResult);
     }
     private void OnSTTError(string message)
     {
