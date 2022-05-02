@@ -30,11 +30,11 @@ public class STTParam : Param
     {
 
 		var path = Path.Combine(Application.streamingAssetsPath + "/TMP/", "Recording.wav");
-		var file = WavUtility.FromAudioClip(clip,out path,saveAsFile:false);
+		//var file = WavUtility.FromAudioClip(clip,out path,saveAsFile:false);
 		//Save(path, clip);
-		//ExportClipData(clip,path);
-        //var file = File.ReadAllBytes(path);
-        Debug.Log(file.Length / 1024+"KB");
+		ExportClipData(clip, path);
+		var file = File.ReadAllBytes(path);
+		Debug.Log(file.Length / 1024+"KB");
         return file;
     }
     private void ExportClipData(AudioClip clip, string path)

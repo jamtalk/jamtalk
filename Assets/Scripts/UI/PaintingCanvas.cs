@@ -21,6 +21,7 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
     public Texture2D brushTexture;
     public Color brushColor;
     public RectTransform rectTransfrom => GetComponent<RectTransform>();
+    private Vector2 lastPos = Vector2.zero;
     public Texture2D texture
     {
         get
@@ -64,12 +65,33 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IEndDragHandler,IBegi
             for (int j = 0; j < texture.height; j++)
                 texture.SetPixel(i, j, canvasColor);
         texture.Apply();
+        lastPos = Vector2.zero;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (!intractable)
             return;
+        if (lastPos != Vector2.zero)
+        {
+            var mousePos = eventData.position;
+            var pixel = brushTexture.width/2f;
+            var direction = (mousePos - lastPos).normalized * pixel;
+            var targetPos = lastPos;
+            var dis = Vector2.Distance(targetPos, mousePos);
+            var count = 0;
+            Debug.Log(direction);
+            while (dis > pixel)
+            {
+                Debug.Log(dis);
+                targetPos += direction;
+                count += 1;
+                dis = Vector2.Distance(targetPos, mousePos);
+                PaintingPixel(ConvertPixelPosition(targetPos));
+            }
+
+        }
+        lastPos = eventData.position;
         PaintingPixel(ConvertPixelPosition(eventData.position));
     }
 
