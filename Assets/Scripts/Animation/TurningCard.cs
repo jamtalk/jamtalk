@@ -21,6 +21,7 @@ public class TurningCard : MonoBehaviour
     private bool alwaysBackDisable;
     private bool alwaysFrontDisable;
     private Sequence seq;
+    public event Action onTurned;
     public bool IsFornt
     {
         get => _isFront;
@@ -76,6 +77,7 @@ public class TurningCard : MonoBehaviour
     {
         if (seq != null)
             seq.Kill();
+        onCompleted += () => onTurned?.Invoke();
         if (_isFront)
             TurnningBack(duration,onCompleted);
         else

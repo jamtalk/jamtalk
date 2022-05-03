@@ -13,6 +13,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
     protected int questionElementCount = 5;
     protected int correctElementCount = 4;
     public Button buttonAudio;
+    private bool isStart=false;
     protected override eContents contents => eContents.JT_PL1_108;
     protected override void Awake()
     {
@@ -59,10 +60,18 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
     }
     private void AddOnClickCardListener(Card_108 card)
     {
+        card.turnner.onTurned += () =>
+        {
+            if (isStart && !CheckOver())
+            {
+                audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
+            }
+        };
         card.onClick += (value) =>
         {
             if (currentQuestion.correct[currentQuestion.currentIndex] == value)
             {
+                isStart = true;
                 AddAnswer(value);
             }
         };
