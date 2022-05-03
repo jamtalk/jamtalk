@@ -174,12 +174,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 200
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 50
+  m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -328,6 +328,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75630698}
   m_CullTransparentMesh: 1
+--- !u!1 &343773861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5236799548975862521, guid: 49fba5d87c984374f921a529bee7face, type: 3}
+  m_PrefabInstance: {fileID: 1134609658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &357004193
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,11 +732,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: 200
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 50
+  m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -2611,6 +2616,7 @@ MonoBehaviour:
   - {fileID: 914545740}
   - {fileID: 923797467}
   - {fileID: 357004195}
+  finger: {fileID: 343773861}
 --- !u!1 &1836606553
 GameObject:
   m_ObjectHideFlags: 0

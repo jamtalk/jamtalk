@@ -46,7 +46,10 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
         }
         return list;    
     }
-
+    protected override eGameResult GetResult()
+    {
+        return eGameResult.Perfect;
+    }
     protected override void ShowQuestion(Question111 question)
     {
         var randomQuestions = question.RandomQuestions;
