@@ -19,6 +19,7 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
     //[Range(1, 512)]
     //public int brushSize;
     public Texture2D brushTexture;
+    public bool[][] brushChecker;
     public Color brushColor;
     public RectTransform rectTransfrom => GetComponent<RectTransform>();
     private Vector2 lastPos = Vector2.zero;
@@ -55,6 +56,18 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
 
     private void Awake()
     {
+        var tmp = new List<bool[]>();
+        for(int i = 0;i < brushTexture.width; i++)
+        {
+            var list = new List<bool>();
+            for(int j = 0; j < brushTexture.height; j++)
+            {
+                list.Add(brushTexture.GetPixel(i, j).a >= 0.1f);
+            }
+            tmp.Add(list.ToArray());
+        }
+        brushChecker = tmp.ToArray();
+
         if (resetOnAwake)
             Clear();
     }
@@ -72,36 +85,26 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
     {
         if (!intractable)
             return;
+        var list = new List<Vector2>();
         if (lastPos != Vector2.zero)
         {
-
             var mousePos = eventData.position;
-            var pixel = brushTexture.width / 2f;
+            var pixel = brushTexture.width / 3f;
             var direction = (mousePos - lastPos).normalized * pixel;
             var targetPos = lastPos;
             var dis = Vector2.Distance(targetPos, mousePos);
             var count = 0;
-            Debug.Log(direction);
-            //while (dis > pixel)
-            //{
-            //    Debug.Log(dis);
-            //    targetPos += direction;
-            //    count += 1;
-            //    dis = Vector2.Distance(targetPos, mousePos);
-            //    PaintingPixel(ConvertPixelPosition(targetPos));
-            //}
-            for(var pos = ConvertPixelPosition( lastPos+direction);Vector2.Distance(targetPos, mousePos)<pixel; pos += direction)
+            while (dis > pixel)
             {
-                PaintingPixel(pos);
+                targetPos += direction;
+                count += 1;
+                dis = Vector2.Distance(targetPos, mousePos);
+                list.Add(ConvertPixelPosition(targetPos));
             }
-
-
-            //var interpolatedPosition = Interpolation.GetInterpolation(ConvertPixelPosition(lastPos), ConvertPixelPosition(eventData.position), texture.width / 3f);
-            //for (int i = 0; i < interpolatedPosition.Length; i++)
-            //    PaintingPixel(ConvertPixelPosition(interpolatedPosition[i]));
         }
         lastPos = eventData.position;
-        PaintingPixel(ConvertPixelPosition(eventData.position));
+        list.Add(ConvertPixelPosition(eventData.position));
+        PaintingPixel(list.ToArray());
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -116,48 +119,45 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
 
         onPaintingEnd?.Invoke();
     }
-    private void PaintingPixel(Vector2 pixcelPos)
+    private void PaintingPixel(Vector2[] pixelsPos)
     {
-        var x = (int)pixcelPos.x;
-        var y = (int)pixcelPos.y;
         var width = (int)rectTransfrom.sizeDelta.x;
-        var hegiht = (int)rectTransfrom.sizeDelta.y;
-        bool isPainted = false;
-        //var brushSize = 100;
-        //for (int i = x - brushSize / 2; i <= x + brushSize / 2; i++)
-        //{
-        //    if (i < 0 || i > width)
-        //        continue;
-        //    for (int j = y - brushSize / 2; j <= y + brushSize / 2; j++)
-        //    {
-        //        if (j < 0 || j > hegiht)
-        //            continue;
-
-        //        texture.SetPixel(i, j, brushColor);
-        //        isPainted = true;
-        //    }
-        //}
-        for (int i = 0; i < brushTexture.width; i++)
+        var height = (int)rectTransfrom.sizeDelta.y;
+        var list = pixelsPos.SelectMany(pixelPos =>
         {
-            var posX = x - brushTexture.width / 2 + i;
-            if (posX < 0 || posX > width)
-                continue;
-            for (int j = 0; j < brushTexture.height; j++)
+            var tmp = new List<Vector2Int>();
+            var x = (int)pixelPos.x;
+            var y = (int)pixelPos.y;
+            for (int i = 0; i < brushTexture.width; i++)
             {
-                var posY = y - brushTexture.height / 2 + j;
-                if (posY < 0 || posY > hegiht)
-                    continue;
+                var posX = x - brushTexture.width / 2 + i;
+                //if (posX < 0 || posX > width)
+                //    continue;
+                for (int j = 0; j < brushTexture.height; j++)
+                {
+                    var posY = y - brushTexture.height / 2 + j;
+                    //if (posY < 0 || posY > height)
+                    //    continue;
 
-                if (brushTexture.GetPixel(i, j).a < 0.1f)
-                    continue;
-
-                texture.SetPixel(posX, posY, brushColor);
-                isPainted = true;
+                    //if (brushTexture.GetPixel(i, j).a < 0.1f)
+                    //    continue;
+                    if(brushChecker[i][j])
+                        tmp.Add(new Vector2Int(posX, posY));
+                }
             }
-        }
+            return tmp.ToArray();
+        })
+        .Where(x => x.x >= 0)
+        .Where(x => x.x <= width)
+        .Where(y => y.y >= 0)
+        .Where(y => y.y <= height)
+        .Distinct()
+        .ToArray();
 
-        if (isPainted)
+        if (list.Length>0)
         {
+            for (int i = 0; i < list.Length; i++)
+                texture.SetPixel(list[i].x, list[i].y, brushColor);
             texture.Apply();
             onPainting?.Invoke();
         }
