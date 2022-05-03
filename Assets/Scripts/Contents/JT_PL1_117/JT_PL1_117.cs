@@ -18,21 +18,74 @@ public class JT_PL1_117 : BaseContents
     protected override eContents contents => eContents.JT_PL1_117;
     protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
     protected override int GetTotalScore() => BingoCount;
+
+    private eAlphabet[] correctsTarget => new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
     protected override void Awake()
     {
         base.Awake();
         board.onClick += OnClick;
         scoreBoard.onFailed += ShowResult;
 
-        questions = GameManager.Instance.alphabets
-            .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take((int)Mathf.Pow(board.size, 2f))
-            .OrderBy(x=> Random.Range(0f,100f))
-            .ToArray();
+        questions = GetQuestion();
+        
         currentIndex = 0;
         PlaySound();
         board.Init(questions
             .OrderBy(x=>Random.Range(0f,100f)).ToArray());
+    }
+    public eAlphabet[] GetQuestion()
+    {
+        var questions = GameManager.Instance.alphabets
+            .Where(x => !correctsTarget.Contains(x))
+            .Take((int)Mathf.Pow(board.size, 2f))
+            .OrderBy(x => Random.Range(0f, 100f))
+            .ToArray();
+        //정답지 뽑기
+        var corrects = new List<eAlphabet>();
+        for(int i = 0;i < board.size; i++)
+            corrects.Add(correctsTarget.OrderBy(x => Random.Range(0f, 100f)).First());
+
+        //정답 인덱스 뽑기
+        var startPos = Random.Range(0, board.size);
+        var correctpos = new List<int>();
+        if (startPos == 0 || startPos == board.size-1)
+        {
+            var type = Random.Range(0, 3);
+            switch (type)
+            {
+                case 0: //대각선
+                    var _startPos = startPos;
+                    for(int i= 0;i < board.size; i++)
+                    {
+                        correctpos.Add(board.size * i + _startPos);
+
+                        if (startPos == 0) 
+                            _startPos += 1;     //첫번째 대각선
+                        else
+                            _startPos -= 1;     //마지막 대각선
+                    }
+                    break;
+                case 1: //세로
+                    for (int i = 0; i < board.size; i++)
+                        correctpos.Add(board.size * i + startPos);
+                    break;
+                case 2: //가로
+                    for (int i = 0; i < board.size; i++)
+                        correctpos.Add(i);
+                    break;
+            }
+        }
+        else
+        {
+            for(int i = 0;i < board.size; i++)
+                correctpos.Add(board.size * i + startPos);
+        }
+
+
+        for (int i = 0; i < board.size; i++)
+            questions[correctpos[i]] = corrects[i];
+
+        return questions;
     }
     protected override eGameResult GetResult()
     {
