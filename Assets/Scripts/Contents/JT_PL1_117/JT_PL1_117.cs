@@ -14,7 +14,8 @@ public class JT_PL1_117 : BaseContents
     //문제
     public int currentIndex = 0;
     public eAlphabet[] questions;
-    public eAlphabet currentQuestion => questions[currentIndex];
+    public eAlphabet[] corrects;
+    public eAlphabet currentQuestion => corrects[currentIndex];
     protected override eContents contents => eContents.JT_PL1_117;
     protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
     protected override int GetTotalScore() => BingoCount;
@@ -30,8 +31,7 @@ public class JT_PL1_117 : BaseContents
         
         currentIndex = 0;
         PlaySound();
-        board.Init(questions
-            .OrderBy(x=>Random.Range(0f,100f)).ToArray());
+        board.Init(questions.ToArray(),corrects);
     }
     public eAlphabet[] GetQuestion()
     {
@@ -44,47 +44,64 @@ public class JT_PL1_117 : BaseContents
         var corrects = new List<eAlphabet>();
         for(int i = 0;i < board.size; i++)
             corrects.Add(correctsTarget.OrderBy(x => Random.Range(0f, 100f)).First());
-
+        this.corrects = corrects.OrderBy(x=>Random.Range(0f,100f)).ToArray();
         //정답 인덱스 뽑기
-        var startPos = Random.Range(0, board.size);
+        var startPosX = Random.Range(0, board.size);
+        var startPosY = Random.Range(0, board.size);
         var correctpos = new List<int>();
-        if (startPos == 0 || startPos == board.size-1)
+        if (startPosY == 0)
         {
-            var type = Random.Range(0, 3);
-            switch (type)
+            if (startPosX == 0 || startPosX == board.size - 1)
             {
-                case 0: //대각선
-                    var _startPos = startPos;
-                    for(int i= 0;i < board.size; i++)
-                    {
-                        correctpos.Add(board.size * i + _startPos);
+                var type = Random.Range(0, 3);
+                switch (type)
+                {
+                    case 0: //대각선
+                        var _startPos = startPosX;
+                        for (int i = 0; i < board.size; i++)
+                        {
+                            correctpos.Add(board.size * i + _startPos);
 
-                        if (startPos == 0) 
-                            _startPos += 1;     //첫번째 대각선
-                        else
-                            _startPos -= 1;     //마지막 대각선
-                    }
-                    break;
-                case 1: //세로
-                    for (int i = 0; i < board.size; i++)
-                        correctpos.Add(board.size * i + startPos);
-                    break;
-                case 2: //가로
-                    for (int i = 0; i < board.size; i++)
-                        correctpos.Add(i);
-                    break;
+                            if (startPosX == 0)
+                                _startPos += 1;     //첫번째 대각선
+                            else
+                                _startPos -= 1;     //마지막 대각선
+                        }
+                        break;
+                    case 1: //세로
+                        for (int i = 0; i < board.size; i++)
+                            correctpos.Add(board.size * i + startPosX);
+                        break;
+                    case 2: //가로
+                        for (int i = 0; i < board.size; i++)
+                            correctpos.Add(i);
+                        break;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < board.size; i++)
+                    correctpos.Add(board.size * i + startPosX);
             }
         }
         else
         {
-            for(int i = 0;i < board.size; i++)
-                correctpos.Add(board.size * i + startPos);
+            for (int i = 0; i < board.size; i++)
+                correctpos.Add(startPosY*board.size+i);
         }
 
 
         for (int i = 0; i < board.size; i++)
             questions[correctpos[i]] = corrects[i];
 
+        var question = string.Empty;
+        for(int i= 0;i < questions.Length; i++)
+        {
+            if (i % board.size == 0)
+                question += "\n";
+            question += questions[i];
+        }
+        Debug.Log(question);
         return questions;
     }
     protected override eGameResult GetResult()

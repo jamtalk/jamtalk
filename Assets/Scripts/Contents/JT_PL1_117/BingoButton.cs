@@ -11,7 +11,6 @@ public class BingoButton : MonoBehaviour
     public JT_PL1_117 controller;
     public EventSystem eventSystem;
     public Button button => GetComponent<Button>();
-    public Sprite[] stampStripes;
     public eAlphabet value { get; private set; }
     public eAlphbetStyle style;
     public Image imageAlphabet;
@@ -25,7 +24,7 @@ public class BingoButton : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
-    public void Init(eAlphabet value)
+    public void Init(eAlphabet value, Sprite Stamp)
     {
         this.value = value;
         isOn = false;
@@ -33,7 +32,7 @@ public class BingoButton : MonoBehaviour
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(style, eAlphbetType.Upper, value);
         imageStamp.gameObject.SetActive(false);
         imageAlphabet.gameObject.SetActive(true);
-        imageStamp.sprite = stampStripes[UnityEngine.Random.Range(0, stampStripes.Length)];
+        imageStamp.sprite = Stamp;
         imageStamp.preserveAspect = true;
         imageAlphabet.preserveAspect = true;
     }

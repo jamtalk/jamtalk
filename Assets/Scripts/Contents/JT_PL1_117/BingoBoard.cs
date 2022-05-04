@@ -3,19 +3,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BingoBoard : MonoBehaviour
 {
     public BingoButton[] buttons;
+    public Sprite[] stamps;
     public event Action<eAlphabet> onClick;
     public int size => (int)Mathf.Sqrt(buttons.Length);
 
-    public void Init(eAlphabet[] alphabets)
+    public void Init(eAlphabet[] alphabets, eAlphabet[] correct)
     {
+        stamps = stamps.OrderBy(x => Random.Range(0, stamps.Length)).ToArray();
+        var correctStamp = stamps.Last();
+        var incorrectStamp = stamps.Take(stamps.Length - 1).ToArray();
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].onClick += onClick;
-            buttons[i].Init(alphabets[i]);
+            var value = alphabets[i];
+            if (correct.Contains(value))
+                buttons[i].Init(value, correctStamp);
+            else
+                buttons[i].Init(value, incorrectStamp[Random.Range(0, incorrectStamp.Length)]);
         }
     }
     public int GetBingoCount()
