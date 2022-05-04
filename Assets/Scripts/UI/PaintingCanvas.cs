@@ -105,6 +105,7 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
         lastPos = eventData.position;
         list.Add(ConvertPixelPosition(eventData.position));
         PaintingPixel(list.ToArray());
+        Debug.DrawLine(eventData.position, eventData.position + Vector2.up*100,Color.black);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -116,7 +117,7 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
     {
         if (audioPlayer != null)
             audioPlayer.Stop();
-
+        lastPos = Vector2.zero;
         onPaintingEnd?.Invoke();
     }
     private void PaintingPixel(Vector2[] pixelsPos)

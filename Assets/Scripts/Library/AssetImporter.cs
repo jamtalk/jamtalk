@@ -94,7 +94,7 @@ public class AssetImporter : ScriptableObject
         var key = int.Parse(clipAct3Metadata[word].Split('-').Last());
         return clipAct3.ToList().Find(x => int.Parse(x.name.Split('-').Last()) == key);
     }
-    public AudioClip GetClipWord(string word) => clipWords.Where(x => x.name == clipWordMetadata[word]).First();
+    public AudioClip GetClipWord(string word) => clipWords.Where(x => x.name == clipWordMetadata[word]).OrderByDescending(x => x.name).First();
     public AudioClip GetClipCorrectEffect() => clipCorrect;
 
     //SpriteGetter
