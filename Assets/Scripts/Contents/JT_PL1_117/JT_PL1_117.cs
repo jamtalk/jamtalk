@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class JT_PL1_117 : BaseContents
 {
     public BingoBoard board;
     public BingoScoreBoard scoreBoard;
+    public Button buttonSound;
     public int BingoCount=>1;
     public RectTransform bingo;
     public AudioSinglePlayer audioPlayer;
@@ -24,6 +26,7 @@ public class JT_PL1_117 : BaseContents
     protected override void Awake()
     {
         base.Awake();
+        buttonSound.onClick.AddListener(PlaySound);
         board.onClick += OnClick;
         scoreBoard.onFailed += ShowResult;
 

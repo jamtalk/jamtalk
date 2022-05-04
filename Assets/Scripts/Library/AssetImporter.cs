@@ -43,6 +43,10 @@ public class AssetImporter : ScriptableObject
     [SerializeField]
     private Sprite[] spriteAlphabetNeonRedLower;
     [SerializeField]
+    private Sprite[] spriteAlphabetNeonColorfulUpper;
+    [SerializeField]
+    private Sprite[] spriteAlphabetNeonColorfulLower;
+    [SerializeField]
     private Sprite[] spriteAlphabetFullColorUpper;
     [SerializeField]
     private Sprite[] spriteAlphabetFullColorLower;
@@ -115,6 +119,11 @@ public class AssetImporter : ScriptableObject
                     return spriteAlphabetNeonRedUpper;
                 else
                     return spriteAlphabetNeonRedLower;
+            case eAlphbetStyle.NeonFulcolor:
+                if (type == eAlphbetType.Upper)
+                    return spriteAlphabetNeonColorfulUpper;
+                else
+                    return spriteAlphabetNeonColorfulLower;
             case eAlphbetStyle.FullColor:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetFullColorUpper;
@@ -147,7 +156,7 @@ public class AssetImporter : ScriptableObject
             case eAlphbetStyle.Gray:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetGrayUpper;
-                else 
+                else
                     return spriteAlphabetGrayLower;
             default:
                 return null;
