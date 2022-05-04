@@ -49,7 +49,7 @@ public class AlphabetToggle110 : MonoBehaviour
             images[i].sprite = sprite;
             images[i].preserveAspect = true;
         }
-        background.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonFulcolor, type, alphabet);
+        background.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonYellow, type, alphabet);
         drag.Init(alphabet, this);
         drop.Init(alphabet, this);
     }

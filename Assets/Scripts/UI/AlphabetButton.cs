@@ -10,6 +10,7 @@ public class AlphabetButton : MonoBehaviour
     public Image image;
     public event Action<eAlphabet> onClick;
     public eAlphabet value { get; private set; }
+    public eAlphbetType type;
     private void Awake()
     {
         button.onClick.AddListener(() => onClick?.Invoke(value));
@@ -17,6 +18,7 @@ public class AlphabetButton : MonoBehaviour
     public void Init(eAlphabet alphabet, eAlphbetStyle style, eAlphbetType type)
     {
         value = alphabet;
+        this.type = type;
         image.sprite = GameManager.Instance.GetAlphbetSprite(style, type, alphabet);
         image.preserveAspect = true;
     }

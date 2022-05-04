@@ -20,6 +20,14 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     {
         base.Awake();
         buttonRocket.onClick.AddListener(PlayCurrentWord);
+        buttonRocket.onClick.AddListener(() =>
+        {
+            if (finger != null)
+            {
+                Destroy(finger);
+                finger = null;
+            }
+        });
         for(int i = 0;i < buttons.Length; i++)
         {
             AddOnClickTextButtonListener(buttons[i]);
@@ -78,7 +86,8 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
             PlayWord(value);
             if (currentQuestion.currentCorrect == value)
             {
-                finger.gameObject.SetActive(false);
+                if (finger != null)
+                    finger.gameObject.SetActive(false);
 
                 for (int i = 0; i < buttons.Length; i++)
                     buttons[i].button.interactable = false;
@@ -125,13 +134,15 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     }
     private void CallRokect()
     {
-        finger.gameObject.SetActive(false);
+        if(finger != null)
+            finger.gameObject.SetActive(false);
         rocket.Call(() =>
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
             PlayCurrentWord();
-            finger.gameObject.SetActive(true);
+            if (finger != null)
+                finger.gameObject.SetActive(true);
         });
     }
 }

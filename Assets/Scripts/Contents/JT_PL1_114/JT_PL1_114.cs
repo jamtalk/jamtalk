@@ -16,6 +16,14 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
     protected override void Awake()
     {
         base.Awake();
+        ship.button.onClick.AddListener(() =>
+        {
+            if (finger != null)
+            {
+                Destroy(finger);
+                finger = null;
+            }
+        });
         ship.onInner += (value) =>
         {
             AddAnswer(value);
@@ -30,11 +38,13 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
             };
             drags[i].onDrag += () =>
             {
-                finger.gameObject.SetActive(false);
+                if(finger!=null)
+                    finger.gameObject.SetActive(false);
             };
             drags[i].onAnswer += (correct) =>
             {
-                finger.gameObject.SetActive(!correct);
+                if (finger != null)
+                    finger.gameObject.SetActive(!correct);
             };
         }
     }
@@ -68,7 +78,8 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
         ship.SetInner();
         ship.OutObject(question.alphabet, () =>
         {
-            finger.gameObject.SetActive(true);
+            if (finger != null)
+                finger.gameObject.SetActive(true);
             SetIntractable(true);
         });
         var questions = question.questions.Union(new string[] { question.correct })

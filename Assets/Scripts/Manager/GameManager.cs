@@ -45,7 +45,6 @@ public class GameManager : MonoSingleton<GameManager>
         var result = GetWords().Where(x => x.First().ToString().ToUpper() == alphabet.ToString());
         if(alphabet != eAlphabet.X)
             result = result.Where(x => !ignore.Contains(x));
-        Debug.LogFormat("---{0} {1}°³---\n{2}", alphabet,result.Count(), string.Join("\n", result.ToArray()));
         return result.ToArray();
     }
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();

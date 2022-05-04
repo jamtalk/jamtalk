@@ -35,7 +35,8 @@ public class JT_PL1_116 : BaseContents
 
         alphabets = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(length)
+            .Take(2)
+            .SelectMany(x => new eAlphabet[] { x, x })
             .ToArray();
 
         words = alphabets
@@ -71,7 +72,7 @@ public class JT_PL1_116 : BaseContents
 
             if (selected.Count == 2)
             {
-                if (selected[0].value == alphabets[currentIndex] &&  selected[1].value == alphabets[currentIndex])
+                if (selected[0].value == alphabets[currentIndex] &&  selected[1].value == alphabets[currentIndex] && selected[0].type != selected[1].type)
                 {
                     var clip = GameManager.Instance.GetClipAct3(words[currentIndex]);
                     answerImage.Show(GameManager.Instance.GetSpriteWord(words[currentIndex]));

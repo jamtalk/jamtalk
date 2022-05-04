@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class JT_PL1_108 : MultiAnswerContents<Question108, string>
 {
     public Card_108[] cards;
+    public GameObject finger;
 
     protected override int QuestionCount => 1;
     protected int questionElementCount = 5;
@@ -20,6 +21,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, string>
         base.Awake();
         buttonAudio.onClick.AddListener(() =>
         {
+            finger.SetActive(false);
             audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
         });
     }

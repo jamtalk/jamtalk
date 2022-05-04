@@ -22,6 +22,14 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
     {
         base.Awake();
         buttonRocket.onClick.AddListener(PlayAudio);
+        buttonRocket.onClick.AddListener(() =>
+        {
+            if (finger != null)
+            {
+                Destroy(finger);
+                finger = null;
+            }
+        });
         for (int i = 0; i < cards.Length; i++)
             AddCardOnClickListener(cards[i]);
     }
@@ -33,7 +41,8 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
             eventSystem.enabled = false;
             if (currentQuestion.correct.Contains(value))
             {
-                finger.gameObject.SetActive(false);
+                if (finger != null)
+                    finger.gameObject.SetActive(false);
                 var sprite = card.imageButton.image.sprite;
                 roket.valueUI.sprite = sprite;
 
@@ -62,11 +71,13 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
     }
     private void CallRocket()
     {
-        finger.gameObject.SetActive(false);
+        if (finger != null)
+            finger.gameObject.SetActive(false);
         eventSystem.enabled = false;
         roket.Call(() =>
         {
-            finger.gameObject.SetActive(true);
+            if (finger != null)
+                finger.gameObject.SetActive(true);
             PlayAudio();
             eventSystem.enabled = true;
         });
