@@ -62,21 +62,18 @@ public class ButtonExitnction : MonoBehaviour
     public void Incorrect()
     {
         incorrectSequence = DOTween.Sequence();
-        var twX = incorrect.DOScaleX(1.5f, .75f);
+        var twX = incorrect.DOScaleX(1f, .25f);
         twX.SetEase(Ease.Linear);
-        twX.SetLoops(2, LoopType.Yoyo);
 
         var twY = incorrect.DOScaleY(1f, .25f);
         twY.SetEase(Ease.Linear);
-        twY.SetLoops(2, LoopType.Yoyo);
 
         incorrectSequence.Append(twY);
-        incorrectSequence.Insert(.125f, twX);
+        incorrectSequence.Join(twX);
         incorrectSequence.onPlay += () =>
         {
             incorrect.localScale = new Vector3(0, 0, 1);
             incorrect.gameObject.SetActive(true);
         };
-        incorrectSequence.onKill += () => incorrect.gameObject.SetActive(false);
     }
 }

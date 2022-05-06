@@ -32,6 +32,7 @@ public class JT_PL1_107 : BaseContents
             drags[i].Init(words[i]);
 
             drops[i].onClick += PlayAudio;
+            drags[i].onClick += PlayAudio;
 
             drags[i].onDrop += () =>
             {

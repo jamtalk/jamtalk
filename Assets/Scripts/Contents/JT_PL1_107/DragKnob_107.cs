@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
+public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointerDownHandler
 {
     public DragKnobPoint107 pointKnob;
     public CanvasScaler scaler;
@@ -17,6 +17,7 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
     public RectTransform cover;
     public string currentValue;
     public event Action onDrop;
+    public event Action<string> onClick;
     public bool intractable = true;
     public bool isConnected = false;
     private void Awake()
@@ -101,5 +102,10 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler
         var current = new Vector2(Screen.width, Screen.height);
         var ratio = current / resolution;
         return pos * ratio;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        onClick?.Invoke(currentValue);
     }
 }
