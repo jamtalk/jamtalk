@@ -52,7 +52,8 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
     {
         var correct = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(QuestionCount)
+            .Take(QuestionCount/2)
+            .SelectMany(x=>new eAlphabet[] {x,x})
             .ToArray();
         var list = new List<Question114>();
         for(int i = 0;i < QuestionCount; i++)
