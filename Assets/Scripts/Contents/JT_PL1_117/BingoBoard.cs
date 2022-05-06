@@ -14,17 +14,18 @@ public class BingoBoard : MonoBehaviour
 
     public void Init(eAlphabet[] alphabets, eAlphabet[] correct)
     {
-        stamps = stamps.OrderBy(x => Random.Range(0, stamps.Length)).ToArray();
-        var correctStamp = stamps.Last();
-        var incorrectStamp = stamps.Take(stamps.Length - 1).ToArray();
+        //stamps = stamps.OrderBy(x => Random.Range(0, stamps.Length)).ToArray();
+        //var correctStamp = stamps.Last();
+        //var incorrectStamp = stamps.Take(stamps.Length - 1).ToArray();
         for (int i = 0; i < buttons.Length; i++)
         {
+            var stamp = stamps.OrderBy(x => Random.Range(0, stamps.Length)).First();
             buttons[i].onClick += onClick;
             var value = alphabets[i];
             if (correct.Contains(value))
-                buttons[i].Init(value, correctStamp);
+                buttons[i].Init(value, stamp);
             else
-                buttons[i].Init(value, incorrectStamp[Random.Range(0, incorrectStamp.Length)]);
+                buttons[i].Init(value, stamp);
         }
     }
     public int GetBingoCount()
