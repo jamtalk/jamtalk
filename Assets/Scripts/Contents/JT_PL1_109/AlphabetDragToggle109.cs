@@ -29,8 +29,8 @@ public class AlphabetDragToggle109 : MonoBehaviour,IBeginDragHandler,IDragHandle
     {
         this.value = value;
         this.index = index;
-        spriteOn = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonRed,eAlphbetType.Lower,value);
-        spriteOff = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonYellow, eAlphbetType.Lower, value);
+        spriteOn = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.NeonRed,eAlphbetType.Lower,value);
+        spriteOff = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.NeonYellow, eAlphbetType.Lower, value);
         this.isOn = isOn;
     }
 

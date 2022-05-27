@@ -41,7 +41,7 @@ public class AlphabetToggle110 : MonoBehaviour
     {
         var index = parent.GetSiblingIndex();
         var type = index == 0 ? eAlphbetType.Upper : eAlphbetType.Lower;
-        var sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, type, alphabet);
+        var sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, alphabet);
         value = alphabet;
 
         for(int i = 0;i < images.Length; i++)
@@ -49,7 +49,7 @@ public class AlphabetToggle110 : MonoBehaviour
             images[i].sprite = sprite;
             images[i].preserveAspect = true;
         }
-        background.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.NeonFulcolor, type, alphabet);
+        background.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.NeonFulcolor, type, alphabet);
         drag.Init(alphabet, this);
         drop.Init(alphabet, this);
     }

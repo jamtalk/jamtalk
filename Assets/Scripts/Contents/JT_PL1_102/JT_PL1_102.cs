@@ -18,7 +18,7 @@ public class JT_PL1_102 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Card, eAlphbetType.Upper);
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphbetType.Upper);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
         egg.onBroken += OnBorken;

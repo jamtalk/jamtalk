@@ -99,8 +99,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
     {
         if (finger != null)
             finger.SetActive(true);
-        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Yellow, eAlphbetType.Upper, question.correct);
-        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Yellow, eAlphbetType.Lower, question.correct);
+        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphbetType.Upper, question.correct);
+        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphbetType.Lower, question.correct);
         var questions = question.RandomQuestions;
         for(int i = 0;i < buttons.Length; i++)
         {

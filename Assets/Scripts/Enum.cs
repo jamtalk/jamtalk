@@ -78,7 +78,7 @@ public enum eAlphabet
     Z
 }
 
-public enum eAlphbetStyle
+public enum eAlphabetStyle
 {
     /// <summary>
     /// 102

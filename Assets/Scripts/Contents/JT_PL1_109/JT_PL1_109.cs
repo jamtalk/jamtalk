@@ -50,7 +50,7 @@ public class JT_PL1_109 : BaseContents
                 var type = i > 0 ? eAlphbetType.Lower : eAlphbetType.Upper;
                 var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word[i].ToString().ToUpper());
                 correct[i].gameObject.SetActive(true);
-                correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, type, eAlphabet);
+                correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, eAlphabet);
                 correct[i].preserveAspect = true;
             }
             else

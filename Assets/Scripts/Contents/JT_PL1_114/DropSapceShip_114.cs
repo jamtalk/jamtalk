@@ -30,7 +30,7 @@ public class DropSapceShip_114 : MonoBehaviour
     {
         SetInner();
         this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, eAlphbetType.Upper, alphabet);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphbetType.Upper, alphabet);
         image.preserveAspect = true;
 
         float duration = 2f;

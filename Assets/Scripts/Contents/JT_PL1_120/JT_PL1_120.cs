@@ -83,7 +83,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
         });
         roket.mask.gameObject.SetActive(true);
         var currentValue = GameManager.Instance.ParsingAlphabet(currentQuestion.correct[currentQuestion.currentIndex]);
-        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.White, eAlphbetType.Lower, currentValue);
+        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphbetType.Lower, currentValue);
     }
     private void PlayAudio()
     {

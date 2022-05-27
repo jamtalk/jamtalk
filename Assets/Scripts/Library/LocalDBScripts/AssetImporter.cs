@@ -7,6 +7,7 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 [CreateAssetMenu(fileName = "AssetImporter.asset", menuName = "Assets Importer")]
 public class AssetImporter : ScriptableObject
@@ -98,62 +99,62 @@ public class AssetImporter : ScriptableObject
     public AudioClip GetClipCorrectEffect() => clipCorrect;
 
     //SpriteGetter
-    public Sprite[] GetSpriteAlphabet(eAlphbetStyle contents, eAlphbetType type)
+    public Sprite[] GetSpriteAlphabet(eAlphabetStyle contents, eAlphbetType type)
     {
         switch (contents)
         {
-            case eAlphbetStyle.Card:
+            case eAlphabetStyle.Card:
                 return spriteAlphabetCard;
-            case eAlphbetStyle.Brown:
+            case eAlphabetStyle.Brown:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetBrownUpper;
                 else
                     return spriteAlphabetBrownLower;
-            case eAlphbetStyle.NeonYellow:
+            case eAlphabetStyle.NeonYellow:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetNeonYellowUpper;
                 else
                     return spriteAlphabetNeonYellowLower;
-            case eAlphbetStyle.NeonRed:
+            case eAlphabetStyle.NeonRed:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetNeonRedUpper;
                 else
                     return spriteAlphabetNeonRedLower;
-            case eAlphbetStyle.NeonFulcolor:
+            case eAlphabetStyle.NeonFulcolor:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetNeonColorfulUpper;
                 else
                     return spriteAlphabetNeonColorfulLower;
-            case eAlphbetStyle.FullColor:
+            case eAlphabetStyle.FullColor:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetFullColorUpper;
                 else
                     return spriteAlphabetFullColorLower;
-            case eAlphbetStyle.Dino:
+            case eAlphabetStyle.Dino:
                 return spriteAlphabetDinoUpper;
-            case eAlphbetStyle.FullColorCard:
+            case eAlphabetStyle.FullColorCard:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetFullColorCardUpper;
                 else
                     return spriteAlphabetFullColorCardLower;
-            case eAlphbetStyle.BingoRed:
+            case eAlphabetStyle.BingoRed:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetBingoRedUpper;
                 else
                     return spriteAlphabetBingoRedLower;
-            case eAlphbetStyle.BingoBlue:
+            case eAlphabetStyle.BingoBlue:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetBingoBlueUpper;
                 else
                     return spriteAlphabetBingoBlueLower;
-            case eAlphbetStyle.Yellow:
+            case eAlphabetStyle.Yellow:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetYellowUpper;
                 else
                     return spriteAlphabetYellowLower;
-            case eAlphbetStyle.White:
+            case eAlphabetStyle.White:
                 return spriteAlphabetWhite;
-            case eAlphbetStyle.Gray:
+            case eAlphabetStyle.Gray:
                 if (type == eAlphbetType.Upper)
                     return spriteAlphabetGrayUpper;
                 else
@@ -162,7 +163,7 @@ public class AssetImporter : ScriptableObject
                 return null;
         }
     }
-    public Sprite GetSpriteAlphabet(eAlphbetStyle style, eAlphbetType type, eAlphabet alphabet) => GetSpriteAlphabet(style, type)[(int)alphabet];
+    public Sprite GetSpriteAlphabet(eAlphabetStyle style, eAlphbetType type, eAlphabet alphabet) => GetSpriteAlphabet(style, type)[(int)alphabet];
     public Sprite[] GetSpriteWord(eAlphabet alphbet) => spriteWords.Where(x => x.name.First().ToString().ToUpper() == alphbet.ToString().ToUpper()).ToArray();
     public Sprite[] GetSpriteWord() => spriteWords;
     public Sprite GetSpriteWord(string word) => spriteWords.ToList().Find(x => x.name == word);

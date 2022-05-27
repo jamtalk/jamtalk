@@ -13,8 +13,8 @@ public class AlphabetImage105 : MonoBehaviour
     }
     public void Init(eAlphabet value)
     {
-        imageLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, eAlphbetType.Lower, value);
-        imageUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColor, eAlphbetType.Upper, value);
+        imageLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphbetType.Lower, value);
+        imageUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphbetType.Upper, value);
         imageLower.preserveAspect = true;
         imageUpper.preserveAspect = true;
     }

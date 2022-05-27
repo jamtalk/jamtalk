@@ -12,7 +12,7 @@ public class BingoButton : MonoBehaviour
     public EventSystem eventSystem;
     public Button button => GetComponent<Button>();
     public eAlphabet value { get; private set; }
-    public eAlphbetStyle style;
+    public eAlphabetStyle style;
     public Image imageAlphabet;
     public Image imageStamp;
     public event Action<eAlphabet> onClick;

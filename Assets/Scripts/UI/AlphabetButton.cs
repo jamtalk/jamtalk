@@ -15,7 +15,7 @@ public class AlphabetButton : MonoBehaviour
     {
         button.onClick.AddListener(() => onClick?.Invoke(value));
     }
-    public void Init(eAlphabet alphabet, eAlphbetStyle style, eAlphbetType type)
+    public void Init(eAlphabet alphabet, eAlphabetStyle style, eAlphbetType type)
     {
         value = alphabet;
         this.type = type;

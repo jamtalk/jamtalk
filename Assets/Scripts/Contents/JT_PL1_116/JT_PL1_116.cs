@@ -48,8 +48,8 @@ public class JT_PL1_116 : BaseContents
 
         for(int i = 0;i < length; i++)
         {
-            upper[i].Init(alphabets[i], eAlphbetStyle.Brown, eAlphbetType.Upper);
-            lower[i].Init(alphabets[i], eAlphbetStyle.Brown, eAlphbetType.Lower);
+            upper[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphbetType.Upper);
+            lower[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphbetType.Lower);
 
             AddButtonListener(upper[i]);
             AddButtonListener(lower[i]);

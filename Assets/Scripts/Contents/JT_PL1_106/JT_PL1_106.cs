@@ -49,7 +49,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
             AddDoubleClickListener(buttonQuestions[i]);
         }
         audioPlayer.Play(GameManager.Instance.GetClipPhanics());
-        buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Brown, eAlphbetType.Upper));
+        buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphbetType.Upper));
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics()));
     }
     private void ResetQuestion()
@@ -59,7 +59,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, string>
             buttonQuestions[i].isOn = false;
         }
         audioPlayer.Play(GameManager.Instance.GetClipPhanics());
-        buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Brown, eAlphbetType.Upper));
+        buttonPhanics.SetSprite(GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphbetType.Upper));
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipPhanics()));
     }
     private void AddDoubleClickListener(DoubleClickButton button)

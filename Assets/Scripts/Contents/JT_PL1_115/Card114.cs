@@ -16,7 +16,7 @@ public class Card114 : MonoBehaviour
     public void Init(eAlphabet alphabet, eAlphbetType type)
     {
         this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.FullColorCard, type, alphabet);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColorCard, type, alphabet);
         card.Init(callback: () =>
         {
             if (card.IsFornt)

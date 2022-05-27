@@ -13,7 +13,7 @@ public class DragAlphabet : MonoBehaviour, IDragHandler, IEndDragHandler
     public void Init(eAlphabet alphabet)
     {
         this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphbetStyle.Dino, eAlphbetType.Upper, alphabet);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Dino, eAlphbetType.Upper, alphabet);
     }
     public void OnDrag(PointerEventData eventData)
     {

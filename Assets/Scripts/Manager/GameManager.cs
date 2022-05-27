@@ -7,7 +7,7 @@ using System.Linq;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public eAlphabet currentAlphabet { get; private set; }
+    public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; private set; }
     private AssetImporter assets;
     public override void Initialize()
@@ -28,10 +28,10 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipAct3(string word) => assets.GetClipAct3(word);
     public AudioClip GetClipWord(string word) => assets.GetClipWord(word);
     public AudioClip GetClipCorrectEffect() => assets.GetClipCorrectEffect();
-    public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type, eAlphabet alphbet) => assets.GetSpriteAlphabet(style, type, alphbet);
-    public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type, string word) => assets.GetSpriteAlphabet(style, type, ParsingAlphabet(word));
-    public Sprite GetAlphbetSprite(eAlphbetStyle style, eAlphbetType type) => GetAlphbetSprite(style, type, currentAlphabet);
-    public Sprite[] GetAlphbetSprites(eAlphbetStyle style, eAlphbetType type) => assets.GetSpriteAlphabet(style, type);
+    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphbetType type, eAlphabet alphbet) => assets.GetSpriteAlphabet(style, type, alphbet);
+    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphbetType type, string word) => assets.GetSpriteAlphabet(style, type, ParsingAlphabet(word));
+    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphbetType type) => GetAlphbetSprite(style, type, currentAlphabet);
+    public Sprite[] GetAlphbetSprites(eAlphabetStyle style, eAlphbetType type) => assets.GetSpriteAlphabet(style, type);
     public Sprite[] GetSpriteWord(eAlphabet alphabet) => assets.GetSpriteWord(alphabet);
     public Sprite[] GetSpriteWord() => assets.GetSpriteWord(currentAlphabet);
     public Sprite GetSpriteWord(string word) => assets.GetSpriteWord(word);
