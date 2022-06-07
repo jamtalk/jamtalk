@@ -15,7 +15,6 @@ public class LocalDBEditor : Editor
             if (GUILayout.Button("Load"))
             {
                 var path = EditorUtility.OpenFilePanel("Select original data", Application.dataPath, "csv");
-                Debug.Log(path);
                 if (!string.IsNullOrEmpty(path))
                 {
                     target.Load(ParsingData(path));
