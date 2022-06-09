@@ -32,9 +32,9 @@ public class AlphabetPaths : ScriptableObject
     //        }
     //    }
     //}
-    public AlphabetPath[] GetPath(eAlphabet alphabet, eAlphbetType type)
+    public AlphabetPath[] GetPath(eAlphabet alphabet, eAlphabetType type)
     {
-        if (type == eAlphbetType.Upper)
+        if (type == eAlphabetType.Upper)
             return upper[alphabet].Values.ToArray();
         else
             return lower[alphabet].Values.ToArray();
@@ -45,11 +45,11 @@ public class AlphabetPaths : ScriptableObject
 public class AlphabetPath 
 {
     public eAlphabet alphabet;
-    public eAlphbetType type;
+    public eAlphabetType type;
     public int stroke;
     public Vector2[] path;
 
-    public AlphabetPath(eAlphabet alphabet, eAlphbetType type, int stroke, Vector2[] path)
+    public AlphabetPath(eAlphabet alphabet, eAlphabetType type, int stroke, Vector2[] path)
     {
         this.alphabet = alphabet;
         this.type = type;

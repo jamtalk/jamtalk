@@ -10,15 +10,17 @@ public class AlphabetAudioData : LocalDBElement
 {
 
     [Serializable]
-    private class AlphabetAudioSource
+    public class AlphabetAudioSource
     {
+        public eAlphabet alphabet;
         public AudioClip clip;
         public AudioClip phanics;
         public AudioClip act1;
         public AudioClip act2;
 
-        public AlphabetAudioSource(AudioClip clip, AudioClip phanics, AudioClip act1, AudioClip act2)
+        public AlphabetAudioSource(eAlphabet alphabet, AudioClip clip, AudioClip phanics, AudioClip act1, AudioClip act2)
         {
+            this.alphabet = alphabet;
             this.clip = clip;
             this.phanics = phanics;
             this.act1 = act1;
@@ -28,6 +30,7 @@ public class AlphabetAudioData : LocalDBElement
 
     [SerializeField]
     private SerializableDictionaryBase<eAlphabet, AlphabetAudioSource> data;
+    public AlphabetAudioSource Get(eAlphabet alphabet) => data[alphabet];
 
     [Header("Orizinal Data")]
     [SerializeField]
@@ -52,6 +55,7 @@ public class AlphabetAudioData : LocalDBElement
             var act1 = datas["act1"].ToString();
             var act2 = datas["act2"].ToString();
             tmp.Add(key, new AlphabetAudioSource(
+                key,
                 LocalDB.Find(clips, clip),
                 LocalDB.Find(phanicses, phanics),
                 LocalDB.Find(acts1, act1),

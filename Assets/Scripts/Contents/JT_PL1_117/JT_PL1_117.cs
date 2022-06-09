@@ -144,6 +144,6 @@ public class JT_PL1_117 : BaseContents
         if (CheckOver())
             ShowResult();
         else
-            audioPlayer.Play(GameManager.Instance.GetClipAlphbet(currentQuestion));
+            audioPlayer.Play(GameManager.Instance.GetResources(currentQuestion).AudioData.clip);
     }
 }

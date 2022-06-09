@@ -16,14 +16,16 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     public event Action<bool> onAnswer;
     public event Action onDrag;
     public bool intracable;
+    public WordsData.WordSources data;
     public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), image.sprite.name.First().ToString().ToUpper());
     private void Awake()
     {
-        button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipWord(image.sprite.name)));
+        button.onClick.AddListener(() => audioPlayer.Play(data.clip));
     }
-    public void Init(Sprite sprite)
+    public void Init(WordsData.WordSources data)
     {
-        image.sprite = sprite;
+        this.data = data;
+        image.sprite = data.sprite;
         gameObject.SetActive(true);
     }
 
@@ -52,7 +54,7 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
             {
                 gameObject.SetActive(false);
                 onDrop?.Invoke();
-                component.InObject(image.sprite);
+                component.InObject(data);
             }
             onAnswer?.Invoke(correct);
         }

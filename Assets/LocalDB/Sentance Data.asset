@@ -1,0 +1,1523 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa9ad878c50d7040a5a9b973f9ddb09, type: 3}
+  m_Name: Sentance Data
+  m_EditorClassIdentifier: 
+  data:
+  - key: 0
+    value: My cat with the hat is happy on the pan.
+    words:
+    - My
+    - cat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - on
+    - the
+    - pan.
+  - key: 0
+    value: My cat with the hat is happy on the mat.
+    words:
+    - My
+    - cat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - on
+    - the
+    - mat.
+  - key: 0
+    value: My cat with the hat is happy on my dad.
+    words:
+    - My
+    - cat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - on
+    - my
+    - dad.
+  - key: 0
+    value: My fat cat is happy all the time.
+    words:
+    - My
+    - fat
+    - cat
+    - is
+    - happy
+    - all
+    - the
+    - time.
+  - key: 0
+    value: My rat with the hat is happy in the cage.
+    words:
+    - My
+    - rat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - in
+    - the
+    - cage.
+  - key: 0
+    value: My rat with the hat is happy in the vase.
+    words:
+    - My
+    - rat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - in
+    - the
+    - vase.
+  - key: 0
+    value: My rat with the hat is happy in an apron.
+    words:
+    - My
+    - rat
+    - with
+    - the
+    - hat
+    - is
+    - happy
+    - in
+    - an
+    - apron.
+  - key: 0
+    value: My fat rat is happy all the time.
+    words:
+    - My
+    - fat
+    - rat
+    - is
+    - happy
+    - all
+    - the
+    - time.
+  - key: 1
+    value: Buy me the bell in the box.
+    words:
+    - Buy
+    - me
+    - the
+    - bell
+    - in
+    - the
+    - box.
+  - key: 1
+    value: Buy me the ball in the box
+    words:
+    - Buy
+    - me
+    - the
+    - ball
+    - in
+    - the
+    - box
+  - key: 1
+    value: Buy me the balloon in the box.
+    words:
+    - Buy
+    - me
+    - the
+    - balloon
+    - in
+    - the
+    - box.
+  - key: 1
+    value: "\"It\u2019s my birthday"
+    words:
+    - "\"It\u2019s"
+    - my
+    - birthday
+  - key: 1
+    value: Buy me the bag in the box.
+    words:
+    - Buy
+    - me
+    - the
+    - bag
+    - in
+    - the
+    - box.
+  - key: 1
+    value: Buy me the bat in the box.
+    words:
+    - Buy
+    - me
+    - the
+    - bat
+    - in
+    - the
+    - box.
+  - key: 1
+    value: Buy me the blocks in the box.
+    words:
+    - Buy
+    - me
+    - the
+    - blocks
+    - in
+    - the
+    - box.
+  - key: 1
+    value: "\"It\u2019s my birthday"
+    words:
+    - "\"It\u2019s"
+    - my
+    - birthday
+  - key: 2
+    value: I can make carrot candies.
+    words:
+    - I
+    - can
+    - make
+    - carrot
+    - candies.
+  - key: 2
+    value: I can bake carrot cookies.
+    words:
+    - I
+    - can
+    - bake
+    - carrot
+    - cookies.
+  - key: 2
+    value: I can bake carrot cake.
+    words:
+    - I
+    - can
+    - bake
+    - carrot
+    - cake.
+  - key: 2
+    value: I can make corn candies.
+    words:
+    - I
+    - can
+    - make
+    - corn
+    - candies.
+  - key: 2
+    value: I can bake corn cookies.
+    words:
+    - I
+    - can
+    - bake
+    - corn
+    - cookies.
+  - key: 2
+    value: I can bake corn cake.
+    words:
+    - I
+    - can
+    - bake
+    - corn
+    - cake.
+  - key: 3
+    value: I see a deer eating donuts at the dinner party.
+    words:
+    - I
+    - see
+    - a
+    - deer
+    - eating
+    - donuts
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 3
+    value: I see a donkey playing the drum at the dinner party.
+    words:
+    - I
+    - see
+    - a
+    - donkey
+    - playing
+    - the
+    - drum
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 3
+    value: I see a dinosaur drawing a picture at the dinner party.
+    words:
+    - I
+    - see
+    - a
+    - dinosaur
+    - drawing
+    - a
+    - picture
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 3
+    value: I see dolls dancing at the dinner party.
+    words:
+    - I
+    - see
+    - dolls
+    - dancing
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 3
+    value: I see a duck opening the door at the dinner party.
+    words:
+    - I
+    - see
+    - a
+    - duck
+    - opening
+    - the
+    - door
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 3
+    value: I see a dog wearing a diamond ring at the dinner party.
+    words:
+    - I
+    - see
+    - a
+    - dog
+    - wearing
+    - a
+    - diamond
+    - ring
+    - at
+    - the
+    - dinner
+    - party.
+  - key: 4
+    value: Eight little elephants saw an egg.
+    words:
+    - Eight
+    - little
+    - elephants
+    - saw
+    - an
+    - egg.
+  - key: 4
+    value: '"An elf said'
+    words:
+    - '"An'
+    - elf
+    - said
+  - key: 4
+    value: Then it changed into an elk.
+    words:
+    - Then
+    - it
+    - changed
+    - into
+    - an
+    - elk.
+  - key: 4
+    value: Eight little eagles saw an eggplant.
+    words:
+    - Eight
+    - little
+    - eagles
+    - saw
+    - an
+    - eggplant.
+  - key: 4
+    value: '"The elf said'
+    words:
+    - '"The'
+    - elf
+    - said
+  - key: 4
+    value: Then it changed into an envelop.
+    words:
+    - Then
+    - it
+    - changed
+    - into
+    - an
+    - envelop.
+  - key: 5
+    value: Find the frog playing the fiddle.
+    words:
+    - Find
+    - the
+    - frog
+    - playing
+    - the
+    - fiddle.
+  - key: 5
+    value: Find the fox stomping his feet.
+    words:
+    - Find
+    - the
+    - fox
+    - stomping
+    - his
+    - feet.
+  - key: 5
+    value: Find the fish floating in the lake.
+    words:
+    - Find
+    - the
+    - fish
+    - floating
+    - in
+    - the
+    - lake.
+  - key: 5
+    value: Find the friends having fun.
+    words:
+    - Find
+    - the
+    - friends
+    - having
+    - fun.
+  - key: 5
+    value: Find the flamingos jumping.
+    words:
+    - Find
+    - the
+    - flamingos
+    - jumping.
+  - key: 5
+    value: Find the bees flying.
+    words:
+    - Find
+    - the
+    - bees
+    - flying.
+  - key: 6
+    value: The gorilla wearing glasses plays golf.
+    words:
+    - The
+    - gorilla
+    - wearing
+    - glasses
+    - plays
+    - golf.
+  - key: 6
+    value: The gorilla wearing gloves plays golf.
+    words:
+    - The
+    - gorilla
+    - wearing
+    - gloves
+    - plays
+    - golf.
+  - key: 6
+    value: The gorilla wearing a green hat plays golf.
+    words:
+    - The
+    - gorilla
+    - wearing
+    - a
+    - green
+    - hat
+    - plays
+    - golf.
+  - key: 6
+    value: The goat wearing glasses plays the guitar.
+    words:
+    - The
+    - goat
+    - wearing
+    - glasses
+    - plays
+    - the
+    - guitar.
+  - key: 6
+    value: The goat wearing gloves plays the guitar.
+    words:
+    - The
+    - goat
+    - wearing
+    - gloves
+    - plays
+    - the
+    - guitar.
+  - key: 6
+    value: The goat wearing a green hat plays the guitar.
+    words:
+    - The
+    - goat
+    - wearing
+    - a
+    - green
+    - hat
+    - plays
+    - the
+    - guitar.
+  - key: 7
+    value: Did you hear the sound of the hammer?
+    words:
+    - Did
+    - you
+    - hear
+    - the
+    - sound
+    - of
+    - the
+    - hammer?
+  - key: 7
+    value: '"Yes'
+    words:
+    - '"Yes'
+  - key: 7
+    value: It was hard to bear.
+    words:
+    - It
+    - was
+    - hard
+    - to
+    - bear.
+  - key: 7
+    value: Did you hear the sound of the harp?
+    words:
+    - Did
+    - you
+    - hear
+    - the
+    - sound
+    - of
+    - the
+    - harp?
+  - key: 7
+    value: '"Yes'
+    words:
+    - '"Yes'
+  - key: 7
+    value: It was good to hear.
+    words:
+    - It
+    - was
+    - good
+    - to
+    - hear.
+  - key: 8
+    value: I went on a trip to India.
+    words:
+    - I
+    - went
+    - on
+    - a
+    - trip
+    - to
+    - India.
+  - key: 8
+    value: I saw iguanas and lizards.
+    words:
+    - I
+    - saw
+    - iguanas
+    - and
+    - lizards.
+  - key: 8
+    value: I went on a trip to Italy.
+    words:
+    - I
+    - went
+    - on
+    - a
+    - trip
+    - to
+    - Italy.
+  - key: 8
+    value: I ate Ice-cream and pizza.
+    words:
+    - I
+    - ate
+    - Ice-cream
+    - and
+    - pizza.
+  - key: 9
+    value: Jaguar is jogging in the jungle.
+    words:
+    - Jaguar
+    - is
+    - jogging
+    - in
+    - the
+    - jungle.
+  - key: 9
+    value: Jaguar is jumping in the jungle.
+    words:
+    - Jaguar
+    - is
+    - jumping
+    - in
+    - the
+    - jungle.
+  - key: 9
+    value: Jaguar is juggling in the jungle.
+    words:
+    - Jaguar
+    - is
+    - juggling
+    - in
+    - the
+    - jungle.
+  - key: 9
+    value: Jack is eating jellybeans in the jar.
+    words:
+    - Jack
+    - is
+    - eating
+    - jellybeans
+    - in
+    - the
+    - jar.
+  - key: 9
+    value: Jack is eating bread with jam.
+    words:
+    - Jack
+    - is
+    - eating
+    - bread
+    - with
+    - jam.
+  - key: 9
+    value: Jack is eating Johnnycake on the plate.
+    words:
+    - Jack
+    - is
+    - eating
+    - Johnnycake
+    - on
+    - the
+    - plate.
+  - key: 10
+    value: Kangaroo is jumping.
+    words:
+    - Kangaroo
+    - is
+    - jumping.
+  - key: 10
+    value: Koala is flying with the kite.
+    words:
+    - Koala
+    - is
+    - flying
+    - with
+    - the
+    - kite.
+  - key: 10
+    value: Koala and Kangaroo are the best friends.
+    words:
+    - Koala
+    - and
+    - Kangaroo
+    - are
+    - the
+    - best
+    - friends.
+  - key: 10
+    value: Kitten is jumping.
+    words:
+    - Kitten
+    - is
+    - jumping.
+  - key: 10
+    value: King is flying the kite.
+    words:
+    - King
+    - is
+    - flying
+    - the
+    - kite.
+  - key: 10
+    value: Kitten and king are the best friends
+    words:
+    - Kitten
+    - and
+    - king
+    - are
+    - the
+    - best
+    - friends
+  - key: 11
+    value: I like the little lion.
+    words:
+    - I
+    - like
+    - the
+    - little
+    - lion.
+  - key: 11
+    value: I like the lovely lizard.
+    words:
+    - I
+    - like
+    - the
+    - lovely
+    - lizard.
+  - key: 11
+    value: I like the large ladybug.
+    words:
+    - I
+    - like
+    - the
+    - large
+    - ladybug.
+  - key: 11
+    value: I love the lemon lollipop.
+    words:
+    - I
+    - love
+    - the
+    - lemon
+    - lollipop.
+  - key: 11
+    value: I love the large cookie.
+    words:
+    - I
+    - love
+    - the
+    - large
+    - cookie.
+  - key: 11
+    value: I love a cup of lettuce juice.
+    words:
+    - I
+    - love
+    - a
+    - cup
+    - of
+    - lettuce
+    - juice.
+  - key: 12
+    value: The monster on the map is scary.
+    words:
+    - The
+    - monster
+    - on
+    - the
+    - map
+    - is
+    - scary.
+  - key: 12
+    value: He likes mango juice.
+    words:
+    - He
+    - likes
+    - mango
+    - juice.
+  - key: 12
+    value: He likes milk.
+    words:
+    - He
+    - likes
+    - milk.
+  - key: 12
+    value: The monkey on the mat is funny.
+    words:
+    - The
+    - monkey
+    - on
+    - the
+    - mat
+    - is
+    - funny.
+  - key: 12
+    value: He likes melon Juice.
+    words:
+    - He
+    - likes
+    - melon
+    - Juice.
+  - key: 12
+    value: He likes mushrooms.
+    words:
+    - He
+    - likes
+    - mushrooms.
+  - key: 13
+    value: It's nine o'clock.
+    words:
+    - It's
+    - nine
+    - o'clock.
+  - key: 13
+    value: The bird's nose is cute.
+    words:
+    - The
+    - bird's
+    - nose
+    - is
+    - cute.
+  - key: 13
+    value: "The bird\u2019s neck is nice."
+    words:
+    - The
+    - "bird\u2019s"
+    - neck
+    - is
+    - nice.
+  - key: 13
+    value: Good morning.
+    words:
+    - Good
+    - morning.
+  - key: 13
+    value: The birds are sleeping in the nest.
+    words:
+    - The
+    - birds
+    - are
+    - sleeping
+    - in
+    - the
+    - nest.
+  - key: 13
+    value: Good night.
+    words:
+    - Good
+    - night.
+  - key: 14
+    value: Ostrich goes to the observatory.
+    words:
+    - Ostrich
+    - goes
+    - to
+    - the
+    - observatory.
+  - key: 14
+    value: Ostrich sees octagon stars.
+    words:
+    - Ostrich
+    - sees
+    - octagon
+    - stars.
+  - key: 14
+    value: Ostrich sees a very big octopus.
+    words:
+    - Ostrich
+    - sees
+    - a
+    - very
+    - big
+    - octopus.
+  - key: 14
+    value: Ostrich sees a lot of things.
+    words:
+    - Ostrich
+    - sees
+    - a
+    - lot
+    - of
+    - things.
+  - key: 14
+    value: Otter likes to cook with oil.
+    words:
+    - Otter
+    - likes
+    - to
+    - cook
+    - with
+    - oil.
+  - key: 14
+    value: Otter likes to cook with olives.
+    words:
+    - Otter
+    - likes
+    - to
+    - cook
+    - with
+    - olives.
+  - key: 14
+    value: Otter likes to cook omelet.
+    words:
+    - Otter
+    - likes
+    - to
+    - cook
+    - omelet.
+  - key: 14
+    value: Otter is the best cook.
+    words:
+    - Otter
+    - is
+    - the
+    - best
+    - cook.
+  - key: 15
+    value: I like popcorn.
+    words:
+    - I
+    - like
+    - popcorn.
+  - key: 15
+    value: I like to eat popcorn under the palm tree.
+    words:
+    - I
+    - like
+    - to
+    - eat
+    - popcorn
+    - under
+    - the
+    - palm
+    - tree.
+  - key: 15
+    value: I love pumpkin.
+    words:
+    - I
+    - love
+    - pumpkin.
+  - key: 15
+    value: I love pumpkin on the piano.
+    words:
+    - I
+    - love
+    - pumpkin
+    - on
+    - the
+    - piano.
+  - key: 16
+    value: I have questions
+    words:
+    - I
+    - have
+    - questions
+  - key: 16
+    value: "Why\u2019s the queen sitting on the quilt?"
+    words:
+    - "Why\u2019s"
+    - the
+    - queen
+    - sitting
+    - on
+    - the
+    - quilt?
+  - key: 16
+    value: "Why\u2019s the quail so small?"
+    words:
+    - "Why\u2019s"
+    - the
+    - quail
+    - so
+    - small?
+  - key: 16
+    value: Can you answer my questions?
+    words:
+    - Can
+    - you
+    - answer
+    - my
+    - questions?
+  - key: 16
+    value: "Why\u2019s the queen so quiet?"
+    words:
+    - "Why\u2019s"
+    - the
+    - queen
+    - so
+    - quiet?
+  - key: 16
+    value: Why does the quail fly so quickly?
+    words:
+    - Why
+    - does
+    - the
+    - quail
+    - fly
+    - so
+    - quickly?
+  - key: 17
+    value: The rabbit read the book at home.
+    words:
+    - The
+    - rabbit
+    - read
+    - the
+    - book
+    - at
+    - home.
+  - key: 17
+    value: The rabbit rolled around at home.
+    words:
+    - The
+    - rabbit
+    - rolled
+    - around
+    - at
+    - home.
+  - key: 17
+    value: The rabbit played the recorder.
+    words:
+    - The
+    - rabbit
+    - played
+    - the
+    - recorder.
+  - key: 17
+    value: This is how the rabbit spent time at home.
+    words:
+    - This
+    - is
+    - how
+    - the
+    - rabbit
+    - spent
+    - time
+    - at
+    - home.
+  - key: 17
+    value: The red panda listened to the radio.
+    words:
+    - The
+    - red
+    - panda
+    - listened
+    - to
+    - the
+    - radio.
+  - key: 17
+    value: The red panda ate ice cream.
+    words:
+    - The
+    - red
+    - panda
+    - ate
+    - ice
+    - cream.
+  - key: 17
+    value: The red panda rolled a dice.
+    words:
+    - The
+    - red
+    - panda
+    - rolled
+    - a
+    - dice.
+  - key: 17
+    value: This is how the red panda spent time at home.
+    words:
+    - This
+    - is
+    - how
+    - the
+    - red
+    - panda
+    - spent
+    - time
+    - at
+    - home.
+  - key: 18
+    value: I like to wear sunglasses.
+    words:
+    - I
+    - like
+    - to
+    - wear
+    - sunglasses.
+  - key: 18
+    value: I like to get on the submarine.
+    words:
+    - I
+    - like
+    - to
+    - get
+    - on
+    - the
+    - submarine.
+  - key: 18
+    value: I like to wear sunglasses in the submarine.
+    words:
+    - I
+    - like
+    - to
+    - wear
+    - sunglasses
+    - in
+    - the
+    - submarine.
+  - key: 18
+    value: I see the seal by the submarine.
+    words:
+    - I
+    - see
+    - the
+    - seal
+    - by
+    - the
+    - submarine.
+  - key: 18
+    value: I like to eat the sandwich.
+    words:
+    - I
+    - like
+    - to
+    - eat
+    - the
+    - sandwich.
+  - key: 18
+    value: I like to see sunflowers.
+    words:
+    - I
+    - like
+    - to
+    - see
+    - sunflowers.
+  - key: 18
+    value: I like to have a sandwich by the sunflowers.
+    words:
+    - I
+    - like
+    - to
+    - have
+    - a
+    - sandwich
+    - by
+    - the
+    - sunflowers.
+  - key: 18
+    value: I see the snake by the sunflowers.
+    words:
+    - I
+    - see
+    - the
+    - snake
+    - by
+    - the
+    - sunflowers.
+  - key: 19
+    value: I built a house in the tree.
+    words:
+    - I
+    - built
+    - a
+    - house
+    - in
+    - the
+    - tree.
+  - key: 19
+    value: I put the tulip in the house.
+    words:
+    - I
+    - put
+    - the
+    - tulip
+    - in
+    - the
+    - house.
+  - key: 19
+    value: I put the table in the house.
+    words:
+    - I
+    - put
+    - the
+    - table
+    - in
+    - the
+    - house.
+  - key: 19
+    value: What a trendy house!
+    words:
+    - What
+    - a
+    - trendy
+    - house!
+  - key: 19
+    value: I set the table in the house.
+    words:
+    - I
+    - set
+    - the
+    - table
+    - in
+    - the
+    - house.
+  - key: 19
+    value: I cooked the turkey and tacos.
+    words:
+    - I
+    - cooked
+    - the
+    - turkey
+    - and
+    - tacos.
+  - key: 19
+    value: I put two cups of tea.
+    words:
+    - I
+    - put
+    - two
+    - cups
+    - of
+    - tea.
+  - key: 19
+    value: What a tasty meal!
+    words:
+    - What
+    - a
+    - tasty
+    - meal!
+  - key: 20
+    value: Flying up with an umbrella is fun.
+    words:
+    - Flying
+    - up
+    - with
+    - an
+    - umbrella
+    - is
+    - fun.
+  - key: 20
+    value: Swimming in the tub with the sub is fun.
+    words:
+    - Swimming
+    - in
+    - the
+    - tub
+    - with
+    - the
+    - sub
+    - is
+    - fun.
+  - key: 20
+    value: Playing an umpire wearing a uniform is fun
+    words:
+    - Playing
+    - an
+    - umpire
+    - wearing
+    - a
+    - uniform
+    - is
+    - fun
+  - key: 20
+    value: "Hurry up. Let\u2019s play together."
+    words:
+    - Hurry
+    - up.
+    - "Let\u2019s"
+    - play
+    - together.
+  - key: 20
+    value: Flying up with a rug is fun.
+    words:
+    - Flying
+    - up
+    - with
+    - a
+    - rug
+    - is
+    - fun.
+  - key: 20
+    value: Swimming in the tub with the tube is fun.
+    words:
+    - Swimming
+    - in
+    - the
+    - tub
+    - with
+    - the
+    - tube
+    - is
+    - fun.
+  - key: 20
+    value: Playing an umpire wearing a unicorn cap is fun
+    words:
+    - Playing
+    - an
+    - umpire
+    - wearing
+    - a
+    - unicorn
+    - cap
+    - is
+    - fun
+  - key: 21
+    value: I can make vanilla chocolate.
+    words:
+    - I
+    - can
+    - make
+    - vanilla
+    - chocolate.
+  - key: 21
+    value: Very very yummy!
+    words:
+    - Very
+    - very
+    - yummy!
+  - key: 21
+    value: I can make vegetable soup.
+    words:
+    - I
+    - can
+    - make
+    - vegetable
+    - soup.
+  - key: 21
+    value: I can play the violin in the van well.
+    words:
+    - I
+    - can
+    - play
+    - the
+    - violin
+    - in
+    - the
+    - van
+    - well.
+  - key: 21
+    value: I can be scary like a vampire.
+    words:
+    - I
+    - can
+    - be
+    - scary
+    - like
+    - a
+    - vampire.
+  - key: 21
+    value: Very very scary!
+    words:
+    - Very
+    - very
+    - scary!
+  - key: 22
+    value: Look at the wizard walking with the wand.
+    words:
+    - Look
+    - at
+    - the
+    - wizard
+    - walking
+    - with
+    - the
+    - wand.
+  - key: 22
+    value: Look at the wizard waving at us.
+    words:
+    - Look
+    - at
+    - the
+    - wizard
+    - waving
+    - at
+    - us.
+  - key: 22
+    value: Look at the wizard cleaning the window.
+    words:
+    - Look
+    - at
+    - the
+    - wizard
+    - cleaning
+    - the
+    - window.
+  - key: 22
+    value: Look at the wizard wearing a watch.
+    words:
+    - Look
+    - at
+    - the
+    - wizard
+    - wearing
+    - a
+    - watch.
+  - key: 22
+    value: Look at the woodpecker eating a worm.
+    words:
+    - Look
+    - at
+    - the
+    - woodpecker
+    - eating
+    - a
+    - worm.
+  - key: 22
+    value: Look at the woodpecker pecking the wood.
+    words:
+    - Look
+    - at
+    - the
+    - woodpecker
+    - pecking
+    - the
+    - wood.
+  - key: 22
+    value: Look at the woodpecker sitting on the white rock.
+    words:
+    - Look
+    - at
+    - the
+    - woodpecker
+    - sitting
+    - on
+    - the
+    - white
+    - rock.
+  - key: 22
+    value: Look at the woodpecker with the wonderful wings
+    words:
+    - Look
+    - at
+    - the
+    - woodpecker
+    - with
+    - the
+    - wonderful
+    - wings
+  - key: 23
+    value: The fox on the box can play x-mas songs on a xylophone.
+    words:
+    - The
+    - fox
+    - on
+    - the
+    - box
+    - can
+    - play
+    - x-mas
+    - songs
+    - on
+    - a
+    - xylophone.
+  - key: 23
+    value: The ox by the blocks can make an x-mas tree with six bells.
+    words:
+    - The
+    - ox
+    - by
+    - the
+    - blocks
+    - can
+    - make
+    - an
+    - x-mas
+    - tree
+    - with
+    - six
+    - bells.
+  - key: 24
+    value: Do you like to play with the yellow yo-yo?
+    words:
+    - Do
+    - you
+    - like
+    - to
+    - play
+    - with
+    - the
+    - yellow
+    - yo-yo?
+  - key: 24
+    value: '"Yes'
+    words:
+    - '"Yes'
+  - key: 24
+    value: Do you like to eat the yellow bananas?
+    words:
+    - Do
+    - you
+    - like
+    - to
+    - eat
+    - the
+    - yellow
+    - bananas?
+  - key: 24
+    value: '"Yes'
+    words:
+    - '"Yes'
+  - key: 25
+    value: "Let\u2019s go to the zoo."
+    words:
+    - "Let\u2019s"
+    - go
+    - to
+    - the
+    - zoo.
+  - key: 25
+    value: There are zero zebras in the zoo.
+    words:
+    - There
+    - are
+    - zero
+    - zebras
+    - in
+    - the
+    - zoo.
+  - key: 25
+    value: But I see zebras in the zipper bag.
+    words:
+    - But
+    - I
+    - see
+    - zebras
+    - in
+    - the
+    - zipper
+    - bag.
+  - key: 25
+    value: I like zebras.
+    words:
+    - I
+    - like
+    - zebras.
+  - key: 25
+    value: "Let\u2019s go to the amusement park."
+    words:
+    - "Let\u2019s"
+    - go
+    - to
+    - the
+    - amusement
+    - park.
+  - key: 25
+    value: There are many zombies in the hunted house.
+    words:
+    - There
+    - are
+    - many
+    - zombies
+    - in
+    - the
+    - hunted
+    - house.
+  - key: 25
+    value: But I am not scared at all.
+    words:
+    - But
+    - I
+    - am
+    - not
+    - scared
+    - at
+    - all.
+  - key: 25
+    value: "Cause it\u2019s Happy Halloween."
+    words:
+    - Cause
+    - "it\u2019s"
+    - Happy
+    - Halloween.

@@ -19,7 +19,7 @@ public class JT_PL1_116 : BaseContents
 
     protected override bool CheckOver() => currentIndex == length;
 
-    private string[] words;
+    private WordsData.WordSources[] words;
     private eAlphabet[] alphabets;
 
     private int currentIndex=0;
@@ -40,7 +40,7 @@ public class JT_PL1_116 : BaseContents
             .ToArray();
 
         words = alphabets
-            .Select(x => GameManager.Instance.GetWords(x).OrderBy(y => Random.Range(0f, 100f)).First())
+            .Select(x => GameManager.Instance.GetResources(x).Words.OrderBy(y => Random.Range(0f, 100f)).First())
             .ToArray();
 
         upper = upper.OrderBy(x => Random.Range(0f, 100f)).ToArray();
@@ -48,8 +48,8 @@ public class JT_PL1_116 : BaseContents
 
         for(int i = 0;i < length; i++)
         {
-            upper[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphbetType.Upper);
-            lower[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphbetType.Lower);
+            upper[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphabetType.Upper);
+            lower[i].Init(alphabets[i], eAlphabetStyle.Brown, eAlphabetType.Lower);
 
             AddButtonListener(upper[i]);
             AddButtonListener(lower[i]);
@@ -58,9 +58,7 @@ public class JT_PL1_116 : BaseContents
     }
     private void PlayWord()
     {
-        var clip = GameManager.Instance.GetClipAct3(words[currentIndex]);
-        Debug.Log(clip);
-        audioPlayer.Play(clip);
+        audioPlayer.Play(words[currentIndex].act3);
     }
     
     private void AddButtonListener(AlphabetButton button)
@@ -74,8 +72,8 @@ public class JT_PL1_116 : BaseContents
             {
                 if (selected[0].value == alphabets[currentIndex] &&  selected[1].value == alphabets[currentIndex] && selected[0].type != selected[1].type)
                 {
-                    var clip = GameManager.Instance.GetClipAct3(words[currentIndex]);
-                    answerImage.Show(GameManager.Instance.GetSpriteWord(words[currentIndex]));
+                    var clip = words[currentIndex].act3;
+                    answerImage.Show(words[currentIndex].sprite);
                     audioPlayer.Play(clip,()=>
                     {
                         answerImage.gameObject.SetActive(false);

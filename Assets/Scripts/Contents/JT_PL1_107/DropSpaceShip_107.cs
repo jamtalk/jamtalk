@@ -18,24 +18,24 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Text text;
     public RectTransform point;
     public RectTransform line_rt;
-    public Action<string> onClick;
+    public Action<WordsData.WordSources> onClick;
     public event Action onDrop;
-    public string currentValue { get; private set; }
+    public WordsData.WordSources data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(string value)
+    public void Init(WordsData.WordSources data)
     {
-        currentValue = value;
+        this.data = data;
         isConnected = false;
-        text.text = value;
+        text.text = data.value;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        onClick?.Invoke(currentValue);
+        onClick?.Invoke(data);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -60,7 +60,7 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
                     return null;
             }))
             .Where(x => x != null)
-            .Where(x => x.currentValue == currentValue)
+            .Where(x => x.data.value == data.value)
             .ToList();
         Debug.Log(drop.Count());
         if (drop.Count > 0)

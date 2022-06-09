@@ -21,10 +21,10 @@ public class JT_PL1_121 : BaseContents
     public UIThrower110 thrower;
     private int index = 0;
     [SerializeField]
-    private string[] words;
+    private SentanceData.SentancesSource[] words;
     public EventSystem eventSystem;
     public AudioSinglePlayer audioPlayer;
-    private string currentSentance => words[index];
+    private SentanceData.SentancesSource currentSentance => words[index];
     private int questionCount => 2;
 
     protected override eContents contents => eContents.JT_PL1_121;
@@ -35,23 +35,22 @@ public class JT_PL1_121 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        words = GameManager.Instance.GetSentances(GameManager.Instance.currentAlphabet)
+        words = GameManager.Instance.GetResources().Sentances
             .OrderBy(x=>Random.Range(0f,100f))
             .Take(questionCount)
             .ToArray();
         index = 0;
         StartCoroutine(Init(currentSentance));
     }
-    private IEnumerator Init(string sentance)
+    private IEnumerator Init(SentanceData.SentancesSource data)
     {
         Clear();
         elements.Clear();
-        var words = sentance.Split(' ');
         var list = new List<RectTransform>();
-        for(int i = 0;i < words.Length; i++)
+        for(int i = 0;i < data.words.Length; i++)
         {
             var element = Instantiate(prefabWordElement, sentanceParent).GetComponent<WordElement121>();
-            element.Init(words[i]);
+            element.Init(data.words[i]);
             element.visible = false;
             elements.Add(element);
         }

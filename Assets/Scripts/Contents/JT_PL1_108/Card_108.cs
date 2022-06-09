@@ -7,35 +7,35 @@ public class Card_108 : MonoBehaviour
     public TurningCard turnner => GetComponent<TurningCard>();
     public ImageButton imageButton;
     [HideInInspector]
-    public string currentValue;
+    public WordsData.WordSources data;
     [HideInInspector]
-    public Action<string> onClick;
+    public Action<WordsData.WordSources> onClick;
     [HideInInspector]
-    public Func<string,bool> checkVaild;
+    public Func<WordsData.WordSources, bool> checkVaild;
     private void Awake()
     {
         turnner.onClick += () =>
         {
             CheckVaild();
-            onClick?.Invoke(currentValue);
+            onClick?.Invoke(data);
         };
     }
     private void CheckVaild()
     {
-        var vaild = checkVaild.Invoke(currentValue);
+        var vaild = checkVaild.Invoke(data);
         if (vaild)
         {
             turnner.Turnning();
         }
     }
-    public void Init(string value)
+    public void Init(WordsData.WordSources data)
     {
-        imageButton.SetSprite(GameManager.Instance.GetSpriteWord(value));
-        currentValue = value;
+        this.data = data;
+        imageButton.sprite = data.sprite;
         turnner.Init(1, () =>
         {
             if (!turnner.IsFornt)
-                onClick?.Invoke(value);
+                onClick?.Invoke(data);
         }, true, true);
     }
 }

@@ -22,9 +22,9 @@ public class JT_PL1_109 : BaseContents
     protected override int GetTotalScore() => questions.Length;
     protected override void Awake()
     {
-        var max = GameManager.Instance.GetWords().OrderByDescending(x => x.Length).First();
+        var max = GameManager.Instance.GetResources().Words.OrderByDescending(x => x.value.Length).First();
         base.Awake();
-        var words = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
+        var words = GameManager.Instance.GetResources().Words
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
@@ -35,20 +35,20 @@ public class JT_PL1_109 : BaseContents
             toggles[i].onEndDrag += OnEndDrag;
 
         ShowQuestion();
-        questionButton.button.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.word)));
+        questionButton.button.onClick.AddListener(() => audioPlayer.Play(currentQuestion.word.clip));
     }
     private void ShowQuestion()
     {
         var word = currentQuestion.word;
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].Init(currentQuestion.alphabets[i], i);
-        alphabetPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.word));
+        alphabetPlayer.Play(currentQuestion.word.clip);
         for(int i = 0;i < correct.Length; i++)
         {
-            if (word.Length > i)
+            if (word.value.Length > i)
             {
-                var type = i > 0 ? eAlphbetType.Lower : eAlphbetType.Upper;
-                var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word[i].ToString().ToUpper());
+                var type = i > 0 ? eAlphabetType.Lower : eAlphabetType.Upper;
+                var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word.value[i].ToString().ToUpper());
                 correct[i].gameObject.SetActive(true);
                 correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, eAlphabet);
                 correct[i].preserveAspect = true;
@@ -58,7 +58,7 @@ public class JT_PL1_109 : BaseContents
                 correct[i].gameObject.SetActive(false);
             }
         }
-        questionButton.image.sprite = GameManager.Instance.GetSpriteWord(word);
+        questionButton.image.sprite = word.sprite;
     }
     private void OnEndDrag()
     {
@@ -68,7 +68,7 @@ public class JT_PL1_109 : BaseContents
             .Select(x => x.value.ToString())
             .ToArray();
         
-        var word = currentQuestion.word
+        var word = currentQuestion.word.value
             .Select(x => x.ToString().ToUpper())
             .ToArray();
 
@@ -116,13 +116,13 @@ public class Question109
     private int width=>11;
     private int height=>5;
     public eAlphabet[] alphabets;
-    public string word;
+    public WordsData.WordSources word;
     public bool isCompleted;
-    public Question109(string word)
+    public Question109(WordsData.WordSources word)
     {
         this.word = word;
         isCompleted = false;
-        var wordAlphabets = word
+        var wordAlphabets = word.value
             .Select(x => (eAlphabet)System.Enum.Parse(typeof(eAlphabet), x.ToString().ToUpper()))
             .ToArray();
 
@@ -146,14 +146,14 @@ public class Question109
             .ToArray();
         var vaildPos = new List<int[]>();
         //세로 정답지 추가
-        if (word.Length < height)
+        if (word.value.Length < height)
         {
             for(int i = 0;i < width; i++)
             {
-                for(int j= 0; j < height-word.Length; j++)
+                for(int j= 0; j < height-word.value.Length; j++)
                 {
                     var tmp = new List<int>();
-                    for(int k = 0; k < word.Length; k++)
+                    for(int k = 0; k < word.value.Length; k++)
                     {
                         tmp.Add(GetIndex(new Vector2(i, j + k)));
                     }
@@ -164,10 +164,10 @@ public class Question109
         //가로 정답지 추가
         for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < width - word.Length; j++)
+            for (int j = 0; j < width - word.value.Length; j++)
             {
                 var tmp = new List<int>();
-                for (int k = 0; k < word.Length; k++)
+                for (int k = 0; k < word.value.Length; k++)
                 {
                     tmp.Add(GetIndex(new Vector2(j + k, i)));
                 }
@@ -180,7 +180,7 @@ public class Question109
         for(int i = 0;i < selectPos.Length; i++)
             alphabets[selectPos[i]] = wordAlphabets[i];
 
-        //var correctPosition = GetVaildPositions(word.Length)
+        //var correctPosition = GetVaildPositions(word.value.Length)
         //    .OrderBy(x => Random.Range(0f, 100f))
         //    .First();
 

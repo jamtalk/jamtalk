@@ -1,8 +1,9 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 #region Contents
 public abstract class BaseContents : MonoBehaviour
@@ -10,7 +11,7 @@ public abstract class BaseContents : MonoBehaviour
     [SerializeField]
     private GameObject popupResult;
     protected abstract eContents contents { get; }
-    protected eAlphbetType type = eAlphbetType.Upper;
+    protected eAlphabetType type = eAlphabetType.Upper;
     protected virtual eGameResult GetResult() => eGameResult.Perfect;
     private float time;
     private DateTime startTime;
@@ -22,7 +23,7 @@ public abstract class BaseContents : MonoBehaviour
         result.SetResult(GetResult());
         RequestManager.Instance.RequestAct(param, response =>
         {
-            Debug.Log("ÀúÀå ¿Ï·á");
+            Debug.Log("ê²°ê³¼ ë°›ê¸° ì™„ë£Œ");
         });
     }
     protected virtual EduLogParam param => new EduLogParam(
@@ -137,9 +138,7 @@ public abstract class Question<TAnswer>
 }
 public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 {
-    public virtual TAnswer[] RandomQuestions => new TAnswer[] { correct }.Union(questions)
-        .OrderBy(x => Guid.NewGuid().ToString())
-        .ToArray();
+    public TAnswer[] totalQuestion { get; protected set; }
     public TAnswer correct { get; protected set; }
     public TAnswer[] questions { get; protected set; }
 
@@ -147,6 +146,13 @@ public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
     {
         this.correct = correct;
         this.questions = questions;
+        totalQuestion = Merge();
+    }
+    protected virtual TAnswer[] Merge()
+    {
+        return questions.Union(new TAnswer[] { correct })
+            .OrderBy(x => Random.Range(0f, 100f))
+            .ToArray();
     }
 
     protected sealed override bool CheckCorrect(TAnswer answer) => correct.Equals(answer);
@@ -154,9 +160,7 @@ public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
 }
 public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
 {
-    public virtual TAnswer[] RandomQuestions => correct.Union(questions)
-        .OrderBy(x => Guid.NewGuid().ToString())
-        .ToArray();
+    public TAnswer[] totalQuestion { get; private set; }
     public int correctCount { get; protected set; }
     public TAnswer[] correct { get; protected set; }
     public TAnswer[] questions { get; protected set; }
@@ -169,7 +173,15 @@ public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
         this.correctCount = correct.Length;
         this.correct = correct;
         this.questions = questions;
+        totalQuestion = Merge();
     }
+    protected virtual TAnswer[] Merge()
+    {
+        return questions.Union(correct)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .ToArray();
+    }
+
 
     public override void SetAnswer(TAnswer answer)
     {

@@ -13,7 +13,7 @@ public class Card114 : MonoBehaviour
     public event Action onDeselected;
 
     public RectTransform star;
-    public void Init(eAlphabet alphabet, eAlphbetType type)
+    public void Init(eAlphabet alphabet, eAlphabetType type)
     {
         this.alphabet = alphabet;
         image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColorCard, type, alphabet);

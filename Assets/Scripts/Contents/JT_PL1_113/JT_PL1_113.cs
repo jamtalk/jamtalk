@@ -55,7 +55,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
         items = items.
             OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
-        var randomQuestion = question.RandomQuestions;
+        var randomQuestion = question.totalQuestion;
         var ch = charactors[Random.Range(0, charactors.Length)];
         ch.Init(question.correct);
 
@@ -67,7 +67,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             items[i].Init(value, spritesProduct.OrderBy(x => Random.Range(0f, 100f)).First());
             items[i].onClick += (item) =>
             {
-                audioPlayer.Play(GameManager.Instance.GetClipPhanics(item.value));
+                audioPlayer.Play(GameManager.Instance.GetResources(item.value).AudioData.phanics);
                 if(item.value == currentQuestion.correct)
                 {
                     ch.finger.gameObject.SetActive(false);

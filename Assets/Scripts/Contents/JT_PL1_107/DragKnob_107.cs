@@ -15,21 +15,22 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
     public Image line;
     private RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
-    public string currentValue;
+    public WordsData.WordSources currentValue;
     public event Action onDrop;
-    public event Action<string> onClick;
+    public event Action<WordsData.WordSources> onClick;
     public bool intractable = true;
     public bool isConnected = false;
+    public WordsData.WordSources data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(string value)
+    public void Init(WordsData.WordSources value)
     {
         intractable = true;
-        currentValue = value;
-        image.sprite = GameManager.Instance.GetSpriteWord(value);
+        this.data = value;
+        image.sprite = value.sprite;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -55,7 +56,7 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
                     return null;
             }))
             .Where(x => x != null)
-            .Where(x => x.currentValue == currentValue)
+            .Where(x => x.data == currentValue)
             .ToList();
         Debug.Log(drop.Count());
         if (drop.Count > 0)

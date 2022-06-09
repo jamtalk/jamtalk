@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class JT_PL1_107 : BaseContents
 {
@@ -18,13 +19,12 @@ public class JT_PL1_107 : BaseContents
     protected override void Awake()
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
-        var words = GameManager.Instance.GetWords()
-            .Where(x => x.First().ToString().ToUpper() == GameManager.Instance.currentAlphabet.ToString())
+        var words = GameManager.Instance.GetResources().Words
             .Take(drops.Length)
             .ToArray();
 
-        drops = drops.OrderBy(x => Guid.NewGuid().ToString()).ToArray();
-        drags = drags.OrderBy(x => Guid.NewGuid().ToString()).ToArray();
+        drops = drops.OrderBy(x=>Random.Range(0f,100f)).ToArray();
+        drags = drags.OrderBy(x=>Random.Range(0f,100f)).ToArray();
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -51,13 +51,13 @@ public class JT_PL1_107 : BaseContents
         }
 
     }
-    private void PlayAudio(string word)
+    private void PlayAudio(WordsData.WordSources word)
     {
-        audioPlayer.Play(GameManager.Instance.GetClipWord(word));
+        audioPlayer.Play(word.clip);
     }
     protected override void ShowResult()
     {
-        audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), base.ShowResult);
+        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
     }
 }
 

@@ -29,12 +29,13 @@ public class LocalDBEditor : Editor
         var data = new List<Hashtable>();
         using (var sr = new StreamReader(path))
         {
-            var keys = sr.ReadLine().Replace(" ", "").Split(',');
+            var keys = sr.ReadLine().Split(',');
+            Debug.Log(string.Join("\n", keys));
             var line = sr.ReadLine();
             while (!string.IsNullOrEmpty(line)) 
             {
                 var table = new Hashtable();
-                var values = line.Replace(" ", "").Split(',');
+                var values = line.Split(',');
                 for (int i = 0; i < keys.Length; i++)
                     table.Add(keys[i], values[i]);
                 data.Add(table);

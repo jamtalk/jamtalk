@@ -17,8 +17,8 @@ public class JT_PL1_105 : BaseContents
 
     private int questionCount => 4;
     private int currentIndex = 0;
-    private string[] questions;
-    private string currentQuestion => questions[currentIndex];
+    private WordsData.WordSources[] questions;
+    private WordsData.WordSources currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_105;
     protected override bool CheckOver() => currentIndex == questionCount;
     protected override int GetTotalScore() => questionCount;
@@ -27,7 +27,7 @@ public class JT_PL1_105 : BaseContents
     {
         base.Awake();
         currentIndex = 0;
-        questions = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
+        questions = GameManager.Instance.GetResources().Words
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
@@ -35,7 +35,7 @@ public class JT_PL1_105 : BaseContents
         for (int i = 0; i < buttonAudio.Length; i++)
             buttonAudio[i].onClick.AddListener(() =>
             {
-                audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion), PlayButtonTween);
+                audioPlayer.Play(currentQuestion.clip, PlayButtonTween);
             });
         
         buttonSTT.onSTT += OnSTTResult;
@@ -63,21 +63,21 @@ public class JT_PL1_105 : BaseContents
     }
     private void ShowQuestion()
     {
-        alphabetImage.Init(GameManager.Instance.ParsingAlphabet(currentQuestion));
-        image.sprite = GameManager.Instance.GetSpriteWord(currentQuestion);
+        alphabetImage.Init(currentQuestion.alphabet);
+        image.sprite = currentQuestion.sprite;
 
         if (buttonTween != null)
         {
             buttonTween.Kill();
             buttonTween = null;
         }
-        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion), PlayButtonTween);
+        audioPlayer.Play(currentQuestion.clip, PlayButtonTween);
         image.preserveAspect = true;
     }
     private void OnSTTResult(string result)
     {
         value.text = result;
-        if (currentQuestion.ToLower() == result.ToLower())
+        if (currentQuestion.value.ToLower() == result.ToLower())
         {
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
             {

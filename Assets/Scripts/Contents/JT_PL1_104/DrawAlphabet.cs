@@ -29,7 +29,7 @@ public class DrawAlphabet : MonoBehaviour
         paintingCanvas.onPaintingEnd -= OnEndPainting;
     }
 
-    public void Init(eAlphabet alphabet, eAlphbetType type)
+    public void Init(eAlphabet alphabet, eAlphabetType type)
     {
         isCompletedStroke = false;
         index = 0;

@@ -10,13 +10,13 @@ public class DropSapceShip_114 : MonoBehaviour
     public Image image;
     public AudioSinglePlayer beamPlayer;
     public AudioSinglePlayer alphbetPlayer;
-    public event Action<string> onInner;
+    public event Action<WordsData.WordSources> onInner;
 
     public RectTransform rtObject;
     public eAlphabet alphabet;
     public void Awake()
     {
-        button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetClipAct2(alphabet)));
+        button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2));
     }
     public void SetInner()
     {
@@ -30,7 +30,7 @@ public class DropSapceShip_114 : MonoBehaviour
     {
         SetInner();
         this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphbetType.Upper, alphabet);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, alphabet);
         image.preserveAspect = true;
 
         float duration = 2f;
@@ -38,21 +38,21 @@ public class DropSapceShip_114 : MonoBehaviour
         var tween = rtObject.DOAnchorPosY(0, duration);
         tween.onComplete += () =>
         {
-            alphbetPlayer.Play(GameManager.Instance.GetClipAct2(alphabet), onCompleted);
+            alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2, onCompleted);
         };
     }
-    public void InObject(Sprite sprite)
+    public void InObject(WordsData.WordSources data)
     {
         SetOutter();
-        image.sprite = sprite;
+        image.sprite = data.sprite;
         image.preserveAspect = true;
-        alphbetPlayer.Play(GameManager.Instance.GetClipAct3(sprite.name), () =>
+        alphbetPlayer.Play(data.act3, () =>
         {
             float duration = 2f;
             beamPlayer.Play(duration);
             var tween = rtObject.DOAnchorPosY(250f, duration);
             tween.SetEase(Ease.InCubic);
-            tween.onComplete += () => onInner?.Invoke(sprite.name);
+            tween.onComplete += () => onInner?.Invoke(data);
         });
     }
 }

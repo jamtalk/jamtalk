@@ -10,12 +10,12 @@ public class AlphabetButton : MonoBehaviour
     public Image image;
     public event Action<eAlphabet> onClick;
     public eAlphabet value { get; private set; }
-    public eAlphbetType type;
+    public eAlphabetType type;
     private void Awake()
     {
         button.onClick.AddListener(() => onClick?.Invoke(value));
     }
-    public void Init(eAlphabet alphabet, eAlphabetStyle style, eAlphbetType type)
+    public void Init(eAlphabet alphabet, eAlphabetStyle style, eAlphabetType type)
     {
         value = alphabet;
         this.type = type;

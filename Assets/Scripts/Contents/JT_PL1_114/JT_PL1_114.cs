@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class JT_PL1_114 : SingleAnswerContents<Question114, string>
+public class JT_PL1_114 : SingleAnswerContents<Question114, WordsData.WordSources>
 {
     public DropSapceShip_114 ship;
     public DragObject_114[] drags;
@@ -58,13 +58,13 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
         var list = new List<Question114>();
         for(int i = 0;i < QuestionCount; i++)
         {
-            var correctWord = GameManager.Instance.GetWords(correct[i])
+            var correctWord = GameManager.Instance.GetResources(correct[i]).Words
             .OrderBy(y => UnityEngine.Random.Range(0f, 100f))
             .First();
 
             var incorrect = GameManager.Instance.alphabets
                 .Where(x => !correct.Contains(x))
-                .SelectMany(x => GameManager.Instance.GetWords(x))
+                .SelectMany(x => GameManager.Instance.GetResources(x).Words)
                 .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
                 .Take(drags.Length - 1)
                 .ToArray();
@@ -83,12 +83,12 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
                 finger.gameObject.SetActive(true);
             SetIntractable(true);
         });
-        var questions = question.questions.Union(new string[] { question.correct })
+        var questions = question.questions.Union(new WordsData.WordSources[] { question.correct })
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .ToArray();
         for (int i = 0; i < drags.Length; i++)
         {
-            drags[i].Init(GameManager.Instance.GetSpriteWord(questions[i]));
+            drags[i].Init(questions[i]);
         }
     }
 
@@ -98,10 +98,10 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, string>
             drags[i].intracable = intracable;
     }
 }
-public class Question114 : SingleQuestion<string>
+public class Question114 : SingleQuestion<WordsData.WordSources>
 {
-    public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), correct.First().ToString().ToUpper());
-    public Question114(string correct, string[] questions) : base(correct, questions)
+    public eAlphabet alphabet => correct.alphabet;
+    public Question114(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
     {
     }
 }

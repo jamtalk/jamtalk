@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_119 : SingleAnswerContents<Question119, string>
+public class JT_PL1_119 : SingleAnswerContents<Question119, WordsData.WordSources>
 {
     public EventSystem eventSystem;
     public ButtonExitnction[] buttons;
@@ -18,7 +18,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
         get
         {
             var value = 5;
-            var words = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet);
+            var words = GameManager.Instance.GetResources().Words;
             if (words.Length < value)
                 value = words.Length;
             return value;
@@ -29,42 +29,41 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
     protected override void Awake()
     {
         base.Awake();
-        for(int i = 0;i < buttons.Length; i++)
-            AddButtonListener(buttons[i]);
         for (int i = 0; i < buttonSound.Length; i++)
             buttonSound[i].onClick.AddListener(() =>
             {
-                audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet));
+                audioPlayer.Play(GameManager.Instance.GetResources().AudioData.phanics);
                 if(finger!=null)
                 {
                     Destroy(finger);
                     finger = null;
                 }
             });
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(GameManager.Instance.currentAlphabet), () =>
+        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.phanics, () =>
         {
             if (finger != null)
                 finger.SetActive(true);
         });
     }
-    private void AddButtonListener(ButtonExitnction button)
+    private void AddButtonListener(ButtonExitnction button, WordsData.WordSources data)
     {
-        button.onClick += (value) =>
+        button.button.onClick.RemoveAllListeners();
+        button.button.onClick.AddListener(() =>
         {
             eventSystem.enabled = false;
             if (finger != null)
                 finger.gameObject.SetActive(false);
-            if (currentQuestion.correct == value)
+            if (currentQuestion.correct == data)
                 button.Exitnction();
             else
                 button.Incorrect();
-            audioPlayer.Play(GameManager.Instance.GetClipWord(value), () =>
+            audioPlayer.Play(data.clip, () =>
             {
                 eventSystem.enabled = true;
-                if (currentQuestion.correct == value)
+                if (currentQuestion.correct == data)
                 {
                     button.Exitnction();
-                    AddAnswer(value);
+                    AddAnswer(data);
                 }
                 else
                 {
@@ -72,12 +71,12 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
                         finger.gameObject.SetActive(true);
                 }
             });
-        };
+        });
     }
 
     protected override List<Question119> MakeQuestion()
     {
-        var correct = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
+        var correct = GameManager.Instance.GetResources().Words
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .ToArray();
@@ -85,8 +84,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
         var list = new List<Question119>();
         for (int i = 0;i < QuestionCount; i++)
         {
-            var incorrect = GameManager.Instance.GetWords()
-                .Where(x => !correct.Contains(x))
+            var incorrect = GameManager.Instance.GetResources().Words
+                .Where(x => !correct.Select(y=>y.value).Contains(x.value))
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttons.Length - 1)
                 .ToArray();
@@ -99,18 +98,19 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, string>
     {
         if (finger != null)
             finger.SetActive(true);
-        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphbetType.Upper, question.correct);
-        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphbetType.Lower, question.correct);
-        var questions = question.RandomQuestions;
+        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.alphabet);
+        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.alphabet);
+        var questions = question.totalQuestion;
         for(int i = 0;i < buttons.Length; i++)
         {
-            buttons[i].Init(GameManager.Instance.GetSpriteWord(questions[i]));
+            buttons[i].Init(questions[i].sprite);
+            AddButtonListener(buttons[i], questions[i]);
         }
     }
 }
-public class Question119 : SingleQuestion<string>
+public class Question119 : SingleQuestion<WordsData.WordSources>
 {
-    public Question119(string correct, string[] questions) : base(correct, questions)
+    public Question119(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
     {
     }
 }

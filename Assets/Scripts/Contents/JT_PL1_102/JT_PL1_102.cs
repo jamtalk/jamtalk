@@ -15,10 +15,13 @@ public class JT_PL1_102 : BaseContents
     public Button buttonEgg;
     public Egg egg;
     public AudioSinglePlayer audioPlayer;
+    public AlphabetAudioData.AlphabetAudioSource audioData;
     protected override void Awake()
     {
         base.Awake();
-        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphbetType.Upper);
+        audioData = GameManager.Instance.GetResources().AudioData;
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card,eAlphabetType.Upper,GameManager.Instance.currentAlphabet);
+
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
         egg.onBroken += OnBorken;
@@ -26,14 +29,14 @@ public class JT_PL1_102 : BaseContents
     }
     private void OnBorken()
     {
-        audioPlayer.Play(GameManager.Instance.GetClipAct2(GameManager.Instance.currentAlphabet), ShowResult);
+        audioPlayer.Play(audioData.act2,ShowResult);
     }
     private void OnClickEgg()
     {
         if (!CheckOver())
-            audioPlayer.Play(GameManager.Instance.GetClipPhanics());
+            audioPlayer.Play(audioData.phanics);
         else
-            audioPlayer.Play(GameManager.Instance.GetClipAlphbet());
+            audioPlayer.Play(audioData.phanics);
 
         currentClickCount += 1;
         if (CheckOver())

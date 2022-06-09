@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_120 : MultiAnswerContents<Question120,string>
+public class JT_PL1_120 : MultiAnswerContents<Question120,WordsData.WordSources>
 {
     public EventSystem eventSystem;
     public Button buttonRocket;
@@ -35,23 +35,21 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
     }
     private void AddCardOnClickListener(Card120 card)
     {
-        card.onClick += () =>
+        card.onClick += (data) =>
         {
-            var value = card.imageButton.image.sprite.name;
             eventSystem.enabled = false;
-            if (currentQuestion.correct.Contains(value))
+            if (currentQuestion.correct.Select(x=>x.value).Contains(data.value))
             {
                 if (finger != null)
                     finger.gameObject.SetActive(false);
                 var sprite = card.imageButton.image.sprite;
                 roket.valueUI.sprite = sprite;
 
-                var clip = GameManager.Instance.GetClipAct3(value);
-                audioPlayer.Play(clip, () =>
+                audioPlayer.Play(data.act3, () =>
                 {
                     roket.Away(sprite, () =>
                     {
-                        AddAnswer(value);
+                        AddAnswer(data);
                         if (!CheckOver())
                             CallRocket();
                         else
@@ -61,8 +59,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
             }
             else
             {
-                var clip = GameManager.Instance.GetClipAct3(value);
-                audioPlayer.Play(clip, () =>
+                audioPlayer.Play(data.act3, () =>
                 {
                     card.card.Turnning(onCompleted: () => eventSystem.enabled = true);
                 });
@@ -82,13 +79,12 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
             eventSystem.enabled = true;
         });
         roket.mask.gameObject.SetActive(true);
-        var currentValue = GameManager.Instance.ParsingAlphabet(currentQuestion.correct[currentQuestion.currentIndex]);
-        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphbetType.Lower, currentValue);
+        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].alphabet);
     }
     private void PlayAudio()
     {
-        var alphabet = GameManager.Instance.ParsingAlphabet(currentQuestion.correct[currentQuestion.currentIndex]);
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(alphabet));
+        var alphabet = currentQuestion.correct[currentQuestion.currentIndex].alphabet;
+        audioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics);
     }
     protected override List<Question120> MakeQuestion()
     {
@@ -103,13 +99,14 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
             var alphabet = alphabets[i];
             for(int j = 0; j < sameAlphabetCount; j++)
             {
-                var correct = GameManager.Instance.GetWords(alphabet)
+                var correct = GameManager.Instance.GetResources(alphabet).Words
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(correctCount)
                     .ToArray();
 
-                var incorrect = GameManager.Instance.GetWords()
-                    .Where(x=>!correct.Contains(x))
+                var incorrect = GameManager.Instance.alphabets
+                    .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
+                    .Where(x=>!correct.Select(y=>y.value).Contains(x.value))
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(cards.Length - correctCount)
                     .ToArray();
@@ -124,23 +121,22 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,string>
     {
         roket.Init();
         CallRocket();
-        var questions = question.RandomQuestions;
-        for(int i = 0;i < questions.Length; i++)
-            cards[i].Init(GameManager.Instance.GetSpriteWord(questions[i]));
+        for(int i = 0;i < question.totalQuestion.Length; i++)
+            cards[i].Init(question.totalQuestion[i]);
     }
 }
-public class Question120 : MultiQuestion<string>
+public class Question120 : MultiQuestion<WordsData.WordSources>
 {
     public int currentIndex { get; private set; }
-    public Question120(string[] correct, string[] questions) : base(correct, questions)
+    public Question120(WordsData.WordSources[] correct, WordsData.WordSources[] questions) : base(correct, questions)
     {
         currentIndex = 0;
     }
-    public override void SetAnswer(string answer)
+    public override void SetAnswer(WordsData.WordSources answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;
     }
 
-    protected override bool CheckCorrect(string answer) => correct.Contains(answer);
+    protected override bool CheckCorrect(WordsData.WordSources answer) => correct.Contains(answer);
 }

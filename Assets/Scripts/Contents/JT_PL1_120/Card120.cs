@@ -7,13 +7,15 @@ public class Card120 : MonoBehaviour
 {
     public TurningCard card;
     public ImageButton imageButton;
-    public event Action onClick;
-    public void Init(Sprite sprite)
+    public event Action<WordsData.WordSources> onClick;
+    public WordsData.WordSources data;
+    public void Init(WordsData.WordSources data)
     {
-        imageButton.SetSprite(sprite);
+        this.data = data;
+        imageButton.sprite = data.sprite;
         card.Init(alwaysBackDisable: true,callback:()=> {
             if (!card.IsFornt)
-                onClick?.Invoke();
+                onClick?.Invoke(data);
         });
         card.SetFront();
     }

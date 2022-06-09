@@ -33,13 +33,13 @@ public class JT_PL1_115 : BaseContents
 
             var upper = i;
             var lower = i + 1;
-            SetCard(randomCards[upper], questions[upper],eAlphbetType.Upper);
-            SetCard(randomCards[lower], questions[lower], eAlphbetType.Lower);
+            SetCard(randomCards[upper], questions[upper],eAlphabetType.Upper);
+            SetCard(randomCards[lower], questions[lower], eAlphabetType.Lower);
         }
 
         StartCoroutine(StartContent());   
     }
-    private void SetCard(Card114 card, eAlphabet alphabet, eAlphbetType type)
+    private void SetCard(Card114 card, eAlphabet alphabet, eAlphabetType type)
     {
         card.Init(alphabet, type);
         card.card.onClick += () => SetCardIntracable(false);
@@ -52,11 +52,11 @@ public class JT_PL1_115 : BaseContents
                 {
                     if (CheckOver())
                     {
-                        audioPlayer.Play(GameManager.Instance.GetClipAct2(value),ShowResult);
+                        audioPlayer.Play(GameManager.Instance.GetResources(value).AudioData.act2,ShowResult);
                     }
                     else
                     {
-                        audioPlayer.Play(GameManager.Instance.GetClipAct2(value), ()=>
+                        audioPlayer.Play(GameManager.Instance.GetResources(value).AudioData.act2, ()=>
                         {
                             selected[0].ShowStar();
                             selected[1].ShowStar();
@@ -68,7 +68,7 @@ public class JT_PL1_115 : BaseContents
                 }
                 else
                 {
-                    audioPlayer.Play(GameManager.Instance.GetClipPhanics(value));
+                    audioPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
                     selected[0].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected[1].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected.Clear();
@@ -76,7 +76,7 @@ public class JT_PL1_115 : BaseContents
             }
             else
             {
-                audioPlayer.Play(GameManager.Instance.GetClipPhanics(value));
+                audioPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
                 SetCardIntracable(true);
             }
         };

@@ -28,7 +28,7 @@ public class ButtonExitnction : MonoBehaviour
     public void Init(Sprite sprite)
     {
         incorrect.gameObject.SetActive(false);
-        imageButton.SetSprite(sprite);
+        imageButton.sprite = sprite;
         rtButton.localScale = Vector3.one;
         star.rotation = Quaternion.Euler(Vector3.zero);
         if(correctSequence != null)

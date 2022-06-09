@@ -5,9 +5,13 @@ public class ImageButton : MonoBehaviour
 {
     public Button button => GetComponent<Button>();
     public Image image;
-    public void SetSprite(Sprite sprite)
+    public Sprite sprite
     {
-        image.sprite = sprite;
-        image.preserveAspect = true;
+        get => image.sprite;
+        set
+        {
+            image.sprite = sprite;
+            image.preserveAspect = true;
+        }
     }
 }

@@ -6,10 +6,17 @@ using UnityEngine.UI;
 public class TextButton111 : TextButton
 {
     public Image image;
-    public override void Init(string value)
+    public event System.Action<WordsData.WordSources> onClickData;
+    public WordsData.WordSources data { get; private set; }
+    private void Awake()
     {
-        base.Init(value);
-        image.sprite = GameManager.Instance.GetSpriteWord(value);
+        button.onClick.AddListener(() => onClickData?.Invoke(data));
+    }
+    public void Init(WordsData.WordSources data)
+    {
+        base.Init(data.value);
+        this.data = data;
+        image.sprite = data.sprite;
         image.preserveAspect = true;
     }
 }

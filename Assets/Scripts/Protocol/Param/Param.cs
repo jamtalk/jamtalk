@@ -45,7 +45,7 @@ public class EduLogParam : UserParam
     public DateTime regdate;
     public eContents contents_title;
     public eAlphabet alphabet;
-    public eAlphbetType alphabetType; 
+    public eAlphabetType alphabetType; 
     public int level;
     public DateTime end_time;
     public TimeSpan timespan;
@@ -53,7 +53,7 @@ public class EduLogParam : UserParam
     public int correct_score;
     public float due;
 
-    public EduLogParam(string app_token, DateTime regdate, eContents contents_title, eAlphabet alphabet, eAlphbetType alphabetType, int level, DateTime end_time, TimeSpan timespan, int total_score, int correct_score, float due)
+    public EduLogParam(string app_token, DateTime regdate, eContents contents_title, eAlphabet alphabet, eAlphabetType alphabetType, int level, DateTime end_time, TimeSpan timespan, int total_score, int correct_score, float due)
         : base()
     {
         this.app_token = app_token;
@@ -75,7 +75,7 @@ public class EduLogParam : UserParam
         form.AddField("app_token", app_token);
         form.AddField("regdate", regdate.ToString("yyyy-MM-dd H:mm:ss"));
         form.AddField("contents_title", contents_title.ToString());
-        if (alphabetType == eAlphbetType.Upper)
+        if (alphabetType == eAlphabetType.Upper)
             form.AddField("alphabet", alphabet.ToString().ToUpper());
         else
             form.AddField("alphabet", alphabet.ToString().ToLower());

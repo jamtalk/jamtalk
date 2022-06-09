@@ -23,7 +23,7 @@ public class JT_PL1_103 : BaseContents
     {
         base.Awake();
         button.onClick.AddListener(PlayAudio);
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphbetType.Upper, question);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, question);
         image.preserveAspect = true;
         buttonSTT.onRecord += PlayButtonTween;
         buttonSTT.onSTT += OnSTTResult;
@@ -66,14 +66,14 @@ public class JT_PL1_103 : BaseContents
             buttonTween.Kill();
             buttonTween = null;
         }
-        audioPlayer.Play(GameManager.Instance.GetClipPhanics(question),()=>PlayButtonTween(false));
+        audioPlayer.Play(GameManager.Instance.GetResources(question).AudioData.phanics,()=>PlayButtonTween(false));
     }
     
     private void OnSTTResult(string result)
     {
         valueText.text = result;
         if (question.ToString().ToLower() == result.ToLower())
-            audioPlayer.Play(GameManager.Instance.GetClipAct2(question), ShowResult);
+            audioPlayer.Play(GameManager.Instance.GetResources(question).AudioData.act2, ShowResult);
     }
     private void OnSTTError(string message)
     {

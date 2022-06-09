@@ -13,11 +13,12 @@ public class SentanceData : LocalDBElement
     {
         public eAlphabet key;
         public string value;
-
+        public string[] words;
         public SentancesSource(eAlphabet key, string value)
         {
             this.key = key;
             this.value = value;
+            words = value.Split(' ');
         }
     }
 

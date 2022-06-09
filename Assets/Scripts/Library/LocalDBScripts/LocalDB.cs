@@ -7,6 +7,10 @@ using UnityEngine;
 public class LocalDB : ScriptableObject
 {
     [SerializeField]
+    private AudioClip correctClip;
+    public static string Path => "LocalDB";
+    public static LocalDB Instance => Resources.Load<LocalDB>(Path);
+    [SerializeField]
     private LocalDBElement[] elements;
 
     public T Get<T>() where T:LocalDBElement
@@ -16,6 +20,7 @@ public class LocalDB : ScriptableObject
             .Select(x=>(T)x)
             .FirstOrDefault();
     }
+    public AudioClip GetCorrectClip() => correctClip;
 
     public static T Find<T>(IEnumerable<T> datas, string name) where T:UnityEngine.Object
     {

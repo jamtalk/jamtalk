@@ -9,17 +9,17 @@ using System.Collections.Generic;
 public class AlphabetSpriteData : LocalDBElement
 {
     [Serializable]
-    private class AlphabetSpritePair
+    public class AlphabetSpritePair
     {
         [SerializeField]
         private Sprite[] upper;
         [SerializeField]
         private Sprite[] lower;
-        public Sprite Get(eAlphabet alhpabet, eAlphbetType type) => Get(type)[(int)alhpabet];
-        public Sprite[] Get(eAlphbetType type)
+        public Sprite Get(eAlphabetType type, eAlphabet alhpabet) => Get(type)[(int)alhpabet];
+        public Sprite[] Get(eAlphabetType type)
         {
             Sprite[] target;
-            if (type == eAlphbetType.Lower)
+            if (type == eAlphabetType.Lower)
                 target = lower;
             else
                 target = upper;
@@ -38,17 +38,9 @@ public class AlphabetSpriteData : LocalDBElement
     public override bool Loadable => false;
     [SerializeField]
     private SerializableDictionaryBase<eAlphabetStyle, AlphabetSpritePair> sprites;
-    private void Awake()
-    {
-        sprites = new SerializableDictionaryBase<eAlphabetStyle, AlphabetSpritePair>();
+    public AlphabetSpritePair Get(eAlphabetStyle style) => sprites[style];
+    public Sprite[] Get(eAlphabetStyle style, eAlphabetType type) => Get(style).Get(type);
+    public Sprite Get(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Get(style).Get(type, alphabet);
 
-        sprites.CopyFrom(
-            Enum.GetNames(typeof(eAlphabetStyle))
-            .Select(x => (eAlphabetStyle)Enum.Parse(typeof(eAlphabetStyle), x))
-            .OrderBy(x => (int)x)
-            .ToArray().ToDictionary(x => x, x => new AlphabetSpritePair())
-            );
-
-    }
     public override void Load(List<Hashtable> data) { }
 }

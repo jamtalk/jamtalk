@@ -30,7 +30,7 @@ public class DropToggle : MonoBehaviour
     public void Init(eAlphabet alphabet, bool isOn = false)
     {
         this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Dino,eAlphbetType.Upper,alphabet);
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Dino,eAlphabetType.Upper,alphabet);
         image.preserveAspect = true;
         this.isOn = isOn;
         this.alphabet = alphabet;

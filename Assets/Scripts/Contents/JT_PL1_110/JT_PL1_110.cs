@@ -13,7 +13,7 @@ public class JT_PL1_110 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioSinglePlayer audioPlayer;
-    private string word;
+    private WordsData.WordSources word;
     protected override eContents contents => eContents.JT_PL1_110;
 
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
@@ -21,7 +21,7 @@ public class JT_PL1_110 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        word = GameManager.Instance.GetWords(GameManager.Instance.currentAlphabet)
+        word = GameManager.Instance.GetResources().Words
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
         toggles = creator.Create(word);
@@ -48,16 +48,16 @@ public class JT_PL1_110 : BaseContents
         toggle.onOn += () =>
         {
             if (CheckOver())
-                audioPlayer.Play(GameManager.Instance.GetClipWord(word), ShowResult);
+                audioPlayer.Play(word.clip, ShowResult);
             else
-                audioPlayer.Play(GameManager.Instance.GetClipAlphbet(toggle.value));
+                audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };
     }
     private void AddDragListener(Dragable110 drag)
     {
         drag.onBegin += (eventData) =>
         {
-            audioPlayer.Play(GameManager.Instance.GetClipPhanics(drag.value));
+            audioPlayer.Play(GameManager.Instance.GetResources(drag.value).AudioData.phanics);
         };
 
         drag.onDrag += (eventData) =>
@@ -68,7 +68,6 @@ public class JT_PL1_110 : BaseContents
 
         drag.onDrop += (eventData) =>
         {
-            Debug.Log(drag.name + "ตๅทำ");
             var results = new List<RaycastResult>();
             caster.Raycast(eventData, results);
             var targets = results.Select(x => x.gameObject.GetComponent<Dropable110>()).Where(x => x != null);

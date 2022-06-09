@@ -29,7 +29,7 @@ public class BingoButton : MonoBehaviour
         this.value = value;
         isOn = false;
         button.interactable = true;
-        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(style, eAlphbetType.Upper, value);
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(style, eAlphabetType.Upper, value);
         imageStamp.gameObject.SetActive(false);
         imageAlphabet.gameObject.SetActive(true);
         imageStamp.sprite = Stamp;

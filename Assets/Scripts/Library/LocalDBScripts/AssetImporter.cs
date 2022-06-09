@@ -99,63 +99,63 @@ public class AssetImporter : ScriptableObject
     public AudioClip GetClipCorrectEffect() => clipCorrect;
 
     //SpriteGetter
-    public Sprite[] GetSpriteAlphabet(eAlphabetStyle contents, eAlphbetType type)
+    public Sprite[] GetSpriteAlphabet(eAlphabetStyle contents, eAlphabetType type)
     {
         switch (contents)
         {
             case eAlphabetStyle.Card:
                 return spriteAlphabetCard;
             case eAlphabetStyle.Brown:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetBrownUpper;
                 else
                     return spriteAlphabetBrownLower;
             case eAlphabetStyle.NeonYellow:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetNeonYellowUpper;
                 else
                     return spriteAlphabetNeonYellowLower;
             case eAlphabetStyle.NeonRed:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetNeonRedUpper;
                 else
                     return spriteAlphabetNeonRedLower;
             case eAlphabetStyle.NeonFulcolor:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetNeonColorfulUpper;
                 else
                     return spriteAlphabetNeonColorfulLower;
             case eAlphabetStyle.FullColor:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetFullColorUpper;
                 else
                     return spriteAlphabetFullColorLower;
             case eAlphabetStyle.Dino:
                 return spriteAlphabetDinoUpper;
             case eAlphabetStyle.FullColorCard:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetFullColorCardUpper;
                 else
                     return spriteAlphabetFullColorCardLower;
             case eAlphabetStyle.BingoRed:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetBingoRedUpper;
                 else
                     return spriteAlphabetBingoRedLower;
             case eAlphabetStyle.BingoBlue:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetBingoBlueUpper;
                 else
                     return spriteAlphabetBingoBlueLower;
             case eAlphabetStyle.Yellow:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetYellowUpper;
                 else
                     return spriteAlphabetYellowLower;
             case eAlphabetStyle.White:
                 return spriteAlphabetWhite;
             case eAlphabetStyle.Gray:
-                if (type == eAlphbetType.Upper)
+                if (type == eAlphabetType.Upper)
                     return spriteAlphabetGrayUpper;
                 else
                     return spriteAlphabetGrayLower;
@@ -163,7 +163,7 @@ public class AssetImporter : ScriptableObject
                 return null;
         }
     }
-    public Sprite GetSpriteAlphabet(eAlphabetStyle style, eAlphbetType type, eAlphabet alphabet) => GetSpriteAlphabet(style, type)[(int)alphabet];
+    public Sprite GetSpriteAlphabet(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => GetSpriteAlphabet(style, type)[(int)alphabet];
     public Sprite[] GetSpriteWord(eAlphabet alphbet) => spriteWords.Where(x => x.name.First().ToString().ToUpper() == alphbet.ToString().ToUpper()).ToArray();
     public Sprite[] GetSpriteWord() => spriteWords;
     public Sprite GetSpriteWord(string word) => spriteWords.ToList().Find(x => x.name == word);

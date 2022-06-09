@@ -6,13 +6,9 @@ using UnityEngine.UI;
 public class WordImage105 : MonoBehaviour
 {
     public Image image;
-    private void Awake()
+    public void Init(Sprite sprite)
     {
-        Init("apple");
-    }
-    public void Init(string word)
-    {
-        image.sprite = GameManager.Instance.GetSpriteWord(word);
+        image.sprite = sprite;
         image.preserveAspect = true;
     }
 }

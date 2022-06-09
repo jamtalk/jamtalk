@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL1_118 : SingleAnswerContents<Question118, string>
+public class JT_PL1_118 : SingleAnswerContents<Question118, WordsData.WordSources>
 {
     public Text textQuestion;
     public Button buttonQuestion;
@@ -13,23 +13,17 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, string>
     private int alphabetCount = 2;
 
     protected override eContents contents => eContents.JT_PL1_118;
-    protected override void Awake()
+    private void AddButtonListener(ImageButton button, WordsData.WordSources data)
     {
-        base.Awake();
-        for(int i = 0;i < buttonsAnswer.Length; i++)
-            AddButtonListener(buttonsAnswer[i]);
-    }
-    private void AddButtonListener(ImageButton button)
-    {
+        button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
         {
-            var value = button.image.sprite.name;
-            if(value == currentQuestion.correct)
+            if(data == currentQuestion.correct)
             {
                 button.button.interactable = false;
-                audioPlayer.Play(GameManager.Instance.GetClipWord(value), () =>
+                audioPlayer.Play(data.clip, () =>
                  {
-                     AddAnswer(value);
+                     AddAnswer(data);
                      if (!CheckOver())
                          button.button.interactable = true;
                  });
@@ -41,40 +35,43 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, string>
         var corrects = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
             .Take(alphabetCount)
-            .SelectMany(x=>GameManager.Instance.GetWords(x).OrderBy(x => Random.Range(0f, 100f)).Take(QuestionCount/alphabetCount))
+            .SelectMany(x=>GameManager.Instance.GetResources(x).Words.OrderBy(x => Random.Range(0f, 100f)).Take(QuestionCount/alphabetCount))
             .ToArray();
 
-        var incorrects = GameManager.Instance.GetWords()
-            .Where(x => !corrects.Contains(x))
+        var incorrects = GameManager.Instance.GetResources().Words
+            .Where(x => !corrects.Select(y=>y.value).Contains(x.value))
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .ToArray();
 
         var list = new List<Question118>();
         for(int i = 0; i< corrects.Length; i++)
-            list.Add(new Question118(corrects[i], new string[] { incorrects[i] }));
+            list.Add(new Question118(corrects[i], new WordsData.WordSources[] { incorrects[i] }));
         return list;
     }
 
     protected override void ShowQuestion(Question118 question)
     {
-        audioPlayer.Play(GameManager.Instance.GetClipAct3(question.correct));
-        buttonQuestion.onClick.RemoveAllListeners();
-        buttonQuestion.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetClipAct3(question.correct)));
+        for(int i = 0;i < buttonsAnswer.Length; i++)
+        {
+            AddButtonListener(buttonsAnswer[i], question.totalQuestion[i]);
+            buttonsAnswer[i].sprite = question.totalQuestion[i].sprite;
+        }
 
-        var randomImage = question.RandomQuestions
-            .Select(x => GameManager.Instance.GetSpriteWord(x))
+        audioPlayer.Play(question.correct.act3);
+        buttonQuestion.onClick.RemoveAllListeners();
+        buttonQuestion.onClick.AddListener(() => audioPlayer.Play(question.correct.act3));
+
+        var randomImage = question.totalQuestion
+            .Select(x => x.sprite)
             .ToArray();
 
-        for (int i = 0;i < buttonsAnswer.Length; i++)
-            buttonsAnswer[i].SetSprite(randomImage[i]);
-
-        textQuestion.text = question.correct;
+        textQuestion.text = question.correct.value;
     }
 }
-public class Question118 : SingleQuestion<string>
+public class Question118 : SingleQuestion<WordsData.WordSources>
 {
-    public Question118(string correct, string[] questions) : base(correct, questions)
+    public Question118(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
     {
         
     }

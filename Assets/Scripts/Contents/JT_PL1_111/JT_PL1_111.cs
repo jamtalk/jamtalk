@@ -5,8 +5,9 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
-public class JT_PL1_111 : MultiAnswerContents<Question111, string>
+public class JT_PL1_111 : MultiAnswerContents<Question111, WordsData.WordSources>
 {
     protected override int QuestionCount => 2;
     public GameObject finger;
@@ -40,16 +41,16 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
         var list = new List<Question111>();
         for(int i = 0;i < QuestionCount; i++)
         {
-            var corrects = GameManager.Instance.GetWords()
-               .Where(x => x.First().ToString().ToUpper() == GameManager.Instance.currentAlphabet.ToString())
-               .OrderBy(x => Guid.NewGuid().ToString())
+            var corrects = GameManager.Instance.GetResources().Words
+               .OrderBy(x => Random.Range(0f,100f))
                .Take(correctCount)
                .ToArray();
-            var incorrects = GameManager.Instance.GetWords()
-               .Where(x => x.First().ToString().ToUpper() != GameManager.Instance.currentAlphabet.ToString())
-               .OrderBy(x => Guid.NewGuid().ToString())
-               .Take(incorrectCount)
-               .ToArray();
+            var incorrects = GameManager.Instance.alphabets
+                .Where(x=>x!=GameManager.Instance.currentAlphabet)
+                .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(incorrectCount)
+                .ToArray();
             list.Add(new Question111(corrects, incorrects));
         }
         return list;    
@@ -60,8 +61,8 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     }
     protected override void ShowQuestion(Question111 question)
     {
-        var randomQuestions = question.RandomQuestions;
-        for(int i=0;i < randomQuestions.Length; i++)
+        var randomQuestions = question.totalQuestion;
+        for (int i=0;i < randomQuestions.Length; i++)
         {
             buttons[i].gameObject.SetActive(true);
             buttons[i].Init(randomQuestions[i]);
@@ -77,11 +78,11 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
         rocket.audioPlayer.Stop();
         base.ShowResult();
     }
-    private void AddOnClickTextButtonListener(TextButton button)
+    private void AddOnClickTextButtonListener(TextButton111 button)
     {
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
-        button.onClick += (value) =>
+        button.onClickData += (value) =>
         {
             PlayWord(value);
             if (currentQuestion.currentCorrect == value)
@@ -108,7 +109,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
                 seq.onComplete += () =>
                 {
                     button.gameObject.SetActive(false);
-                    rocket.Away(value, () =>
+                    rocket.Away(value.value, () =>
                     {
                         AddAnswer(value);
                         Debug.LogFormat("현재 문제 : {0}/{1}\n현재 문제 풀이 상황 : {2}/{3}", 
@@ -127,11 +128,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(string word)
-    {
-        var clip = GameManager.Instance.GetClipWord(word);
-        audioPlayer.Play(clip);
-    }
+    private void PlayWord(WordsData.WordSources word)=> audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         if(finger != null)
@@ -146,17 +143,17 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, string>
         });
     }
 }
-public class Question111 : MultiQuestion<string>
+public class Question111 : MultiQuestion<WordsData.WordSources>
 {
     public int currentIndex { get; private set; } = 0;
-    public string currentCorrect => correct[currentIndex];
+    public WordsData.WordSources currentCorrect => correct[currentIndex];
     
-    public Question111(string[] correct, string[] questions) : base(correct, questions)
+    public Question111(WordsData.WordSources[] correct, WordsData.WordSources[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(string answer) => currentCorrect == answer;
-    public override void SetAnswer(string answer)
+    protected override bool CheckCorrect(WordsData.WordSources answer) => currentCorrect == answer;
+    public override void SetAnswer(WordsData.WordSources answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

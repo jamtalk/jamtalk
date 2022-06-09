@@ -42,7 +42,7 @@ public class JT_PL1_112 : BaseContents
         {
             for (int i = 0; i < drags.Length; i++)
                 drags[i].intracable = false;
-            audioPlayer.Play(GameManager.Instance.GetClipAct2(toggle.alphabet),()=>
+            audioPlayer.Play(GameManager.Instance.GetResources(toggle.alphabet).AudioData.act2,()=>
             {
                 if (CheckOver())
                     ShowResult();

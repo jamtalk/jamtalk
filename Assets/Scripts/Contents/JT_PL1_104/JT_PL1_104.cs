@@ -17,14 +17,14 @@ public class JT_PL1_104 : BaseContents
         base.Awake();
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         drawAlphabet.onCompleted += ShowResult;
-        drawAlphabet.Init(GameManager.Instance.currentAlphabet, eAlphbetType.Upper);
+        drawAlphabet.Init(GameManager.Instance.currentAlphabet, eAlphabetType.Upper);
     }
 
     protected override bool CheckOver() => true;
     protected override void ShowResult()
     {
         mask.gameObject.SetActive(false);
-        audioPlayer.Play(GameManager.Instance.GetClipAct2(), base.ShowResult);
+        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
     }
 
     private void OnDisable()

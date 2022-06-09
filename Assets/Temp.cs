@@ -10,7 +10,7 @@ public class Drawable : MonoBehaviour
     public Image image;
     public AlphabetPaths paths;
     public eAlphabet alphabet;
-    public eAlphbetType type;
+    public eAlphabetType type;
     private void Awake()
     {
     }

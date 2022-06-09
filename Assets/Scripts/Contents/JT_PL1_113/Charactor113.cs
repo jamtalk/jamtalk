@@ -23,7 +23,7 @@ public class Charactor113 : MonoBehaviour
     public Image product;
     private void Awake()
     {
-        button.onClick.AddListener(() => clapPlayer.Play(GameManager.Instance.GetClipPhanics(value)));
+        button.onClick.AddListener(() => clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics));
     }
     public void Init(eAlphabet value)
     {
@@ -55,7 +55,7 @@ public class Charactor113 : MonoBehaviour
         {
             anim.Stop();
             movePlayer.Stop();
-            clapPlayer.Play(GameManager.Instance.GetClipPhanics(value));
+            clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
             eventSystem.enabled = true;
 
             finger.SetActive(true);

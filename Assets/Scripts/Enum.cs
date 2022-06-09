@@ -134,7 +134,7 @@ public enum eAlphabetStyle
     NeonFulcolor,
 }
 
-public enum eAlphbetType
+public enum eAlphabetType
 {
     Upper,
     Lower

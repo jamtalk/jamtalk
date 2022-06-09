@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95b744e45e6d5448931b10630481a96, type: 3}
   m_Name: LocalDB
   m_EditorClassIdentifier: 
-  elements: []
+  correctClip: {fileID: 8300000, guid: da37d69cfcc583c4cbfd89286eac5241, type: 3}
+  elements:
+  - {fileID: 11400000, guid: b086cf44d8fa4e6499ad89b624385a5b, type: 2}
+  - {fileID: 11400000, guid: 2d4f1af9fb123284aa6f4d7f9188ce5e, type: 2}
+  - {fileID: 11400000, guid: e0f3d8cd68ec2d84fabeec303d493d88, type: 2}
+  - {fileID: 11400000, guid: 0633c27730edbbe458570edd3a603cf2, type: 2}

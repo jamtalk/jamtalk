@@ -40,7 +40,7 @@ public class AlphabetToggle110 : MonoBehaviour
     public void Init(eAlphabet alphabet)
     {
         var index = parent.GetSiblingIndex();
-        var type = index == 0 ? eAlphbetType.Upper : eAlphbetType.Lower;
+        var type = index == 0 ? eAlphabetType.Upper : eAlphabetType.Lower;
         var sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, alphabet);
         value = alphabet;
 

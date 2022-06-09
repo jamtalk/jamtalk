@@ -8,17 +8,17 @@ using UnityEngine;
 public class WordsData : LocalDBElement
 {
     [Serializable]
-    private class WordSources
+    public class WordSources
     {
         public eAlphabet alphabet;
         public string value;
         public Sprite sprite;
         public AudioClip clip;
-        public AudioClip act;
+        public AudioClip act3;
         public bool IsNull => string.IsNullOrEmpty(value) ||
             sprite == null ||
             clip == null ||
-            act == null;
+            act3 == null;
 
         public WordSources(eAlphabet alphabet, string word, Sprite image, AudioClip clip, AudioClip act)
         {
@@ -26,12 +26,29 @@ public class WordsData : LocalDBElement
             this.value = word;
             this.sprite = image;
             this.clip = clip;
-            this.act = act;
+            this.act3 = act;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is WordSources sources &&
+                   alphabet == sources.alphabet &&
+                   value == sources.value;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1117737164;
+            hashCode = hashCode * -1521134295 + alphabet.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
+            return hashCode;
         }
     }
     [SerializeField]
     private WordSources[] data;
-
+    public WordSources[] Get() => data;
+    public WordSources[] Get(eAlphabet alphabet) => data.Where(x => x.alphabet == alphabet).ToArray();
+    public WordSources Get(eAlphabet alphabet, string word) => Get(alphabet).ToList().Find(x => x.value == word);
     [Header("Orizinal Data")]
     [SerializeField]
     private Sprite[] sprites;
@@ -42,6 +59,8 @@ public class WordsData : LocalDBElement
 
     public override void Load(List<Hashtable> data)
     {
+        int current = sprites.Length;
+        sprites = sprites.Distinct().ToArray();
         var tmp = new List<WordSources>();
         for (int i = 0; i < data.Count; i++)
         {
@@ -49,7 +68,7 @@ public class WordsData : LocalDBElement
             var clip = datas["clip"].ToString();
             var act = datas["act"].ToString();
             var value = datas["key"].ToString();
-            var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), datas["alhpabet"].ToString());
+            var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), datas["alphabet"].ToString());
             tmp.Add(new WordSources(
                 alphabet,
                 value,
@@ -58,7 +77,7 @@ public class WordsData : LocalDBElement
                 LocalDB.Find(acts, act)
                 ));
         }
-        this.data = tmp.ToArray();
+        this.data = tmp.Where(x=>!x.IsNull).ToArray();
 
         var spritesNames = sprites.Select(x => x.name);
         var dataNames = this.data.Select(x => x.value);
@@ -71,7 +90,7 @@ public class WordsData : LocalDBElement
                    missingItem = "Sprite";
                else if (x.clip == null)
                    missingItem = "Audio";
-               else if (x.act == null)
+               else if (x.act3 == null)
                    missingItem = "Act";
                else
                    missingItem = "UnKnwon";
