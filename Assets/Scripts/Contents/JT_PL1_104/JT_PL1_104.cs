@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JT_PL1_104 : BaseContents
 {
@@ -24,6 +25,8 @@ public class JT_PL1_104 : BaseContents
     protected override void ShowResult()
     {
         mask.gameObject.SetActive(false);
+        var tween = drawAlphabet.transform.DOScale(1.5f, .5f);
+        tween.SetLoops(2, LoopType.Yoyo);
         audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
     }
 
