@@ -35,6 +35,12 @@ public class GameManager : MonoSingleton<GameManager>
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style, type, alphabet);
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public WordsData.WordSources FindWord(eAlphabet alphabet, string value) => datas[alphabet].Words.ToList().Find(x => x.value == value);
+    public Vector3 GetMousePosition(float z = 0)
+    {
+        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos.z = z;
+        return pos;
+    }
 }
 
 public class AlphabetData
