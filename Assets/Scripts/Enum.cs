@@ -22,6 +22,7 @@ public enum eSceneName
     JT_PL1_119,
     JT_PL1_120,
     JT_PL1_121,
+    JT_PL2_108,
 }
 
 public enum eContents
@@ -46,6 +47,7 @@ public enum eContents
     JT_PL1_119,
     JT_PL1_120,
     JT_PL1_121,
+    JT_PL2_108,
 }
 
 public enum eAlphabet
@@ -158,14 +160,14 @@ public enum eCharactorDirection
 }
 public enum eAPIAct
 {
-    register,       //회원가입
-    memberinfo,     //회원정보수정
-    exists,         //아이디중복검사
-    member,         //회원정보조회
-    login,          //로그인
-    memberout,      //회원탈퇴
-    board,          //게시판조회
-    couponreg,      //쿠폰생성
-    edulog,         //학습기록
-    edulog_view,    //학습기록 조회
+    register,       //????????
+    memberinfo,     //????????????
+    exists,         //??????????????
+    member,         //????????????
+    login,          //??????
+    memberout,      //????????
+    board,          //??????????
+    couponreg,      //????????
+    edulog,         //????????
+    edulog_view,    //???????? ????
 }
