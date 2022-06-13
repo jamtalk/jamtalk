@@ -18,14 +18,20 @@ public class Egg : MonoBehaviour
     public AudioClip crackClip;
     public event Action onBroken;
     public bool isCrakced => imageEgg.sprite == spriteCrack;
+    Coroutine shaking;
+    private void Awake()
+    {
+        shaking = StartCoroutine(Shaking());
+    }
     public void SetCrack()
     {
         PlayAudio(crackClip);
         imageEgg.sprite = spriteCrack;
-        imageEgg.rectTransform.DOShakePosition(1f,30);
+        imageEgg.rectTransform.DOShakePosition(1f,50);
     }
     public void Break()
     {
+        StopCoroutine(shaking);
         imageEgg.gameObject.SetActive(false);
         var seq = DOTween.Sequence();
         foreach(var pice in pices)
@@ -64,5 +70,18 @@ public class Egg : MonoBehaviour
             audioPlayer.Stop();
         audioPlayer.clip = clip;
         audioPlayer.Play();
+    }
+    public IEnumerator Shaking()
+    {
+        while (true)
+        {
+            var delay = UnityEngine.Random.Range(2f, 5f);
+            yield return new WaitForSeconds(delay);
+
+            var isShaking = true;
+            var tween = imageEgg.rectTransform.DOShakePosition(.5f, 30);
+            tween.onComplete += () => isShaking = false;
+            while (isShaking) { yield return null; }
+        }
     }
 }

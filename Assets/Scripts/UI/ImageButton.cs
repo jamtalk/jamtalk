@@ -10,8 +10,9 @@ public class ImageButton : MonoBehaviour
         get => image.sprite;
         set
         {
-            image.sprite = sprite;
+            image.sprite = value;
             image.preserveAspect = true;
+            image.name = value.name;
         }
     }
 }
