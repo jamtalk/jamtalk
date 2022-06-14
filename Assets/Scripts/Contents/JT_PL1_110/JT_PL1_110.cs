@@ -14,8 +14,8 @@ public class JT_PL1_110 : BaseContents
     public UIMover[] mover;
     public AudioSinglePlayer audioPlayer;
     private WordsData.WordSources word;
-    protected override eContents contents => eContents.JT_PL1_110;
 
+    protected override eContents contents => eContents.JT_PL1_110;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     protected override int GetTotalScore() => 1;
     protected override void Awake()
@@ -31,6 +31,7 @@ public class JT_PL1_110 : BaseContents
 
         var throwElements = toggles.Select(x => x.throwElement).ToArray();
         thrower.Init(throwElements);
+        
         thrower.Throwing(2f, 3f,onTrowed:()=>
         {
             for (int i = 0; i < dragables.Length; i++)

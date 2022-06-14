@@ -29,6 +29,22 @@ public class AudioSinglePlayer : MonoBehaviour
             overRoutine = null;
         }
     }
+
+    /// <summary>
+    /// invoke로만 delay 호출
+    /// </summary>
+    private void Play()
+    {
+        player.Play();
+    }
+    public void Play(AudioClip clip, float delay)
+    {
+        if (player.isPlaying)
+            Stop();
+        if (clip != null)
+            player.clip = clip;
+        Invoke("Play", delay);
+    }
     public void Play(AudioClip clip = null)
     {
         if (player.isPlaying)

@@ -8,6 +8,9 @@ public class UIThrower110 : MonoBehaviour
 {
     public RectTransform[] targets;
     public RectTransform[] paths;
+    public AudioClip scatterClip;
+    public AudioSinglePlayer player;
+
     public void Init(RectTransform[] targets)
     {
         this.targets = targets;
@@ -30,6 +33,7 @@ public class UIThrower110 : MonoBehaviour
         }
         seq.onComplete += onTrowed;
         seq.Play();
+        player.Play(scatterClip, 4f);
     }
     private Tween MakeTween(RectTransform target, RectTransform path, float duration)
     {

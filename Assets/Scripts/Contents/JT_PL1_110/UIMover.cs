@@ -4,8 +4,8 @@ using DG.Tweening;
 
 public class UIMover : MonoBehaviour
 {
-    public RectTransform rt => GetComponent<RectTransform>();
-    public RectTransform[] paths;
+    public  RectTransform rt => GetComponent<RectTransform>();
+    public  RectTransform[] paths;
     public void Move(float duration, float delay = 0,TweenCallback onCompleted=null)
     {
         var seq = DOTween.Sequence();
