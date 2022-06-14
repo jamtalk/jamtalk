@@ -15,7 +15,6 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
     public Image line;
     private RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
-    public WordsData.WordSources currentValue;
     public event Action onDrop;
     public event Action<WordsData.WordSources> onClick;
     public bool intractable = true;
@@ -56,7 +55,7 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
                     return null;
             }))
             .Where(x => x != null)
-            .Where(x => x.data == currentValue)
+            .Where(x => x.data == data)
             .ToList();
         Debug.Log(drop.Count());
         if (drop.Count > 0)
@@ -107,6 +106,6 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        onClick?.Invoke(currentValue);
+        onClick?.Invoke(data);
     }
 }
