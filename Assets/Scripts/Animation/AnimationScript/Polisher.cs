@@ -7,7 +7,7 @@ using DG.Tweening;
 public class Polisher : AnimationScript
 {
     [SerializeField]
-    [Range(1f,5f)]
+    [Range(1f,10f)]
     private float delay;
     private Coroutine polishing;
     [SerializeField]

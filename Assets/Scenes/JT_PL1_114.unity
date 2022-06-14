@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 357004197}
   - component: {fileID: 357004196}
   - component: {fileID: 357004195}
+  - component: {fileID: 357004201}
   m_Layer: 5
   m_Name: DragObject
   m_TagString: Untagged
@@ -390,6 +391,12 @@ MonoBehaviour:
   audioPlayer: {fileID: 357004196}
   button: {fileID: 357004198}
   intracable: 1
+  data:
+    alphabet: 0
+    value: 
+    sprite: {fileID: 0}
+    clip: {fileID: 0}
+    act3: {fileID: 0}
 --- !u!114 &357004196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +587,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357004193}
   m_CullTransparentMesh: 1
+--- !u!114 &357004201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357004193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2cc512b689cbc4d9d9df1c4b5e23dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  speed: 100
+  randomRange: 10
+  angle: 30
 --- !u!1 &447999179
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +818,7 @@ GameObject:
   - component: {fileID: 914545742}
   - component: {fileID: 914545741}
   - component: {fileID: 914545740}
+  - component: {fileID: 914545746}
   m_Layer: 5
   m_Name: DragObject
   m_TagString: Untagged
@@ -837,6 +861,12 @@ MonoBehaviour:
   audioPlayer: {fileID: 914545741}
   button: {fileID: 914545743}
   intracable: 1
+  data:
+    alphabet: 0
+    value: 
+    sprite: {fileID: 0}
+    clip: {fileID: 0}
+    act3: {fileID: 0}
 --- !u!114 &914545741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,6 +1057,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914545738}
   m_CullTransparentMesh: 1
+--- !u!114 &914545746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914545738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2cc512b689cbc4d9d9df1c4b5e23dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  speed: 100
+  randomRange: 10
+  angle: 30
 --- !u!1 &923797465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,6 +1088,7 @@ GameObject:
   - component: {fileID: 923797469}
   - component: {fileID: 923797468}
   - component: {fileID: 923797467}
+  - component: {fileID: 923797473}
   m_Layer: 5
   m_Name: DragObject
   m_TagString: Untagged
@@ -1084,6 +1131,12 @@ MonoBehaviour:
   audioPlayer: {fileID: 923797468}
   button: {fileID: 923797470}
   intracable: 1
+  data:
+    alphabet: 0
+    value: 
+    sprite: {fileID: 0}
+    clip: {fileID: 0}
+    act3: {fileID: 0}
 --- !u!114 &923797468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,6 +1327,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923797465}
   m_CullTransparentMesh: 1
+--- !u!114 &923797473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923797465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2cc512b689cbc4d9d9df1c4b5e23dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  speed: 100
+  randomRange: 10
+  angle: 30
 --- !u!1 &998873078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +2015,7 @@ GameObject:
   - component: {fileID: 1245541931}
   - component: {fileID: 1245541930}
   - component: {fileID: 1245541933}
+  - component: {fileID: 1245541934}
   m_Layer: 5
   m_Name: DragObject
   m_TagString: Untagged
@@ -2178,6 +2248,28 @@ MonoBehaviour:
   audioPlayer: {fileID: 1245541930}
   button: {fileID: 1245541932}
   intracable: 1
+  data:
+    alphabet: 0
+    value: 
+    sprite: {fileID: 0}
+    clip: {fileID: 0}
+    act3: {fileID: 0}
+--- !u!114 &1245541934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245541926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2cc512b689cbc4d9d9df1c4b5e23dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  speed: 100
+  randomRange: 10
+  angle: 30
 --- !u!1 &1315765229
 GameObject:
   m_ObjectHideFlags: 0
