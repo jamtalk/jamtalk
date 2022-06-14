@@ -230,7 +230,7 @@ MonoBehaviour:
   playOnAwake: 1
   speed: 20
   direction: 0
-  range: 0.5
+  range: 0.2
 --- !u!1 &34412533
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,8 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOnAwake: 1
   speed: 20
-  direction: 0
-  range: 0.5
+  direction: 1
+  range: 0.2
 --- !u!1 &258540408
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +792,7 @@ MonoBehaviour:
   playOnAwake: 1
   speed: 20
   direction: 0
-  range: 0.5
+  range: 0.2
 --- !u!1 &1186361553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,8 +1003,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOnAwake: 1
   speed: 20
-  direction: 0
-  range: 0.5
+  direction: 1
+  range: 0.2
 --- !u!1 &1248624215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,4 +2424,4 @@ MonoBehaviour:
   playOnAwake: 1
   speed: 20
   direction: 0
-  range: 0.5
+  range: 0.2
