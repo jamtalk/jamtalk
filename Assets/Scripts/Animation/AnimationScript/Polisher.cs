@@ -4,29 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Polish : AnimationScript
+public class Polisher : AnimationScript
 {
     [SerializeField]
-    private Image image;
-    [SerializeField]
-    private RectTransform rt;
-    [SerializeField]
+    [Range(1f,5f)]
     private float delay;
     private Coroutine polishing;
+    [SerializeField]
+    [Range(1f, 100f)]
+    private float width =100;
+    [SerializeField]
+    private Image image => GetComponent<Image>();
+    private RectTransform rt => GetComponent<RectTransform>();
     public override void Play()
     {
         polishing = StartCoroutine(Polishing());
     }
     public override void Stop()
     {
-        StopCoroutine(polishing);
+        if (polishing != null)
+            StopCoroutine(polishing);
     }
     private IEnumerator Polishing()
     {
         yield return new WaitForSecondsRealtime(delay);
+        transform.eulerAngles = new Vector3(0, 0, -45f);
         var size = transform.parent.GetComponent<RectTransform>().rect.size;
-        rt.sizeDelta = new Vector2(100, GetDistance(size.x, size.y));
+        rt.sizeDelta = new Vector2(width, GetDistance(size.x, size.y));
         size /= 2f;
+        size += Vector2.one * width;
         var startPos = new Vector2(size.x,-size.y);
         var endPos = new Vector2(-size.x, size.y); 
         rt.localPosition = startPos;
