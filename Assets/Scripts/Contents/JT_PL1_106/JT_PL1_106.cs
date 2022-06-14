@@ -83,7 +83,8 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordsData.WordSource
         {
             if(currentQuestion.correct == data)
             {
-                button.GetComponent<Image>().sprite = spritePop;
+                button.button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
+                //button.transform.GetChild(0).GetComponent<Image>().sprite = spritePop;
                 button.image.gameObject.SetActive(false);
                 audioPlayer.Play(1f, clipPop);
                 var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);

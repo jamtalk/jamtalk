@@ -4,22 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Polish : MonoBehaviour
+public class Polish : AnimationScript
 {
     [SerializeField]
     private Image image;
     [SerializeField]
     private RectTransform rt;
     [SerializeField]
-    private float duration;
-    [SerializeField]
     private float delay;
     private Coroutine polishing;
-    private void Awake()
+    public override void Play()
     {
         polishing = StartCoroutine(Polishing());
     }
-    private void OnDestroy()
+    public override void Stop()
     {
         StopCoroutine(polishing);
     }
