@@ -8,14 +8,12 @@ public class UIThrower110 : MonoBehaviour
 {
     public RectTransform[] targets;
     public RectTransform[] paths;
-    public AudioClip scatterClip;
-    public AudioSinglePlayer player;
 
     public void Init(RectTransform[] targets)
     {
         this.targets = targets;
     }
-    public void Throwing(float duration=1f,float delay = 0, bool rotating=true, TweenCallback onTrowed=null)
+    public virtual void Throwing(float duration=1f,float delay = 0, bool rotating=true, TweenCallback onTrowed=null)
     {
         paths = paths.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         var seq = DOTween.Sequence();
@@ -33,7 +31,6 @@ public class UIThrower110 : MonoBehaviour
         }
         seq.onComplete += onTrowed;
         seq.Play();
-        player.Play(scatterClip, 4f);
     }
     private Tween MakeTween(RectTransform target, RectTransform path, float duration)
     {

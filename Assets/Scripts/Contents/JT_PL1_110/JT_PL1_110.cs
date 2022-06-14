@@ -12,6 +12,7 @@ public class JT_PL1_110 : BaseContents
     public WordCreator110 creator;
     public UIThrower110 thrower;
     public UIMover[] mover;
+    public AudioClip startClip;
     public AudioSinglePlayer audioPlayer;
     private WordsData.WordSources word;
 
@@ -37,6 +38,7 @@ public class JT_PL1_110 : BaseContents
             for (int i = 0; i < dragables.Length; i++)
                 dragables[i].intractable = true;
         });
+        audioPlayer.Play(5f, 3.5f, startClip);
 
         for (int i = 0; i < dragables.Length; i++)
             AddDragListener(dragables[i]);

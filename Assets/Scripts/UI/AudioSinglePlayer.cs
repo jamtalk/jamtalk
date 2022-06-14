@@ -45,6 +45,7 @@ public class AudioSinglePlayer : MonoBehaviour
             player.clip = clip;
         Invoke("Play", delay);
     }
+
     public void Play(AudioClip clip = null)
     {
         if (player.isPlaying)
@@ -61,6 +62,12 @@ public class AudioSinglePlayer : MonoBehaviour
     public void Play(float duration, AudioClip clip = null)
     {
         Play(clip);
+        stopRoutine = StartCoroutine(StopRoutine(duration));
+    }
+
+    public void Play(float duration, float delay, AudioClip clip = null)
+    {
+        Play(clip, delay);
         stopRoutine = StartCoroutine(StopRoutine(duration));
     }
     public void Play(float duration, AudioClip clip, Action onOver)

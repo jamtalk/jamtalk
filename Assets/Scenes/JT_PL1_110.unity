@@ -1106,8 +1106,6 @@ MonoBehaviour:
   - {fileID: 789777803}
   - {fileID: 1582707719}
   - {fileID: 142295689}
-  scatterClip: {fileID: 8300000, guid: 701b4cb129366dd41af404c204cf3640, type: 3}
-  player: {fileID: 122620620}
 --- !u!114 &866636544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,8 +1869,8 @@ MonoBehaviour:
   mover:
   - {fileID: 1056221625}
   - {fileID: 342401988}
+  startClip: {fileID: 8300000, guid: 701b4cb129366dd41af404c204cf3640, type: 3}
   audioPlayer: {fileID: 1053526117}
-  contentsNumber: 8
 --- !u!1 &1582707718
 GameObject:
   m_ObjectHideFlags: 0
