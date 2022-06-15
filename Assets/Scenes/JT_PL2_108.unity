@@ -2032,7 +2032,6 @@ GameObject:
   - component: {fileID: 1283954201}
   - component: {fileID: 1283954203}
   - component: {fileID: 1283954202}
-  - component: {fileID: 1283954204}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -2097,25 +2096,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283954200}
   m_CullTransparentMesh: 1
---- !u!95 &1283954204
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283954200}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b3e1cfd16015f40bcbefee680b41a6dd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1314600652
 GameObject:
   m_ObjectHideFlags: 0
