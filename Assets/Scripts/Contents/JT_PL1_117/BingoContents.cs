@@ -97,9 +97,10 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
                 correctpos.Add(startPosY * board.size + i);
         }
 
-
         for (int i = 0; i < board.size; i++)
+        {
             questions[correctpos[i]] = corrects[i];
+        }
 
         var question = string.Empty;
         for (int i = 0; i < questions.Length; i++)
