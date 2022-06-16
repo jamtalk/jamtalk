@@ -83,7 +83,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
         }
     }
 
-    private void AddDoubleClickListener(BubbleElement bubble, WordsData.WordSources data)
+    protected virtual void AddDoubleClickListener(BubbleElement bubble, WordsData.WordSources data)
     {
         bubble.onClickFirst.RemoveAllListeners();
         bubble.onClick.RemoveAllListeners();
@@ -167,15 +167,15 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
         }
     }
 
-    private void BubblesPlay(List<BubbleElement> bubbles, float size)
+    private void BubblesPlay(List<BubbleElement> bubbles, float max)
     {
         audioPlayer.Play(1f, errorClip);
         eventSystem.enabled = false;
         for (int i = 0; i < bubbles.Count; i++)
-            bubbles[i].Play(() => eventSystem.enabled = true, size);
+            bubbles[i].InOut(() => eventSystem.enabled = true, 0.5f ,max);
     }
 
-    private void Speak()
+    protected virtual void Speak()
     {
         foreach(var item in ani)
             item.SetBool("Speak", true);

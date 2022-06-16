@@ -15,6 +15,7 @@ public class BubbleElement : DoubleClickButton
 
     private float duration = 1f;
     private Sequence seq;
+    private Vector3 defaultPosition;
 
     public void Init(WordsData.WordSources data)
     {
@@ -30,10 +31,20 @@ public class BubbleElement : DoubleClickButton
         gameObject.SetActive(true);
     }
 
-    public void Play(TweenCallback callback, float size)
+    public void SetDefaultPosition()
     {
-        var min = 0.5f;
-        var max = size;
+        defaultPosition = transform.position;
+        //interactable = true;
+    }
+    public void ResetPosition()
+    {
+        transform.position = defaultPosition;
+    }
+
+    public void InOut(TweenCallback callback, float minimum, float maximum)
+    {
+        var min = minimum;
+        var max = maximum;
         seq = DOTween.Sequence();
         Tween startTween;
         Tween endTween;
@@ -46,6 +57,26 @@ public class BubbleElement : DoubleClickButton
         endTween.SetEase(Ease.Linear);
         seq.Append(startTween);
         seq.Append(endTween);
+        seq.onComplete += callback;
+        seq.Play();
+    }
+
+    public void OutIn(TweenCallback callback, float minimum, float maximum)
+    {
+        var min = minimum;
+        var max = maximum;
+        seq = DOTween.Sequence();
+        Tween endTween;
+        Tween startTween;
+
+        transform.localScale = new Vector3(max, max, 1);
+        endTween = transform.DOScale(1.2f, .5f);
+        startTween = transform.DOScale(min, duration);
+
+        endTween.SetEase(Ease.Linear);
+        startTween.SetEase(Ease.Linear);
+        seq.Append(endTween);
+        seq.Append(startTween);
         seq.onComplete += callback;
         seq.Play();
     }
