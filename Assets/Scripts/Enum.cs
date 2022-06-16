@@ -160,6 +160,11 @@ public enum eAlphabet
     Y,
     Z
 }
+public enum eVowelType
+{
+    Short,
+    Long
+}
 
 public enum eAlphabetStyle
 {
