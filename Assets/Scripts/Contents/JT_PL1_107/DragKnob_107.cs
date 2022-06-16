@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointerDownHandler
+public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPointerDownHandler
 {
     public DragKnobPoint107 pointKnob;
     public CanvasScaler scaler;
@@ -32,13 +32,13 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
         image.sprite = value.sprite;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         if (!intractable)
             return;
         SetLine(eventData.position);
     }
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if (!intractable)
             return;
@@ -57,7 +57,7 @@ public class DragKnob_107 : MonoBehaviour, IDragHandler, IEndDragHandler,IPointe
             .Where(x => x != null)
             .Where(x => x.data == data)
             .ToList();
-        Debug.Log(drop.Count());
+        
         if (drop.Count > 0)
         {
             var target = drop[0].point;
