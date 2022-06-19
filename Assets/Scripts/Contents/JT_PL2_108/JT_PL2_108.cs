@@ -12,9 +12,9 @@ public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordsData.WordSour
 
     protected override int QuestionCount => 6;
 
-    private WordsData.WordSources[] words;
+    protected WordsData.WordSources[] words;
     [SerializeField]
-    private PotionElement[] elements;
+    protected PotionElement[] elements;
 
     public GameObject prefabPotionElement;
     public PotElement prefabPot;
