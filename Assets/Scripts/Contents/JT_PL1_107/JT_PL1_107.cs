@@ -13,19 +13,23 @@ public class JT_PL1_107 : BaseContents
     public DropSpaceShip_107[] drops;
     public DragKnob_107[] drags;
     public AudioSinglePlayer audioPlayer;
+    
     protected override eContents contents => eContents.JT_PL1_107;
     protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
+    protected WordsData.WordSources[] words;
+
     protected override void Awake()
     {
         GetWords();
+        SetElement(words);
     }
     protected virtual void GetWords()
     {
-        var words = GameManager.Instance.GetResources().Words
+        words = GameManager.Instance.GetResources().Words
             .Take(drops.Length)
             .ToArray();
-        SetElement(words);
+        //SetElement(words);
     }
 
     protected void SetElement(WordsData.WordSources[] words)

@@ -14,7 +14,7 @@ public class JT_PL1_110 : BaseContents
     public UIMover[] mover;
     public AudioClip startClip;
     public AudioSinglePlayer audioPlayer;
-    private WordsData.WordSources word;
+    protected WordsData.WordSources word;
 
     protected override eContents contents => eContents.JT_PL1_110;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
@@ -22,9 +22,19 @@ public class JT_PL1_110 : BaseContents
     protected override void Awake()
     {
         base.Awake();
+
+        GetWord();
+        SetElement(word);
+    }
+    protected virtual void GetWord()
+    {
         word = GameManager.Instance.GetResources().Words
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
+    }
+
+    private void SetElement(WordsData.WordSources words)
+    {
         toggles = creator.Create(word);
         for (int i = 0; i < toggles.Length; i++)
             AddToggleListner(toggles[i]);
@@ -32,8 +42,8 @@ public class JT_PL1_110 : BaseContents
 
         var throwElements = toggles.Select(x => x.throwElement).ToArray();
         thrower.Init(throwElements);
-        
-        thrower.Throwing(2f, 3f,onTrowed:()=>
+
+        thrower.Throwing(2f, 3f, onTrowed: () =>
         {
             for (int i = 0; i < dragables.Length; i++)
                 dragables[i].intractable = true;
@@ -46,6 +56,7 @@ public class JT_PL1_110 : BaseContents
         for (int i = 0; i < mover.Length; i++)
             mover[i].Move(4f, 3f);
     }
+
     private void AddToggleListner(AlphabetToggle110 toggle)
     {
         toggle.onOn += () =>
