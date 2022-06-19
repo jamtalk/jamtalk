@@ -18,13 +18,22 @@ public class JT_PL1_107 : BaseContents
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
     protected override void Awake()
     {
-        scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
+        GetWords();
+    }
+    protected virtual void GetWords()
+    {
         var words = GameManager.Instance.GetResources().Words
             .Take(drops.Length)
             .ToArray();
+        SetElement(words);
+    }
 
-        drops = drops.OrderBy(x=>Random.Range(0f,100f)).ToArray();
-        drags = drags.OrderBy(x=>Random.Range(0f,100f)).ToArray();
+    protected void SetElement(WordsData.WordSources[] words)
+    {
+        scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
+
+        drops = drops.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+        drags = drags.OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -49,8 +58,8 @@ public class JT_PL1_107 : BaseContents
                     audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
             };
         }
-
     }
+
     private void PlayAudio(WordsData.WordSources word)
     {
         audioPlayer.Play(word.clip);
