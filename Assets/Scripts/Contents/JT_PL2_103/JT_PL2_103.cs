@@ -112,7 +112,6 @@ public class JT_PL2_103 : BaseContents
             throwingElements.Add(shortElement);
             list.Add(shortElement.GetComponent<RectTransform>());
             shortElement.onDrop += OnDrop;
-            //shortElement.onDrag += OnDrag;
 
             var longElement = Instantiate(prefabDragWordElement, longThrowParent).GetComponent<DragWordElement203>();
             longElement.Init(longElements[i].value);
@@ -121,7 +120,6 @@ public class JT_PL2_103 : BaseContents
             throwingLongElements.Add(longElement);
             list.Add(longElement.GetComponent<RectTransform>());
             longElement.onDrop += OnDrop;
-            //longElement.onDrag += OnDrag;
         }
         yield return new WaitForEndOfFrame();
 
