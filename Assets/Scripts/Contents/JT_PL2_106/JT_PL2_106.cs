@@ -41,8 +41,10 @@ public class JT_PL2_106 : BaseContents
     protected override void Awake()
     {          
         base.Awake();
-        rouletteEffect.gameObject.SetActive(false);
         Init();
+        rouletteEffect.gameObject.SetActive(false);
+        shortButton.interactable = false;
+        longButton.interactable = false;
         spinButton.onClick.AddListener(() => Spin());
         shortButton.onClick.AddListener(() => ButtonListener(shortButton));
         longButton.onClick.AddListener(() => ButtonListener(longButton));
@@ -95,6 +97,8 @@ public class JT_PL2_106 : BaseContents
 
     private void ButtonListener(Button button)
     {
+        audioPlayer.Play(tabClip);
+
         for(int i = 0; i < WordsCount; i++)
         {
             if (button.name == "ShortButton")
