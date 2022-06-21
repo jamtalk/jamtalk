@@ -4,14 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSources>
+public class JT_PL3_106 : SingleAnswerContents<Question3_106, VowelData.VowelSource>
 {
     protected override eContents contents => eContents.JT_PL2_106;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
     protected override int QuestionCount => 3;
     private int index = 0;
-    private WordsData.WordSources[] words;
+    //private WordsData.WordSources[] words;
+    private VowelData.VowelSource[] vowels;
 
     public Thrower306 thrower;
     public Text[] texts;
@@ -26,10 +27,11 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
     {
         base.Awake();
 
-        currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
-        currentText.text = words[index].value;
-        currentImage.sprite = words[index].sprite;
-        currentImage.name = words[index].value;
+        //currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
+        currentButton.onClick.AddListener(() => currentQuestion.correct.PlayClip());
+        currentText.text = vowels[index].value;
+        currentImage.sprite = vowels[index].sprite;
+        currentImage.name = vowels[index].value;
         currentImage.preserveAspect = true;
     }
 
@@ -37,9 +39,9 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
     {
         index = index > 2 ? index = 2 : index ;
 
-        currentText.text = words[index].value;
-        currentImage.sprite = words[index].sprite;
-        currentImage.name = words[index].value;
+        currentText.text = vowels[index].value;
+        currentImage.sprite = vowels[index].sprite;
+        currentImage.name = vowels[index].value;
         currentImage.preserveAspect = true;
         currentImage.gameObject.SetActive(true);
 
@@ -57,27 +59,28 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
         bagImage.gameObject.SetActive(true);
     }
 
-    protected override List<Question2_106> MakeQuestion()
+    protected override List<Question3_106> MakeQuestion()
     {
-        var questions = new List<Question2_106>();
-        words = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f, 100f)).ToArray()
-            .Take(QuestionCount)
+        var questions = new List<Question3_106>();
+        vowels = GameManager.Instance.vowels
+            .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
+            .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+            .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         for (int i = 0; i < QuestionCount; i++)
         {
             var tmp = GameManager.Instance.alphabets
                 .Where(x => x != GameManager.Instance.currentAlphabet)
-                .SelectMany(x => GameManager.Instance.GetResources(x).Words)
+                .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
                 .OrderBy(x => Random.Range(0f, 100f)).ToArray()
-                .Take(words.Length - 1)
+                .Take(elements.Count - 1)
                 .ToArray();
-            questions.Add(new Question2_106(words[i], tmp));
+            questions.Add(new Question3_106(vowels[i], tmp));
         }
         return questions;
     }
 
-    protected override void ShowQuestion(Question2_106 question)
+    protected override void ShowQuestion(Question3_106 question)
     {
         for (int i = 0; i < question.totalQuestion.Length; i++)
         {
@@ -88,7 +91,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement element, WordsData.WordSources data)
+    protected virtual void AddDoubleClickListener(BubbleElement element, VowelData.VowelSource data)
     {
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
@@ -96,7 +99,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
         element.onClickFirst.AddListener(() =>
         {
             //audioPlayer.Play(element.); 해당 음가 호출
-            audioPlayer.Play(currentQuestion.correct.clip);
+            currentQuestion.correct.PlayClip();
         });
 
         element.onClick.AddListener(() =>
@@ -111,7 +114,9 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
                     elements[i].gameObject.SetActive(false);
                 currentImage.gameObject.SetActive(false);
 
-                audioPlayer.Play(words[index - 1].act3, () => SetCurrentImage());
+                //audioPlayer.Play(vowels[index - 1], () => SetCurrentImage()); 
+                currentQuestion.correct.PlayClip(); // current audio play 후
+                SetCurrentImage();                  // 호출되어야 함
                 thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () => SetBagImage());
 
                 thrower.GetComponent<Image>().sprite = currentImage.sprite;
@@ -125,7 +130,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
     }
 }
 
-public class Question2_106 : SingleQuestion<WordsData.WordSources>
+public class Question3_106 : SingleQuestion<VowelData.VowelSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -138,7 +143,7 @@ public class Question2_106 : SingleQuestion<WordsData.WordSources>
                 .ToArray();
         }
     }
-    public Question2_106(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question3_106(VowelData.VowelSource correct, VowelData.VowelSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

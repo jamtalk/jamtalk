@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSources>
+public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSource>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_104;
@@ -16,6 +16,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
 
     private float smallBubbleSize = 0.7f;
     private WordsData.WordSources[] words;
+    private VowelData.VowelSource[] vowels;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -55,19 +56,22 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
     protected override List<Question2_104> MakeQuestion()
     {
         var questions = new List<Question2_104>();
-        words = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f, 100f)).ToArray()
-            .Take(QuestionCount)
+        vowels = GameManager.Instance.vowels
+            .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
+            .Where(x => x.type == eVowelType.Short)
+            .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+            .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
-        for (int i = 0; i < QuestionCount; i++)
+        for ( int i = 0; i < QuestionCount; i++)
         {
-            var tmp = GameManager.Instance.alphabets
-                .Where(x => x != GameManager.Instance.currentAlphabet)
-                .SelectMany(x => GameManager.Instance.GetResources(x).Words)
-                .OrderBy(x => Random.Range(0f, 100f)).ToArray()
+            var tmp = GameManager.Instance.vowels
+                .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
+                .Where(x => x.type == eVowelType.Long)
+                .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+                .OrderBy(x => Random.Range(0f, 100f))
                 .Take(elements.Count - 1)
                 .ToArray();
-            questions.Add(new Question2_104(words[i], tmp));
+            questions.Add(new Question2_104(vowels[i], tmp));
         }
         return questions;
     }
@@ -84,7 +88,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement bubble, WordsData.WordSources data)
+    protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelData.VowelSource data)
     {
         bubble.onClickFirst.RemoveAllListeners();
         bubble.onClick.RemoveAllListeners();
@@ -157,7 +161,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
             StartCoroutine(Init());
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble,WordsData.WordSources data)
+    protected virtual void ThrowElement(BubbleElement bubble, VowelData.VowelSource data)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
     }
@@ -185,11 +189,11 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
     {
         foreach(var item in ani)
             item.SetBool("Speak", true);
-        audioPlayer.Play(currentQuestion.correct.clip);
+        currentQuestion.correct.PlayClip();
     }
 }
 
-public class Question2_104 : SingleQuestion<WordsData.WordSources>
+public class Question2_104 : SingleQuestion<VowelData.VowelSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -202,7 +206,7 @@ public class Question2_104 : SingleQuestion<WordsData.WordSources>
                 .ToArray();
         }
     }
-    public Question2_104(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question2_104(VowelData.VowelSource correct, VowelData.VowelSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

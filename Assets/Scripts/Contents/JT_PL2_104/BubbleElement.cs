@@ -11,13 +11,13 @@ public class BubbleElement : DoubleClickButton
     private bool interactable = false;
 
     public Text textValue;
-    public WordsData.WordSources data { get; private set; }
+    public VowelData.VowelSource data { get; private set; }
 
     private float duration = 1f;
     private Sequence seq;
     private Vector3 defaultPosition;
 
-    public void Init(WordsData.WordSources data)
+    public void Init(VowelData.VowelSource data)
     {
         this.data = data;
         textValue.text = data.value;
