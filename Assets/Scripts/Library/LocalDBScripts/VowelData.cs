@@ -14,23 +14,9 @@ public class VowelData : LocalDBElement
         public eAlphabet alphabet;
         public string value;
         public Sprite sprite;
-        public AudioClip clip;
-        public AudioClip act3;
-
-        public VowelSource(eVowelType type, eAlphabet alphabet, string value, Sprite sprite, AudioClip clip, AudioClip act3)
-        {
-            this.type = type;
-            this.alphabet = alphabet;
-            this.value = value;
-            this.sprite = sprite;
-            this.clip = clip;
-            this.act3 = act3;
-        }
-
-        public bool IsNull => string.IsNullOrEmpty(value) ||
-            sprite == null ||
-            clip == null ||
-            act3 == null;
+        public string actValue;
+        public void PlayClip() => AndroidPluginManager.Instance.PlayTTS(value);
+        public void PlayAct() => AndroidPluginManager.Instance.PlayTTS(actValue);
 
         public override bool Equals(object obj)
         {
@@ -48,6 +34,20 @@ public class VowelData : LocalDBElement
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
             return hashCode;
         }
+
+        public VowelSource(eVowelType type, eAlphabet alphabet, string value, Sprite sprite, string act)
+        {
+            this.type = type;
+            this.alphabet = alphabet;
+            this.value = value;
+            this.sprite = sprite;
+            this.actValue = act;
+        }
+
+        public bool IsNull => string.IsNullOrEmpty(value) ||
+            string.IsNullOrEmpty(actValue) ||
+            sprite == null;
+
     }
     [SerializeField]
     private VowelSource[] data;
@@ -57,10 +57,6 @@ public class VowelData : LocalDBElement
     [Header("Orizinal Data")]
     [SerializeField]
     private Sprite[] sprites;
-    [SerializeField]
-    private AudioClip[] clips;
-    [SerializeField]
-    private AudioClip[] acts;
 
     public override void Load(List<Hashtable> data)
     {
@@ -70,18 +66,16 @@ public class VowelData : LocalDBElement
         for (int i = 0; i < data.Count; i++)
         {
             var datas = data[i];
-            var clip = datas["clip"].ToString();
-            var act = datas["act"].ToString();
             var value = datas["key"].ToString();
             var type = (eVowelType)Enum.Parse(typeof(eVowelType), datas["type"].ToString());
+            var actValue = datas["actValue"].ToString();
             var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), datas["alphabet"].ToString());
             tmp.Add(new VowelSource(
                 type,
                 alphabet,
                 value,
                 LocalDB.Find(sprites, value),
-                LocalDB.Find(clips, clip),
-                LocalDB.Find(acts, act)
+                actValue
                 ));
         }
         this.data = tmp
@@ -97,10 +91,6 @@ public class VowelData : LocalDBElement
             string missingItem;
             if (x.sprite == null)
                 missingItem = "Sprite";
-            else if (x.clip == null)
-                missingItem = "Audio";
-            else if (x.act3 == null)
-                missingItem = "Act";
             else
                 missingItem = "UnKnwon";
 

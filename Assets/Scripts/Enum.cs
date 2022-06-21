@@ -165,7 +165,6 @@ public enum eVowelType
     Short,
     Long
 }
-
 public enum eAlphabetStyle
 {
     /// <summary>
