@@ -9,8 +9,10 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; private set; }
+    public eDigraphs currentDigrpahs { get; set; }
 
     private Dictionary<eAlphabet, AlphabetData> datas;
+    private Dictionary<eDigraphs, DigraphsData.DigraphsSources[]> digraphs;
 
     public override void Initialize()
     {
@@ -28,15 +30,25 @@ public class GameManager : MonoSingleton<GameManager>
             vowels.Get(x),
             audios.Get(x)))
             .ToDictionary(x => x.Alphabet, x => x);
+
+        var digraphsData = LocalDB.Instance.Get<DigraphsData>().Get();
+        digraphs = digrpahs
+            .ToDictionary(x => x, x => digraphsData.Where(y => y.type == x).ToArray());
     }
     public AudioClip GetClipCorrectEffect() => LocalDB.Instance.GetCorrectClip();
     public AlphabetData GetResources() => datas[currentAlphabet];
     public AlphabetData GetResources(eAlphabet alphabet) => datas[alphabet];
+    public DigraphsData.DigraphsSources[] GetDigraphs(eDigraphs type) => digraphs[type];
+    public DigraphsData.DigraphsSources[] GetDigrpahs() => GetDigraphs(currentDigrpahs);
+    public DigraphsData.DigraphsSources[] GetDigrpahs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
     public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style);
     public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style,type);
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style, type, alphabet);
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowles => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
+    public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
+        .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))
+        .ToArray();
     public WordsData.WordSources FindWord(eAlphabet alphabet, string value) => datas[alphabet].Words.ToList().Find(x => x.value == value);
     public Vector3 GetMousePosition(float z = 0)
     {

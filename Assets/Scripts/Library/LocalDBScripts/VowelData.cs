@@ -79,7 +79,7 @@ public class VowelData : LocalDBElement
                 ));
         }
         this.data = tmp
-            //.Where(x => !x.IsNull)
+            .Where(x => !x.IsNull)
             .ToArray();
 
         var spritesNames = sprites.Select(x => x.name);

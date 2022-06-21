@@ -1,4 +1,4 @@
-public enum eSceneName
+﻿public enum eSceneName
 {
     Test,
     JT_PL1_102 = 102,
@@ -164,6 +164,30 @@ public enum eVowelType
 {
     Short,
     Long
+}
+public enum eDigraphs
+{
+    //3단계 목록
+    CH=300,
+    NG=301,
+    NK=302,
+    SH=303,
+    TH=304,
+    WH=305,
+    //4단계 목록
+    AI = 400,
+    AW = 401,
+    EA = 402,
+    IE = 403,
+    OA = 404,
+    OI = 405,
+    OO = 406,
+    OW = 407,
+    UI = 408,
+    //5단계 목록
+    AR = 500,
+    IR = 501,
+    OR = 502,
 }
 public enum eAlphabetStyle
 {

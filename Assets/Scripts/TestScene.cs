@@ -1,6 +1,8 @@
+﻿using GJGameLibrary;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +15,9 @@ public class TestScene : MonoBehaviour
     public eSceneName[] ignore;
     private void Awake()
     {
+        //StartCoroutine(Tmp());
+        //return;
+        AndroidPluginManager.Instance.PlayTTS("Question!!");
         var scenes = Enum.GetNames(typeof(eSceneName))
             .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
             .Where(x=>!ignore.Contains(x))
@@ -49,4 +54,15 @@ public class TestScene : MonoBehaviour
         button.onClick.AddListener(() => GJGameLibrary.GJSceneLoader.Instance.LoadScene(scene));
         button.transform.GetChild(0).GetComponent<Text>().text = scene.ToString();
     }
+    //IEnumerator Tmp()
+    //{
+    //    yield return null;
+    //    var root = new DirectoryInfo(@"D:\Project\Jamtalk\Assets\Sprites\DoublePhanics");
+    //    var files = root.GetDirectories()
+    //        .SelectMany(x => x.GetDirectories())
+    //        .SelectMany(x => x.GetFiles())
+    //        .Where(x => x.Extension == ".png")
+    //        .Select(x => string.Format("{0},{1},{2}", x.Directory.Parent.Name.Replace("level",""), x.Directory.Name, x.Name.Replace(x.Extension, "")));
+    //    Debug.Log(string.Join("\n",files));
+    //}
 }
