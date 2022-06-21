@@ -7,6 +7,7 @@ using System.Linq;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public delegate void PlayTTS();
     public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; private set; }
     public eDigraphs currentDigrpahs { get; set; }
@@ -38,6 +39,20 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipCorrectEffect() => LocalDB.Instance.GetCorrectClip();
     public AlphabetData GetResources() => datas[currentAlphabet];
     public AlphabetData GetResources(eAlphabet alphabet) => datas[alphabet];
+    public Dictionary<eAlphabet, PlayTTS> GetVowelClips(eVowelType type)
+    {
+        var dic = new Dictionary<eAlphabet, PlayTTS>();
+        for(int i = 0;i< vowels.Length; i++)
+        {
+            var vowel = vowels[i];
+            dic.Add(vowel,
+                GetResources(vowel).Vowels
+                .Where(x => x.type == type)
+                .Where(x => x.alphabet == vowel)
+                .First().PlayAct);
+        }
+        return dic;
+    }
     public DigraphsData.DigraphsSources[] GetDigraphs(eDigraphs type) => digraphs[type];
     public DigraphsData.DigraphsSources[] GetDigrpahs() => GetDigraphs(currentDigrpahs);
     public DigraphsData.DigraphsSources[] GetDigrpahs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
@@ -45,7 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style,type);
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style, type, alphabet);
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
-    public eAlphabet[] vowles => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
+    public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
     public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
         .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))
         .ToArray();
