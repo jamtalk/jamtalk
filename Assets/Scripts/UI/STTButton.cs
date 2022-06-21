@@ -13,24 +13,40 @@ public class STTButton : MonoBehaviour
     public Button button;
     public event Action<string> onSTT;
     public event Action<bool> onRecord;
+    [SerializeField]
+    public string value;
     public bool isRecording { get; private set; } = false;
     private void Awake()
     {
         recorder.onSTT += OnSTTEnded;
         button.onClick.AddListener(() =>
         {
+#if !UNITY_EDITOR
             if (isRecording)
                 recorder.Stop();
             else
                 recorder.Record();
+#endif
             isRecording = !isRecording;
             onRecord?.Invoke(isRecording);
+
+#if UNITY_IOS
+            isRecording = !isRecording;
+            onRecord?.Invoke(isRecording);
+#endif
         });
     }
     private void OnDisable()
     {
         recorder.onSTT -= OnSTTEnded;
     }
+
+#if UNITY_IOS
+    public void SetCorrect(string correct)
+    {
+        recorder.correct = correct;
+    }
+#endif
     
     private void OnSTTEnded(bool success,string result)
     {
