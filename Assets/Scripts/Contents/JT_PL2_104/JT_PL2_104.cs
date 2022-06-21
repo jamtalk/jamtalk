@@ -16,16 +16,17 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
 
     private float smallBubbleSize = 0.7f;
     private WordsData.WordSources[] words;
-    private List<BubbleElement> bubbles = new List<BubbleElement>();
+    protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
+
+    [Header("UI")]
     public RectTransform bubbleParent;
     public Thrower204 thrower;
-
     public GameObject bubbleElement;
-    public GameObject yelloyDiver;
-    public GameObject blueDiver;
     public Text textPot;
 
+    [Header("List")]
+    public Button[] charactors;
     [SerializeField]
     private RectTransform[] smallBubbles;
     [SerializeField]
@@ -33,7 +34,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
     [SerializeField]
     private Animator[] ani;
 
-    public AudioClip bgmClip;
+    [Header("Audio")]
     public AudioClip tabClip;
     public AudioClip putClip;
     public AudioClip errorClip;
@@ -43,12 +44,12 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
         base.Awake();
 
         textPot.text = GameManager.Instance.currentAlphabet.ToString();
-        var yellowButton = yelloyDiver.GetComponent<Button>();
-        var blueButton = blueDiver.GetComponent<Button>();
-        yellowButton.onClick.AddListener(() => Speak());
-        blueButton.onClick.AddListener(() => Speak());
-
-        audioPlayer.Play(1f, bgmClip);
+        SetButtonAddListener(charactors);
+    }
+    private void SetButtonAddListener(Button[] buttons)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].onClick.AddListener(() => Speak());
     }
 
     protected override List<Question2_104> MakeQuestion()
@@ -131,7 +132,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
                     smallBubbles.isOn = false;
                     if (GameManager.Instance.currentAlphabet.ToString().ToLower() == smallBubbles.textValue.text)
                     {
-                        thrower.Throw(smallBubbles, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
+                        ThrowElement(smallBubbles, data);
 
                         var targets = new List<GameObject>();
                         for (int i = 1; i < bubbles.Count + 1; i++)
@@ -156,6 +157,11 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, WordsData.WordSour
             StartCoroutine(Init());
         });
     }
+    protected virtual void ThrowElement(BubbleElement bubble,WordsData.WordSources data)
+    {
+        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
+    }
+
     private IEnumerator Init()
     {
         bubbleParent.gameObject.SetActive(false);
