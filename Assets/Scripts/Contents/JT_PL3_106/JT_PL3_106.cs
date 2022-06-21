@@ -16,6 +16,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
     public Thrower306 thrower;
     public Text[] texts;
     public Text currentText;
+    public Button currentButton;
     public Image currentImage;
     public Image bagImage;
     [SerializeField]
@@ -25,6 +26,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question2_106, WordsData.WordSour
     {
         base.Awake();
 
+        currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
         currentText.text = words[index].value;
         currentImage.sprite = words[index].sprite;
         currentImage.name = words[index].value;
