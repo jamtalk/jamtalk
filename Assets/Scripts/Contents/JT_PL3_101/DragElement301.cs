@@ -43,7 +43,6 @@ public class DragElement301 : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
         if (isColors)
             return;
-        resultText.gameObject.SetActive(false);
 
         var results = new List<RaycastResult>();
         caster.Raycast(eventData, results);
