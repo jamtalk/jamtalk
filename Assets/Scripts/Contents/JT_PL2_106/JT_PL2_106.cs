@@ -30,13 +30,13 @@ public class JT_PL2_106 : BaseContents
     public AudioClip tabClip;
     public AudioClip currentClip;
 
-    private WordsData.WordSources[] shortWords;
-    private WordsData.WordSources[] longWords;
+    private VowelData.VowelSource[] shortWords;
+    private VowelData.VowelSource[] longWords;
 
     private Sequence seq;
     private List<Text> textList = new List<Text>();
     private int currentIndex;
-    private List<WordsData.WordSources> datas = new List<WordsData.WordSources>();
+    private List<VowelData.VowelSource> datas = new List<VowelData.VowelSource>();
 
     protected override void Awake()
     {          
@@ -52,14 +52,14 @@ public class JT_PL2_106 : BaseContents
 
     private void Init()
     {
-        shortWords = GameManager.Instance.GetResources().Words
+        shortWords = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.type == eVowelType.Short)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(WordsCount)
             .ToArray();
 
-        longWords = GameManager.Instance.alphabets
-            .Where(x => x != GameManager.Instance.currentAlphabet)
-            .SelectMany(x => GameManager.Instance.GetResources(x).Words)
+        longWords = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.type == eVowelType.Long)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(WordsCount)
             .ToArray();

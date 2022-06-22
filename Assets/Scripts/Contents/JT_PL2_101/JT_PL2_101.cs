@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +49,16 @@ public class JT_PL2_101 : BaseContents
             {
                 index += 1;
 
-                Speak(target.name);
+                if (index < 5)
+                    Speak(target.name);
+                else if ( index > 5)
+                {
+                    Debug.Log(index - 5);
+                    var vowel = GameManager.Instance.vowels[index - 5];
+                    var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
+                    clips[vowel].Invoke();
+                }
+
                 audioPlayer.Play(1f, dropClip);
 
                 if (index == 5)

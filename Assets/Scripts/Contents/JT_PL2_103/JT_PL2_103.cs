@@ -26,9 +26,9 @@ public class JT_PL2_103 : BaseContents
         throwingLongElements.Select(x => x.GetComponent<WordElement203>()))
         .ToList();
 
-    private WordsData.WordSources[] words;
-    private WordsData.WordSources[] tempWords;
-    private WordsData.WordSources currentWord => words[index];
+    private VowelData.VowelSource[] shortVowels;
+    private VowelData.VowelSource[] longVowels;
+    private VowelData.VowelSource currentWord => shortVowels[index];
 
     public UIThrower110 thrower;
 
@@ -69,37 +69,49 @@ public class JT_PL2_103 : BaseContents
         }
 
         var alphabet = currentWord.alphabet;
-        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics));
         shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics));
+        longButton.onClick.AddListener(() =>
+        {
+            var vowels = GameManager.Instance.vowels;
+            eAlphabet alphabet = vowels[0];
+            for (int i = 0; i < vowels.Length; i++)
+            {
+                if (vowels[i] == GameManager.Instance.currentAlphabet)
+                    alphabet = vowels[i];
+            }
+            var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
+            clips[alphabet].Invoke();
+        });
     }
 
     private void GetWords()
     {
-        words = GameManager.Instance.GetResources().Words
+        shortVowels = GameManager.Instance.GetResources().Vowels
+            .Where( x => x.type == eVowelType.Short)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(wordsCount)
             .ToArray();
-        tempWords = GameManager.Instance.alphabets
-                .Where(x => x != GameManager.Instance.currentAlphabet)
-                .SelectMany(x => GameManager.Instance.GetResources(x).Words)
-                .OrderBy(x => Random.Range(0f, 100f))
-                .Take(wordsCount)
-                .ToArray();
+
+        longVowels = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.type == eVowelType.Long)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Take(wordsCount)
+            .ToArray();
     }
 
-    private IEnumerator Init(WordsData.WordSources data)
+    private IEnumerator Init(VowelData.VowelSource data)
     {
         shortsElements.Clear();
         var list = new List<RectTransform>();
-        for (int i = 0; i < words.Length; i++)
+        for (int i = 0; i < shortVowels.Length; i++)
         {
             var shortElement = Instantiate(prefabWordElement, wordShortParent).GetComponent<WordElement203>();
-            shortElement.Init(words[i].value);
+            shortElement.Init(shortVowels[i].value);
             shortElement.visible = false;
             shortsElements.Add(shortElement);
 
             var longElement = Instantiate(prefabWordElement, wordLongParent).GetComponent<WordElement203>();
-            longElement.Init(tempWords[i].value);
+            longElement.Init(longVowels[i].value);
             longElement.GetComponent<Image>().sprite = longImage;
             longElement.visible = false;
             longElements.Add(longElement);
@@ -164,12 +176,12 @@ public class JT_PL2_103 : BaseContents
 
     private void OnDrop(WordElement203 target)
     {
-        for(int i = 0; i < words.Length; i ++)
+        for(int i = 0; i < shortVowels.Length; i ++)
         {
-            if (words[i].value.Contains(target.textValue.text))
-                popupImage.sprite = words[i].sprite;
-            if(tempWords[i].value.Contains(target.textValue.text))
-                popupImage.sprite = tempWords[i].sprite;
+            if (shortVowels[i].value.Contains(target.textValue.text))
+                popupImage.sprite = shortVowels[i].sprite;
+            if(longVowels[i].value.Contains(target.textValue.text))
+                popupImage.sprite = longVowels[i].sprite;
         }
 
         popupImage.preserveAspect = true;
