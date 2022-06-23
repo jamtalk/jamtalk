@@ -14,7 +14,7 @@ public class JT_PL1_110 : BaseContents
     public UIMover[] mover;
     public AudioClip startClip;
     public AudioSinglePlayer audioPlayer;
-    protected WordsData.WordSources word;
+    protected WordSource word;
 
     protected override eContents contents => eContents.JT_PL1_110;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
@@ -33,7 +33,7 @@ public class JT_PL1_110 : BaseContents
             .First();
     }
 
-    private void SetElement(WordsData.WordSources words)
+    private void SetElement(WordSource words)
     {
         toggles = creator.Create(word);
         for (int i = 0; i < toggles.Length; i++)

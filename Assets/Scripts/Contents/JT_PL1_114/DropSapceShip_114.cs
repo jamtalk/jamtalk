@@ -10,7 +10,7 @@ public class DropSapceShip_114 : MonoBehaviour
     public Image image;
     public AudioSinglePlayer beamPlayer;
     public AudioSinglePlayer alphbetPlayer;
-    public event Action<WordsData.WordSources> onInner;
+    public event Action<WordSource> onInner;
 
     public RectTransform rtObject;
     public eAlphabet alphabet;
@@ -41,7 +41,7 @@ public class DropSapceShip_114 : MonoBehaviour
             alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2, onCompleted);
         };
     }
-    public void InObject(WordsData.WordSources data)
+    public void InObject(WordSource data)
     {
         SetOutter();
         image.sprite = data.sprite;

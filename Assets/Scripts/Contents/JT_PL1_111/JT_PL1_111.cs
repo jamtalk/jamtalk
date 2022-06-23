@@ -7,7 +7,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_111 : MultiAnswerContents<Question111, WordsData.WordSources>
+public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
 {
     protected override int QuestionCount => 2;
     public GameObject finger;
@@ -128,7 +128,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordsData.WordSources
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(WordsData.WordSources word)=> audioPlayer.Play(word.clip);
+    private void PlayWord(WordSource word)=> audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         if(finger != null)
@@ -143,17 +143,17 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordsData.WordSources
         });
     }
 }
-public class Question111 : MultiQuestion<WordsData.WordSources>
+public class Question111 : MultiQuestion<WordSource>
 {
     public int currentIndex { get; private set; } = 0;
-    public WordsData.WordSources currentCorrect => correct[currentIndex];
+    public WordSource currentCorrect => correct[currentIndex];
     
-    public Question111(WordsData.WordSources[] correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question111(WordSource[] correct, WordSource[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(WordsData.WordSources answer) => currentCorrect == answer;
-    public override void SetAnswer(WordsData.WordSources answer)
+    protected override bool CheckCorrect(WordSource answer) => currentCorrect == answer;
+    public override void SetAnswer(WordSource answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

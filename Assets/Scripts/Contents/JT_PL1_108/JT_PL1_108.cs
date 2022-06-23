@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_108 : MultiAnswerContents<Question108, WordsData.WordSources>
+public class JT_PL1_108 : MultiAnswerContents<Question108, WordSource>
 {
     public Card_108[] cards;
     public GameObject finger;
@@ -109,20 +109,20 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, WordsData.WordSources
         audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
     }
 }
-public class Question108 : MultiQuestion<WordsData.WordSources>
+public class Question108 : MultiQuestion<WordSource>
 {
     public int currentIndex;
-    public Question108(WordsData.WordSources[] correct, WordsData.WordSources[] questions) : base(correct, questions) 
+    public Question108(WordSource[] correct, WordSource[] questions) : base(correct, questions) 
     {
         currentIndex = 0;
     }
 
-    protected override bool CheckCorrect(WordsData.WordSources answer)
+    protected override bool CheckCorrect(WordSource answer)
     {
         return correct[currentIndex] == answer;
     }
 
-    public override void SetAnswer(WordsData.WordSources answer)
+    public override void SetAnswer(WordSource answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

@@ -45,3 +45,25 @@ public abstract class LocalDBElement : ScriptableObject
     public virtual bool Loadable => true;
     public abstract void Load(List<Hashtable> data);
 }
+
+public abstract class LocalDBElement<T> : LocalDBElement
+    where T : DataSource
+{
+    [SerializeField]
+    protected T[] data;
+    public T[] Get() => data;
+}
+
+public abstract class DataSource
+{
+    public string value;
+    public Sprite sprite;
+
+    protected DataSource(string value, Sprite sprite)
+    {
+        this.value = value;
+        this.sprite = sprite;
+    }
+
+    public virtual bool IsNull => string.IsNullOrEmpty(value) || sprite == null;
+}

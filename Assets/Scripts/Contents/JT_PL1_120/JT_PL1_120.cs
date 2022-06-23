@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_120 : MultiAnswerContents<Question120,WordsData.WordSources>
+public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
 {
     public EventSystem eventSystem;
     public Button buttonRocket;
@@ -125,18 +125,18 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordsData.WordSources>
             cards[i].Init(question.totalQuestion[i]);
     }
 }
-public class Question120 : MultiQuestion<WordsData.WordSources>
+public class Question120 : MultiQuestion<WordSource>
 {
     public int currentIndex { get; private set; }
-    public Question120(WordsData.WordSources[] correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question120(WordSource[] correct, WordSource[] questions) : base(correct, questions)
     {
         currentIndex = 0;
     }
-    public override void SetAnswer(WordsData.WordSources answer)
+    public override void SetAnswer(WordSource answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;
     }
 
-    protected override bool CheckCorrect(WordsData.WordSources answer) => correct.Contains(answer);
+    protected override bool CheckCorrect(WordSource answer) => correct.Contains(answer);
 }

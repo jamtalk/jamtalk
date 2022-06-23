@@ -3,52 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 [CreateAssetMenu(fileName = "WordsData.asset", menuName = "LocalDB/Element/Word Data")]
-public class WordsData : LocalDBElement
+public class WordsData : LocalDBElement<WordSource>
 {
-    [Serializable]
-    public class WordSources
-    {
-        public eAlphabet alphabet;
-        public string value;
-        public Sprite sprite;
-        public AudioClip clip;
-        public AudioClip act3;
-        public bool IsNull => string.IsNullOrEmpty(value) ||
-            sprite == null ||
-            clip == null ||
-            act3 == null;
-
-        public WordSources(eAlphabet alphabet, string word, Sprite image, AudioClip clip, AudioClip act)
-        {
-            this.alphabet = alphabet;
-            this.value = word;
-            this.sprite = image;
-            this.clip = clip;
-            this.act3 = act;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is WordSources sources &&
-                   alphabet == sources.alphabet &&
-                   value == sources.value;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = -1117737164;
-            hashCode = hashCode * -1521134295 + alphabet.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
-            return hashCode;
-        }
-    }
-    [SerializeField]
-    private WordSources[] data;
-    public WordSources[] Get() => data;
-    public WordSources[] Get(eAlphabet alphabet) => data.Where(x => x.alphabet == alphabet).ToArray();
-    public WordSources Get(eAlphabet alphabet, string word) => Get(alphabet).ToList().Find(x => x.value == word);
+    public WordSource[] Get(eAlphabet alphabet) => data.Where(x => x.alphabet == alphabet).ToArray();
+    public WordSource Get(eAlphabet alphabet, string word) => Get(alphabet).ToList().Find(x => x.value == word);
     [Header("Orizinal Data")]
     [SerializeField]
     private Sprite[] sprites;
@@ -61,7 +20,7 @@ public class WordsData : LocalDBElement
     {
         int current = sprites.Length;
         sprites = sprites.Distinct().ToArray();
-        var tmp = new List<WordSources>();
+        var tmp = new List<WordSource>();
         for (int i = 0; i < data.Count; i++)
         {
             var datas = data[i];
@@ -69,7 +28,7 @@ public class WordsData : LocalDBElement
             var act = datas["act"].ToString();
             var value = datas["key"].ToString();
             var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), datas["alphabet"].ToString());
-            tmp.Add(new WordSources(
+            tmp.Add(new WordSource(
                 alphabet,
                 value,
                 LocalDB.Find(sprites, value),
@@ -101,6 +60,37 @@ public class WordsData : LocalDBElement
         Debug.Log(missingAudiosAll);
         Debug.Log(missings);
     }
-    #region Methods
-    #endregion
+}
+
+[Serializable]
+public class WordSource : DataSource
+{
+    public eAlphabet alphabet;
+    public AudioClip clip;
+    public AudioClip act3;
+    public override bool IsNull => base.IsNull ||
+        clip == null ||
+        act3 == null;
+
+    public WordSource(eAlphabet alphabet, string word, Sprite sprite, AudioClip clip, AudioClip act) : base(word, sprite)
+    {
+        this.alphabet = alphabet;
+        this.clip = clip;
+        this.act3 = act;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is WordSource sources &&
+               alphabet == sources.alphabet &&
+               value == sources.value;
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = -1117737164;
+        hashCode = hashCode * -1521134295 + alphabet.GetHashCode();
+        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
+        return hashCode;
+    }
 }

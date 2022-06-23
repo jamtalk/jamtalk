@@ -16,16 +16,16 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     private RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
     public event Action onDrop;
-    public event Action<WordsData.WordSources> onClick;
+    public event Action<WordSource> onClick;
     public bool intractable = true;
     public bool isConnected = false;
-    public WordsData.WordSources data { get; private set; }
+    public WordSource data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(WordsData.WordSources value)
+    public void Init(WordSource value)
     {
         intractable = true;
         this.data = value;

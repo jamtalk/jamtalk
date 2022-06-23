@@ -17,8 +17,8 @@ public class JT_PL1_105 : BaseContents
 
     private int questionCount => 4;
     private int currentIndex = 0;
-    private WordsData.WordSources[] questions;
-    private WordsData.WordSources currentQuestion => questions[currentIndex];
+    private WordSource[] questions;
+    private WordSource currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_105;
     protected override bool CheckOver() => currentIndex == questionCount;
     protected override int GetTotalScore() => questionCount;

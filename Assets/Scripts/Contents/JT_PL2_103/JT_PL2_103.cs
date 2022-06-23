@@ -26,9 +26,9 @@ public class JT_PL2_103 : BaseContents
         throwingLongElements.Select(x => x.GetComponent<WordElement203>()))
         .ToList();
 
-    private VowelData.VowelSource[] shortVowels;
-    private VowelData.VowelSource[] longVowels;
-    private VowelData.VowelSource currentWord => shortVowels[index];
+    private VowelSource[] shortVowels;
+    private VowelSource[] longVowels;
+    private VowelSource currentWord => shortVowels[index];
 
     public UIThrower110 thrower;
 
@@ -99,7 +99,7 @@ public class JT_PL2_103 : BaseContents
             .ToArray();
     }
 
-    private IEnumerator Init(VowelData.VowelSource data)
+    private IEnumerator Init(VowelSource data)
     {
         shortsElements.Clear();
         var list = new List<RectTransform>();

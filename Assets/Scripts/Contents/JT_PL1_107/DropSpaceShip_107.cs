@@ -18,15 +18,15 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Text text;
     public RectTransform point;
     public RectTransform line_rt;
-    public Action<WordsData.WordSources> onClick;
+    public Action<WordSource> onClick;
     public event Action onDrop;
-    public WordsData.WordSources data { get; private set; }
+    public WordSource data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(WordsData.WordSources data)
+    public void Init(WordSource data)
     {
         this.data = data;
         isConnected = false;

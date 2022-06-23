@@ -8,7 +8,7 @@ public class WordCreator110 : MonoBehaviour
     public GameObject element;
     public RectTransform parent => GetComponent<RectTransform>();
 
-    public AlphabetToggle110[] Create(WordsData.WordSources data)
+    public AlphabetToggle110[] Create(WordSource data)
     {
         var word = data.value.Replace(" ", "");
         var elements = new List<AlphabetToggle110>();

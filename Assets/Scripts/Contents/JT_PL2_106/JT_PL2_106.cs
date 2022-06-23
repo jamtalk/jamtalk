@@ -30,13 +30,13 @@ public class JT_PL2_106 : BaseContents
     public AudioClip tabClip;
     public AudioClip currentClip;
 
-    private VowelData.VowelSource[] shortWords;
-    private VowelData.VowelSource[] longWords;
+    private VowelSource[] shortWords;
+    private VowelSource[] longWords;
 
     private Sequence seq;
     private List<Text> textList = new List<Text>();
     private int currentIndex;
-    private List<VowelData.VowelSource> datas = new List<VowelData.VowelSource>();
+    private List<VowelSource> datas = new List<VowelSource>();
 
     protected override void Awake()
     {          

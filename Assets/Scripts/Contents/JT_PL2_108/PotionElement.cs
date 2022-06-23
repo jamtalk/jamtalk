@@ -22,9 +22,9 @@ public class PotionElement : MonoBehaviour , IDragHandler, IEndDragHandler, IBeg
 
     private GraphicRaycaster caster => FindObjectOfType<GraphicRaycaster>();
 
-    public WordsData.WordSources data { get; private set; }
+    public WordSource data { get; private set; }
 
-    public void Init(WordsData.WordSources data)
+    public void Init(WordSource data)
     {
         this.data = data;
         textValue.text = data.value;

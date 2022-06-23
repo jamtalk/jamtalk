@@ -13,7 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
     public eDigraphs currentDigrpahs { get; set; }
 
     private Dictionary<eAlphabet, AlphabetData> datas;
-    private Dictionary<eDigraphs, DigraphsData.DigraphsSources[]> digraphs;
+    private Dictionary<eDigraphs, DigraphsSource[]> digraphs;
 
     public override void Initialize()
     {
@@ -53,9 +53,9 @@ public class GameManager : MonoSingleton<GameManager>
         }
         return dic;
     }
-    public DigraphsData.DigraphsSources[] GetDigraphs(eDigraphs type) => digraphs[type];
-    public DigraphsData.DigraphsSources[] GetDigrpahs() => GetDigraphs(currentDigrpahs);
-    public DigraphsData.DigraphsSources[] GetDigrpahs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
+    public DigraphsSource[] GetDigraphs(eDigraphs type) => digraphs[type];
+    public DigraphsSource[] GetDigrpahs() => GetDigraphs(currentDigrpahs);
+    public DigraphsSource[] GetDigrpahs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
     public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style);
     public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style,type);
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style, type, alphabet);
@@ -64,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
     public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
         .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))
         .ToArray();
-    public WordsData.WordSources FindWord(eAlphabet alphabet, string value) => datas[alphabet].Words.ToList().Find(x => x.value == value);
+    public WordSource FindWord(eAlphabet alphabet, string value) => datas[alphabet].Words.ToList().Find(x => x.value == value);
     public Vector3 GetMousePosition(float z = 0)
     {
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -78,11 +78,11 @@ public class AlphabetData
     public eAlphabet Alphabet { get; private set; }
     public bool IsVowel => Vowels == null || Vowels.Length == 0;
     public SentanceData.SentancesSource[] Sentances { get; private set; }
-    public WordsData.WordSources[] Words { get; private set; }
-    public VowelData.VowelSource[] Vowels { get; private set; }
+    public WordSource[] Words { get; private set; }
+    public VowelSource[] Vowels { get; private set; }
 
     public AlphabetAudioData.AlphabetAudioSource AudioData { get; private set; }
-    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordsData.WordSources[] words, VowelData.VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource audioData)
+    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordSource[] words, VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource audioData)
     {
         Alphabet = alphabet;
         Sentances = sentances;

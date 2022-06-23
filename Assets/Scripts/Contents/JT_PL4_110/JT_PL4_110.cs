@@ -4,17 +4,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL4_110 : BingoContents<WordsData.WordSources, WordBingoButton, Text, WordBingoBoard>
+public class JT_PL4_110 : BingoContents<WordSource, WordBingoButton, Text, WordBingoBoard>
 {
     protected override eContents contents => eContents.JT_PL4_110;
 
-    protected override WordsData.WordSources[] correctsTarget =>
+    protected override WordSource[] correctsTarget =>
         new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
         .SelectMany(x => GameManager.Instance.GetResources(x).Words)
         .Where(x => x.value.Length < 6)
         .ToArray();
 
-    public override WordsData.WordSources[] GetQuestionType()
+    public override WordSource[] GetQuestionType()
     {
         return GameManager.Instance.alphabets
             .Select(x => GameManager.Instance.GetResources(x))
@@ -26,7 +26,7 @@ public class JT_PL4_110 : BingoContents<WordsData.WordSources, WordBingoButton, 
             .ToArray();
     }
 
-    protected override bool IsCurrentAnswer(WordsData.WordSources value) => value == currentQuestion;
+    protected override bool IsCurrentAnswer(WordSource value) => value == currentQuestion;
 
     protected override AudioClip GetClip() => currentQuestion.clip;
 }

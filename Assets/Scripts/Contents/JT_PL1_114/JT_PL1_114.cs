@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class JT_PL1_114 : SingleAnswerContents<Question114, WordsData.WordSources>
+public class JT_PL1_114 : SingleAnswerContents<Question114, WordSource>
 {
     public DropSapceShip_114 ship;
     public DragObject_114[] drags;
@@ -83,7 +83,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, WordsData.WordSource
                 finger.gameObject.SetActive(true);
             SetIntractable(true);
         });
-        var questions = question.questions.Union(new WordsData.WordSources[] { question.correct })
+        var questions = question.questions.Union(new WordSource[] { question.correct })
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .ToArray();
         for (int i = 0; i < drags.Length; i++)
@@ -98,10 +98,10 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, WordsData.WordSource
             drags[i].intracable = intracable;
     }
 }
-public class Question114 : SingleQuestion<WordsData.WordSources>
+public class Question114 : SingleQuestion<WordSource>
 {
     public eAlphabet alphabet => correct.alphabet;
-    public Question114(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question114(WordSource correct, WordSource[] questions) : base(correct, questions)
     {
     }
 }

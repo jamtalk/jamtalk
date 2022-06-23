@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSource>
+public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_104;
@@ -15,8 +15,8 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSou
     protected override int QuestionCount => 3;
 
     private float smallBubbleSize = 0.7f;
-    private WordsData.WordSources[] words;
-    private VowelData.VowelSource[] vowels;
+    private WordSource[] words;
+    private VowelSource[] vowels;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -88,7 +88,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSou
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelData.VowelSource data)
+    protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelSource data)
     {
         bubble.onClickFirst.RemoveAllListeners();
         bubble.onClick.RemoveAllListeners();
@@ -161,7 +161,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSou
             StartCoroutine(Init());
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble, VowelData.VowelSource data)
+    protected virtual void ThrowElement(BubbleElement bubble, VowelSource data)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
     }
@@ -193,7 +193,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelData.VowelSou
     }
 }
 
-public class Question2_104 : SingleQuestion<VowelData.VowelSource>
+public class Question2_104 : SingleQuestion<VowelSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -206,7 +206,7 @@ public class Question2_104 : SingleQuestion<VowelData.VowelSource>
                 .ToArray();
         }
     }
-    public Question2_104(VowelData.VowelSource correct, VowelData.VowelSource[] questions) : base(correct, questions)
+    public Question2_104(VowelSource correct, VowelSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

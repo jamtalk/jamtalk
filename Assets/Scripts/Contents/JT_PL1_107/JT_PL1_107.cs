@@ -17,7 +17,7 @@ public class JT_PL1_107 : BaseContents
     protected override eContents contents => eContents.JT_PL1_107;
     protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
-    protected WordsData.WordSources[] words;
+    protected WordSource[] words;
 
     protected override void Awake()
     {
@@ -32,7 +32,7 @@ public class JT_PL1_107 : BaseContents
         //SetElement(words);
     }
 
-    protected void SetElement(WordsData.WordSources[] words)
+    protected void SetElement(WordSource[] words)
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
 
@@ -64,7 +64,7 @@ public class JT_PL1_107 : BaseContents
         }
     }
 
-    private void PlayAudio(WordsData.WordSources word)
+    private void PlayAudio(WordSource word)
     {
         audioPlayer.Play(word.clip);
     }

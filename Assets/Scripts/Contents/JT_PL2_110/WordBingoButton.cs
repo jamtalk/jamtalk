@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WordBingoButton : BaseBingoButton<WordsData.WordSources, Text>
+public class WordBingoButton : BaseBingoButton<WordSource, Text>
 {
     protected override void SetViewer()
     {

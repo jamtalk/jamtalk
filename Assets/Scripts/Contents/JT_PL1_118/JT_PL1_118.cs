@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL1_118 : SingleAnswerContents<Question118, WordsData.WordSources>
+public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
 {
     public Text textQuestion;
     public Button buttonQuestion;
@@ -13,7 +13,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordsData.WordSource
     private int alphabetCount = 2;
 
     protected override eContents contents => eContents.JT_PL1_118;
-    private void AddButtonListener(ImageButton button, WordsData.WordSources data)
+    private void AddButtonListener(ImageButton button, WordSource data)
     {
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
@@ -46,7 +46,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordsData.WordSource
 
         var list = new List<Question118>();
         for(int i = 0; i< corrects.Length; i++)
-            list.Add(new Question118(corrects[i], new WordsData.WordSources[] { incorrects[i] }));
+            list.Add(new Question118(corrects[i], new WordSource[] { incorrects[i] }));
         return list;
     }
 
@@ -69,9 +69,9 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordsData.WordSource
         textQuestion.text = question.correct.value;
     }
 }
-public class Question118 : SingleQuestion<WordsData.WordSources>
+public class Question118 : SingleQuestion<WordSource>
 {
-    public Question118(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question118(WordSource correct, WordSource[] questions) : base(correct, questions)
     {
         
     }

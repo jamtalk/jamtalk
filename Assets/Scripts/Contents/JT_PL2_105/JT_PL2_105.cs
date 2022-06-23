@@ -6,7 +6,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelData.VowelSource>
+public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_105;
@@ -31,7 +31,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelData.VowelSou
     private Vector3 defaultPosition;
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
-    private VowelData.VowelSource[] vowels;
+    private VowelSource[] vowels;
     /// <summary>
     /// thrower 사이즈 변경
     /// 별똥별 추가
@@ -96,7 +96,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelData.VowelSou
             AddClickListener(elements[i], data);
         }
     }
-    private void AddClickListener(BubbleElement planet, VowelData.VowelSource data)
+    private void AddClickListener(BubbleElement planet, VowelSource data)
     {
         planet.onClickFirst.RemoveAllListeners();
 
@@ -119,7 +119,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelData.VowelSou
 
     }
 
-    private IEnumerator InitPlanet(VowelData.VowelSource data)
+    private IEnumerator InitPlanet(VowelSource data)
     {
         yield return new WaitForSecondsRealtime(1f);
         audioPlayer.Play(boomClip);
@@ -145,7 +145,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelData.VowelSou
 
 
 
-public class Question2_105 : SingleQuestion<VowelData.VowelSource>
+public class Question2_105 : SingleQuestion<VowelSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -158,7 +158,7 @@ public class Question2_105 : SingleQuestion<VowelData.VowelSource>
                 .ToArray();
         }
     }
-    public Question2_105(VowelData.VowelSource correct, VowelData.VowelSource[] questions) : base(correct, questions)
+    public Question2_105(VowelSource correct, VowelSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

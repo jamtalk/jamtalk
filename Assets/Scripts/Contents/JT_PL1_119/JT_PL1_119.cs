@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_119 : SingleAnswerContents<Question119, WordsData.WordSources>
+public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
 {
     public EventSystem eventSystem;
     public ButtonExitnction[] buttons;
@@ -45,7 +45,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordsData.WordSource
                 finger.SetActive(true);
         });
     }
-    private void AddButtonListener(ButtonExitnction button, WordsData.WordSources data)
+    private void AddButtonListener(ButtonExitnction button, WordSource data)
     {
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
@@ -108,9 +108,9 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordsData.WordSource
         }
     }
 }
-public class Question119 : SingleQuestion<WordsData.WordSources>
+public class Question119 : SingleQuestion<WordSource>
 {
-    public Question119(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question119(WordSource correct, WordSource[] questions) : base(correct, questions)
     {
     }
 }

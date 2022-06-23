@@ -116,9 +116,9 @@ public class Question109
     private int width=>11;
     private int height=>5;
     public eAlphabet[] alphabets;
-    public WordsData.WordSources word;
+    public WordSource word;
     public bool isCompleted;
-    public Question109(WordsData.WordSources word)
+    public Question109(WordSource word)
     {
         this.word = word;
         isCompleted = false;

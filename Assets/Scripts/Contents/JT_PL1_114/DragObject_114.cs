@@ -16,13 +16,13 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     public event Action<bool> onAnswer;
     public event Action onDrag;
     public bool intracable;
-    public WordsData.WordSources data;
+    public WordSource data;
     public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), image.sprite.name.First().ToString().ToUpper());
     private void Awake()
     {
         button.onClick.AddListener(() => audioPlayer.Play(data.clip));
     }
-    public void Init(WordsData.WordSources data)
+    public void Init(WordSource data)
     {
         this.data = data;
         image.sprite = data.sprite;

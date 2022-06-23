@@ -7,48 +7,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "VowelData.asset", menuName = "LocalDB/Element/Vowel Data")]
 public class VowelData : LocalDBElement
 {
-    [Serializable]
-    public class VowelSource
-    {
-        public eVowelType type;
-        public eAlphabet alphabet;
-        public string value;
-        public Sprite sprite;
-        public string actValue;
-        public void PlayClip() => AndroidPluginManager.Instance.PlayTTS(value);
-        public void PlayAct() => AndroidPluginManager.Instance.PlayTTS(actValue);
-
-        public override bool Equals(object obj)
-        {
-            return obj is VowelSource source &&
-                   type == source.type &&
-                   alphabet == source.alphabet &&
-                   value == source.value;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = -251028527;
-            hashCode = hashCode * -1521134295 + type.GetHashCode();
-            hashCode = hashCode * -1521134295 + alphabet.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
-            return hashCode;
-        }
-
-        public VowelSource(eVowelType type, eAlphabet alphabet, string value, Sprite sprite, string act)
-        {
-            this.type = type;
-            this.alphabet = alphabet;
-            this.value = value;
-            this.sprite = sprite;
-            this.actValue = act;
-        }
-
-        public bool IsNull => string.IsNullOrEmpty(value) ||
-            string.IsNullOrEmpty(actValue) ||
-            sprite == null;
-
-    }
     [SerializeField]
     private VowelSource[] data;
     public VowelSource[] Get() => data;
@@ -102,4 +60,41 @@ public class VowelData : LocalDBElement
     }
     #region Methods
     #endregion
+}
+
+[Serializable]
+public class VowelSource : DataSource
+{
+    public eVowelType type;
+    public eAlphabet alphabet;
+    public string actValue;
+    public void PlayClip() => AndroidPluginManager.Instance.PlayTTS(value);
+    public void PlayAct() => AndroidPluginManager.Instance.PlayTTS(actValue);
+    public override bool IsNull => base.IsNull || string.IsNullOrEmpty(actValue);
+
+    public override bool Equals(object obj)
+    {
+        return obj is VowelSource source &&
+               type == source.type &&
+               alphabet == source.alphabet &&
+               value == source.value;
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = -251028527;
+        hashCode = hashCode * -1521134295 + type.GetHashCode();
+        hashCode = hashCode * -1521134295 + alphabet.GetHashCode();
+        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(value);
+        return hashCode;
+    }
+
+    public VowelSource(eVowelType type, eAlphabet alphabet, string value, Sprite sprite, string act) : base(value,sprite)
+    {
+        this.type = type;
+        this.alphabet = alphabet;
+        this.actValue = act;
+    }
+
+
 }

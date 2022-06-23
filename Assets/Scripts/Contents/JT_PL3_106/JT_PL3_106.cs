@@ -4,15 +4,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_106 : SingleAnswerContents<Question3_106, VowelData.VowelSource>
+public class JT_PL3_106 : SingleAnswerContents<Question3_106, VowelSource>
 {
     protected override eContents contents => eContents.JT_PL2_106;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
     protected override int QuestionCount => 3;
     private int index = 0;
-    //private WordsData.WordSources[] words;
-    private VowelData.VowelSource[] vowels;
+    //private WordSource[] words;
+    private VowelSource[] vowels;
 
     public Thrower306 thrower;
     public Text[] texts;
@@ -91,7 +91,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question3_106, VowelData.VowelSou
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement element, VowelData.VowelSource data)
+    protected virtual void AddDoubleClickListener(BubbleElement element, VowelSource data)
     {
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
@@ -130,7 +130,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question3_106, VowelData.VowelSou
     }
 }
 
-public class Question3_106 : SingleQuestion<VowelData.VowelSource>
+public class Question3_106 : SingleQuestion<VowelSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -143,7 +143,7 @@ public class Question3_106 : SingleQuestion<VowelData.VowelSource>
                 .ToArray();
         }
     }
-    public Question3_106(VowelData.VowelSource correct, VowelData.VowelSource[] questions) : base(correct, questions)
+    public Question3_106(VowelSource correct, VowelSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

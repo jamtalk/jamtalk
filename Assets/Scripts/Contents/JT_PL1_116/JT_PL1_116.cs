@@ -19,7 +19,7 @@ public class JT_PL1_116 : BaseContents
 
     protected override bool CheckOver() => currentIndex == length;
 
-    private WordsData.WordSources[] words;
+    private WordSource[] words;
     private eAlphabet[] alphabets;
 
     private int currentIndex=0;

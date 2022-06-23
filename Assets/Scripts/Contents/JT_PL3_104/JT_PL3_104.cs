@@ -19,7 +19,7 @@ public class JT_PL3_104 : JT_PL2_104
         return base.MakeQuestion();
     }
 
-    protected override void ThrowElement(BubbleElement bubble, VowelData.VowelSource data)
+    protected override void ThrowElement(BubbleElement bubble, VowelSource data)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {

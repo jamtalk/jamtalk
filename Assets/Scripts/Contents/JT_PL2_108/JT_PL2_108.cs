@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordsData.WordSources>
+public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordSource>
 {
     protected override eContents contents => eContents.JT_PL2_108;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
@@ -12,7 +12,7 @@ public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordsData.WordSour
 
     protected override int QuestionCount => 6;
 
-    protected WordsData.WordSources[] words;
+    protected WordSource[] words;
     [SerializeField]
     protected PotionElement[] elements;
 
@@ -125,7 +125,7 @@ public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordsData.WordSour
         yield return new WaitForSecondsRealtime(1);
         successEffect.SetActive(false);
     }
-    protected override void AddAnswer(WordsData.WordSources answer)
+    protected override void AddAnswer(WordSource answer)
     {
         base.AddAnswer(answer);
         for (int i = 0; i < elements.Length; i++)
@@ -134,7 +134,7 @@ public class JT_PL2_108 : SingleAnswerContents<Question2_108, WordsData.WordSour
 }
 
 
-public class Question2_108 : SingleQuestion<WordsData.WordSources>
+public class Question2_108 : SingleQuestion<WordSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -147,7 +147,7 @@ public class Question2_108 : SingleQuestion<WordsData.WordSources>
                 .ToArray();
         }
     }
-    public Question2_108(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question2_108(WordSource correct, WordSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

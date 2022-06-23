@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class JT_PL1_106 : SingleAnswerContents<Question106, WordsData.WordSources>
+public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
 {
     protected override eContents contents => eContents.JT_PL1_106;
 
@@ -65,7 +65,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordsData.WordSource
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }
-    private void AddDoubleClickListener(DoubleClickButton button, WordsData.WordSources data)
+    private void AddDoubleClickListener(DoubleClickButton button, WordSource data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
@@ -110,7 +110,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordsData.WordSource
     }
 }
 [Serializable]
-public class Question106 : SingleQuestion<WordsData.WordSources>
+public class Question106 : SingleQuestion<WordSource>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -123,7 +123,7 @@ public class Question106 : SingleQuestion<WordsData.WordSources>
                 .ToArray();
         }
     }
-    public Question106(WordsData.WordSources correct, WordsData.WordSources[] questions) : base(correct, questions)
+    public Question106(WordSource correct, WordSource[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x=>x.sprite).ToArray();

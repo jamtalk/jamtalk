@@ -7,11 +7,11 @@ public class Card_108 : MonoBehaviour
     public TurningCard turnner => GetComponent<TurningCard>();
     public ImageButton imageButton;
     [HideInInspector]
-    public WordsData.WordSources data;
+    public WordSource data;
     [HideInInspector]
-    public Action<WordsData.WordSources> onClick;
+    public Action<WordSource> onClick;
     [HideInInspector]
-    public Func<WordsData.WordSources, bool> checkVaild;
+    public Func<WordSource, bool> checkVaild;
     private void Awake()
     {
         turnner.onClick += () =>
@@ -28,7 +28,7 @@ public class Card_108 : MonoBehaviour
             turnner.Turnning();
         }
     }
-    public void Init(WordsData.WordSources data)
+    public void Init(WordSource data)
     {
         this.data = data;
         imageButton.sprite = data.sprite;
