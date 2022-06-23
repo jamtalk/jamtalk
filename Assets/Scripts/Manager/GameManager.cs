@@ -54,8 +54,8 @@ public class GameManager : MonoSingleton<GameManager>
         return dic;
     }
     public DigraphsSource[] GetDigraphs(eDigraphs type) => digraphs[type];
-    public DigraphsSource[] GetDigrpahs() => GetDigraphs(currentDigrpahs);
-    public DigraphsSource[] GetDigrpahs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
+    public DigraphsSource[] GetDigraphs() => GetDigraphs(currentDigrpahs);
+    public DigraphsSource[] GetDigraphs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
     public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style);
     public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style,type);
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => LocalDB.Instance.Get<AlphabetSpriteData>().Get(style, type, alphabet);
