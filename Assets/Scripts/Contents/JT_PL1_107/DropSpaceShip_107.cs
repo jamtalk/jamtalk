@@ -18,15 +18,15 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Text text;
     public RectTransform point;
     public RectTransform line_rt;
-    public Action<WordSource> onClick;
+    public Action<DataSource> onClick;
     public event Action onDrop;
-    public WordSource data { get; private set; }
+    public DataSource data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(WordSource data)
+    public void Init(DataSource data)
     {
         this.data = data;
         isConnected = false;
@@ -82,6 +82,8 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     }
     private void SetLine(Vector2 position)
     {
+        line_rt.gameObject.SetActive(true);
+
         var v1 = position - (Vector2)line_rt.position;
         var angle = Mathf.Atan2(v1.y, v1.x) * Mathf.Rad2Deg - 90f;
         line_rt.rotation = Quaternion.Euler(0, 0, angle);
@@ -94,6 +96,8 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     }
     private void SetCover(Vector2 position)
     {
+        cover.gameObject.SetActive(true);
+
         intractable = false;
         isConnected = true;
 
@@ -103,7 +107,14 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
         var tween = cover.DOSizeDelta(size, .25f);
         tween.onComplete += () => onDrop?.Invoke();
     }
-
+    public void Reset()
+    {
+        cover.sizeDelta = Vector2.zero;
+        line_rt.gameObject.SetActive(false);
+        cover.gameObject.SetActive(false);
+        intractable = true;
+        isConnected = false;
+    }
     public Vector2 FactorPos(Vector2 pos)
     {
         var resolution = scaler.referenceResolution;

@@ -1,73 +1,33 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
-public class JT_PL1_107 : BaseContents
+public class JT_PL1_107 : BaseMatchImage<WordSource>
 {
-    public CanvasScaler scaler;
-    public DropSpaceShip_107[] drops;
-    public DragKnob_107[] drags;
-    public AudioSinglePlayer audioPlayer;
-    
     protected override eContents contents => eContents.JT_PL1_107;
     protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
-    protected WordSource[] words;
 
     protected override void Awake()
     {
+        base.Awake();
         GetWords();
-        SetElement(words);
     }
-    protected virtual void GetWords()
+
+    protected override void GetWords()
     {
         words = GameManager.Instance.GetResources().Words
+            .OrderBy(x => Random.Range(0f, 100f))
             .Take(drops.Length)
             .ToArray();
-        //SetElement(words);
+        SetElement(words);
     }
 
-    protected void SetElement(WordSource[] words)
+    protected override void PlayAudio(DataSource word)
     {
-        scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
-
-        drops = drops.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-        drags = drags.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        for (int i = 0; i < words.Length; i++)
-        {
-            drops[i].Init(words[i]);
-            drags[i].Init(words[i]);
-
-            drops[i].onClick += PlayAudio;
-            drags[i].onClick += PlayAudio;
-
-            drags[i].onDrop += () =>
-            {
-                if (CheckOver())
-                    ShowResult();
-                else
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-            };
-            drops[i].onDrop += () =>
-            {
-                if (CheckOver())
-                    ShowResult();
-                else
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-            };
-        }
+        var data = (WordSource)word;
+        audioPlayer.Play(data.clip);
     }
 
-    private void PlayAudio(WordSource word)
-    {
-        audioPlayer.Play(word.clip);
-    }
     protected override void ShowResult()
     {
         audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);

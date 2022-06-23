@@ -16,22 +16,21 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     private RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
     public event Action onDrop;
-    public event Action<WordSource> onClick;
+    public event Action<DataSource> onClick;
     public bool intractable = true;
     public bool isConnected = false;
-    public WordSource data { get; private set; }
+    public DataSource data { get; private set; }
     private void Awake()
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
     }
-    public void Init(WordSource value)
+    public void Init(DataSource value)
     {
         intractable = true;
         this.data = value;
         image.sprite = value.sprite;
     }
-
     public virtual void OnDrag(PointerEventData eventData)
     {
         if (!intractable)
@@ -74,6 +73,8 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     }
     private void SetLine(Vector2 position)
     {
+        line.gameObject.SetActive(true);
+
         var v1 = position - (Vector2)line_rt.position;
         var angle = Mathf.Atan2(v1.y, v1.x) * Mathf.Rad2Deg - 90f;
         line_rt.rotation = Quaternion.Euler(0, 0, angle);
@@ -85,7 +86,8 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
         line_rt.sizeDelta = size;
     }
     private void SetCover(Vector2 position)
-    {
+    { 
+        cover.gameObject.SetActive(true);
         intractable = false;
         isConnected = true;
 
@@ -95,7 +97,14 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
         var tween = cover.DOSizeDelta(size, .25f);
         tween.onComplete += () => onDrop?.Invoke();
     }
-
+    public void Reset()
+    {
+        cover.sizeDelta = Vector2.zero;
+        line.gameObject.SetActive(false);
+        cover.gameObject.SetActive(false);
+        intractable = true;
+        isConnected = false;
+    }
     public Vector2 FactorPos(Vector2 pos)
     {
         var resolution = scaler.referenceResolution;
