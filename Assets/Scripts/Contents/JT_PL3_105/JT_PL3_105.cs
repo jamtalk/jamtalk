@@ -14,7 +14,7 @@ public class JT_PL3_105 : BaseContents
     private int index = 0;
     
     private eDigraphs eCurrentDigraphs;
-    private DigraphsSource[] currentDigraphs;
+    private DigraphsSource currentDigraphs;
 
     public Text currentText;
     public GameObject hammer;
@@ -42,13 +42,15 @@ public class JT_PL3_105 : BaseContents
         eCurrentDigraphs = eDig[Random.Range(0, eDig.Length)];
 
         currentDigraphs = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))   //  select
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))  
             .Where(x => x.type == eCurrentDigraphs)
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(1)
-            .ToArray();
+            .First();
+        currentDigraphs.PlayClip();
 
-        currentText.text = currentDigraphs[0].value;    // select
+        string value = currentDigraphs.value;
+        currentText.text = value.Replace(eCurrentDigraphs.ToString().ToLower(), "__");
+
         SetMolesPosition();
     }
 
