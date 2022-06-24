@@ -72,8 +72,8 @@ public class DigraphsSource : DataSource
     }
 
     public int TargetLevel { get; private set; }
-    public void PlayClip() => AndroidPluginManager.Instance.PlayTTS(value);
-    public void PlayAct() => AndroidPluginManager.Instance.PlayTTS(actValue);
+    public void PlayClip(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(value,onDone);
+    public void PlayAct(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(actValue,onDone);
 
     public override bool Equals(object obj)
     {

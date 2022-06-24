@@ -10,7 +10,7 @@ public class GameManager : MonoSingleton<GameManager>
     public delegate void PlayTTS();
     public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; private set; }
-    public eDigraphs currentDigrpahs { get; set; }
+    public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
 
     private Dictionary<eAlphabet, AlphabetData> datas;
     private Dictionary<eDigraphs, DigraphsSource[]> digraphs;
