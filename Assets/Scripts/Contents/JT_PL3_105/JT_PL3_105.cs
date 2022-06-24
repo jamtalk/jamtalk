@@ -1,105 +1,142 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class JT_PL3_105 : SingleAnswerContents<Question3_105, WordSource>
+public class JT_PL3_105 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL3_105;
-    protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
+    protected override bool CheckOver() => index == QuestionCount;
     protected override int GetTotalScore() => QuestionCount;
-    protected override int QuestionCount => 5;
+    protected int QuestionCount => 5;
+    private int index = 0;
+    
+    private eDigraphs eCurrentDigraphs;
+    private DigraphsSource[] currentDigraphs;
 
-    public Mole[] moles;
+    public Text currentText;
+    public GameObject hammer;
+    public Image effectImage;
+    public Image progressBar;
     public MoleElement305[] elements;
     public RectTransform[] layouts;
+    public AudioClip hammerClip;
+    public AudioClip moleClip;
+    public AudioClip effectClip;
+    public AudioSinglePlayer audioPlayer;
+
+    private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
     protected override void Awake()
     {
         base.Awake();
 
-        for (int i = 0; i < elements.Length; i++)
-            elements[i].Init(moles[i]);
+        MakeQuestion();
     }
 
-    protected override List<Question3_105> MakeQuestion()
+
+    protected void MakeQuestion()
     {
-        var questions = new List<Question3_105>();
-        var currentWord = GameManager.Instance.GetDigraphs() // dirgaphs
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
-            .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
-            .Take(QuestionCount)
+        eCurrentDigraphs = eDig[Random.Range(0, eDig.Length)];
+
+        currentDigraphs = GameManager.Instance.digrpahs
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))   //  select
+            .Where(x => x.type == eCurrentDigraphs)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Take(1)
             .ToArray();
 
-        return questions;
+        currentText.text = currentDigraphs[0].value;    // select
+        SetMolesPosition();
     }
 
-    protected override void ShowQuestion(Question3_105 question)
+    protected void SetMolesPosition()
     {
         var tempLayouts = layouts
-            .OrderBy(x => UnityEngine.Random.Range(0f, layouts.Length))
+            .OrderBy(x => Random.Range(0f, layouts.Length))
             .Take(3)
             .ToArray();
 
         for (int i = 0; i < elements.Length; i++)
         {
-            var data = question.totalQuestion[i];
             elements[i].transform.position = tempLayouts[i].position;
-            AddListener(elements[i], data);
+            elements[i].gameObject.SetActive(true);
+            AddListener(elements[i]);
         }
     }
 
-    private void AddListener(MoleElement305 element, WordSource data)
+    private void AddListener(MoleElement305 element)
     {
         var button = element.GetComponent<Button>();
         button.onClick.RemoveAllListeners();
 
         button.onClick.AddListener(() =>
         {
-            if (element.text.text.Contains(GameManager.Instance.currentDigrpahs.ToString()))
-            {                                                 
-                AddAnswer(data);
-                if (CheckOver())
-                    ShowResult();
-            }
-            else
+            hammer.transform.position = element.transform.position;
+            var hammerRt = hammer.GetComponent<RectTransform>();
+            var hammerWidth = hammerRt.rect.width;
+            var posion = hammerRt.anchoredPosition;
+            posion.x += hammerWidth;
+
+            hammerRt.anchoredPosition = posion;
+
+            HammerDoMove(() =>
             {
+                hammer.gameObject.SetActive(false);
+                effectImage.transform.position = element.transform.position;
+                effectImage.gameObject.SetActive(true);
+
+                audioPlayer.Play(1f, effectClip, () =>
+                {
+                    effectImage.gameObject.SetActive(false);
+
+                    if (element.text.text.ToUpper().Contains(eCurrentDigraphs.ToString()))
+                    {
+                        index += 1;
+                        ProgressBarDoMove();
+                        if (CheckOver())
+                            ShowResult();
+                        else
+                            MakeQuestion();
+
+                    }
+                    else
+                    {
+                        SetMolesPosition();
+                    }
+                });
                 
-            }
+            });
+            
         });
-
     }
 
-
-
-}
-
-
-[Serializable]
-public class Mole
-{
-    public eDigraphs digraphs;
-    public Sprite color;
-}
-
-public class Question3_105 : SingleQuestion<WordSource>
-{
-    private Sprite spriteCorrect;
-    private Sprite[] spriteQuestions;
-    public Sprite[] SpriteQuestions
+    private void ProgressBarDoMove()
     {
-        get
-        {
-            return spriteQuestions.Union(new Sprite[] { spriteCorrect })
-                .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
-                .ToArray();
-        }
+        var vector = new Vector3((0.2f * index), 0f, 0f);
+        progressBar.transform.DOScaleX(vector.x, .5f);
     }
-    public Question3_105(WordSource correct, WordSource[] questions) : base(correct, questions)
+
+    private void HammerDoMove(TweenCallback callback)
     {
-        spriteCorrect = correct.sprite;
-        spriteQuestions = questions.Select(x => x.sprite).ToArray();
+        hammer.gameObject.SetActive(true);
+
+        Sequence seq = DOTween.Sequence();
+        Tween startTween;
+        Tween lastTween;
+        var startVector = new Vector3(0, 0, -5);
+        var lastVector = new Vector3(0, 0, 15);
+        startTween = hammer.gameObject.transform.DORotate(startVector, .5f);
+        lastTween = hammer.gameObject.transform.DORotate(lastVector, .5f);
+
+        startTween.SetEase(Ease.Linear);
+        lastTween.SetEase(Ease.InQuad);
+        seq.Append(startTween);
+        seq.Append(lastTween);
+        seq.onComplete += callback;
+        seq.Play();
     }
+
 }
