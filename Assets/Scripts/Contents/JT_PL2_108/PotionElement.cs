@@ -7,12 +7,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class PotionElement : MonoBehaviour , IDragHandler, IEndDragHandler, IBeginDragHandler
+public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, IBeginDragHandler
+    where T : DataSource
 {
     [SerializeField]
     private bool interactable = false;
-    public event Action<PotionElement> onDrop;
-    public event Action<PotionElement> onDrag;
+    public event Action<PotionElement<T>> onDrop;
+    public event Action<PotionElement<T>> onDrag;
     public Text textValue;
     private Vector3 defaultPosition;
     
@@ -22,9 +23,9 @@ public class PotionElement : MonoBehaviour , IDragHandler, IEndDragHandler, IBeg
 
     private GraphicRaycaster caster => FindObjectOfType<GraphicRaycaster>();
 
-    public WordSource data { get; private set; }
+    public T data { get; private set; }
 
-    public void Init(WordSource data)
+    public void Init(T data)
     {
         this.data = data;
         textValue.text = data.value;
@@ -75,6 +76,8 @@ public class PotionElement : MonoBehaviour , IDragHandler, IEndDragHandler, IBeg
     {
         transform.position = defaultPosition;
         gameObject.SetActive(true);
+        image.gameObject.SetActive(true);
+        textValue.gameObject.SetActive(true);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

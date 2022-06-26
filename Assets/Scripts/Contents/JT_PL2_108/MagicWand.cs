@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MagicWand : MonoBehaviour
+public class MagicWand<T> : MonoBehaviour
+    where T : DataSource
 {
     public ParticleSystem particle;
     public Image potionImage;
@@ -24,7 +25,7 @@ public class MagicWand : MonoBehaviour
         else
             gameObject.SetActive(false);
     }
-    public void SetDrag(PotionElement data)
+    public void SetDrag(PotionElement<T> data)
     {
         transform.position = GameManager.Instance.GetMousePosition();
         potionImage.sprite = data.image.sprite;
