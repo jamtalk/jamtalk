@@ -15,7 +15,6 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
     protected override int QuestionCount => 3;
 
     private float smallBubbleSize = 0.7f;
-    private WordSource[] words;
     private VowelSource[] vowels;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
