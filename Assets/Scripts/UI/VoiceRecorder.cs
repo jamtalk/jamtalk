@@ -17,14 +17,8 @@ public class VoiceRecorder : MonoBehaviour
         get => source.clip;
         private set => source.clip = value;
     }
-#if UNITY_IOS
-    public string correct;
-#endif
     public void Record()
     {
-#if UNITY_IOS
-        Stop();
-#else
         if (Microphone.devices.Length == 0)
         {
             Debug.LogError("마이크가 없습니다");
@@ -36,13 +30,9 @@ public class VoiceRecorder : MonoBehaviour
             source.clip = Microphone.Start(deviceName, false, 5, 8000);
             //source.Play();
         }
-#endif
     }
     public void Stop()
     {
-#if UNITY_IOS
-        onSTT?.Invoke(true, correct);
-#else
         Debug.Log("종료");
         source.Stop();
         Microphone.End(deviceName);
@@ -52,7 +42,6 @@ public class VoiceRecorder : MonoBehaviour
             var result = response.GetResult<STTResult>();
             onSTT?.Invoke(result.IsSuccessed, result.result);
         });
-#endif
     }
     public void Play()
     {
