@@ -17,10 +17,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
     public Image[] parentImages;
     public Image[] childrenImages;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
     protected override List<Question4_102> MakeQuestion()
     {
         var questions = new List<Question4_102>();
