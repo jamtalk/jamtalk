@@ -42,6 +42,7 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
         onDoneCallback = onCompleted;
 #if UNITY_EDITOR
         Debug.Log("TTS : "+_message);
+        onDoneCallback?.Invoke();
 #elif UNITY_IPHONE
         //_TAG_StartSpeak(_message);
 #elif UNITY_ANDROID
