@@ -23,8 +23,8 @@ public class JT_PL4_106 : BaseContents
 
         MakeQuestion();
 
-        for (int i = 0; i < buttons.Length - 1; i++)
-            buttons[i].onClick.AddListener(() => SetButtonAddListener(eDig[i]));
+        for (int i = 0; i < buttons.Length; i++)
+            SetButtonAddListener(buttons[i], eDig[i]);
     }
 
     private void MakeQuestion()
@@ -35,20 +35,48 @@ public class JT_PL4_106 : BaseContents
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
-        currentText.text = current.value;
+        SetCurrentColor();
     }
-    private void SetButtonAddListener(eDigraphs digraphs)
+
+    private void SetButtonAddListener(Button button, eDigraphs digraphs)
     {
         // phanics 출력 , image 변경
-
-        Debug.Log("Click");
-        if (current.type == digraphs)
+        button.onClick.AddListener(() =>
         {
-            index += 1;
-            current.PlayAct();
+            if (current.type == digraphs)
+            {
+                index += 1;
+                current.PlayAct();
+            }
+
+            if (CheckOver())
+                ShowResult();
+        });
+        
+    }
+
+    private void SetCurrentColor()
+    {
+        var isCheck = current.value.Contains(current.type.ToString().ToLower());
+        string value = string.Empty;
+
+        if (!isCheck)
+        {
+            string temp = string.Empty;
+            if (current.type == eDigraphs.OI)
+                temp = "oy";
+            else if (current.type == eDigraphs.EA)
+                temp = "ee";
+
+            value = current.value.Replace(temp,
+                "<color=\"red\">" + temp + "</color>");
+        }
+        else
+        {
+            value = current.value.Replace(current.type.ToString().ToLower()
+                , "<color=\"red\">" + current.type.ToString().ToLower() + "</color>");
         }
 
-        if (CheckOver())
-            ShowResult();
+        currentText.text = value;
     }
 }
