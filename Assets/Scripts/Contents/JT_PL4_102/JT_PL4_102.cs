@@ -17,10 +17,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
     public Image[] parentImages;
     public Image[] childrenImages;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
     protected override List<Question4_102> MakeQuestion()
     {
         var questions = new List<Question4_102>();
@@ -64,18 +60,46 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
                 for (int i = 0; i < parentImages.Length; i++)
                     parentImages[i].gameObject.SetActive(false);
 
-                successText.text = data.value;
                 successImage.sprite = data.sprite;
-                //successEffect.gameObject.SetActive(true);
-                 ////sound action () => successEfeect gameobject Setactive False
-                for (int i = 0; i < parentImages.Length; i++)
-                    parentImages[i].gameObject.SetActive(true);
-                //// , parentImage gameobject Setactive True
-                button.sprite = successedImage;
+                SetCurrentColor(data);
+                successEffect.gameObject.SetActive(true);
 
+                data.PlayAct(() =>
+                {
+                    successEffect.gameObject.SetActive(false);
+                    for (int i = 0; i < parentImages.Length; i++)
+                        parentImages[i].gameObject.SetActive(true);
+                });
+
+                button.sprite = successedImage;
                 AddAnswer(currentQuestion.currentCorrect);
             }
         });
+    }
+
+    private void SetCurrentColor(DigraphsSource data)
+    {
+        var isCheck = data.value.Contains(data.type.ToString().ToLower());
+        string value = string.Empty;
+
+        if (!isCheck)
+        {
+            string temp = string.Empty;
+            if (data.type == eDigraphs.OI)
+                temp = "oy";
+            else if (data.type == eDigraphs.EA)
+                temp = "ee";
+
+            value = data.value.Replace(temp,
+                "<color=\"red\">" + temp + "</color>");
+        }
+        else
+        {
+            value = data.value.Replace(data.type.ToString().ToLower()
+                , "<color=\"red\">" + data.type.ToString().ToLower() + "</color>");
+        }
+
+        successText.text = value;
     }
 }
 
