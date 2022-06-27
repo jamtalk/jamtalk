@@ -31,7 +31,7 @@ public class JT_PL4_106 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == eDigraphs.OI) // temp data
+            .Where(x => x.type == eDig[Random.Range(0, 2)])
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
@@ -46,11 +46,15 @@ public class JT_PL4_106 : BaseContents
             if (current.type == digraphs)
             {
                 index += 1;
-                current.PlayAct();
+                current.PlayAct(() =>
+                {
+                    if (CheckOver())
+                        ShowResult();
+                    else
+                        MakeQuestion();
+                });
             }
 
-            if (CheckOver())
-                ShowResult();
         });
         
     }
