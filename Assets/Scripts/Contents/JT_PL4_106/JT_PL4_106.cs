@@ -71,6 +71,8 @@ public class JT_PL4_106 : BaseContents
                 temp = "oy";
             else if (current.type == eDigraphs.EA)
                 temp = "ee";
+            else if (current.type == eDigraphs.AI)
+                temp = "ay";
 
             value = current.value.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");

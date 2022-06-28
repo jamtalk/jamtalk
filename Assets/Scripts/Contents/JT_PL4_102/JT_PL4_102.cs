@@ -89,6 +89,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
                 temp = "oy";
             else if (data.type == eDigraphs.EA)
                 temp = "ee";
+            else if (data.type == eDigraphs.AI)
+                temp = "ay";
 
             value = data.value.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");
