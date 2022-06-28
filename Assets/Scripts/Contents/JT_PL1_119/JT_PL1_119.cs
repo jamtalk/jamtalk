@@ -80,12 +80,12 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .ToArray();
-        Debug.LogFormat("{0}=>{1}", correct.Length, QuestionCount);
         var list = new List<Question119>();
         for (int i = 0;i < QuestionCount; i++)
         {
-            var incorrect = GameManager.Instance.GetResources().Words
-                .Where(x => !correct.Select(y=>y.value).Contains(x.value))
+            var incorrect = GameManager.Instance.alphabets
+                .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
+                .Where(x=>!correct.Contains(x))
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttons.Length - 1)
                 .ToArray();

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: LocalDB
+  m_EditorClassIdentifier: 
+  m_GroupName: LocalDB
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2632d6bdeb687b544956cf12536c0f83
+  m_SerializeEntries:
+  - m_GUID: b086cf44d8fa4e6499ad89b624385a5b
+    m_Address: AudioData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2d4f1af9fb123284aa6f4d7f9188ce5e
+    m_Address: AlhpabetSpriteData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 538eb3aaca24ae44aa25c17795321e74
+    m_Address: DigraphsData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0633c27730edbbe458570edd3a603cf2
+    m_Address: SentanceData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f9e589b4d8c29bd4daca4dba3f3a98e4
+    m_Address: VowelData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e0f3d8cd68ec2d84fabeec303d493d88
+    m_Address: WordsData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4eab9c10259f36e45b31aa2028b881a7
+    m_Address: LocalDB
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2d6b71bf98acd6441aafa2fc1db560e1, type: 2}
+    - {fileID: 11400000, guid: d6b4458fe4f5d5148bfafe01041eeaba, type: 2}

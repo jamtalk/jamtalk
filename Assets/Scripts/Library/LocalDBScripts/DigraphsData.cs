@@ -61,6 +61,33 @@ public class DigraphsData : LocalDBElement<DigraphsSource>
 public class DigraphsSource : DataSource
 {
     public eDigraphs type;
+    public bool IsPair
+    {
+        get
+        {
+            var num = (int)type;
+            var pairs = Enum.GetNames(typeof(ePairDigraphs))
+                .Select(x => (ePairDigraphs)Enum.Parse(typeof(ePairDigraphs), x))
+                .Select(x => (int)x)
+                .ToArray();
+            return pairs.Contains(num);
+        }
+    }
+    public ePairDigraphs Pair
+    {
+        get
+        {
+            var num = (int)type;
+            var pairs = Enum.GetNames(typeof(ePairDigraphs))
+                .Select(x => (ePairDigraphs)Enum.Parse(typeof(ePairDigraphs), x))
+                .Select(x=>(int)x)
+                .ToArray();
+            if (pairs.Contains(num))
+                return (ePairDigraphs)num;
+            else
+                return 0;
+        }
+    }
     public string actValue;
     public override bool IsNull => base.IsNull || string.IsNullOrEmpty(actValue);
 

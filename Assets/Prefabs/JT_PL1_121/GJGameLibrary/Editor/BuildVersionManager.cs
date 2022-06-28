@@ -42,8 +42,8 @@ public class BuildVersionManager
         PlayerSettings.Android.bundleVersionCode =
             MajorVersion * 10000 + MinorVersion * 1000 + Build;
 
-        Debug.Log("Build v" + PlayerSettings.bundleVersion +
-            " (" + PlayerSettings.Android.bundleVersionCode + ")");
+        //Debug.Log("Build v" + PlayerSettings.bundleVersion +
+        //    " (" + PlayerSettings.Android.bundleVersionCode + ")");
     }
 
     [PostProcessBuild(1)]

@@ -150,9 +150,10 @@ public abstract class SingleQuestion<TAnswer> : Question<TAnswer>
     }
     protected virtual TAnswer[] Merge()
     {
-        return questions.Union(new TAnswer[] { correct })
+        var result = questions.Union(new TAnswer[] { correct })
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
+        return result;
     }
 
     protected sealed override bool CheckCorrect(TAnswer answer) => correct.Equals(answer);

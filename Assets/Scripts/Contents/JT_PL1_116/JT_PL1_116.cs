@@ -40,7 +40,8 @@ public class JT_PL1_116 : BaseContents
             .ToArray();
 
         words = alphabets
-            .Select(x => GameManager.Instance.GetResources(x).Words.OrderBy(y => Random.Range(0f, 100f)).First())
+            .Distinct()
+            .SelectMany(x => GameManager.Instance.GetResources(x).Words.OrderBy(y => Random.Range(0f, 100f)).Take(2))
             .ToArray();
 
         upper = upper.OrderBy(x => Random.Range(0f, 100f)).ToArray();

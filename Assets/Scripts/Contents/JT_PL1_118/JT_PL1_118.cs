@@ -32,18 +32,23 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
     }
     protected override List<Question118> MakeQuestion()
     {
-        var corrects = GameManager.Instance.alphabets
+        var targetAlphabets = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(alphabetCount)
-            .SelectMany(x=>GameManager.Instance.GetResources(x).Words.OrderBy(x => Random.Range(0f, 100f)).Take(QuestionCount/alphabetCount))
+            .Take(alphabetCount);
+
+        var corrects = targetAlphabets
+            .Select(x => GameManager.Instance.GetResources(x))
+            .SelectMany(x => x.Words.OrderBy(y => Random.Range(0f, 100f)).Take(QuestionCount / alphabetCount))
             .ToArray();
 
-        var incorrects = GameManager.Instance.GetResources().Words
-            .Where(x => !corrects.Select(y=>y.value).Contains(x.value))
+        var incorrects = GameManager.Instance.alphabets
+            .Where(x => !targetAlphabets.Contains(x))
+            .SelectMany(x => GameManager.Instance.GetResources(x).Words)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .ToArray();
 
+        Debug.LogFormat("{0} / {1}", corrects.Length, incorrects.Length);
         var list = new List<Question118>();
         for(int i = 0; i< corrects.Length; i++)
             list.Add(new Question118(corrects[i], new WordSource[] { incorrects[i] }));
