@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
 {
@@ -16,14 +18,18 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
     public Button[] buttonQuestions;
 
     [SerializeField]
-    private GameObject charactor;
+    private GameObject[] charactor;
     private DigraphsSource[] current;
+    [SerializeField]
+    private EventSystem eventSystem;
+    private float colorFillamount = 0f;
 
     protected override void Awake()
     {
         base.Awake();
-    }
 
+        buttonCharactor.onClick.AddListener(() => CharactorAddListener());
+    }
     protected override List<Question4_107> MakeQuestion()
     {
         var questions = new List<Question4_107>();
@@ -33,16 +39,16 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
             .Where(x => x.type == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
-
+        
         for (int i = 0; i < QuestionCount; i++)
         {
             var temp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
                 .Where(x => x.type != GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
-                .Take(1)
+                .Take(buttonQuestions.Length - 1)
                 .ToArray();
-
+            
             questions.Add(new Question4_107(current[i], temp));
         }
         return questions;
@@ -50,23 +56,18 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
 
     protected override void ShowQuestion(Question4_107 question)
     {
-        var list = new List<DigraphsSource>();
-        for (int i = 0; i < buttonQuestions.Length; i++)
-            list.Add(question.totalQuestion[i]);
-        list.Add(question.correct);
-
-        var data = list
-            .OrderBy(x => Random.Range(0, list.Count))
-            .ToArray();
-
         for (int i = 0; i < buttonQuestions.Length; i++)
         {
-            buttonQuestions[i].name = data[i].value;
-            buttonQuestions[i].image.sprite = data[i].sprite;
-            AddListener(buttonQuestions[i], question.correct);
+            var data = question.totalQuestion[i];
+            buttonQuestions[i].name = question.totalQuestion[i].value;
+            buttonQuestions[i].image.sprite = question.totalQuestion[i].sprite;
+            buttonQuestions[i].image.preserveAspect = true;
+            buttonQuestions[i].interactable = false;
+
+            AddListener(buttonQuestions[i], data);
         }
 
-        currentText.text = question.correct.value;
+        currentText.text = current[currentQuestionIndex].value;
     }
 
     private void AddListener(Button button, DigraphsSource data)
@@ -75,20 +76,63 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
 
         button.onClick.AddListener(() =>
         {
-            if (button.name.Contains(data.value))
-            {
+            if (currentQuestion.correct == data)
+            {   // 우측 캐릭터 기뻐하는 애니매이팅
+                Debug.Log(button.name);
                 data.PlayClip(() =>
                 {
-                    if (CheckOver())
-                        ShowResult();
+                    colorFillamount = 0f;
+                    var color = Color.black;
+                    color.a = colorFillamount;
+                    currentText.color = color;
+                    
+                    AddAnswer(data);
                 });
+            }
+            else
+            {
+                // 우측 캐릭터 실망하는 애니매이팅 
             }
         });
     }
 
-    private void DoMove()
+    private void CharactorAddListener()
     {
+        DoMove(() =>
+        {
+            colorFillamount += 0.33f;
+            var color = Color.black;
+            color.a = colorFillamount;
+            currentText.color = color;
 
+            if (colorFillamount >= 0.9f)
+            {
+                for (int i = 0; i < buttonQuestions.Length; i++)
+                    buttonQuestions[i].interactable = true;
+            }
+            eventSystem.enabled = true;
+        });
+    }
+
+    private void DoMove(TweenCallback callback)
+    {
+        eventSystem.enabled = false;
+        Sequence seq = DOTween.Sequence();
+
+        for (int i = 0; i < charactor.Length; i++)
+        {
+            var duration = 1f;
+            var transform = charactor[i].transform.position.y;
+            Tween startTween = charactor[i].transform.DOMoveY(transform - 50, duration);
+            Tween lastTween = charactor[i].transform.DOMoveY(transform, duration);
+            startTween.SetEase(Ease.Linear);
+            lastTween.SetEase(Ease.Linear);
+            seq.Insert(0, startTween);
+            seq.Insert(duration, lastTween);
+        }
+
+        seq.onComplete += callback;
+        seq.Play();
     }
 }
 
