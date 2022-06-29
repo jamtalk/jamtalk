@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class JT_PL4_105 : BaseContents
 {
@@ -12,16 +14,24 @@ public class JT_PL4_105 : BaseContents
     private int questionCount = 3;
     private int index = 0;
     private DigraphsSource current;
+    private string digraphsValue;
+    private Vector3 defaultPosition;
 
     public Image currentImage;
     public RectTransform wordLayout;
     public GameObject wordElement;
     public GameObject digraphsElement;
+    public GameObject charactor;
+    public GameObject balloon;
+    public RectTransform firstRect;
+    public RectTransform lastRect;
+    public EventSystem eventSystem;
 
     protected override void Awake()
     {
         base.Awake();
 
+        defaultPosition = currentImage.transform.position;
         MakeQuestion();
     }
 
@@ -29,7 +39,8 @@ public class JT_PL4_105 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.type == eDigraphs.AI)
+            //.Where(x => x.type == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
@@ -38,23 +49,39 @@ public class JT_PL4_105 : BaseContents
 
     private void ShowQuestion()
     {
+        Clear();
+        eventSystem.enabled = true;
+        wordLayout.gameObject.SetActive(true);
+        balloon.gameObject.SetActive(true);
+        currentImage.fillAmount = 1f;
+
         currentImage.sprite = current.sprite;
         currentImage.preserveAspect = true;
 
         var digraphs = current.type.ToString().ToLower();
-        var currentTemp = current.value.Replace(digraphs, string.Empty);
+        var pairDigraphs = current.Pair.ToString().ToLower();
+
+        if (!current.value.Contains(current.type.ToString().ToLower()))
+            digraphsValue = pairDigraphs;
+        else
+            digraphsValue = digraphs;
+
+        var digraphsIndex = current.value.IndexOf(digraphsValue);
+        var currentTemp = current.value.Replace(digraphsValue, string.Empty);
         var tempList = new List<string>();
+
         foreach (var item in currentTemp)
             tempList.Add(item.ToString());
-        tempList.Add(digraphs);
+        tempList.Insert(digraphsIndex, digraphsValue);
 
         for(int i = 0; i < tempList.Count; i++)
         {
-            if (current.type.ToString() == tempList[i].ToUpper())
+            if (digraphsValue == tempList[i])
             {
                 var textElemet = Instantiate(digraphsElement, wordLayout).GetComponent<wordElement405>();
-                textElemet.Init(current.type);  // oi oy 등으로 변경되게 수정 필요 
-                DigraphsButtonAddListener(textElemet.currentButton, textElemet.worngButton);
+                textElemet.Init(digraphs, pairDigraphs);
+                DigraphsButtonAddListener(textElemet.digraphsButton, textElemet.text);
+                DigraphsButtonAddListener(textElemet.pairButton, textElemet.pairText);
             }
             else
             {
@@ -62,20 +89,59 @@ public class JT_PL4_105 : BaseContents
                 textElemet.Init(tempList[i]);
             }
         }
-
-
     }
 
-    private void DigraphsButtonAddListener(Button currentButton, Button worngButton)
+    private void DigraphsButtonAddListener(Button button, Text text)
     {
-        currentButton.onClick.AddListener(() =>
+        button.onClick.AddListener(() =>
         {
-            
+            if(digraphsValue.Contains(text.text))
+            {
+                index += 1;
+                DoMove(() =>
+                {
+                    if (CheckOver())
+                        ShowResult();
+                    else
+                        MakeQuestion();
+                });
+            }
         });
+    }
 
-        worngButton.onClick.AddListener(() =>
-        {
+    private void DoMove(TweenCallback callback)
+    {
+        eventSystem.enabled = false;
+        wordLayout.gameObject.SetActive(false);
+        balloon.gameObject.SetActive(false);
 
-        });
+        Sequence seq = DOTween.Sequence();
+
+        var duration = 1f;
+        Tween startTween = currentImage.transform.DOMove(firstRect.position, duration);
+        Tween endTween = currentImage.transform.DOMove(lastRect.position, duration);
+        Tween fillTween = currentImage.DOFillAmount(0, 1f);
+
+        startTween.SetEase(Ease.Linear);
+        fillTween.SetEase(Ease.Linear);
+
+        seq.Append(startTween);
+        seq.Append(endTween);
+        seq.Insert(duration, fillTween);
+
+        seq.onComplete += callback;
+        seq.Play();
+    }
+
+    private void Clear()
+    {
+        currentImage.transform.position = defaultPosition;
+
+        var targets = new List<GameObject>();
+        for (int i = 0; i < wordLayout.childCount; i++)
+            targets.Add(wordLayout.GetChild(i).gameObject);
+        for (int i = 0; i < targets.Count; i++)
+            Destroy(targets[i]);
+        targets.Clear();
     }
 }
