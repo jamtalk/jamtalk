@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class wordElement405 : MonoBehaviour
 {
     public Text text;
-    public Text texts;
-    public Button currentButton;
-    public Button worngButton;
+    public Text pairText;
+    public Button digraphsButton;
+    public Button pairButton;
 
     public void Init(string value)
     {
         text.text = value;
     }
-    public void Init(eDigraphs value)
+    public void Init(string digraphs, string pair)
     { 
-        text.text = value.ToString().ToLower();
-        texts.text = value.ToString();
+        text.text = digraphs;
+        pairText.text = pair;
     }
 }
