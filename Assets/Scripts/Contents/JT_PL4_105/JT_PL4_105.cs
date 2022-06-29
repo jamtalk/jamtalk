@@ -59,7 +59,7 @@ public class JT_PL4_105 : BaseContents
         currentImage.preserveAspect = true;
 
         var digraphs = current.type.ToString().ToLower();
-        var pairDigraphs = current.Pair.ToString().ToLower();
+        var pairDigraphs = current.GetPair().ToString().ToLower();
 
         if (!current.value.Contains(current.type.ToString().ToLower()))
             digraphsValue = pairDigraphs;
