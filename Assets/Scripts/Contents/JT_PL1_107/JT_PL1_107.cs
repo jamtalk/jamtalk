@@ -7,12 +7,6 @@ public class JT_PL1_107 : BaseMatchImage<WordSource>
     protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => !drops.Select(x => x.isConnected).Contains(false);
 
-    protected override void Awake()
-    {
-        base.Awake();
-        GetWords();
-    }
-
     protected override void GetWords()
     {
         words = GameManager.Instance.GetResources().Words

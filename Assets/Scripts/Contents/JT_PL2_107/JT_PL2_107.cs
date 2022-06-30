@@ -7,13 +7,6 @@ public class JT_PL2_107 : BaseMatchImage<VowelSource>
 {
     protected override eContents contents => eContents.JT_PL2_107;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        GetWords();
-    }
-
     protected override void GetWords()
     {
         words = GameManager.Instance.GetResources().Vowels

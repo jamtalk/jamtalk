@@ -14,13 +14,6 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
     private int digraphsIndex = 0;
     private int dropCount = 0;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        GetWords();
-    }
-
     protected override void GetWords()
     {
         Debug.Log(digraphsIndex + eDig[digraphsIndex].ToString());

@@ -13,6 +13,12 @@ public abstract class BaseMatchImage<T> : BaseContents
     public AudioSinglePlayer audioPlayer;
     protected T[] words;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        GetWords();
+    }
+
     protected abstract void GetWords();
 
 

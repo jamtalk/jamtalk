@@ -103,17 +103,17 @@ public class JT_PL3_106 : BaseContents
                     elements[i].gameObject.SetActive(false);
                 currentImage.gameObject.SetActive(false);
 
-                currentDigraphs.PlayClip(() => SetCurrentImage()); // action 끝난 후 SetCurrentImage 동작
+                currentDigraphs.PlayClip(() => SetCurrentImage()); 
 
                 thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () => SetBagImage());
 
                 thrower.GetComponent<Image>().sprite = currentImage.sprite;
                 thrower.gameObject.SetActive(true);
 
-                //if (CheckOver())
-                //    ShowResult();
-                //else
-                //    MakeQuestion();
+                if (CheckOver())
+                    ShowResult();
+                else
+                    MakeQuestion();
             }
             else
             {

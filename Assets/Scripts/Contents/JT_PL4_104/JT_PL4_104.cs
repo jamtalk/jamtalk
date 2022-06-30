@@ -14,9 +14,10 @@ public class JT_PL4_104 : BaseContents
 
     public WordElement404[] elements;
 
-    private eDigraphs[] eDig = { eDigraphs.OI, eDigraphs.AI, eDigraphs.EA
-                                ,eDigraphs.OW, eDigraphs.AW, eDigraphs.IE};
+    private eDigraphs[] eDig = { eDigraphs.OI, eDigraphs.AI, eDigraphs.EA };
 
+    private List<eDigraphs> digraphsList = new List<eDigraphs>();
+    private List<ePairDigraphs> pairList = new List<ePairDigraphs>();
     protected override void Awake()
     {
         base.Awake();
@@ -27,13 +28,23 @@ public class JT_PL4_104 : BaseContents
 
     private void MakeQuestion()
     {
-        var data = eDig.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        for (int i = 0; i < elements.Length; i++)
+        //var dsadas = DigraphsSource.GetPair(eDigraphs.AI);
+        
+        for(int i = 0; i < eDig.Length; i++)
         {
-            elements[i].Init(data[i]);
-            AddListener(elements[i]);
+            digraphsList.Add(eDig[i]);
+            pairList.Add(DigraphsSource.GetPair(eDig[i]));
         }
+
+        //var data = digraphsList.ToArray() + pairList.ToArray();
+
+        //var data = eDig.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
+        //for (int i = 0; i < elements.Length; i++)
+        //{
+        //    elements[i].Init(data[i]);
+        //    AddListener(elements[i]);
+        //}
     }
 
     private void AddListener(WordElement404 element)

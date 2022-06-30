@@ -10,16 +10,18 @@ public class JT_PL4_101 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
+    private int slideCount = 0;
 
     public Slider[] sliders;
     public Text[] headTexts;
-    public Image[] persnalImages;
-    public Image[] addImages;
+    public GameObject[] addImages;
     public Animator[] anis;
+    public Text[] digraphsTexts;
+    public Text[] pairsTexts;
     public Image successImages;
 
-    private string[] values = { "ai", "oi", "ea", "ay", "oy", "ee" };
     private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
+    private List<ePairDigraphs> pairs = new List<ePairDigraphs>();
 
     protected override void Awake()
     {
@@ -30,29 +32,71 @@ public class JT_PL4_101 : BaseContents
 
         MakeQuestion();
 
-        sliders[0].onValueChanged.AddListener((value) => AddListener(value, sliders[0]));
+        for(int i = 0; i < sliders.Length; i++)
+            AddListener(sliders[i], addImages[i]);
     }
 
     private void MakeQuestion()
     {
-        var values = new List<string>();
+        pairs.Add(DigraphsSource.GetPair(digraphs[index]));
 
-        foreach (var item in digraphs[index].ToString().ToLower())
+        var digraph = digraphs[index].ToString().ToLower();
+        var pair = pairs[index].ToString().ToLower();
+
+        for (int i = 0; i < digraphsTexts.Length; i++)
+        {
+            digraphsTexts[i].text = digraph;
+            pairsTexts[i].text = pair;
+        }
+
+        var values = new List<string>();
+        var temp = digraph + pair;
+
+        foreach (var item in temp)
             values.Add(item.ToString());
 
-        headTexts[0].text = values[0];
-        headTexts[1].text = values[1];
+        for (int i = 0; i < values.Count; i++)
+            headTexts[i].text = values[i];
     }
 
-    private void ShowQuestion()
+    private void AddListener(Slider slider, GameObject addObj)
     {
+        slider.onValueChanged.AddListener((value) =>
+        {
+            if (value <= 0.001f)
+            {
+                slideCount += 1;
+                slider.gameObject.SetActive(false);
+                addObj.gameObject.SetActive(true);
 
+                if (slideCount >= 2)
+                {
+                    StartCoroutine(Reset());
+                }
+            }
+        });
     }
 
-    private void AddListener(float value, Slider slider)
+    private IEnumerator Reset()
     {
-        if (value <= 0.001f)
-            slider.gameObject.SetActive(false);
+        successImages.gameObject.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1f);
+        slideCount = 0;
+        index += 1;
+
+        for (int i = 0; i < sliders.Length; i++)
+        {
+            sliders[i].value = 1;
+            addImages[i].gameObject.SetActive(false);
+            sliders[i].gameObject.SetActive(true);
+        }
+        successImages.gameObject.SetActive(false);
+
+        if (CheckOver())
+            ShowResult();
+        else
+            MakeQuestion();
     }
 
 }
