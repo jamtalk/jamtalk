@@ -48,16 +48,11 @@ public class JT_PL2_101 : BaseContents
             if(puzzles[i].name.Contains(target.name))
             {
                 index += 1;
-
+                var value = target.name.ToUpper();
                 if (index < 5)
-                    Speak(target.name);
-                else if ( index > 5)
-                {
-                    Debug.Log(index - 5);
-                    var vowel = GameManager.Instance.vowels[index - 5];
-                    var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
-                    clips[vowel].Invoke();
-                }
+                    Speak(value);
+                else if (index > 5)
+                    LongSpeak(value);
 
                 audioPlayer.Play(1f, dropClip);
 
@@ -85,15 +80,27 @@ public class JT_PL2_101 : BaseContents
 
     private void OnDrag(DragElement201 target)
     {
-        Speak(target.name);
+        var value = target.name.ToUpper();
+        if(index < 5)
+            Speak(value);
+        else
+            LongSpeak(value);
+
         audioPlayer.Play(1f, tabClip);
     }
 
     private void Speak(string value)
     {
-        value = value.ToUpper();
         ani.SetBool("Speak", true);
         eAlphabet alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
         speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics);
+    }
+
+    private void LongSpeak(string value)
+    {
+        var temp = GameManager.Instance.vowels;
+        var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
+        var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
+        clips[alphabet].Invoke();
     }
 }
