@@ -50,7 +50,7 @@ public class JT_PL2_101 : BaseContents
                 index += 1;
                 var value = target.name.ToUpper();
                 if (index < 5)
-                    Speak(value);
+                    ShortSpeak(value);
                 else if (index > 5)
                     LongSpeak(value);
 
@@ -62,13 +62,18 @@ public class JT_PL2_101 : BaseContents
                 }
 
                 if (CheckOver())
+                {
+                    Speak();
                     ShowResult();
+                }
             }
         }
     }
 
     private void Reset()
     {
+        Speak();
+
         text.text = "Long";
         for(int i = 0; i < puzzles.Length; i++)
         {
@@ -82,14 +87,14 @@ public class JT_PL2_101 : BaseContents
     {
         var value = target.name.ToUpper();
         if(index < 5)
-            Speak(value);
+            ShortSpeak(value);
         else
             LongSpeak(value);
 
         audioPlayer.Play(1f, tabClip);
     }
 
-    private void Speak(string value)
+    private void ShortSpeak(string value)
     {
         ani.SetBool("Speak", true);
         eAlphabet alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
@@ -102,5 +107,22 @@ public class JT_PL2_101 : BaseContents
         var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
         var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
         clips[alphabet].Invoke();
+    }
+
+    private void Speak()
+    {
+        eAlphabet[] alphabets = { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
+        var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
+
+        if (index == 5)
+        {
+            for (int i = 0; i < alphabets.Length; i++)
+                speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabets[i]).AudioData.phanics);
+        }
+        else
+        {
+            for (int i = 0; i < alphabets.Length; i++)
+                clips[alphabets[i]].Invoke();
+        }
     }
 }

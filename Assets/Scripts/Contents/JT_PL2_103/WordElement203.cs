@@ -21,9 +21,19 @@ public class WordElement203 : MonoBehaviour
     }
     public RectTransform textRT => textValue.GetComponent<RectTransform>();
     public string value { get; private set; }
-    public void Init(string value)
+    public VowelSource data { get; private set; }
+    public void Init(VowelSource data)
     {
-        this.value = value;
+        this.data = data;
+        value = data.value;
+        value = value;
+        textValue.text = value;
+        name = value;
+    }
+    public void Init(string data)
+    {
+        value = data;
+        value = value;
         textValue.text = value;
         name = value;
     }

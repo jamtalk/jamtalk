@@ -106,12 +106,12 @@ public class JT_PL2_103 : BaseContents
         for (int i = 0; i < shortVowels.Length; i++)
         {
             var shortElement = Instantiate(prefabWordElement, wordShortParent).GetComponent<WordElement203>();
-            shortElement.Init(shortVowels[i].value);
+            shortElement.Init(shortVowels[i]);
             shortElement.visible = false;
             shortsElements.Add(shortElement);
 
             var longElement = Instantiate(prefabWordElement, wordLongParent).GetComponent<WordElement203>();
-            longElement.Init(longVowels[i].value);
+            longElement.Init(longVowels[i]);
             longElement.GetComponent<Image>().sprite = longImage;
             longElement.visible = false;
             longElements.Add(longElement);
@@ -187,8 +187,11 @@ public class JT_PL2_103 : BaseContents
         popupImage.preserveAspect = true;
         popupCureent.GetComponentInChildren<Text>().text = target.textValue.text;
         popupCureent.gameObject.SetActive(true);
+
+        target.data.PlayClip();
+        StartCoroutine(WaitSeconds());
+
         
-        audioPlayer.Play(1f, currentClip, () => popupCureent.gameObject.SetActive(false));
         target.visible = true;
         if (!shortsElements.Select(x => x.visible).Contains(false)
             && !longElements.Select(x => x.visible).Contains(false))
@@ -202,5 +205,10 @@ public class JT_PL2_103 : BaseContents
                     StartCoroutine(Init(currentWord));
             });
         }
+    }
+    private IEnumerator WaitSeconds()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        audioPlayer.Play(1f, currentClip, () => popupCureent.gameObject.SetActive(false));
     }
 }
