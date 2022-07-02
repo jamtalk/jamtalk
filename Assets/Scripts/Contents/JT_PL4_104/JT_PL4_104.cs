@@ -28,23 +28,24 @@ public class JT_PL4_104 : BaseContents
 
     private void MakeQuestion()
     {
-        //var dsadas = DigraphsSource.GetPair(eDigraphs.AI);
-        
-        for(int i = 0; i < eDig.Length; i++)
+        var temp = new List<string>();
+        for (int i = 0; i < eDig.Length; i++)
         {
             digraphsList.Add(eDig[i]);
             pairList.Add(DigraphsSource.GetPair(eDig[i]));
+            temp.Add(pairList[i].ToString());
+            temp.Add(digraphsList[i].ToString());
         }
 
-        //var data = digraphsList.ToArray() + pairList.ToArray();
+        var data = temp
+            .OrderBy(x => Random.Range(0f, 100f))
+            .ToArray();
 
-        //var data = eDig.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        //for (int i = 0; i < elements.Length; i++)
-        //{
-        //    elements[i].Init(data[i]);
-        //    AddListener(elements[i]);
-        //}
+        for (int i = 0; i < elements.Length; i++)
+        {
+            elements[i].Init(data[i]);
+            AddListener(elements[i]);
+        }
     }
 
     private void AddListener(WordElement404 element)

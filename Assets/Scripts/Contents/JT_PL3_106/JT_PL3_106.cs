@@ -65,7 +65,7 @@ public class JT_PL3_106 : BaseContents
 
         var value = currentDigraphs.value;
         currentText.text = value.Replace(
-            GameManager.Instance.currentDigrpahs.ToString().ToLower(), "");
+            GameManager.Instance.currentDigrpahs.ToString().ToLower(), "__");
         currentImage.sprite = currentDigraphs.sprite;
         currentImage.name = currentDigraphs.value;
         currentImage.preserveAspect = true;
@@ -103,12 +103,13 @@ public class JT_PL3_106 : BaseContents
                     elements[i].gameObject.SetActive(false);
                 currentImage.gameObject.SetActive(false);
 
-                currentDigraphs.PlayClip(() => SetCurrentImage()); 
-
-                thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () => SetBagImage());
-
                 thrower.GetComponent<Image>().sprite = currentImage.sprite;
                 thrower.gameObject.SetActive(true);
+                thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
+                {
+                    SetBagImage();
+                    currentDigraphs.PlayClip(() => SetCurrentImage()); 
+                });
 
                 if (CheckOver())
                     ShowResult();

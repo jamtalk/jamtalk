@@ -11,7 +11,7 @@ public class WordElement404 : MonoBehaviour
     public GameObject charactor;
     public Button button;
 
-    public void Init(eDigraphs value)
+    public void Init(string value)
     {
         text.text = value.ToString().ToLower();
     }

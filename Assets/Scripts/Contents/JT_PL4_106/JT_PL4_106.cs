@@ -15,7 +15,7 @@ public class JT_PL4_106 : BaseContents
     private eDigraphs[] eDig = { eDigraphs.OI, eDigraphs.AI, eDigraphs.EA };
 
     public Text currentText;
-    public Button[] buttons;
+    public DoubleClickButton[] doubleClick;
 
     protected override void Awake()
     {
@@ -23,8 +23,8 @@ public class JT_PL4_106 : BaseContents
 
         MakeQuestion();
 
-        for (int i = 0; i < buttons.Length; i++)
-            SetButtonAddListener(buttons[i], eDig[i]);
+        for (int i = 0; i < doubleClick.Length; i++)
+            ButtonAddListener(doubleClick[i], eDig[i]);
     }
 
     private void MakeQuestion()
@@ -36,17 +36,26 @@ public class JT_PL4_106 : BaseContents
             .First();
 
         SetCurrentColor();
+        for (int i = 0; i < doubleClick.Length; i++)
+            doubleClick[i].isOn = false;
     }
-
-    private void SetButtonAddListener(Button button, eDigraphs digraphs)
+    private void ButtonAddListener(DoubleClickButton button, eDigraphs digraphs)
     {
-        // phanics 출력 , image 변경
+        button.onClickFirst.RemoveAllListeners();
+        button.onClick.RemoveAllListeners();
+
+        button.onClickFirst.AddListener(() =>
+        {
+            // phanics 출력
+            Debug.Log(digraphs.ToString());
+        });
+
         button.onClick.AddListener(() =>
         {
             if (current.type == digraphs)
             {
                 index += 1;
-                current.PlayAct(() =>
+                current.PlayClip(() =>
                 {
                     if (CheckOver())
                         ShowResult();
@@ -54,9 +63,7 @@ public class JT_PL4_106 : BaseContents
                         MakeQuestion();
                 });
             }
-
         });
-        
     }
 
     private void SetCurrentColor()

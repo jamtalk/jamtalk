@@ -395,6 +395,10 @@ MonoBehaviour:
   - {fileID: 1075696708}
   - {fileID: 2075573026}
   - {fileID: 1843042532}
+  doubleClick:
+  - {fileID: 1075696709}
+  - {fileID: 2075573027}
+  - {fileID: 1843042533}
 --- !u!1 &463963829
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +782,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1075696707}
   - component: {fileID: 1075696708}
+  - component: {fileID: 1075696709}
   m_Layer: 0
   m_Name: Element
   m_TagString: Untagged
@@ -848,6 +853,27 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1176523296}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1075696709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075696706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2add8806acf5a4aa36ae2faec7e923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1176523296}
+  spriteNormal: {fileID: 21300000, guid: 3331e84878d50704c82c15308b0da747, type: 3}
+  spriteSelected: {fileID: 21300000, guid: 173560f25d04d904a8d2d0842874f710, type: 3}
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickFirst:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1176523293
@@ -1094,6 +1120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843042531}
   - component: {fileID: 1843042532}
+  - component: {fileID: 1843042533}
   m_Layer: 0
   m_Name: Element (2)
   m_TagString: Untagged
@@ -1164,6 +1191,27 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 780831409}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1843042533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843042530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2add8806acf5a4aa36ae2faec7e923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 780831409}
+  spriteNormal: {fileID: 21300000, guid: 0f9d719200b72d547a9f902e04cf1909, type: 3}
+  spriteSelected: {fileID: 21300000, guid: c421af9438fa6d6458378901345c039f, type: 3}
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickFirst:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1966355579
@@ -1326,6 +1374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2075573025}
   - component: {fileID: 2075573026}
+  - component: {fileID: 2075573027}
   m_Layer: 0
   m_Name: Element (1)
   m_TagString: Untagged
@@ -1396,5 +1445,26 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 47673976}
   m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2075573027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075573024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2add8806acf5a4aa36ae2faec7e923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 47673976}
+  spriteNormal: {fileID: 21300000, guid: ca85409fbdac27a44b41d02a9e44e6e1, type: 3}
+  spriteSelected: {fileID: 21300000, guid: 36547debaf337430393e8aba369cd2d7, type: 3}
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onClickFirst:
     m_PersistentCalls:
       m_Calls: []
