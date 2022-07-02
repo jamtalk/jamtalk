@@ -38,7 +38,7 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
         if (dropCount == words.Length)
         {
             dropCount = 0;
-            GetWords(); // ch , th , sh sound
+            GetWords();
             for(int i = 0; i < words.Length; i++)
             {
                 drags[i].Reset();

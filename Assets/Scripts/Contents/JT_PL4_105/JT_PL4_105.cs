@@ -98,6 +98,7 @@ public class JT_PL4_105 : BaseContents
             if(digraphsValue.Contains(text.text))
             {
                 index += 1;
+                current.PlayClip();
                 DoMove(() =>
                 {
                     if (CheckOver())

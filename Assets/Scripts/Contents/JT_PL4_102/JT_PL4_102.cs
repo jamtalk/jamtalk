@@ -50,8 +50,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
 
     private void AddListener(Image button, DigraphsSource data)
     {
-        Debug.Log(data.value + " / " + currentQuestion.currentCorrect.value);
-
         button.GetComponent<Button>().onClick.AddListener(() =>
         {
             data.PlayClip();

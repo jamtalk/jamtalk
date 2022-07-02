@@ -96,8 +96,13 @@ public class JT_PL3_105 : BaseContents
 
                     if (element.text.text.ToUpper().Contains(eCurrentDigraphs.ToString()))
                     {
+                        currentDigraphs.PlayClip(() =>
+                        {
+                            currentText.text = currentDigraphs.value;
+                            ProgressBarDoMove();
+                        });
                         index += 1;
-                        ProgressBarDoMove();
+
                         if (CheckOver())
                             ShowResult();
                         else
