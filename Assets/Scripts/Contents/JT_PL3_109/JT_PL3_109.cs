@@ -16,7 +16,7 @@ public class JT_PL3_109 : BaseContents
     public AudioSinglePlayer audioPlayer;
     protected DigraphsSource word;
 
-    protected override eContents contents => eContents.JT_PL1_110;
+    protected override eContents contents => eContents.JT_PL3_109;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     protected override int GetTotalScore() => 1;
     protected override void Awake()

@@ -115,9 +115,11 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
             bubble.gameObject.SetActive(false);
             Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
 
-            char[] values = bubble.textValue.text.ToCharArray();
+            var values = new List<string>();
+            foreach (var item in bubble.textValue.text)
+                values.Add(item.ToString());
 
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Count; i++)
             {
                 var smallBubbles = Instantiate(bubbleElement, bubble.transform.parent).GetComponent<BubbleElement>();
                 smallBubbles.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;

@@ -12,6 +12,7 @@ public class BubbleElement : DoubleClickButton
 
     public Text textValue;
     public VowelSource data { get; private set; }
+    public DigraphsSource digraphs { get; private set; }
 
     private float duration = 1f;
     private Sequence seq;
@@ -24,7 +25,16 @@ public class BubbleElement : DoubleClickButton
         name = data.value;
         gameObject.SetActive(true);
     }
-    public void Init(char value)
+
+    public void Init(DigraphsSource data)
+    {
+        digraphs = data;
+        textValue.text = data.value;
+        name = data.value;
+        gameObject.SetActive(true);
+    }
+
+    public void Init(string value)
     {
         textValue.text = value.ToString();
         name = value.ToString();
