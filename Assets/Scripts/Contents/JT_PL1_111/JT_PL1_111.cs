@@ -112,7 +112,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
                     rocket.Away(value.value, () =>
                     {
                         AddAnswer(value);
-                        Debug.LogFormat("현재 문제 : {0}/{1}\n현재 문제 풀이 상황 : {2}/{3}", 
+                        Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}", 
                             currentQuestionIndex+1, QuestionCount,
                             currentQuestion.currentIndex+1, currentQuestion.correctCount
                             );
