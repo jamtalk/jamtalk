@@ -18,14 +18,25 @@ public class JT_PL1_102 : BaseContents
     public AlphabetAudioData.AlphabetAudioSource audioData;
     protected override void Awake()
     {
+        Debug.Log("컨텐츠 로드 완료");
         base.Awake();
+        Debug.Log("베이스");
         audioData = GameManager.Instance.GetResources().AudioData;
+        Debug.LogFormat("오디오 {0}", audioData!=null);
+        imageAlphabet.sprite = null;
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card,eAlphabetType.Upper,GameManager.Instance.currentAlphabet);
-
+        Debug.LogFormat("이미지 {0}", imageAlphabet.sprite != null);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
         egg.onBroken += OnBorken;
         buttonEgg.onClick.AddListener(OnClickEgg);
+    }
+    private void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Debug.Log("클릭");
+        }
     }
     private void OnBorken()
     {

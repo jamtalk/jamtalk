@@ -12,6 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95b744e45e6d5448931b10630481a96, type: 3}
   m_Name: LocalDB
   m_EditorClassIdentifier: 
+  atlases:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues: 010000000000000002000000
+    _keys: 010000000000000002000000
+    _values:
+    - {fileID: 4343727234628468602, guid: 9537305334b4c334e97b268062555cf3, type: 2}
+    - {fileID: 4343727234628468602, guid: 1e8e2e57f64c9774dba04c6604168fc0, type: 2}
+    - {fileID: 4343727234628468602, guid: 267372da35583e04f987627a6fc39736, type: 2}
   correctClip: {fileID: 8300000, guid: da37d69cfcc583c4cbfd89286eac5241, type: 3}
   elements:
   - {fileID: 11400000, guid: b086cf44d8fa4e6499ad89b624385a5b, type: 2}

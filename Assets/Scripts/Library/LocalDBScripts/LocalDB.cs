@@ -5,11 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.U2D;
+using RotaryHeart.Lib.SerializableDictionary;
 
 [CreateAssetMenu(fileName = "LocalDB.asset", menuName = "LocalDB/DB")]
 public class LocalDB : ScriptableObject
 {
+    [SerializeField]
+    private SerializableDictionaryBase<eAtlasType, SpriteAtlas> atlases;
     [SerializeField]
     private AudioClip correctClip;
     public static string Path => "LocalDB";
@@ -29,7 +32,14 @@ public class LocalDB : ScriptableObject
     }
     [SerializeField]
     private LocalDBElement[] elements;
-
+    public Sprite GetSprite(eAtlasType type, string value)
+    {
+        Debug.LogFormat("{0} / {1}", type, value);
+        Debug.Log(atlases[type]);
+        Debug.Log(atlases.Count);
+        Debug.Log(atlases[type].spriteCount);
+        return atlases[type].GetSprite(value);
+    }
     public T Get<T>() where T:LocalDBElement
     {
         return elements
@@ -58,30 +68,46 @@ public class LocalDB : ScriptableObject
     }
     public static IEnumerator Initialize(Action onDone)
     {
-        yield return null;
-        _instance = null;
-        Debug.Log("로딩 시작@");
-        var list = new List<LocalDBElement>();
-        yield return AddElement<AlphabetSpriteData>(list);
-        yield return AddElement<AlphabetAudioData>(list);
-        Debug.Log(list.Count);
-        //var op = Resources.LoadAsync<LocalDB>(Path);
-        //Debug.Log(op.isDone);
-        //while (!op.isDone)
-        //{
-        //    yield return op;
-        //    var progress = op.progress * 100f;
-        //    Debug.LogFormat("{0}% 진행 완료",progress.ToString("N2"));
-        //}
-        //_instance = op.asset as LocalDB;
-        //Debug.LogFormat("결과 : {0}", _instance);
-        //onDone?.Invoke();
+        //_instance = null;
+
+        //_instance = CreateInstance<LocalDB>();
+
+        //var list = new List<LocalDBElement>();
+
+        //yield return AddElement<WordsData>(list);
+        //yield return AddElement<VowelData>(list);
+        //yield return AddElement<AlphabetAudioData>(list);
+        //yield return AddElement<AlphabetSpriteData>(list);
+        //yield return AddElement<DigraphsData>(list);
+        //yield return AddElement<SentanceData>(list);
+        //_instance.elements = list.ToArray();
+
+        //Debug.Log("데이터 로딩 완료");
+
+        //var op = Addressables.LoadAssetAsync<AudioClip>("correctSound");
+        //yield return op;
+
+        //Debug.Log("클립 로딩 완료");
+        //_instance.correctClip = op.Result;
+        //_instance.elements = list.ToArray();
+        var op = Resources.LoadAsync<LocalDB>(Path);
+        while (!op.isDone)
+        {
+            yield return op;
+            var progress = op.progress * 100f;
+            Debug.LogFormat("{0}% 진행 완료", progress.ToString("N2"));
+        }
+        _instance = op.asset as LocalDB;
+        Debug.LogFormat("결과 : {0}", _instance);
+
+        onDone?.Invoke();
     }
     private static IEnumerator AddElement<T>(List<LocalDBElement> elements) where T:LocalDBElement
     {
+        Debug.LogFormat("{0} 로딩시작", typeof(T).Name);
         var op = Addressables.LoadAssetAsync<T>(typeof(T).Name);
-        yield return op;
-        Debug.LogFormat("{0} 로딩결과 : {1}", typeof(T).Name, op.Result);
+        while (!op.IsDone) { yield return null; }
+        Debug.LogFormat("{0} 로딩결과 : {1}", typeof(T).Name, op.Result != null);
         elements.Add(op.Result);
     }
     //public static IEnumerator Initialize(Action<float> onProgress=null,Action onDone=null)
@@ -125,12 +151,12 @@ public abstract class LocalDBElement<T> : LocalDBElement
 public abstract class DataSource
 {
     public string value;
-    public Sprite sprite;
+    protected abstract eAtlasType atlas { get; }
+    public Sprite sprite => LocalDB.Instance.GetSprite(atlas, value);
 
-    protected DataSource(string value, Sprite sprite)
+    protected DataSource(string value)
     {
         this.value = value;
-        this.sprite = sprite;
     }
 
     public virtual bool IsNull => string.IsNullOrEmpty(value) || sprite == null;

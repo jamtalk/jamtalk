@@ -30,27 +30,17 @@ namespace GJGameLibrary
         IEnumerator LoadSceneAsyc(eSceneName scene)
         {
             //PopupManager.Instance.ShowLoading();
-            AsyncOperation op = SceneManager.LoadSceneAsync(scene.ToString());
-            op.allowSceneActivation = false;
-            op.completed += Op_completed;
-            while (!op.isDone) {
-                if (op.progress < .9f)
-                {
-                    yield return null;
-                }
-                else
-                {
-                    op.allowSceneActivation = true;
-                    Debug.Log(bgm[scene]);
-                    //SoundManager.Instance.SetBGMClip(bgm[scene]);
-                    yield break;
-                }
+            var op = SceneManager.LoadSceneAsync(scene.ToString());
+            //op.allowSceneActivation = false;
+            while (!op.isDone)
+            {
+                //var progress = op.progress * 100f;
+                //Debug.LogFormat("{0} 씬 로딩중.. ({1}%)", scene.ToString(), progress.ToString("N2"));
+                yield return new WaitForEndOfFrame();
             }
-        }
-
-        private void Op_completed(AsyncOperation obj)
-        {
-            //PopupManager.Instance.Clear();
+            Debug.Log("씬 로딩 완료");
+            op.allowSceneActivation = true; 
+            yield break;
         }
     }
 }

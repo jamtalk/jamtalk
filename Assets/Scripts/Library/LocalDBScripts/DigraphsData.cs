@@ -10,13 +10,8 @@ public class DigraphsData : LocalDBElement<DigraphsSource>
 {
     public DigraphsSource[] Get(eDigraphs type) => data.Where(x => x.type == type).ToArray();
     public DigraphsSource Get(eDigraphs type, string word) => Get(type).ToList().Find(x => x.value == word);
-    [Header("Orizinal Data")]
-    [SerializeField]
-    private Sprite[] sprites;
     public override void Load(List<Hashtable> data)
     {
-        int current = sprites.Length;
-        sprites = sprites.Distinct().ToArray();
         var tmp = new List<DigraphsSource>();
         for (int i = 0; i < data.Count; i++)
         {
@@ -28,7 +23,6 @@ public class DigraphsData : LocalDBElement<DigraphsSource>
             tmp.Add(new DigraphsSource(
                 type,
                 value,
-                LocalDB.Find(sprites, value),
                 actValue,
                 level
                 ));
@@ -36,30 +30,13 @@ public class DigraphsData : LocalDBElement<DigraphsSource>
         this.data = tmp
             .Where(x => !x.IsNull)
             .ToArray();
-
-        var spritesNames = sprites.Select(x => x.name);
-        var dataNames = this.data.Select(x => x.value);
-        var missingAudiosAll = "음성 전체 누락 단어목록\n" + string.Join("\n", spritesNames.Where(x => !dataNames.Contains(x)));
-        var duplicated = "중복 이미지 목록\n" + string.Join("\n", sprites.Where(x => sprites.Where(y => y.name == x.name).Count() > 1).Select(x => x.name));
-        var missings = "누락 항목\n" + string.Join("\n", tmp.Where(x => x.IsNull).Select(x =>
-        {
-            string missingItem;
-            if (x.sprite == null)
-                missingItem = "Sprite";
-            else
-                missingItem = "UnKnwon";
-
-            return string.Format("{0} Missing : {1}", x.value, missingItem);
-        }));
-        Debug.Log(duplicated);
-        Debug.Log(missingAudiosAll);
-        Debug.Log(missings);
     }
 }
 
 [Serializable]
 public class DigraphsSource : DataSource
 {
+    protected override eAtlasType atlas => eAtlasType.Digraphs;
     public eDigraphs type;
     public bool IsPair() => IsPair(type);
     public ePairDigraphs GetPair() => GetPair(type);
@@ -87,7 +64,7 @@ public class DigraphsSource : DataSource
     public string actValue;
     public override bool IsNull => base.IsNull || string.IsNullOrEmpty(actValue);
 
-    public DigraphsSource(eDigraphs type, string value, Sprite sprite, string actValue, int targetLevel) : base(value,sprite)
+    public DigraphsSource(eDigraphs type, string value, string actValue, int targetLevel) : base(value)
     {
         this.type = type;
         this.actValue = actValue;
@@ -95,6 +72,7 @@ public class DigraphsSource : DataSource
     }
 
     public int TargetLevel { get; private set; }
+
     public void PlayClip(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(value,onDone);
     public void PlayAct(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(actValue,onDone);
 

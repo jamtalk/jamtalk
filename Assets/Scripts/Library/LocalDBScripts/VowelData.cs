@@ -12,14 +12,9 @@ public class VowelData : LocalDBElement
     public VowelSource[] Get() => data;
     public VowelSource[] Get(eAlphabet alphabet) => data.Where(x => x.alphabet == alphabet).ToArray();
     public VowelSource Get(eAlphabet alphabet, string word) => Get(alphabet).ToList().Find(x => x.value == word);
-    [Header("Orizinal Data")]
-    [SerializeField]
-    private Sprite[] sprites;
 
     public override void Load(List<Hashtable> data)
     {
-        int current = sprites.Length;
-        sprites = sprites.Distinct().ToArray();
         var tmp = new List<VowelSource>();
         for (int i = 0; i < data.Count; i++)
         {
@@ -32,39 +27,19 @@ public class VowelData : LocalDBElement
                 type,
                 alphabet,
                 value,
-                LocalDB.Find(sprites, value),
                 actValue
                 ));
         }
         this.data = tmp
             .Where(x => !x.IsNull)
             .ToArray();
-
-        var spritesNames = sprites.Select(x => x.name);
-        var dataNames = this.data.Select(x => x.value);
-        var missingAudiosAll = "음성 전체 누락 단어목록\n" + string.Join("\n", spritesNames.Where(x => !dataNames.Contains(x)));
-        var duplicated = "중복 이미지 목록\n" + string.Join("\n", sprites.Where(x => sprites.Where(y => y.name == x.name).Count() > 1).Select(x => x.name));
-        var missings = "누락 항목\n" + string.Join("\n", tmp.Where(x => x.IsNull).Select(x =>
-        {
-            string missingItem;
-            if (x.sprite == null)
-                missingItem = "Sprite";
-            else
-                missingItem = "UnKnwon";
-
-            return string.Format("{0} Missing : {1}", x.value, missingItem);
-        }));
-        Debug.Log(duplicated);
-        Debug.Log(missingAudiosAll);
-        Debug.Log(missings);
     }
-    #region Methods
-    #endregion
 }
 
 [Serializable]
 public class VowelSource : DataSource
 {
+    protected override eAtlasType atlas => eAtlasType.Vowels;
     public eVowelType type;
     public eAlphabet alphabet;
     public string actValue;
@@ -89,7 +64,7 @@ public class VowelSource : DataSource
         return hashCode;
     }
 
-    public VowelSource(eVowelType type, eAlphabet alphabet, string value, Sprite sprite, string act) : base(value,sprite)
+    public VowelSource(eVowelType type, eAlphabet alphabet, string value, string act) : base(value)
     {
         this.type = type;
         this.alphabet = alphabet;

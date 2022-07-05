@@ -4,6 +4,8 @@ using UnityEngine;
 using GJGameLibrary.DesignPattern;
 using System;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using System.Threading.Tasks;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -31,6 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
             vowels.Get(x),
             audios.Get(x)))
             .ToDictionary(x => x.Alphabet, x => x);
+        Debug.Log(string.Format("Datas : {0}°³\n{1}", datas.Count, string.Join("\n",datas.Select(x => x.Key))));
 
         var digraphsData = LocalDB.Instance.Get<DigraphsData>().Get();
         digraphs = digrpahs

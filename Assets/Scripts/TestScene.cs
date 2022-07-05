@@ -6,7 +6,10 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using OptionData = UnityEngine.UI.Dropdown.OptionData;
+using UnityEngine.U2D;
+
 public class TestScene : MonoBehaviour
 {
     public ScrollRect scrollRect;
@@ -17,17 +20,24 @@ public class TestScene : MonoBehaviour
     public Transform parent;
     public int[] levels;
     public GameObject loading;
-    private void Awake()
+
+    private Coroutine loadingRoutine;
+    private void Start()
     {
         loading.gameObject.SetActive(true);
-        StartCoroutine(LocalDB.Initialize(() =>
+        var tween = textProgress.DOText("L O A D I N G . . .", 1f);
+        tween.SetLoops(-1);
+        StartCoroutine(SetLayout());
+        loadingRoutine = StartCoroutine(LocalDB.Initialize(() =>
         {
+            DOTween.KillAll();
             loading.gameObject.SetActive(false);
-            StartCoroutine(SetLayout());
+            StopCoroutine(loadingRoutine);
+            GC.Collect();
         }));
         var options = new List<OptionData>();
         levels = levels.OrderBy(x => x).ToArray();
-        for(int i = 0;i < levels.Length; i++)
+        for (int i = 0; i < levels.Length; i++)
             options.Add(new OptionData(string.Format("{0} 단계", levels[i])));
         dropLevel.options = options;
         dropLevel.onValueChanged.AddListener(value => SelectLevel(value + 1));
@@ -53,33 +63,19 @@ public class TestScene : MonoBehaviour
             items.Add(scrollRect.content.GetChild(i).gameObject);
 
         for (int i = 0; i < items.Count; i++)
-            Destroy(items[i]);
-    }
-    IEnumerator SetLayout()
-    {
-        yield return new WaitForEndOfFrame();
-        var size = scrollRect.GetComponent<RectTransform>().rect.size;
-        var layout = scrollRect.content.GetComponent<GridLayoutGroup>();
-        var count = layout.constraintCount;
-        size.y = 150f;
-        size.x -= (layout.spacing.x + layout.padding.left + layout.padding.right) * (count - 1);
-        size.x /= count;
-        layout.cellSize = size;
-        SelectLevel(1);
+            DestroyImmediate(items[i]);
+        GC.Collect();
     }
     public void CreateInstances(int level)
     {
-        Debug.Log(level + "생성");
         var scenes = Enum.GetNames(typeof(eSceneName))
             .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
             .Where(x=>x.ToString().Contains("PL"+level))
             .ToArray();
-        Debug.LogFormat("씬 목록 ({0}개)\n{1}", scenes.Length, string.Join("\n", scenes));
         for (int i = 0; i < scenes.Length; i++)
         {
             var button = Instantiate(original, parent).GetComponent<Button>();
             AddListener(button, scenes[i]);
-
         }
         original.gameObject.SetActive(false);
 
@@ -98,7 +94,23 @@ public class TestScene : MonoBehaviour
         {
             var alphabet = (eAlphabet)(value * 2);
             GameManager.Instance.currentAlphabet = alphabet;
-            Debug.Log(alphabet);
         });
+    }
+    private IEnumerator SetLayout()
+    {
+        var data = GameManager.Instance.alphabets;
+
+        yield return LocalDB.Initialize(() => Debug.Log("끝!"));
+        Debug.Log("다음단계");
+        loading.gameObject.SetActive(false);
+        yield return new WaitForEndOfFrame();
+        var size = scrollRect.GetComponent<RectTransform>().rect.size;
+        var layout = scrollRect.content.GetComponent<GridLayoutGroup>();
+        var count = layout.constraintCount;
+        size.y = 150f;
+        size.x -= (layout.spacing.x + layout.padding.left + layout.padding.right) * (count - 1);
+        size.x /= count;
+        layout.cellSize = size;
+        SelectLevel(1);
     }
 }
