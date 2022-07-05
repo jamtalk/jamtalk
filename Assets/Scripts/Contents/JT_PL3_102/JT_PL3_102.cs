@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
 {
     protected override eContents contents => eContents.JT_PL3_102;
-    protected override int QuestionCount => 1;
+    protected override int QuestionCount => 3;
     private int answerCount = 6;
+    private eDigraphs[] digraphs = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
+    public Sprite backImage;
     public Image spatulaImage;
-    public Text[] texts;
-    public Image[] images;
+    public DoubleClick302[] pancakes;
 
     protected override List<Question3_102> MakeQuestion()
     {
@@ -22,7 +23,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
         {
             var current = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+                .Where(x => x.type == digraphs[i])
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(answerCount)
                 .ToArray();
@@ -33,20 +34,40 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
 
     protected override void ShowQuestion(Question3_102 question)
     {
-        for (int i = 0; i < images.Length; i++)
+        Debug.Log(currentQuestionIndex);
+
+        for(int i = 0; i < pancakes.Length; i++)
         {
-            var data = question.totalQuestion[i];
-            images[i].sprite = data.sprite;
-            texts[i].text = data.value;
+            pancakes[i].isOn = false;
+            pancakes[i].images.gameObject.SetActive(false);
+            pancakes[i].textPhanix.gameObject.SetActive(true);
+
+            pancakes[i].Init(question.totalQuestion[i]);
+            AddListener(pancakes[i]);
         }
     }
 
-    private void AddListener()
+    private void AddListener(DoubleClick302 button)
     {
+        button.onClick.RemoveAllListeners();
+        button.onClickFirst.RemoveAllListeners();
 
+        button.onClickFirst.AddListener(() =>
+        {
+            button.data.PlayAct();
+        });
+
+        button.onClick.AddListener(() =>
+        {
+            button.data.PlayClip();
+            button.image.sprite = backImage;
+            button.textPhanix.gameObject.SetActive(false);
+            button.images.gameObject.SetActive(true);
+
+            AddAnswer(button.data);
+        });
     }
 }
-
 
 public class Question3_102 : MultiQuestion<DigraphsSource>
 {
