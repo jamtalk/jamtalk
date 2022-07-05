@@ -12,7 +12,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
 
     protected override eContents contents => eContents.JT_PL5_104;
     public TextRocket rocket;
-    public DoubleClickButton[] buttons;
+    public DoubleClick504[] buttons;
     public Button buttonRocket;
 
     protected override void Awake()
@@ -65,7 +65,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         for (int i = 0; i < randomQuestions.Length; i++)
         {
             buttons[i].gameObject.SetActive(true);
-            //buttons[i].Init(randomQuestions[i]);
+            buttons[i].Init(randomQuestions[i]);  
             buttons[i].button.interactable = false;
             var rt = buttons[i].GetComponent<RectTransform>();
             rt.anchoredPosition = Vector2.zero;
@@ -78,7 +78,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         rocket.audioPlayer.Stop();
         base.ShowResult();
     }
-    private void AddOnClickTextButtonListener(DoubleClickButton button)
+    private void AddOnClickTextButtonListener(DoubleClick504 button)
     {
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
@@ -86,8 +86,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
 
         button.onClickFirst.AddListener(() =>
         {
-            Debug.Log("firist");
-            // digraphs 출력
+            button.data.PlayAct();
         });
         button.onClick.AddListener(() =>
         {
@@ -123,8 +122,8 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                             currentQuestionIndex + 1, QuestionCount,
                             currentQuestion.currentIndex + 1, currentQuestion.correctCount
                             );
-                        if (!CheckOver())
-                            CallRokect();
+                        if (!CheckOver()) { }
+                            //CallRokect();
                     });
                 };
                 seq.Play();
