@@ -27,10 +27,6 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                 finger = null;
             }
         });
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            AddOnClickTextButtonListener(buttons[i]);
-        }
     }
     protected override List<Question5_104> MakeQuestion()
     {
@@ -65,13 +61,16 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         for (int i = 0; i < randomQuestions.Length; i++)
         {
             buttons[i].gameObject.SetActive(true);
-            buttons[i].Init(randomQuestions[i]);  
+            buttons[i].Init(randomQuestions[i]);
+            buttons[i].name = randomQuestions[i].value;
             buttons[i].button.interactable = false;
             var rt = buttons[i].GetComponent<RectTransform>();
             rt.anchoredPosition = Vector2.zero;
             rt.localScale = Vector3.one;
         }
         CallRokect();
+        for (int i = 0; i < buttons.Length; i++)
+            AddOnClickTextButtonListener(buttons[i]);
     }
     protected override void ShowResult()
     {
@@ -80,6 +79,9 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
     }
     private void AddOnClickTextButtonListener(DoubleClick504 button)
     {
+        button.onClick.RemoveAllListeners();
+        button.onClickFirst.RemoveAllListeners();
+
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
         var value = currentQuestion.correct[currentQuestionIndex];
@@ -99,20 +101,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                 for (int i = 0; i < buttons.Length; i++)
                     buttons[i].button.interactable = false;
 
-                var seq = DOTween.Sequence();
-
-                var moveTween = rt.DOMove(window.position, 1f);
-                moveTween.SetEase(Ease.Linear);
-                var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
-                scaleTweenStart.SetEase(Ease.Linear);
-                var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
-                scaleTweenEnd.SetEase(Ease.Linear);
-
-                seq.Append(scaleTweenStart);
-                seq.Append(scaleTweenEnd);
-                seq.Insert(0, moveTween);
-
-                seq.onComplete += () =>
+                DoMove(window, rt, () =>
                 {
                     button.gameObject.SetActive(false);
                     rocket.Away(value.value, () =>
@@ -123,13 +112,31 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                             currentQuestion.currentIndex + 1, currentQuestion.correctCount
                             );
                         if (!CheckOver()) { }
-                            //CallRokect();
+                        CallRokect();
                     });
-                };
-                seq.Play();
+                });
             }
         });
     }
+    private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
+    {
+        var seq = DOTween.Sequence();
+
+        var moveTween = rt.DOMove(window.position, 1f);
+        moveTween.SetEase(Ease.Linear);
+        var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
+        scaleTweenStart.SetEase(Ease.Linear);
+        var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
+        scaleTweenEnd.SetEase(Ease.Linear);
+
+        seq.Append(scaleTweenStart);
+        seq.Append(scaleTweenEnd);
+        seq.Insert(0, moveTween);
+
+        seq.onComplete += callback;
+        seq.Play();
+    }
+
     private void PlayCurrentWord()
     {
         PlayWord(currentQuestion.currentCorrect);

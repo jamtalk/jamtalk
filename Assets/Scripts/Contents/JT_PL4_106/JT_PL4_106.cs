@@ -21,38 +21,52 @@ public class JT_PL4_106 : BaseContents
     {
         base.Awake();
 
-        MakeQuestion();
-
-        for (int i = 0; i < doubleClick.Length; i++)
-            ButtonAddListener(doubleClick[i], eDig[i]);
+        MakeQuestion();    
     }
 
     private void MakeQuestion()
     {
+        var random = eDig[Random.Range(0, 2)];
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == eDig[Random.Range(0, 2)])
+            .Where(x => x.type == random)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
-        SetCurrentColor();
+        var temp = GameManager.Instance.digrpahs
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.type != random)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Take(2)
+            .ToArray();
+
+        var tempList = new List<DigraphsSource>();
+        for(int i = 0; i < temp.Length; i ++)
+            tempList.Add(temp[i]);
+        tempList.Add(current);
+
+        var list = tempList.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
         for (int i = 0; i < doubleClick.Length; i++)
+        {
+            ButtonAddListener(doubleClick[i], list[i]);
             doubleClick[i].isOn = false;
+        }
+        SetCurrentColor();
     }
-    private void ButtonAddListener(DoubleClickButton button, eDigraphs digraphs)
+    private void ButtonAddListener(DoubleClickButton button, DigraphsSource data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
 
         button.onClickFirst.AddListener(() =>
         {
-            // phanics 출력
-            Debug.Log(digraphs.ToString());
+            data.PlayAct();            
         });
 
         button.onClick.AddListener(() =>
         {
-            if (current.type == digraphs)
+            if (current.type == data.type)
             {
                 index += 1;
                 current.PlayClip(() =>

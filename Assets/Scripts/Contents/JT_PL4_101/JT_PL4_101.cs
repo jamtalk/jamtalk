@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class JT_PL4_101 : BaseContents
 
     private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
     private List<ePairDigraphs> pairs = new List<ePairDigraphs>();
+    private DigraphsSource data;
 
     protected override void Awake()
     {
@@ -38,6 +40,11 @@ public class JT_PL4_101 : BaseContents
 
     private void MakeQuestion()
     {
+        data = GameManager.Instance.digrpahs
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.type == digraphs[index])
+            .First();
+
         pairs.Add(DigraphsSource.GetPair(digraphs[index]));
 
         var digraph = digraphs[index].ToString().ToLower();
@@ -71,6 +78,7 @@ public class JT_PL4_101 : BaseContents
 
                 if (slideCount >= 2)
                 {
+                    data.PlayAct(); // pairDigraphs act 출력
                     StartCoroutine(Reset());
                 }
             }
