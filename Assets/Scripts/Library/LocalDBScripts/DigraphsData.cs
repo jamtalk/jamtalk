@@ -38,7 +38,9 @@ public class DigraphsSource : DataSource
 {
     protected override eAtlasType atlas => eAtlasType.Digraphs;
     public eDigraphs type;
+    public ePairDigraphs pairType;
     public bool IsPair() => IsPair(type);
+    public bool IsPairType() => IsPair(pairType);
     public ePairDigraphs GetPair() => GetPair(type);
     public static bool IsPair(eDigraphs digraphs)
     {

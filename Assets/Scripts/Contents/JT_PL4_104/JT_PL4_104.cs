@@ -11,6 +11,7 @@ public class JT_PL4_104 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
+    private int buttonCount = 0;
 
     public WordElement404[] elements;
 
@@ -54,8 +55,17 @@ public class JT_PL4_104 : BaseContents
 
         button.onClick.AddListener(() =>
         {
+            buttonCount += 1;
+
+            //var temp = (eDigraphs)Enum.Parse(typeof(eDigraphs), element.text.text.ToUpper());
+
             // 해당 음가 출력
-            element.Open();    
+            element.Open();
+
+            if(buttonCount >= 2)
+            {
+
+            }
         });
     }
 }
