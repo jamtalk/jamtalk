@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ public class JT_PL4_101 : BaseContents
     public Animator[] anis;
     public Text[] digraphsTexts;
     public Text[] pairsTexts;
+    public Sprite[] pacmanImages;
     public Image successImages;
 
     private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
@@ -70,7 +72,8 @@ public class JT_PL4_101 : BaseContents
     {
         slider.onValueChanged.AddListener((value) =>
         {
-            // sprite list 가지고 있고 % 5 해서 나머지에 따라 이미지 설정 
+            var temp = Convert.ToInt32(slider.value % 5);
+            slider.image.sprite = pacmanImages[temp];
 
             if (value <= 0.001f)
             {
@@ -97,7 +100,8 @@ public class JT_PL4_101 : BaseContents
 
         for (int i = 0; i < sliders.Length; i++)
         {
-            sliders[i].value = 1;
+            sliders[i].value = 25;
+            sliders[i].image.sprite = pacmanImages[4];
             addImages[i].gameObject.SetActive(false);
             sliders[i].gameObject.SetActive(true);
         }
