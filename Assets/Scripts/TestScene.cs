@@ -24,17 +24,18 @@ public class TestScene : MonoBehaviour
     private Coroutine loadingRoutine;
     private void Start()
     {
+        Application.targetFrameRate = 60;
         loading.gameObject.SetActive(true);
         var tween = textProgress.DOText("L O A D I N G . . .", 1f);
         tween.SetLoops(-1);
         StartCoroutine(SetLayout());
-        loadingRoutine = StartCoroutine(LocalDB.Initialize(() =>
-        {
-            DOTween.KillAll();
-            loading.gameObject.SetActive(false);
-            StopCoroutine(loadingRoutine);
-            GC.Collect();
-        }));
+        //loadingRoutine = StartCoroutine(LocalDB.Initialize(() =>
+        //{
+        //    DOTween.KillAll();
+        //    loading.gameObject.SetActive(false);
+        //    StopCoroutine(loadingRoutine);
+        //    GC.Collect();
+        //}));
         var options = new List<OptionData>();
         levels = levels.OrderBy(x => x).ToArray();
         for (int i = 0; i < levels.Length; i++)
@@ -71,25 +72,28 @@ public class TestScene : MonoBehaviour
         var scenes = Enum.GetNames(typeof(eSceneName))
             .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
             .Where(x=>x.ToString().Contains("PL"+level))
+            .Where(x=>x != eSceneName.JT_PL2_102)
             .ToArray();
+        Debug.LogFormat("{0}개 생성",scenes.Length);
         for (int i = 0; i < scenes.Length; i++)
         {
             var button = Instantiate(original, parent).GetComponent<Button>();
             AddListener(button, scenes[i]);
+            button.gameObject.SetActive(true);
         }
         original.gameObject.SetActive(false);
-
-        var options = new List<OptionData>();
-        var enums = Enum.GetNames(typeof(eAlphabet))
-            .Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x))
-            .ToArray();
-        for (int i = 0; i < enums.Length / 2; i++)
+        switch (level)
         {
-            var first = i * 2;
-            var next = first + 1;
-            options.Add(new OptionData(string.Format("{0} ~ {1}", enums[first], enums[next])));
+            case 1:
+                dropContents.options = GetAlphabetsOption();
+                break;
+            case 2:
+                dropContents.options = GetVowelOptions();
+                break;
+            default:
+                dropContents.options = GetDigrpahsOption();
+                break;
         }
-        dropContents.options = options;
         dropContents.onValueChanged.AddListener((value) =>
         {
             var alphabet = (eAlphabet)(value * 2);
@@ -98,7 +102,10 @@ public class TestScene : MonoBehaviour
     }
     private IEnumerator SetLayout()
     {
-        var data = GameManager.Instance.alphabets;
+        yield return new WaitForSecondsRealtime(1f);
+        //var waitFrame = 3;
+        //for (int i = 0; i < waitFrame; i++)
+        //    yield return new WaitForEndOfFrame();
 
         yield return LocalDB.Initialize(() => Debug.Log("끝!"));
         Debug.Log("다음단계");
@@ -112,5 +119,29 @@ public class TestScene : MonoBehaviour
         size.x /= count;
         layout.cellSize = size;
         SelectLevel(1);
+    }
+
+    private List<OptionData> GetAlphabetsOption()
+    {
+        var options = new List<OptionData>();
+        var enums = Enum.GetNames(typeof(eAlphabet))
+            .Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x))
+            .ToArray();
+        for (int i = 0; i < enums.Length / 2; i++)
+        {
+            var first = i * 2;
+            var next = first + 1;
+            options.Add(new OptionData(string.Format("{0} ~ {1}", enums[first], enums[next])));
+        }
+        return options;
+    }
+
+    private List<OptionData> GetVowelOptions()
+    {
+        return GameManager.Instance.vowels.Select(x => new OptionData(x.ToString())).ToList();
+    }
+    private List<OptionData> GetDigrpahsOption()
+    {
+        return GameManager.Instance.digrpahs.Select(x => new OptionData(x.ToString())).ToList();
     }
 }

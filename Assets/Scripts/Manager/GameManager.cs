@@ -11,8 +11,9 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public delegate void PlayTTS();
     public eAlphabet currentAlphabet { get; set; }
-    public eContents currentContents { get; private set; }
+    public eContents currentContents { get; set; }
     public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
+    public eVowelType currentVowel { get; set; }
 
     private Dictionary<eAlphabet, AlphabetData> datas;
     private Dictionary<eDigraphs, DigraphsSource[]> digraphs;
