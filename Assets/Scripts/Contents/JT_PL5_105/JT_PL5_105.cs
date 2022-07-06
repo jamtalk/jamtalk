@@ -7,19 +7,26 @@ using UnityEngine.UI;
 public class JT_PL5_105 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL5_105;
-    protected override bool CheckOver() => questionCount == index;
+    protected override bool CheckOver() => toggles.Select(x => x.toggle.isOn).Contains(false);
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
+    private int exampleIndex = 5;
     private int index = 0;
     private DigraphsSource[] current;
+    private List<ToggleText505> toggles = new List<ToggleText505>();
+    private int digraphsIndex = 0;
 
-    public Text currentText;
-    public DoubleClickButton doubleClickButton;
-
+    public Thrower505 thrower;
+    public GameObject textElement;
+    public RectTransform textLayout;
+    public GameObject exampleElement;
+    public RectTransform exampleLayout;
 
     protected override void Awake()
     {
         base.Awake();
+
+        MakeQuestion();
     }
 
     private void MakeQuestion()
@@ -37,14 +44,60 @@ public class JT_PL5_105 : BaseContents
     private void ShowQuestion()
     {
         var digraphs = current[index].type.ToString().ToLower();
-
+        digraphsIndex = current[index].value.IndexOf(digraphs);
         var temp = current[index].value.Replace(digraphs, string.Empty);
-        // var questions =  eAlphabet linq 로 가져와서 temp 추가하여 보기 만들기 
+        var tempList = new List<string>();
+        foreach (var item in temp)
+            tempList.Add(item.ToString());
+        var questions = tempList;
 
-        // currentText > digraphs 만 나타나야 함 
+        for (int i = 0; i < questions.Count; i++)
+        {
+            var questionsElement = Instantiate(exampleElement, exampleLayout).GetComponent<DoubleClick505>();
+            questionsElement.Init(questions[i]);
+            AddListener(questionsElement, i);
+        }
 
 
+        tempList.Insert(digraphsIndex, digraphs);
+        for (int i = 0; i < tempList.Count; i++)
+        {
+            var toggleElement = Instantiate(textElement, textLayout).GetComponent<ToggleText505>();
+            var isOn = true;
+            if (i == digraphsIndex)
+                isOn = false;
+            toggleElement.Init(tempList[i], isOn);
+
+            toggles.Add(toggleElement);
+        }
     }
 
+    private void AddListener(DoubleClick505 button, int number)
+    {
+        button.onClick.RemoveAllListeners();
+        button.onClickFirst.RemoveAllListeners();
 
+        button.onClickFirst.AddListener(() =>
+        {
+            Debug.Log(button.text.text);
+            // phanics sound 출력 
+        });
+
+        button.onClick.AddListener(() =>
+        {
+            if (number >= digraphsIndex)
+                number += 1;
+            ThrowElement(button, number);
+        });
+    }
+
+    protected virtual void ThrowElement(DoubleClick505 item, int number)
+    {
+        Debug.Log(item.text.text);
+        thrower.Throw(item, textLayout, () =>
+        {
+            toggles[number].toggle.isOn = false;
+            item.gameObject.SetActive(false);
+        });
+    }
 }
