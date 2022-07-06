@@ -68,32 +68,10 @@ public class LocalDB : ScriptableObject
     }
     public static IEnumerator Initialize(Action onDone)
     {
-        //_instance = null;
-
-        //_instance = CreateInstance<LocalDB>();
-
-        //var list = new List<LocalDBElement>();
-
-        //yield return AddElement<WordsData>(list);
-        //yield return AddElement<VowelData>(list);
-        //yield return AddElement<AlphabetAudioData>(list);
-        //yield return AddElement<AlphabetSpriteData>(list);
-        //yield return AddElement<DigraphsData>(list);
-        //yield return AddElement<SentanceData>(list);
-        //_instance.elements = list.ToArray();
-
-        //Debug.Log("데이터 로딩 완료");
-
-        //var op = Addressables.LoadAssetAsync<AudioClip>("correctSound");
-        //yield return op;
-
-        //Debug.Log("클립 로딩 완료");
-        //_instance.correctClip = op.Result;
-        //_instance.elements = list.ToArray();
         var op = Resources.LoadAsync<LocalDB>(Path);
         while (!op.isDone)
         {
-            yield return op;
+            yield return null;
             var progress = op.progress * 100f;
             Debug.LogFormat("{0}% 진행 완료", progress.ToString("N2"));
         }
