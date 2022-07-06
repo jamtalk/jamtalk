@@ -8,7 +8,7 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
     protected override eContents contents => eContents.JT_PL3_107;
     protected override int GetTotalScore() => 12;
     protected override bool CheckOver() =>
-        digraphsIndex == 2 && !drops.Select(x => x.isConnected).Contains(false);
+        !drops.Select(x => x.isConnected).Contains(false);
 
     private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
     private int digraphsIndex = 0;
@@ -16,8 +16,6 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
 
     protected override void GetWords()
     {
-        Debug.Log(digraphsIndex + eDig[digraphsIndex].ToString());
-
         words = GameManager.Instance.digrpahs
             .SelectMany(x=>GameManager.Instance.GetDigraphs(x))
             .Where( x => x.type == eDig[digraphsIndex])
@@ -25,34 +23,27 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
             .Take(drops.Length)
             .ToArray();
 
-        Debug.Log(words.Length);
-
         SetElement(words);
         digraphsIndex += 1;
+        Debug.Log("digraphgs " + digraphsIndex);
     }
-
     protected override void onDrop()
     {
         dropCount += 1;
 
         if (dropCount == words.Length)
         {
-            dropCount = 0;
             GetWords();
             for(int i = 0; i < words.Length; i++)
             {
                 drags[i].Reset();
                 drops[i].Reset();
             }
+            dropCount = 0;
         }
-
-
-        Debug.Log(CheckOver());
 
         if (CheckOver())
-        {   // 결과 도출하기
             ShowResult();
-        }
         else
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
     }
@@ -64,7 +55,8 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
     }
 
     protected override void ShowResult()
-    {   // th sound
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
+    {
+        base.ShowResult();
+        //audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
     }
 }
