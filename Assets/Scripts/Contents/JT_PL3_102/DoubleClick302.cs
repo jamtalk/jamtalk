@@ -7,6 +7,7 @@ public class DoubleClick302 : DoubleClickButton
 {
     public Text textPhanix;
     public Image images;
+    public bool isCheck = false;
     public DigraphsSource data { get; private set; }
 
     public void Init(DigraphsSource data)

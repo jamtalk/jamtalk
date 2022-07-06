@@ -34,10 +34,9 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
 
     protected override void ShowQuestion(Question3_102 question)
     {
-        Debug.Log(currentQuestionIndex);
-
         for(int i = 0; i < pancakes.Length; i++)
         {
+            pancakes[i].isCheck = false;
             pancakes[i].isOn = false;
             pancakes[i].images.gameObject.SetActive(false);
             pancakes[i].textPhanix.gameObject.SetActive(true);
@@ -59,12 +58,17 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
 
         button.onClick.AddListener(() =>
         {
-            button.data.PlayClip();
-            button.image.sprite = backImage;
-            button.textPhanix.gameObject.SetActive(false);
-            button.images.gameObject.SetActive(true);
+            if (!button.isCheck)
+            {
+                button.isCheck = true;
 
-            AddAnswer(button.data);
+                button.data.PlayClip();
+                button.image.sprite = backImage;
+                button.textPhanix.gameObject.SetActive(false);
+                button.images.gameObject.SetActive(true);
+
+                AddAnswer(button.data);
+            }
         });
     }
 }
