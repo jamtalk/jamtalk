@@ -49,6 +49,15 @@ public class DigraphsSource : DataSource
             .ToArray();
         return pairs.Contains(num);
     }
+    public static bool IsPair(ePairDigraphs digraphs)
+    {
+        var num = (int)digraphs;
+        var pairs = Enum.GetNames(typeof(eDigraphs))
+            .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))
+            .Select(x => (int)x)
+            .ToArray();
+        return pairs.Contains(num);
+    }
     public static ePairDigraphs GetPair(eDigraphs digraphs)
     {
         var num = (int)digraphs;

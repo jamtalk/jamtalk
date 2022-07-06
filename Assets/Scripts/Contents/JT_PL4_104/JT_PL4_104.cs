@@ -21,7 +21,7 @@ public class JT_PL4_104 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-
+        
         MakeQuestion();
     }
 

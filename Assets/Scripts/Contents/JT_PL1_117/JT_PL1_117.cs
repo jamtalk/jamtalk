@@ -23,7 +23,7 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
             .ToArray();
     }
 
-    protected override AudioClip GetClip() => currentQuestion.AudioData.clip;
+    protected override void GetClip() => audioPlayer.Play(currentQuestion.AudioData.clip);
 
     protected override bool IsCurrentAnswer(AlphabetData value) => value == currentQuestion;
 }

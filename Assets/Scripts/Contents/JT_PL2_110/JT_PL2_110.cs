@@ -12,6 +12,8 @@ public class JT_PL2_110 : BingoContents<WordSource, WordBingoButton, Text, WordB
         new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
         .SelectMany(x => GameManager.Instance.GetResources(x).Words)
         .Where(x => x.value.Length < 6)
+        .Distinct()
+        .OrderBy(x => Random.Range(0f, 100f))
         .ToArray();
 
     public override WordSource[] GetQuestionType()
@@ -26,7 +28,7 @@ public class JT_PL2_110 : BingoContents<WordSource, WordBingoButton, Text, WordB
             .ToArray(); 
     }
 
-    protected override bool IsCurrentAnswer(WordSource value) => value == currentQuestion;
+    protected override void GetClip() => audioPlayer.Play(currentQuestion.clip);
 
-    protected override AudioClip GetClip() => currentQuestion.clip;
+    protected override bool IsCurrentAnswer(WordSource value) => value == currentQuestion;
 }

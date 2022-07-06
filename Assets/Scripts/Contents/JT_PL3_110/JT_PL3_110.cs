@@ -4,29 +4,31 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_110 : BingoContents<WordSource, WordBingoButton, Text, WordBingoBoard>
+public class JT_PL3_110 : BingoContents<DigraphsSource, DigraphsBingoButton, Text, DigraphsBingoBoard>
 {
     protected override eContents contents => eContents.JT_PL3_110;
 
-    protected override WordSource[] correctsTarget =>
-        new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
-        .SelectMany(x => GameManager.Instance.GetResources(x).Words)
+    protected override DigraphsSource[] correctsTarget =>
+        GameManager.Instance.digrpahs
+        .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+        .Where(x => x.type == GameManager.Instance.currentDigrpahs)
         .Where(x => x.value.Length < 6)
+        .Distinct()
+        .OrderBy(x => Random.Range(0f, 100f))
         .ToArray();
 
-    public override WordSource[] GetQuestionType()
+    public override DigraphsSource[] GetQuestionType()
     {
-        return GameManager.Instance.alphabets
-            .Select(x => GameManager.Instance.GetResources(x))
-            .Where(x => !correctsTarget.Select(y => y.alphabet).Contains(x.Alphabet))
-            .SelectMany(x => x.Words)
+        return GameManager.Instance.digrpahs
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.type != GameManager.Instance.currentDigrpahs)
             .Where(x => x.value.Length < 6)
             .Take((int)Mathf.Pow(board.size, 2f))
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
     }
 
-    protected override bool IsCurrentAnswer(WordSource value) => value == currentQuestion;
+    protected override void GetClip() => currentQuestion.PlayClip();
 
-    protected override AudioClip GetClip() => currentQuestion.clip;
+    protected override bool IsCurrentAnswer(DigraphsSource value) => value == currentQuestion;
 }

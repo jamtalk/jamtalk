@@ -70,6 +70,8 @@ public class JT_PL4_101 : BaseContents
     {
         slider.onValueChanged.AddListener((value) =>
         {
+            // sprite list 가지고 있고 % 5 해서 나머지에 따라 이미지 설정 
+
             if (value <= 0.001f)
             {
                 slideCount += 1;

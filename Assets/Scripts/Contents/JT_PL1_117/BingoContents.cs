@@ -145,12 +145,12 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         PlaySound();
 
     }
-    protected abstract AudioClip GetClip();
+    protected abstract void GetClip();
     public void PlaySound()
     {
         if (CheckOver())
             ShowResult();
         else
-            audioPlayer.Play(GetClip());
+            GetClip();
     }
 }
