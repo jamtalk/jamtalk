@@ -43,6 +43,8 @@ namespace GJGameLibrary.Util.Bezier
 
             return result;
         }
+
+        #region Methods
         private static int[] GetCombinationValues(int n)
         {
             int[] arr = new int[n + 1];
@@ -91,5 +93,6 @@ namespace GJGameLibrary.Util.Bezier
 
             return Permutation(n, r) / Factorial(r);
         }
+        #endregion
     }
 }

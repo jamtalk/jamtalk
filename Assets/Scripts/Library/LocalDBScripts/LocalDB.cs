@@ -66,19 +66,17 @@ public class LocalDB : ScriptableObject
 
         }
     }
-    public static IEnumerator Initialize(Action onDone)
+    public static IEnumerator Initialize(Action<float> onProgress=null)
     {
         var op = Resources.LoadAsync<LocalDB>(Path);
         while (!op.isDone)
         {
             yield return null;
             var progress = op.progress * 100f;
+            onProgress?.Invoke(progress);
             Debug.LogFormat("{0}% 진행 완료", progress.ToString("N2"));
         }
         _instance = op.asset as LocalDB;
-        Debug.LogFormat("결과 : {0}", _instance);
-
-        onDone?.Invoke();
     }
     private static IEnumerator AddElement<T>(List<LocalDBElement> elements) where T:LocalDBElement
     {

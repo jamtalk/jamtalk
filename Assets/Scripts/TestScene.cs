@@ -20,6 +20,7 @@ public class TestScene : MonoBehaviour
     public Transform parent;
     public int[] levels;
     public GameObject loading;
+    public Slider loadingBar;
 
     private Coroutine loadingRoutine;
     private void Start()
@@ -29,13 +30,6 @@ public class TestScene : MonoBehaviour
         var tween = textProgress.DOText("L O A D I N G . . .", 1f);
         tween.SetLoops(-1);
         StartCoroutine(SetLayout());
-        //loadingRoutine = StartCoroutine(LocalDB.Initialize(() =>
-        //{
-        //    DOTween.KillAll();
-        //    loading.gameObject.SetActive(false);
-        //    StopCoroutine(loadingRoutine);
-        //    GC.Collect();
-        //}));
         var options = new List<OptionData>();
         levels = levels.OrderBy(x => x).ToArray();
         for (int i = 0; i < levels.Length; i++)
@@ -72,7 +66,7 @@ public class TestScene : MonoBehaviour
         var scenes = Enum.GetNames(typeof(eSceneName))
             .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
             .Where(x=>x.ToString().Contains("PL"+level))
-            .Where(x=>x != eSceneName.JT_PL2_102)
+            .Where(x=>x != eSceneName.JT_PL2_102 && x!=eSceneName.JT_PL2_111)
             .ToArray();
         Debug.LogFormat("{0}개 생성",scenes.Length);
         for (int i = 0; i < scenes.Length; i++)
@@ -106,9 +100,10 @@ public class TestScene : MonoBehaviour
         //var waitFrame = 3;
         //for (int i = 0; i < waitFrame; i++)
         //    yield return new WaitForEndOfFrame();
+        loadingBar.gameObject.SetActive(true);
+        yield return LocalDB.Initialize((progress) => loadingBar.value = progress);
+        loadingBar.gameObject.SetActive(false);
 
-        yield return LocalDB.Initialize(() => Debug.Log("끝!"));
-        Debug.Log("다음단계");
         loading.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
         var size = scrollRect.GetComponent<RectTransform>().rect.size;
