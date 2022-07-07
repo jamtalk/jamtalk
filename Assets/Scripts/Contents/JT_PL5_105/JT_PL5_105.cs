@@ -10,7 +10,6 @@ public class JT_PL5_105 : BaseContents
     protected override bool CheckOver() => !toggles.Select(x => x.toggle.isOn).Contains(true);
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
-    private int exampleIndex = 5;
     private int index = 0;
     private DigraphsSource[] current;
     private List<ToggleText505> toggles = new List<ToggleText505>();
@@ -97,6 +96,14 @@ public class JT_PL5_105 : BaseContents
         {
             toggles[number].toggle.isOn = false;
             item.gameObject.SetActive(false);
+            string.Join(",", toggles.Select(x => x.toggle.isOn));
+
+            index += 1;;
+            if (index == toggles.Count - 1)
+            {
+                if (CheckOver())
+                    ShowResult();
+            }
         });
     }
 }
