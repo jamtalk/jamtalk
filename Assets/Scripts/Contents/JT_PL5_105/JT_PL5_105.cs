@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class JT_PL5_105 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL5_105;
-    protected override bool CheckOver() => toggles.Select(x => x.toggle.isOn).Contains(false);
+    protected override bool CheckOver() => !toggles.Select(x => x.toggle.isOn).Contains(true);
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int exampleIndex = 5;
@@ -93,7 +93,6 @@ public class JT_PL5_105 : BaseContents
 
     protected virtual void ThrowElement(DoubleClick505 item, int number)
     {
-        Debug.Log(item.text.text);
         thrower.Throw(item, textLayout, () =>
         {
             toggles[number].toggle.isOn = false;

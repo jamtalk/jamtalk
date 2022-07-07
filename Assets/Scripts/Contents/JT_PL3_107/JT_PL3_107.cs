@@ -6,12 +6,11 @@ using UnityEngine;
 public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
 {
     protected override eContents contents => eContents.JT_PL3_107;
-    protected override int GetTotalScore() => 12;
-    protected override bool CheckOver() =>
-        !drops.Select(x => x.isConnected).Contains(false);
+    protected override int GetTotalScore() => drops.Length;
+    protected override bool CheckOver() => digraphsIndex == eDig.Length;
 
-    private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
-    private int digraphsIndex = 0;
+    protected eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
+    protected int digraphsIndex = 0;
     private int dropCount = 0;
 
     protected override void GetWords()
@@ -22,30 +21,31 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(drops.Length)
             .ToArray();
-
         SetElement(words);
-        digraphsIndex += 1;
-        Debug.Log("digraphgs " + digraphsIndex);
     }
     protected override void onDrop()
     {
         dropCount += 1;
 
         if (dropCount == words.Length)
-        {
-            GetWords();
-            for(int i = 0; i < words.Length; i++)
+        { 
+            digraphsIndex += 1;
+            if (eDig.Length == digraphsIndex)
+                base.onDrop();
+            else
             {
-                drags[i].Reset();
-                drops[i].Reset();
-            }
-            dropCount = 0;
-        }
+                GetWords();
+                for (int i = 0; i < words.Length; i++)
+                {
+                    drags[i].Reset();
+                    drops[i].Reset();
+                }
 
-        if (CheckOver())
-            ShowResult();
-        else
-            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                dropCount = 0;
+
+            }
+        }
+        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
     }
 
     protected override void PlayAudio(DataSource word)
