@@ -38,9 +38,7 @@ public class DigraphsSource : DataSource
 {
     protected override eAtlasType atlas => eAtlasType.Digraphs;
     public eDigraphs type;
-    public ePairDigraphs pairType;
     public bool IsPair() => IsPair(type);
-    public bool IsPairType() => IsPair(pairType);
     public ePairDigraphs GetPair() => GetPair(type);
     public static bool IsPair(eDigraphs digraphs)
     {
@@ -69,6 +67,18 @@ public class DigraphsSource : DataSource
             .ToArray();
         if (pairs.Contains(num))
             return (ePairDigraphs)num;
+        else
+            return 0;
+    }
+    public static eDigraphs GetPair(ePairDigraphs digraphs)
+    {
+        var num = (int)digraphs;
+        var pairs = Enum.GetNames(typeof(eDigraphs))
+            .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))
+            .Select(x => (int)x)
+            .ToArray();
+        if (pairs.Contains(num))
+            return (eDigraphs)num;
         else
             return 0;
     }

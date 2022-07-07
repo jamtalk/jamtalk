@@ -11,14 +11,23 @@ public class WordElement404 : MonoBehaviour
     public GameObject charactor;
     public Button button;
 
-    public void Init(string value)
+    public Question4_104 data;
+
+    public void Init(Question4_104 data)
     {
-        text.text = value.ToLower();
+        this.data = data;
+        text.text = data.text;
     }
+
     public void Open()
     {
         closeImage.gameObject.SetActive(false);
         openImage.gameObject.SetActive(true);
+    }
+    public void Close()
+    {
+        closeImage.gameObject.SetActive(true);
+        openImage.gameObject.SetActive(false);
     }
     public void Correct()
     {
