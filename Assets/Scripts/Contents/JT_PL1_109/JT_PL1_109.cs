@@ -22,14 +22,17 @@ public class JT_PL1_109 : BaseContents
     protected override int GetTotalScore() => questions.Length;
     protected override void Awake()
     {
-        var max = GameManager.Instance.GetResources().Words.OrderByDescending(x => x.value.Length).First();
         base.Awake();
-        var words = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Take(questionCount)
-            .ToArray();
 
-        questions = words.Select(x => new Question109(x)).ToArray();
+        var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        questions = targets
+            .SelectMany(x =>
+                GameManager.Instance.GetResources(x).Words
+                .OrderBy(y => Random.Range(0f, 100f))
+                .Take(questionCount / 2))
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Select(x => new Question109(x))
+            .ToArray();
 
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].onEndDrag += OnEndDrag;

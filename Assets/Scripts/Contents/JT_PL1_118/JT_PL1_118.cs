@@ -32,9 +32,10 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
     }
     protected override List<Question118> MakeQuestion()
     {
-        var targetAlphabets = GameManager.Instance.alphabets
-            .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(alphabetCount);
+        var targetAlphabets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        //var targetAlphabets = GameManager.Instance.alphabets
+        //    .Where(x => x >= GameManager.Instance.currentAlphabet)
+        //    .Take(alphabetCount);
 
         var corrects = targetAlphabets
             .Select(x => GameManager.Instance.GetResources(x))
@@ -52,7 +53,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
         var list = new List<Question118>();
         for(int i = 0; i< corrects.Length; i++)
             list.Add(new Question118(corrects[i], new WordSource[] { incorrects[i] }));
-        return list;
+        return list.OrderBy(x=>Random.Range(0f,100f)).ToList();
     }
 
     protected override void ShowQuestion(Question118 question)

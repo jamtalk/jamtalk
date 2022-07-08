@@ -17,18 +17,28 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
     public ImageButton buttonPhanics;
     public Sprite spritePop;
     public AudioClip clipPop;
-
+    protected override void Awake()
+    {
+        GameManager.Instance.currentAlphabet = eAlphabet.E;
+        base.Awake();
+    }
     protected override List<Question106> MakeQuestion()
     {
         var questions = new List<Question106>();
-        var correctWord = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f,100f)).ToArray()
+        var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        var correctWord = targets
+            .SelectMany(x=> 
+                GameManager.Instance.GetResources(x).Words
+                .OrderBy(y=>Random.Range(0f,100f))
+                .Take(QuestionCount/2))
+            .OrderBy(x => Random.Range(0f,100f))
             .Take(QuestionCount)
             .ToArray();
         for (int i = 0; i < QuestionCount; i++)
         {
             var tmp = GameManager.Instance.alphabets
                 .Where(x=>x!=GameManager.Instance.currentAlphabet)
+                .Where(x => x != GameManager.Instance.currentAlphabet+1)
                 .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
                 .OrderBy(x => Random.Range(0f, 100f)).ToArray()
                 .Take(4)
@@ -47,9 +57,9 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
             buttonQuestions[i].sprite = data.sprite;
             AddDoubleClickListener(buttonQuestions[i],data);
         }
-        var phanics = GameManager.Instance.GetResources().AudioData.phanics;
+        var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,GameManager.Instance.currentAlphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,currentQuestion.correct.alphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }
@@ -59,9 +69,9 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
         {
             buttonQuestions[i].isOn = false;
         }
-        var phanics = GameManager.Instance.GetResources().AudioData.phanics;
+        var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, currentQuestion.correct.alphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }

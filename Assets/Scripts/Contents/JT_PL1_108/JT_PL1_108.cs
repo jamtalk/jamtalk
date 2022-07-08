@@ -29,10 +29,15 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, WordSource>
     protected override eGameResult GetResult() => eGameResult.Perfect;
     protected override List<Question108> MakeQuestion()
     {
-        var correct = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f,100f))
-            .Take(correctElementCount)
+        var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        var correct = targets
+            .SelectMany(x => 
+                GameManager.Instance.GetResources(x).Words
+                .OrderBy(y => Random.Range(0f, 100f))
+                .Take(correctElementCount / 2))
+            .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
+
         var questions = GameManager.Instance.alphabets
             .Where(x=>x!=GameManager.Instance.currentAlphabet)
             .SelectMany(x=>GameManager.Instance.GetResources(x).Words)

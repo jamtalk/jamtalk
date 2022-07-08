@@ -44,6 +44,7 @@ public class WordSource : DataSource
     public eAlphabet alphabet;
     public AudioClip clip;
     public AudioClip act3;
+    public AlphabetAudioData.AlphabetAudioSource audio => GameManager.Instance.GetResources(alphabet).AudioData;
     public override bool IsNull => base.IsNull ||
         clip == null ||
         act3 == null;

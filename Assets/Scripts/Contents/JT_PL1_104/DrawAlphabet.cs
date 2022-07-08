@@ -31,6 +31,9 @@ public class DrawAlphabet : MonoBehaviour
 
     public void Init(eAlphabet alphabet, eAlphabetType type)
     {
+        paintingCanvas.Clear();
+        paintingCanvas.gameObject.SetActive(true);
+        arrow.gameObject.SetActive(true);
         isCompletedStroke = false;
         index = 0;
         stroke = 0;
