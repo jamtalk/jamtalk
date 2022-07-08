@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using GJGameLibrary.Util.Bezier;
+using GJGameLibrary.Util.Bezier.DoTween;
 
 public class UIMover : MonoBehaviour
 {
@@ -8,8 +10,9 @@ public class UIMover : MonoBehaviour
     public  RectTransform[] paths;
     public void Move(float duration, float delay = 0,TweenCallback onCompleted=null)
     {
-        var seq = DOTween.Sequence();
-        seq.Insert(delay,rt.DOPath(paths.Select(x => x.position).ToArray(), duration));
+        var seq = BezierTween.Curve(rt, duration, 50, paths.Select(x => x.position).ToArray());
+        seq.SetDelay(delay);
+        seq.onComplete += onCompleted;
         seq.Play();
     }
 }
