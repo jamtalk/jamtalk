@@ -10,37 +10,43 @@ public class JT_PL1_102 : BaseContents
     public int ClickCount => 3;
     public int currentClickCount = 0;
     protected override bool CheckOver() => currentClickCount == ClickCount;
+    private int currentIndex;
     protected override int GetTotalScore() => 1;
     public Image imageAlphabet;
     public Button buttonEgg;
     public Egg egg;
     public AudioSinglePlayer audioPlayer;
     public AlphabetAudioData.AlphabetAudioSource audioData;
+    private eAlphabet[] targets;
     protected override void Awake()
     {
-        Debug.Log("컨텐츠 로드 완료");
         base.Awake();
-        Debug.Log("베이스");
-        audioData = GameManager.Instance.GetResources().AudioData;
-        Debug.LogFormat("오디오 {0}", audioData!=null);
-        imageAlphabet.sprite = null;
-        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card,eAlphabetType.Upper,GameManager.Instance.currentAlphabet);
-        Debug.LogFormat("이미지 {0}", imageAlphabet.sprite != null);
-        imageAlphabet.SetNativeSize();
-        imageAlphabet.preserveAspect = true;
+        currentIndex = 0;
+        targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet+1 };
+        Init(targets[currentIndex]);
         egg.onBroken += OnBorken;
         buttonEgg.onClick.AddListener(OnClickEgg);
     }
-    private void Update()
+    protected void Init(eAlphabet value)
     {
-        if (Input.GetMouseButton(0))
-        {
-            Debug.Log("클릭");
-        }
+        egg.Init();
+        currentClickCount = 0;
+        var data = GameManager.Instance.GetResources(value);
+        audioData = data.AudioData;
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphabetType.Upper, value);
+        imageAlphabet.SetNativeSize();
+        imageAlphabet.preserveAspect = true;
     }
     private void OnBorken()
     {
-        audioPlayer.Play(audioData.act2,ShowResult);
+        audioPlayer.Play(audioData.act2,()=>
+        {
+            currentIndex += 1;
+            if (currentIndex < targets.Length)
+                Init(targets[currentIndex]);
+            else
+                ShowResult();
+        });
     }
     private void OnClickEgg()
     {

@@ -43,6 +43,17 @@ public class Egg : MonoBehaviour
         seq.onComplete += () => onBroken?.Invoke();
         seq.Play();
     }
+    public void Init()
+    {
+        imageEgg.sprite = spriteNormal;
+        StartCoroutine(Shaking());
+        imageEgg.gameObject.SetActive(true);
+        foreach (var pice in pices.Keys)
+        {
+            pice.gameObject.SetActive(false);
+            pice.anchoredPosition = Vector2.zero;
+        }
+    }
     public void Shake()
     {
         PlayAudio(shakeClip);
@@ -75,7 +86,7 @@ public class Egg : MonoBehaviour
     {
         while (true)
         {
-            var delay = UnityEngine.Random.Range(2f, 5f);
+            var delay = UnityEngine.Random.Range(1f, 3f);
             yield return new WaitForSeconds(delay);
 
             var isShaking = true;

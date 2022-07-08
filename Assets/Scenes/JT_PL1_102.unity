@@ -530,8 +530,8 @@ Canvas:
   m_GameObject: {fileID: 595585268}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 587934889}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -582,6 +582,12 @@ MonoBehaviour:
   buttonEgg: {fileID: 1487812933}
   egg: {fileID: 1244900531}
   audioPlayer: {fileID: 1943757085}
+  audioData:
+    alphabet: 0
+    clip: {fileID: 0}
+    phanics: {fileID: 0}
+    act1: {fileID: 0}
+    act2: {fileID: 0}
 --- !u!1 &755820945
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PopupResult : BasePopup
@@ -41,7 +42,13 @@ public class PopupResult : BasePopup
     }
     private void OnClickNext()
     {
-        GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
+        if (GameManager.Instance.currentAlphabet + 1 < eAlphabet.Z)
+            GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
+        else
+        {
+            GameManager.Instance.currentAlphabet += 2;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
     private void OnClickPre()
     {
