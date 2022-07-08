@@ -15,9 +15,15 @@ public class UIThrower110 : MonoBehaviour
     }
     public virtual void Throwing(float duration=1f,float delay = 0, bool rotating=true, TweenCallback onTrowed=null)
     {
+        StartCoroutine(Throw(duration, delay, rotating, onTrowed));
+    }
+    IEnumerator Throw(float duration = 1f, float delay = 0, bool rotating = true, TweenCallback onTrowed = null)
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         paths = paths.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         var seq = DOTween.Sequence();
-        for(int i = 0;i < targets.Length; i++)
+        for (int i = 0; i < targets.Length; i++)
         {
             var tween = MakeTween(targets[i], paths[i], duration);
             seq.Insert(delay, tween);
