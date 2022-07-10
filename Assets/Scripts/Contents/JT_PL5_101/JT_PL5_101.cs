@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+//using GJGameLibrary.Util.Bezier.DoTween;
 
 public class JT_PL5_101 : BaseContents
 {

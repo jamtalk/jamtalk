@@ -55,6 +55,9 @@ public class BaseSlotMachine<TData,TElement> : MonoBehaviour where TElement:Slot
         CreateElements(3);
         var seq = GetSlotingSequnce(datas);
         seq.SetEase(Ease.InOutCubic);
+
+        seq.onComplete += onDone;
+
         seq.Play();
     }
     protected virtual Sequence GetSlotingSequnce(TData[] datas)
