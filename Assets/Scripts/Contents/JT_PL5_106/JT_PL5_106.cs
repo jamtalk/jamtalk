@@ -17,11 +17,20 @@ public class JT_PL5_106 : BaseContents
     public RectTransform[] layouts;
     public GameObject starElement;
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        MakeQuestion();
+    }
+
     private void MakeQuestion()
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
             .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
         ShowQuestion();
@@ -32,15 +41,29 @@ public class JT_PL5_106 : BaseContents
         var digraphsIndex = current.value.IndexOf(digraphs);
         var temp = current.value.Replace(digraphs, string.Empty);
 
-        var first = current.value.Substring(0, digraphsIndex);
-        var last = current.value.Substring(digraphsIndex);
-        questionList.Add(first);
+        var first = string.Empty;
+        var last = string.Empty;
+
+        if (digraphsIndex != 0)
+        {
+            first = current.value.Substring(0, digraphsIndex);
+            questionList.Add(first);
+        }
+
+        if(digraphsIndex != current.value.Length - digraphs.Length)
+        {
+            last = current.value.Substring(digraphsIndex + digraphs.Length);
+            questionList.Add(last);
+        }
+
         questionList.Add(digraphs);
-        questionList.Add(last);
+
+        var randomLayout = layouts.OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         for (int i = 0; i < questionList.Count ; i++)
         {
-            var element = Instantiate(starElement, layouts[i]).GetComponent<Text>();
+            var element = Instantiate(starElement, randomLayout[i]).GetComponent<StarElement506>();
+            element.Init(questionList[i]);
         }
     }
 }
