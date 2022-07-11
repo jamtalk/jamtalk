@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public delegate void PlayTTS();
     public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; set; }
     public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
@@ -23,19 +22,19 @@ public class GameManager : MonoSingleton<GameManager>
         base.Initialize();
         currentAlphabet = eAlphabet.A;
         currentContents = eContents.JT_PL1_102;
-        var audios = LocalDB.Instance.Get<AlphabetAudioData>();
+        var alphabetAudio = LocalDB.Instance.Get<AlphabetAudioData>();
         var sprites = LocalDB.Instance.Get<AlphabetSpriteData>();
         var sentance = LocalDB.Instance.Get<SentanceData>();
         var words = LocalDB.Instance.Get<WordsData>();
         var vowels = LocalDB.Instance.Get<VowelData>();
+        var vowelAudio = LocalDB.Instance.Get<VowelAudioData>();
         datas = alphabets.Select(x => new AlphabetData(x,
             sentance.Get(x),
             words.Get(x),
             vowels.Get(x),
-            audios.Get(x)))
+            alphabetAudio.Get(x),
+            vowelAudio.Get(x)))
             .ToDictionary(x => x.Alphabet, x => x);
-        Debug.Log(string.Format("Datas : {0}°³\n{1}", datas.Count, string.Join("\n",datas.Select(x => x.Key))));
-
         var digraphsData = LocalDB.Instance.Get<DigraphsData>().Get();
         digraphs = digrpahs
             .ToDictionary(x => x, x => digraphsData.Where(y => y.type == x).ToArray());
@@ -43,20 +42,6 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipCorrectEffect() => LocalDB.Instance.GetCorrectClip();
     public AlphabetData GetResources() => datas[currentAlphabet];
     public AlphabetData GetResources(eAlphabet alphabet) => datas[alphabet];
-    public Dictionary<eAlphabet, PlayTTS> GetVowelClips(eVowelType type)
-    {
-        var dic = new Dictionary<eAlphabet, PlayTTS>();
-        for(int i = 0;i< vowels.Length; i++)
-        {
-            var vowel = vowels[i];
-            dic.Add(vowel,
-                GetResources(vowel).Vowels
-                .Where(x => x.type == type)
-                .Where(x => x.alphabet == vowel)
-                .First().PlayAct);
-        }
-        return dic;
-    }
     public DigraphsSource[] GetDigraphs(eDigraphs type) => digraphs[type];
     public DigraphsSource[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     public DigraphsSource[] GetDigraphs(int level) => digraphs.SelectMany(x => x.Value).Where(x => x.TargetLevel == level).ToArray();
@@ -84,15 +69,17 @@ public class AlphabetData
     public SentanceData.SentancesSource[] Sentances { get; private set; }
     public WordSource[] Words { get; private set; }
     public VowelSource[] Vowels { get; private set; }
+    public VowelAudioData.VowelAudioSource VowelAudioData { get; private set; }
 
     public AlphabetAudioData.AlphabetAudioSource AudioData { get; private set; }
-    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordSource[] words, VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource audioData)
+    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordSource[] words, VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource alhpabetAudio, VowelAudioData.VowelAudioSource vowelAudio)
     {
         Alphabet = alphabet;
         Sentances = sentances;
         Words = words;
         Vowels = vowels;
-        AudioData = audioData;
+        AudioData = alhpabetAudio;
+        VowelAudioData = vowelAudio;
     }
     public Sprite Get(eAlphabetStyle style, eAlphabetType type) => GameManager.Instance.GetAlphbetSprite(style, type, Alphabet);
 }

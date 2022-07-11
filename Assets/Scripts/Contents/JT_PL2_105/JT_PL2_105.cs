@@ -139,7 +139,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
     {
         var ani = astronaut.GetComponent<Animator>();
         ani.SetBool("Speak", true);
-        currentQuestion.correct.PlayClip();
+        audioPlayer.Play(currentQuestion.correct.clip);
     }
 }
 

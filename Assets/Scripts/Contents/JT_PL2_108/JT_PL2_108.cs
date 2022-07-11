@@ -34,6 +34,6 @@ public class JT_PL2_108 : BaseWitch<VowelSource>
     protected override void Speak()
     {
         base.Speak();
-        currentQuestion.correct.PlayClip();
+        audioPlayer.Play(currentQuestion.correct.clip);
     }
 }

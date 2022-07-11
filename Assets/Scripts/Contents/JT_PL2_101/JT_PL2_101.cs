@@ -98,31 +98,28 @@ public class JT_PL2_101 : BaseContents
     {
         ani.SetBool("Speak", true);
         eAlphabet alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics);
+        speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Short));
     }
 
     private void LongSpeak(string value)
     {
-        var temp = GameManager.Instance.vowels;
         var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
-        clips[alphabet].Invoke();
+        speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Long));
     }
 
     private void Speak()
     {
         eAlphabet[] alphabets = { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
-        var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
-
+        
         if (index == 5)
         {
             for (int i = 0; i < alphabets.Length; i++)
-                speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabets[i]).AudioData.phanics);
+                speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabets[i]).VowelAudioData.GetPhanics(eVowelType.Short));
         }
         else
         {
             for (int i = 0; i < alphabets.Length; i++)
-                clips[alphabets[i]].Invoke();
+                speakAudioPlayer.Play(GameManager.Instance.GetResources(alphabets[i]).VowelAudioData.GetPhanics(eVowelType.Long));
         }
     }
 }

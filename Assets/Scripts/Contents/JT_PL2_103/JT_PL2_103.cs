@@ -69,19 +69,8 @@ public class JT_PL2_103 : BaseContents
         }
 
         var alphabet = currentWord.alphabet;
-        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics));
-        longButton.onClick.AddListener(() =>
-        {
-            var vowels = GameManager.Instance.vowels;
-            eAlphabet alphabet = vowels[0];
-            for (int i = 0; i < vowels.Length; i++)
-            {
-                if (vowels[i] == GameManager.Instance.currentAlphabet)
-                    alphabet = vowels[i];
-            }
-            var clips = GameManager.Instance.GetVowelClips(eVowelType.Long);
-            clips[alphabet].Invoke();
-        });
+        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Short)));
+        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Long)));
     }
 
     private void GetWords()
@@ -188,7 +177,7 @@ public class JT_PL2_103 : BaseContents
         popupCureent.GetComponentInChildren<Text>().text = target.textValue.text;
         popupCureent.gameObject.SetActive(true);
 
-        target.data.PlayClip();
+        audioPlayer.Play(target.data.clip);
         StartCoroutine(WaitSeconds());
 
         

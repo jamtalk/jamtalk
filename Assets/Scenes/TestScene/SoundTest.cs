@@ -1,18 +1,14 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class SoundTest : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private const string target = "PL1-ACT-01-01";
+    public AudioSource source;
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
