@@ -8,8 +8,11 @@ public class Card114 : MonoBehaviour
 {
     public TurningCard card => GetComponent<TurningCard>();
     public Image image;
+    public Text text;
+    public DigraphsSource data;
     public eAlphabet alphabet;
     public event Action<eAlphabet> onSelected;
+    public event Action<DigraphsSource> onSelecte;
     public event Action onDeselected;
 
     public RectTransform star;
@@ -25,6 +28,23 @@ public class Card114 : MonoBehaviour
                 onDeselected?.Invoke();
         },alwaysFrontDisable:true);
     }
+
+    public void Init(DigraphsSource data, string color)
+    {
+        this.data = data;
+        text.text = data.value.Replace(data.value,
+            "<color=\"" + color + "\">" + data.value + "</color>");
+
+        Debug.Log(text.text);
+        card.Init(callback: () =>
+        {
+            if (card.IsFornt)
+                onSelecte?.Invoke(data);
+            else
+                onDeselected?.Invoke();
+        }, alwaysFrontDisable: true);
+    }
+
     public void SetIntractable(bool value)
     {
         card.buttonBack.interactable = value;
