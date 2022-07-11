@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
 {
-    protected override int QuestionCount => 2;
+    protected override int QuestionCount => 3;
     public GameObject finger;
 
     protected override eContents contents => eContents.JT_PL5_104;
@@ -27,6 +27,10 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                 finger = null;
             }
         });
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            AddOnClickTextButtonListener(buttons[i]);
+        }
     }
     protected override List<Question5_104> MakeQuestion()
     {
@@ -68,9 +72,8 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
             rt.anchoredPosition = Vector2.zero;
             rt.localScale = Vector3.one;
         }
+        
         CallRokect();
-        for (int i = 0; i < buttons.Length; i++)
-            AddOnClickTextButtonListener(buttons[i]);
     }
     protected override void ShowResult()
     {
@@ -79,22 +82,18 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
     }
     private void AddOnClickTextButtonListener(DoubleClick504 button)
     {
-        button.onClick.RemoveAllListeners();
-        button.onClickFirst.RemoveAllListeners();
-
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
-        var value = currentQuestion.correct[currentQuestionIndex];
 
         button.onClickFirst.AddListener(() =>
         {
             button.data.PlayAct();
         });
-        button.onClick.AddListener(() =>
+        button.onClickData += (value) =>
         {
-            PlayWord(value);
-            if (currentQuestion.currentCorrect == value)
+            if (value.type == currentQuestion.currentCorrect.type)
             {
+                PlayWord(value);
                 if (finger != null)
                     finger.gameObject.SetActive(false);
 
@@ -107,16 +106,13 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                     rocket.Away(value.value, () =>
                     {
                         AddAnswer(value);
-                        Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}",
-                            currentQuestionIndex + 1, QuestionCount,
-                            currentQuestion.currentIndex + 1, currentQuestion.correctCount
-                            );
-                        if (!CheckOver()) { }
-                        CallRokect();
+
+                        if (!CheckOver()) 
+                            CallRokect();
                     });
                 });
             }
-        });
+        };
     }
     private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
     {
@@ -148,7 +144,8 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
             buttons[i].isOn = false;
         if (finger != null)
             finger.gameObject.SetActive(false);
-        rocket.Call(() => // call 방향 전환 필요 
+
+        rocket.Call(() => 
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
