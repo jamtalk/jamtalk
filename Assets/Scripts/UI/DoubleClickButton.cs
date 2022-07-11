@@ -22,12 +22,11 @@ public class DoubleClickButton : ImageButton
             _ison = value;
         }
     }
-    private void Awake()
+    protected virtual void Awake()
     {
         _ison = false;
         button.onClick.AddListener(() =>
         {
-            Debug.Log(isOn);
             if (isOn)
                 onClick?.Invoke();
             else
