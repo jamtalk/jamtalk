@@ -11,8 +11,8 @@ public class JT_PL4_109 : BaseContents
     protected override int GetTotalScore() => cards.Where(x => x.card.IsFornt).Count();
 
     private string[] richs =
-        { "blue", "cyan", "magenta", "green", "red", "white"
-            , "yellow" , "teal", "orange", "darkblue", "purple"};
+        { "blue", "cyan", "magenta", "green", "red", "brown"
+            , "grey" , "teal", "orange", "darkblue", "purple"};
     private List<Card114> selected = new List<Card114>();
     public Card114[] cards;
     public AudioSinglePlayer audioPlayer;
