@@ -19,7 +19,7 @@ public class JT_PL2_107 : BaseMatchImage<VowelSource>
     protected override void PlayAudio(DataSource word)
     {
         var data = (VowelSource)word;
-        data.PlayClip();
+        audioPlayer.Play(data.clip);
     }
 
     protected override void ShowResult()

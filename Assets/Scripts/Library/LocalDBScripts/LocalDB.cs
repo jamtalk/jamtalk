@@ -34,10 +34,6 @@ public class LocalDB : ScriptableObject
     private LocalDBElement[] elements;
     public Sprite GetSprite(eAtlasType type, string value)
     {
-        Debug.LogFormat("{0} / {1}", type, value);
-        Debug.Log(atlases[type]);
-        Debug.Log(atlases.Count);
-        Debug.Log(atlases[type].spriteCount);
         return atlases[type].GetSprite(value);
     }
     public T Get<T>() where T:LocalDBElement

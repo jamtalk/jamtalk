@@ -4,21 +4,19 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-
 [CreateAssetMenu(fileName = "Alphabet Audio Data.asset", menuName = "LocalDB/Element/Alphabet Audio Data")]
 public class AlphabetAudioData : LocalDBElement
 {
-
     [Serializable]
     public class AlphabetAudioSource
     {
         public eAlphabet alphabet;
-        public AudioClip clip;
-        public AudioClip phanics;
-        public AudioClip act1;
-        public AudioClip act2;
+        public string clip;
+        public string phanics;
+        public string act1;
+        public string act2;
 
-        public AlphabetAudioSource(eAlphabet alphabet, AudioClip clip, AudioClip phanics, AudioClip act1, AudioClip act2)
+        public AlphabetAudioSource(eAlphabet alphabet, string clip, string phanics, string act1, string act2)
         {
             this.alphabet = alphabet;
             this.clip = clip;
@@ -31,16 +29,6 @@ public class AlphabetAudioData : LocalDBElement
     [SerializeField]
     private SerializableDictionaryBase<eAlphabet, AlphabetAudioSource> data;
     public AlphabetAudioSource Get(eAlphabet alphabet) => data[alphabet];
-
-    [Header("Orizinal Data")]
-    [SerializeField]
-    private AudioClip[] clips;
-    [SerializeField]
-    private AudioClip[] phanicses;
-    [SerializeField]
-    private AudioClip[] acts1;
-    [SerializeField]
-    private AudioClip[] acts2;
 
     public override void Load(List<Hashtable> data)
     {
@@ -56,10 +44,10 @@ public class AlphabetAudioData : LocalDBElement
             var act2 = datas["act2"].ToString();
             tmp.Add(key, new AlphabetAudioSource(
                 key,
-                LocalDB.Find(clips, clip),
-                LocalDB.Find(phanicses, phanics),
-                LocalDB.Find(acts1, act1),
-                LocalDB.Find(acts2, act2)
+                clip,
+                phanics,
+                act1,
+                act2
                 ));
         }
 

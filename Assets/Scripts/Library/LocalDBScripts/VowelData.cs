@@ -21,13 +21,17 @@ public class VowelData : LocalDBElement
             var datas = data[i];
             var value = datas["key"].ToString();
             var type = (eVowelType)Enum.Parse(typeof(eVowelType), datas["type"].ToString());
-            var actValue = datas["actValue"].ToString();
+            var act = datas["actValue"].ToString();
+            var clip = datas["clip"].ToString();
+            var phanics = datas["phanics"].ToString();
             var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), datas["alphabet"].ToString());
             tmp.Add(new VowelSource(
                 type,
                 alphabet,
                 value,
-                actValue
+                act,
+                clip,
+                phanics
                 ));
         }
         this.data = tmp
@@ -42,10 +46,10 @@ public class VowelSource : DataSource
     protected override eAtlasType atlas => eAtlasType.Vowels;
     public eVowelType type;
     public eAlphabet alphabet;
-    public string actValue;
-    public void PlayClip() => AndroidPluginManager.Instance.PlayTTS(value);
-    public void PlayAct() => AndroidPluginManager.Instance.PlayTTS(actValue);
-    public override bool IsNull => base.IsNull || string.IsNullOrEmpty(actValue);
+    public string act;
+    public string clip;
+    public string phanics;
+    public override bool IsNull => base.IsNull || string.IsNullOrEmpty(act);
 
     public override bool Equals(object obj)
     {
@@ -64,11 +68,13 @@ public class VowelSource : DataSource
         return hashCode;
     }
 
-    public VowelSource(eVowelType type, eAlphabet alphabet, string value, string act) : base(value)
+    public VowelSource(eVowelType type, eAlphabet alphabet, string value, string act, string clip, string phanics) : base(value)
     {
         this.type = type;
         this.alphabet = alphabet;
-        this.actValue = act;
+        this.act = act;
+        this.clip = clip;
+        this.phanics = phanics;
     }
 
 

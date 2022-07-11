@@ -190,7 +190,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
     {
         foreach(var item in ani)
             item.SetBool("Speak", true);
-        currentQuestion.correct.PlayClip();
+        audioPlayer.Play(currentQuestion.correct.clip);
     }
 }
 
