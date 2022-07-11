@@ -9,21 +9,21 @@ public class Card114 : MonoBehaviour
     public TurningCard card => GetComponent<TurningCard>();
     public Image image;
     public Text text;
-    public DigraphsSource data;
-    public eAlphabet alphabet;
-    public event Action<eAlphabet> onSelected;
+    public Card114Data alhpabetData;
+    public DigraphsSource digraphsData;
+    public event Action<Card114Data> onSelected;
     public event Action<DigraphsSource> onSelecte;
     public event Action onDeselected;
 
     public RectTransform star;
-    public void Init(eAlphabet alphabet, eAlphabetType type)
+    public void Init(Card114Data data)
     {
-        this.alphabet = alphabet;
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColorCard, type, alphabet);
+        this.alhpabetData = data;
+        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColorCard, data.type, data.alhpabet);
         card.Init(callback: () =>
         {
             if (card.IsFornt)
-                onSelected?.Invoke(alphabet);
+                onSelected?.Invoke(data);
             else
                 onDeselected?.Invoke();
         },alwaysFrontDisable:true);
@@ -31,7 +31,7 @@ public class Card114 : MonoBehaviour
 
     public void Init(DigraphsSource data, string color)
     {
-        this.data = data;
+        this.digraphsData = data;
         text.text = data.value.Replace(data.value,
             "<color=\"" + color + "\">" + data.value + "</color>");
 
@@ -56,5 +56,16 @@ public class Card114 : MonoBehaviour
         tween.SetEase(Ease.Linear);
         tween.SetLoops(2,LoopType.Yoyo);
         tween.Play();
+    }
+}
+public class Card114Data
+{
+    public eAlphabet alhpabet;
+    public eAlphabetType type;
+
+    public Card114Data(eAlphabet alhpabet, eAlphabetType type)
+    {
+        this.alhpabet = alhpabet;
+        this.type = type;
     }
 }

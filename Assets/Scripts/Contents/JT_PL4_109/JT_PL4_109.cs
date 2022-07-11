@@ -59,7 +59,7 @@ public class JT_PL4_109 : BaseContents
             selected.Add(card);
             if (selected.Count == 2)
             {
-                if (selected[0].data.type == selected[1].data.type)
+                if (selected[0].digraphsData.type == selected[1].digraphsData.type)
                 {
                     if (CheckOver())
                     {

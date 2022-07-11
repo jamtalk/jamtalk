@@ -84,6 +84,7 @@ public class AudioSinglePlayer : MonoBehaviour
         stopRoutine = StartCoroutine(OnOverRoutine(duration, onOver));
     }
     public void Play(float duration, string clip, Action onOver) => AudioClipManager.Instance.GetClip(clip, value => Play(duration, value, onOver));
+    
     IEnumerator StopRoutine(float duration)
     {
         yield return new WaitForSeconds(duration);
@@ -91,6 +92,7 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     IEnumerator OnOverRoutine(Action onOver)
     {
+        Debug.LogFormat("{0} : {1}", player.clip.name, player.clip.length);
         yield return new WaitForSeconds(player.clip.length);
         onOver?.Invoke();
     }

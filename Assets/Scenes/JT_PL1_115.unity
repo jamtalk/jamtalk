@@ -298,7 +298,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 24399155}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 1552452854}
 --- !u!1 &53175556
 GameObject:
@@ -894,7 +898,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 287183232}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 1408874959}
 --- !u!1 &444895019 stripped
 GameObject:
@@ -1186,7 +1194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 531171136}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 67260803}
 --- !u!1 &547252896
 GameObject:
@@ -1980,7 +1992,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 950702869}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 2111499447}
 --- !u!1001 &982447084
 PrefabInstance:
@@ -2134,7 +2150,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 982447087}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 1239021107}
 --- !u!1 &1061856741
 GameObject:
@@ -2659,7 +2679,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1255948155}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 203990257}
 --- !u!1001 &1314388167
 PrefabInstance:
@@ -2980,7 +3004,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1314388173}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 832864922}
 --- !u!1 &1528348782
 GameObject:
@@ -3244,6 +3272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  eventSystem: {fileID: 53175558}
   cards:
   - {fileID: 1486967366}
   - {fileID: 287183234}
@@ -3521,7 +3550,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1755689371}
-  alphabet: 0
+  text: {fileID: 0}
+  digraphsData:
+    value: 
+    type: 0
+    actValue: 
   star: {fileID: 769672379}
 --- !u!1 &1836606553
 GameObject:

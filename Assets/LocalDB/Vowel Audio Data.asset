@@ -19,7 +19,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -34,7 +34,27 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
-    _keyValues: 
-    _keys: 
-    _values: []
+    isExpanded: 1
+    _keyValues: 0000000004000000080000000e00000014000000
+    _keys: 0000000004000000080000000e00000014000000
+    _values:
+    - alphabet: 0
+      clip: PL1-AL-01
+      phanics_long: SLV-006
+      phanics_short: SLV-001
+    - alphabet: 4
+      clip: PL1-AL-05
+      phanics_long: SLV-007
+      phanics_short: SLV-002
+    - alphabet: 8
+      clip: PL1-AL-09
+      phanics_long: SLV-008
+      phanics_short: SLV-003
+    - alphabet: 14
+      clip: PL1-AL-15
+      phanics_long: SLV-009
+      phanics_short: SLV-004
+    - alphabet: 20
+      clip: PL1-AL-21
+      phanics_long: SLV-010
+      phanics_short: SLV-005
