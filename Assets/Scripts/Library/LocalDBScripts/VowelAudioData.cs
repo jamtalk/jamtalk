@@ -32,7 +32,13 @@ public class VowelAudioData : LocalDBElement
     }
     [SerializeField]
     private SerializableDictionaryBase<eAlphabet, VowelAudioSource> data;
-    public VowelAudioSource Get(eAlphabet alphabet) => data[alphabet];
+    public VowelAudioSource Get(eAlphabet alphabet)
+    {
+        if (data.ContainsKey(alphabet))
+            return data[alphabet];
+        else
+            return null;
+    }
 
     public override void Load(List<Hashtable> data)
     {

@@ -69,17 +69,17 @@ public class AlphabetData
     public SentanceData.SentancesSource[] Sentances { get; private set; }
     public WordSource[] Words { get; private set; }
     public VowelSource[] Vowels { get; private set; }
-    public VowelAudioData.VowelAudioSource VowelAudioData { get; private set; }
 
     public AlphabetAudioData.AlphabetAudioSource AudioData { get; private set; }
-    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordSource[] words, VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource alhpabetAudio, VowelAudioData.VowelAudioSource vowelAudio)
+    public VowelAudioData.VowelAudioSource VowelAudioData { get; private set; }
+    public AlphabetData(eAlphabet alphabet, SentanceData.SentancesSource[] sentances, WordSource[] words, VowelSource[] vowels, AlphabetAudioData.AlphabetAudioSource alhpabetAudio, VowelAudioData.VowelAudioSource audio=null)
     {
         Alphabet = alphabet;
         Sentances = sentances;
         Words = words;
         Vowels = vowels;
         AudioData = alhpabetAudio;
-        VowelAudioData = vowelAudio;
+        VowelAudioData = VowelAudioData;
     }
     public Sprite Get(eAlphabetStyle style, eAlphabetType type) => GameManager.Instance.GetAlphbetSprite(style, type, Alphabet);
 }
