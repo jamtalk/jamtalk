@@ -18,12 +18,17 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
     private bool isMoving=false;
 
     public RectTransform rt => GetComponent<RectTransform>();
-    private float horizontalStartPoint => Screen.width / 2f;
-    private float horizontalMiddlePoint => rt.sizeDelta.x / -2f;
-    private float horizontalEndPoint => Screen.width / -2f - rt.sizeDelta.x;
+    private float horizontalStartPoint_ToLeft => Screen.width / 2f;
+    private float horizontalMiddlePoint_ToLeft => rt.sizeDelta.x / -2f;
+    private float horizontalEndPoint_ToLeft => Screen.width / -2f - rt.sizeDelta.x;
+    private float horizontalStartPoint_ToRight => (Screen.width / -2f) - rt.sizeDelta.x;
+    private float horizontalMiddlePoint_ToRight => rt.sizeDelta.x / -2f;
+    private float horizontalEndPoint_ToRight => Screen.width / 2f;
     private float verticalStartPoint => Screen.height/-2f + rt.sizeDelta.y / -2f;
     private float verticalMiddlePoint => rt.sizeDelta.y / 2f;
     private float verticalEndPoint => Screen.height / 2f + rt.sizeDelta.y;
+    [Range(0,2)]
+    public int tempNum = 0;
     public void Init()
     {
         switch (direction)
@@ -33,10 +38,15 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
                 rt.anchorMin = new Vector2(0f, .5f);
                 rt.anchorMax = new Vector2(0f, .5f);
                 break;
-            case eRocketDirection.Horizontal:
+            case eRocketDirection.Horizontal_ToLeft:
                 rt.pivot = new Vector2(0f, 1f);
                 rt.anchorMin = new Vector2(0f, .5f);
                 rt.anchorMax = new Vector2(0f, .5f);
+                break;
+            case eRocketDirection.Horizontal_ToRight:
+                rt.pivot = new Vector2(1f, 0f); 
+                rt.anchorMin = new Vector2(.5f, 0f);
+                rt.anchorMax = new Vector2(.5f, 0f);
                 break;
         }
         SetStartPosition();
@@ -49,8 +59,11 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
             case eRocketDirection.Vertical:
                 pos.y = verticalStartPoint;
                 break;
-            case eRocketDirection.Horizontal:
-                pos.x = horizontalStartPoint;
+            case eRocketDirection.Horizontal_ToLeft:
+                pos.x = horizontalStartPoint_ToLeft;
+                break;
+            case eRocketDirection.Horizontal_ToRight:
+                pos.x = horizontalStartPoint_ToRight;
                 break;
         }
         rt.anchoredPosition = pos;
@@ -63,8 +76,11 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
             case eRocketDirection.Vertical:
                 pos.x = verticalMiddlePoint;
                 break;
-            case eRocketDirection.Horizontal:
-                pos.y = horizontalMiddlePoint;
+            case eRocketDirection.Horizontal_ToLeft:
+                pos.y = horizontalMiddlePoint_ToLeft;
+                break;
+            case eRocketDirection.Horizontal_ToRight:
+                pos.x = horizontalMiddlePoint_ToRight;
                 break;
         }
         rt.anchoredPosition = pos;
@@ -77,8 +93,11 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
             case eRocketDirection.Vertical:
                 pos.x = verticalEndPoint;
                 break;
-            case eRocketDirection.Horizontal:
-                pos.y = horizontalEndPoint;
+            case eRocketDirection.Horizontal_ToLeft:
+                pos.y = horizontalEndPoint_ToLeft;
+                break;
+            case eRocketDirection.Horizontal_ToRight:
+                pos.x = horizontalEndPoint_ToRight;
                 break;
         }
         rt.anchoredPosition = pos;
@@ -104,14 +123,25 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
                     }
                 };
                 break;
-            case eRocketDirection.Horizontal:
-                tween = rt.DOAnchorPosX(horizontalMiddlePoint, duration);
+            case eRocketDirection.Horizontal_ToLeft:
+                tween = rt.DOAnchorPosX(horizontalMiddlePoint_ToLeft, duration);
                 tween.onUpdate += () =>
                 {
-                    if (rt.anchoredPosition.x < horizontalMiddlePoint / 1.5f && isMoving)
+                    if (rt.anchoredPosition.x < horizontalMiddlePoint_ToLeft / 1.5f && isMoving)
                     {
                         isMoving = false;
                         audioPlayer.Play(duration / 2f,clipStop);
+                    }
+                };
+                break;
+            case eRocketDirection.Horizontal_ToRight:
+                tween = rt.DOAnchorPosX(horizontalMiddlePoint_ToRight, duration);
+                tween.onUpdate += () =>
+                {
+                    if (rt.anchoredPosition.x < horizontalMiddlePoint_ToRight / 1.5f && isMoving)
+                    {
+                        isMoving = false;
+                        audioPlayer.Play(duration / 2f, clipStop);
                     }
                 };
                 break;
@@ -134,9 +164,13 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
             case eRocketDirection.Vertical:
                 tween = rt.DOAnchorPosY(verticalEndPoint, duration);
                 break;
-            case eRocketDirection.Horizontal:
-                tween = rt.DOAnchorPosX(horizontalEndPoint, duration);
+            case eRocketDirection.Horizontal_ToLeft:
+                tween = rt.DOAnchorPosX(horizontalEndPoint_ToLeft, duration);
                 break;
+            case eRocketDirection.Horizontal_ToRight:
+                tween = rt.DOAnchorPosX(horizontalEndPoint_ToRight, duration);
+                break;
+
         }
 
         tween.onComplete += onLeave;

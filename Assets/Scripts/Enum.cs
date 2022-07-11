@@ -265,7 +265,8 @@ public enum eGameResult
 public enum eRocketDirection
 {
     Vertical,
-    Horizontal
+    Horizontal_ToLeft,
+    Horizontal_ToRight
 }
 public enum eCharactorDirection
 {
