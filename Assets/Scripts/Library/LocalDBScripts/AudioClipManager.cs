@@ -14,15 +14,14 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
     }
     public void GetClip(string key,Action<AudioClip> callback)
     {
-        AudioClip clip = null;
         if (string.IsNullOrEmpty(key))
         {
             Debug.LogWarning("Audio key is null.");
-            callback?.Invoke(clip);
+            callback?.Invoke(null);
         }
         else if (clips.ContainsKey(key))
         {
-            clip = clips[key];
+            var clip = clips[key];
             Debug.LogFormat("{0} : {1}", key, clip);
             callback?.Invoke(clip);
         }
@@ -36,9 +35,15 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
     {
         var op = Addressables.LoadAssetAsync<AudioClip>(key);
         while (!op.IsDone) { yield return null; }
-        if (op.Result != null)
+        if (op.Status==UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        {
+            Debug.LogFormat("{0} : {1} (NEW)", key, op.Result);
+        }
+        else
+        {
+            Debug.LogErrorFormat("{0} : NULL (Load failed)", key);
             clips.Add(key, op.Result);
-        Debug.LogFormat("{0} : {1} (NEW)", key, op.Result);
+        }
         callback?.Invoke(op.Result);
     }
 }

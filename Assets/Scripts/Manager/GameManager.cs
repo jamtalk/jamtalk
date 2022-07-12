@@ -25,7 +25,7 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipCorrectEffect() => schema.correctSound;
     public AlphabetData GetResources(eAlphabet alphabet) => new AlphabetData(alphabet);
     public AlphabetData GetResources() => GetResources(currentAlphabet);
-    public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.key == type.ToString()).ToArray();
+    public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => schema.alphabetSprite.Get(style);
     public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => schema.alphabetSprite.Get(style,type);
