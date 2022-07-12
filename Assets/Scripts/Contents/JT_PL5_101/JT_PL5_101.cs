@@ -20,7 +20,6 @@ public class JT_PL5_101 : BaseContents
     public RectTransform[] leftWaypoint;
     public RectTransform[] rightWaypoint;
     private DigraphsSource digraphs;
-
     protected override void Awake()
     {
         base.Awake();
@@ -53,8 +52,7 @@ public class JT_PL5_101 : BaseContents
         DoMove(leftWaypoint, alphabetImages[0]);
         DoMove(rightWaypoint, alphabetImages[1]);
 
-        digraphs.PlayAct();
-
+        audioPlayer.Play(digraphs.act);
         StartCoroutine(Wait());
     }
     private IEnumerator Wait()

@@ -32,6 +32,6 @@ public class JT_PL3_108 : BaseWitch<DigraphsSource>
     protected override void Speak()
     {
         base.Speak();
-        currentQuestion.correct.PlayClip();
+        audioPlayer.Play(currentQuestion.correct.clip);
     }
 }

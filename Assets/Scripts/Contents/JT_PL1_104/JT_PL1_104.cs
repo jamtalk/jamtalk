@@ -7,7 +7,6 @@ using DG.Tweening;
 public class JT_PL1_104 : BaseContents
 {
     public DrawAlphabet drawAlphabet;
-    public AudioSinglePlayer audioPlayer;
     public GameObject mask;
     public CanvasScaler scaler;
     protected override eContents contents => eContents.JT_PL1_104;

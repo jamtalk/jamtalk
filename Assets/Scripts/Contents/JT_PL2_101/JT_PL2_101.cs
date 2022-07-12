@@ -21,7 +21,6 @@ public class JT_PL2_101 : BaseContents
     public Text text;
 
     public AudioSinglePlayer speakAudioPlayer;
-    public AudioSinglePlayer audioPlayer;
     public AudioClip tabClip;
     public AudioClip dropClip;
 

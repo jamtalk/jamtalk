@@ -79,13 +79,13 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
             if (currentQuestion.correct == data)
             {   // 우측 캐릭터 기뻐하는 애니매이팅
                 Debug.Log(button.name);
-                data.PlayClip(() =>
+                audioPlayer.Play(data.clip, () =>
                 {
                     colorFillamount = 0f;
                     var color = Color.black;
                     color.a = colorFillamount;
                     currentText.color = color;
-                    
+
                     AddAnswer(data);
                 });
             }

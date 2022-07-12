@@ -25,7 +25,6 @@ public class JT_PL2_106 : BaseContents
     public Text rouletteText;
     public Image rouletteEffect;
 
-    public AudioSinglePlayer audioPlayer;
     public AudioClip rouletteClip;
     public AudioClip tabClip;
     public AudioClip currentClip;

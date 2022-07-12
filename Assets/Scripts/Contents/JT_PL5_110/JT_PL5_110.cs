@@ -128,7 +128,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsSource>
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(DigraphsSource word) => word.PlayClip();
+    private void PlayWord(DigraphsSource word) => audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         if (finger != null)

@@ -26,7 +26,6 @@ public class JT_PL4_101 : BaseContents
     private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
     private List<ePairDigraphs> pairs = new List<ePairDigraphs>();
     private DigraphsSource data;
-
     protected override void Awake()
     {
         base.Awake();
@@ -83,7 +82,7 @@ public class JT_PL4_101 : BaseContents
 
                 if (slideCount >= 2)
                 {
-                    data.PlayAct(); // pairDigraphs act 출력
+                    audioPlayer.Play(data.act);
                     StartCoroutine(Reset());
                 }
             }

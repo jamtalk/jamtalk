@@ -51,7 +51,6 @@ public class JT_PL2_103 : BaseContents
     public AudioClip startClip;
     public AudioClip currentClip;
     public AudioClip tabClip;
-    public AudioSinglePlayer audioPlayer;
     public EventSystem eventSystem;
 
     protected override void Awake()

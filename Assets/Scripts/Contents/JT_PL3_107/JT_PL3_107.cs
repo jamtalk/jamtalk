@@ -51,7 +51,7 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsSource>
     protected override void PlayAudio(DataSource word)
     {
         var data = (DigraphsSource)word;
-        data.PlayClip();
+        audioPlayer.Play(data.clip);
     }
 
     protected override void ShowResult()

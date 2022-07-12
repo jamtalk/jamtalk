@@ -16,6 +16,7 @@ public abstract class BaseContents : MonoBehaviour
     private float time;
     private DateTime startTime;
     private DateTime endTime;
+    public AudioSinglePlayer audioPlayer;
     protected virtual void ShowResult()
     {
         endTime = DateTime.Now;
@@ -56,7 +57,6 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected abstract int QuestionCount { get; }
     protected int currentQuestionIndex = 0;
     protected TQuestion currentQuestion => questions[currentQuestionIndex];
-    public AudioSinglePlayer audioPlayer;
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
     protected override void Awake()

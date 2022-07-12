@@ -26,12 +26,11 @@ public class JT_PL4_108 : BaseContents
     private string[] questionTexts;
     private List<string> answerTexts = new List<string>();
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
-
     protected override void Awake()
     {
         base.Awake();
         MakeQuestion();
-        currentButton.onClick.AddListener(() => current.PlayClip());
+        currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
     }
 
     private void MakeQuestion()
@@ -41,8 +40,7 @@ public class JT_PL4_108 : BaseContents
             .Where(x => x.type == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
-
-        current.PlayClip();
+        audioPlayer.Play(current.clip);
         ShowQuestion();
     }
 
@@ -111,7 +109,7 @@ public class JT_PL4_108 : BaseContents
 
             if(answerIndex == answerElements.Count)
             {
-                current.PlayClip(() =>
+                audioPlayer.Play(current.clip, () =>
                 {
                     index += 1;
                     if (CheckOver())

@@ -14,8 +14,6 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     public Button buttonSound;
     public int BingoCount => 1;
     public RectTransform bingo;
-    public AudioSinglePlayer audioPlayer;
-    //????
     public int currentIndex = 0;
     public TValue[] questions;
     public TValue[] corrects;
@@ -145,12 +143,12 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         PlaySound();
 
     }
-    protected abstract void GetClip();
+    protected abstract void PlayClip();
     public void PlaySound()
     {
         if (CheckOver())
             ShowResult();
         else
-            GetClip();
+            PlayClip();
     }
 }

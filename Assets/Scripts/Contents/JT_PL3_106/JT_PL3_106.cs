@@ -90,7 +90,7 @@ public class JT_PL3_106 : BaseContents
 
         element.onClickFirst.AddListener(() =>
         {
-            data.PlayAct();
+            audioPlayer.Play(data.act);
         });
 
         element.onClick.AddListener(() =>
@@ -108,7 +108,8 @@ public class JT_PL3_106 : BaseContents
                 thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
                 {
                     SetBagImage();
-                    currentDigraphs.PlayClip(() => SetCurrentImage()); 
+
+                    audioPlayer.Play(currentDigraphs.clip, () => SetCurrentImage());
                 });
 
                 if (CheckOver())
@@ -118,7 +119,7 @@ public class JT_PL3_106 : BaseContents
             }
             else
             {
-                data.PlayAct();
+                audioPlayer.Play(data.act);
             }
         });
     }

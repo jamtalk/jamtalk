@@ -13,7 +13,6 @@ public class JT_PL3_109 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-    public AudioSinglePlayer audioPlayer;
     protected DigraphsSource word;
 
     protected override eContents contents => eContents.JT_PL3_109;
@@ -63,7 +62,7 @@ public class JT_PL3_109 : BaseContents
         toggle.onOn += () =>
         {
             if (CheckOver())
-                word.PlayClip(() => ShowResult()) ;
+                audioPlayer.Play(word.clip, ShowResult);
             else
                 audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };

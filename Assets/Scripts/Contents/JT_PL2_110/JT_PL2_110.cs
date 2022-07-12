@@ -28,7 +28,7 @@ public class JT_PL2_110 : BingoContents<WordSource, WordBingoButton, Text, WordB
             .ToArray(); 
     }
 
-    protected override void GetClip() => audioPlayer.Play(currentQuestion.clip);
+    protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip);
 
     protected override bool IsCurrentAnswer(WordSource value) => value == currentQuestion;
 }

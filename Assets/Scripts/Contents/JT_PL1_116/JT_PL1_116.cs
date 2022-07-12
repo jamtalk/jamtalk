@@ -12,7 +12,6 @@ public class JT_PL1_116 : BaseContents
     public AlphabetButton[] upper;
     public AlphabetButton[] lower;
     public Button[] buttonPlayer;
-    public AudioSinglePlayer audioPlayer;
     public AudioClip clipClick;
     private int length => upper.Length;
     protected override eContents contents => eContents.JT_PL1_116;

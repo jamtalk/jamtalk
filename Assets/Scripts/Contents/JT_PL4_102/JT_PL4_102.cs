@@ -52,7 +52,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
     {
         button.GetComponent<Button>().onClick.AddListener(() =>
         {
-            data.PlayClip();
+            audioPlayer.Play(data.clip);
             if (data.value == currentQuestion.currentCorrect.value)
             {
                 for (int i = 0; i < parentImages.Length; i++)
@@ -61,8 +61,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
                 successImage.sprite = data.sprite;
                 SetCurrentColor(data);
                 successEffect.gameObject.SetActive(true);
-
-                data.PlayAct(() =>
+                audioPlayer.Play(data.act, () =>
                 {
                     successEffect.gameObject.SetActive(false);
                     for (int i = 0; i < parentImages.Length; i++)

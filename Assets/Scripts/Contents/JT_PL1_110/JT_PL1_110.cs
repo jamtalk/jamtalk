@@ -13,7 +13,6 @@ public class JT_PL1_110 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-    public AudioSinglePlayer audioPlayer;
     protected WordSource word;
 
     protected override eContents contents => eContents.JT_PL1_110;

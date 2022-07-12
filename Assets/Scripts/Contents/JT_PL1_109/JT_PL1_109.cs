@@ -8,7 +8,6 @@ public class JT_PL1_109 : BaseContents
 {
     private int questionCount => 4;
     public AlphabetDragToggle109[] toggles;
-    public AudioSinglePlayer audioPlayer;
     public AudioSinglePlayer alphabetPlayer;
     private Question109[] questions;
     private int currentIndex = 0;

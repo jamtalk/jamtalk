@@ -23,7 +23,6 @@ public class JT_PL1_121 : BaseContents
     [SerializeField]
     private SentanceData.SentancesSource[] words;
     public EventSystem eventSystem;
-    public AudioSinglePlayer audioPlayer;
     private SentanceData.SentancesSource currentSentance => words[index];
     private int questionCount => 2;
 

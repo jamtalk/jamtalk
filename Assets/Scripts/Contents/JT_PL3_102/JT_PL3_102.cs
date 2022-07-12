@@ -53,7 +53,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
 
         button.onClickFirst.AddListener(() =>
         {
-            button.data.PlayAct();
+            audioPlayer.Play(button.data.act);
         });
 
         button.onClick.AddListener(() =>
@@ -62,7 +62,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
             {
                 button.isCheck = true;
 
-                button.data.PlayClip();
+                audioPlayer.Play(button.data.act);
                 button.image.sprite = backImage;
                 button.textPhanix.gameObject.SetActive(false);
                 button.images.gameObject.SetActive(true);

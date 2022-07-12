@@ -10,7 +10,6 @@ public abstract class BaseMatchImage<T> : BaseContents
     public CanvasScaler scaler;
     public DropSpaceShip_107[] drops;
     public DragKnob_107[] drags;
-    public AudioSinglePlayer audioPlayer;
     protected T[] words;
 
     protected override void Awake()

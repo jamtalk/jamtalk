@@ -28,7 +28,7 @@ public class JT_PL3_110 : BingoContents<DigraphsSource, DigraphsBingoButton, Tex
             .ToArray();
     }
 
-    protected override void GetClip() => currentQuestion.PlayClip();
+    protected override void PlayClip() => audioPlayer.Play(currentQuestion.act);
 
     protected override bool IsCurrentAnswer(DigraphsSource value) => value == currentQuestion;
 }

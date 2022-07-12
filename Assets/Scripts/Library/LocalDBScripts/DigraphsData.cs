@@ -17,13 +17,15 @@ public class DigraphsData : LocalDBElement<DigraphsSource>
         {
             var datas = data[i];
             var value = datas["value"].ToString();
+            var clip = datas["clip"].ToString();
             var type = (eDigraphs)Enum.Parse(typeof(eDigraphs), datas["type"].ToString().ToUpper());
-            var actValue = datas["actValue"].ToString();
+            var act = datas["actValue"].ToString();
             var level = int.Parse(datas["level"].ToString());
             tmp.Add(new DigraphsSource(
                 type,
                 value,
-                actValue,
+                act,
+                clip,
                 level
                 ));
         }
@@ -82,20 +84,19 @@ public class DigraphsSource : DataSource
         else
             return 0;
     }
-    public string actValue;
-    public override bool IsNull => base.IsNull || string.IsNullOrEmpty(actValue);
+    public string act { get; protected set; }
+    public string clip { get; protected set; }
+    public override bool IsNull => base.IsNull || string.IsNullOrEmpty(act);
 
-    public DigraphsSource(eDigraphs type, string value, string actValue, int targetLevel) : base(value)
+    public DigraphsSource(eDigraphs type, string value, string act, string clip,int targetLevel) : base(value)
     {
         this.type = type;
-        this.actValue = actValue;
+        this.act = act;
+        this.clip = clip;
         TargetLevel = targetLevel;
     }
 
     public int TargetLevel { get; private set; }
-
-    public void PlayClip(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(value,onDone);
-    public void PlayAct(Action onDone = null) => AndroidPluginManager.Instance.PlayTTS(actValue,onDone);
 
     public override bool Equals(object obj)
     {

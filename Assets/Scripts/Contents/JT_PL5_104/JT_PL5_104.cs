@@ -87,7 +87,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
 
         button.onClickFirst.AddListener(() =>
         {
-            button.data.PlayAct();
+            audioPlayer.Play(button.data.act);
         });
         button.onClickData += (value) =>
         {
@@ -137,7 +137,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(DigraphsSource word) => word.PlayClip();
+    private void PlayWord(DigraphsSource word) => audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         for (int i = 0; i < buttons.Length; i++)

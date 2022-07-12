@@ -25,7 +25,6 @@ public class JT_PL3_105 : BaseContents
     public AudioClip hammerClip;
     public AudioClip moleClip;
     public AudioClip effectClip;
-    public AudioSinglePlayer audioPlayer;
 
     private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
@@ -46,7 +45,7 @@ public class JT_PL3_105 : BaseContents
             .Where(x => x.type == eCurrentDigraphs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
-        currentDigraphs.PlayClip();
+        audioPlayer.Play(currentDigraphs.clip);
 
         string value = currentDigraphs.value;
         currentText.text = value.Replace(eCurrentDigraphs.ToString().ToLower(), "__");
@@ -96,7 +95,7 @@ public class JT_PL3_105 : BaseContents
 
                     if (element.text.text.ToUpper().Contains(eCurrentDigraphs.ToString()))
                     {
-                        currentDigraphs.PlayClip(() =>
+                        audioPlayer.Play(currentDigraphs.clip, () =>
                         {
                             currentText.text = currentDigraphs.value;
                             ProgressBarDoMove();

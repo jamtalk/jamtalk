@@ -12,7 +12,6 @@ public class JT_PL1_115 : BaseContents
     public EventSystem eventSystem;
     public Card114[] cards;
     private List<Card114> selected = new List<Card114>();
-    public AudioSinglePlayer audioPlayer;
     protected override eContents contents => eContents.JT_PL1_115;
 
     protected override bool CheckOver() => !cards.Select(x => x.card.IsFornt).Contains(false);

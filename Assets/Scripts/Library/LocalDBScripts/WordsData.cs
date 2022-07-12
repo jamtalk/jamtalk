@@ -29,8 +29,8 @@ public class WordsData : LocalDBElement<WordSource>
             tmp.Add(new WordSource(
                 alphabet,
                 value,
-                LocalDB.Find(clips, clip),
-                LocalDB.Find(acts, act)
+                clip,
+                act
                 ));
         }
         this.data = tmp.Where(x=>!x.IsNull).ToArray();
@@ -42,14 +42,14 @@ public class WordSource : DataSource
 {
     protected override eAtlasType atlas => eAtlasType.Words;
     public eAlphabet alphabet;
-    public AudioClip clip;
-    public AudioClip act3;
+    public string clip;
+    public string act3;
     public AlphabetAudioData.AlphabetAudioSource audio => GameManager.Instance.GetResources(alphabet).AudioData;
     public override bool IsNull => base.IsNull ||
         clip == null ||
         act3 == null;
 
-    public WordSource(eAlphabet alphabet, string word, AudioClip clip, AudioClip act) : base(word)
+    public WordSource(eAlphabet alphabet, string word, string clip, string act) : base(word)
     {
         this.alphabet = alphabet;
         this.clip = clip;

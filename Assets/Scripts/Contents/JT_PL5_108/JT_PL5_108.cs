@@ -50,16 +50,16 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
             buttonQuestions[i].sprite = data.sprite;
             AddDoubleClickListener(buttonQuestions[i], data);
         }
-        question.correct.PlayClip();
+        audioPlayer.Play(question.correct.clip);
         current = question.correct;
         
         var temp = buttonPhanics.GetComponentInChildren<Text>();
-        temp.text = question.correct.actValue;
+        temp.text = question.correct.act;
 
         // image 변경
         //buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
-        buttonPhanics.button.onClick.AddListener(() => question.correct.PlayAct());
+        buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(question.correct.act));
     }
     private void ResetQuestion()
     {
@@ -67,14 +67,14 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
         {
             buttonQuestions[i].isOn = false;
         }
-        current.PlayClip();
+        audioPlayer.Play(current.clip);
 
         var temp = buttonPhanics.GetComponentInChildren<Text>();
         temp.text = GameManager.Instance.currentDigrpahs.ToString().ToLower();
         // image 변경
         //buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
-        buttonPhanics.button.onClick.AddListener(() => current.PlayClip());
+        buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(current.clip));
     }
     private void AddDoubleClickListener(DoubleClickButton button, DigraphsSource data)
     {
@@ -86,7 +86,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
             for (int i = 0; i < buttonQuestions.Length; i++)
             {
                 buttonQuestions[i].isOn = buttonQuestions[i] == button;
-                data.PlayClip();
+                audioPlayer.Play(data.clip);
             }
         });
 

@@ -200,7 +200,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
     {
         foreach (var item in ani)
             item.SetBool("Speak", true);
-        currentQuestion.correct.PlayClip();
+        audioPlayer.Play(currentQuestion.correct.clip);
     }
 }
 

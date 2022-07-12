@@ -24,7 +24,6 @@ public class JT_PL3_101 : BaseContents
     public Text resultText;
 
     private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
-
     protected override void Awake()
     {
         base.Awake();
@@ -58,8 +57,8 @@ public class JT_PL3_101 : BaseContents
         if (CheckOver())
             ShowResult();
         else
-        { 
-            temp.PlayAct(() => SetColors());
+        {
+            audioPlayer.Play(temp.act,() => SetColors());
 
             dragElement.isColors = false;
             resultText.gameObject.SetActive(false);

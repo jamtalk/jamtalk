@@ -9,7 +9,6 @@ public class JT_PL1_105 : BaseContents
 {
     public AlphabetImage105 alphabetImage;
     public Image image;
-    public AudioSinglePlayer audioPlayer;
     public Button[] buttonAudio;
     public STTButton buttonSTT;
     public Text value;

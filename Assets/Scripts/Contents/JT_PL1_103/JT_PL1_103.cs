@@ -8,7 +8,6 @@ public class JT_PL1_103 : BaseContents
 {
     public Image image;
     public Button button;
-    public AudioSinglePlayer audioPlayer;
     public STTButton buttonSTT;
     public Text valueText;
     private Tween buttonTween;

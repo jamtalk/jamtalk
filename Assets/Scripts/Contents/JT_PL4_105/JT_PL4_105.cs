@@ -26,7 +26,6 @@ public class JT_PL4_105 : BaseContents
     public RectTransform firstRect;
     public RectTransform lastRect;
     public EventSystem eventSystem;
-
     protected override void Awake()
     {
         base.Awake();
@@ -98,7 +97,8 @@ public class JT_PL4_105 : BaseContents
             if(digraphsValue.Contains(text.text))
             {
                 index += 1;
-                current.PlayClip();
+                audioPlayer.Play(current.clip);
+                
                 DoMove(() =>
                 {
                     if (CheckOver())

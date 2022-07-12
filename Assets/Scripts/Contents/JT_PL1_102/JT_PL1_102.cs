@@ -15,7 +15,6 @@ public class JT_PL1_102 : BaseContents
     public Image imageAlphabet;
     public Button buttonEgg;
     public Egg egg;
-    public AudioSinglePlayer audioPlayer;
     public AlphabetAudioData.AlphabetAudioSource audioData;
     private eAlphabet[] targets;
     protected override void Awake()

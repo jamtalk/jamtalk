@@ -16,7 +16,6 @@ public class JT_PL4_106 : BaseContents
 
     public Text currentText;
     public DoubleClickButton[] doubleClick;
-
     protected override void Awake()
     {
         base.Awake();
@@ -61,7 +60,7 @@ public class JT_PL4_106 : BaseContents
 
         button.onClickFirst.AddListener(() =>
         {
-            data.PlayAct();            
+            audioPlayer.Play(data.act);
         });
 
         button.onClick.AddListener(() =>
@@ -69,7 +68,7 @@ public class JT_PL4_106 : BaseContents
             if (current.type == data.type)
             {
                 index += 1;
-                current.PlayClip(() =>
+                audioPlayer.Play(current.clip, () =>
                 {
                     if (CheckOver())
                         ShowResult();

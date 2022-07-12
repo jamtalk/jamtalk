@@ -8,7 +8,6 @@ public class JT_PL1_112 : BaseContents
 {
     public DropToggle[] toggles;
     public DragAlphabet[] drags;
-    public AudioSinglePlayer audioPlayer;
     protected override eContents contents => eContents.JT_PL1_112;
 
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);

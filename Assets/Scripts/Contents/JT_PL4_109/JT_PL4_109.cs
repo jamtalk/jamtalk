@@ -15,7 +15,6 @@ public class JT_PL4_109 : BaseContents
             , "grey" , "teal", "orange", "darkblue", "purple"};
     private List<Card114> selected = new List<Card114>();
     public Card114[] cards;
-    public AudioSinglePlayer audioPlayer;
 
     protected override void Awake()
     {
@@ -63,11 +62,11 @@ public class JT_PL4_109 : BaseContents
                 {
                     if (CheckOver())
                     {
-                        data.PlayAct(() => ShowResult());
+                        audioPlayer.Play(data.clip, ShowResult);
                     }
                     else
                     {
-                        data.PlayAct(() =>
+                        audioPlayer.Play(data.act, () =>
                         {
                             selected[0].ShowStar();
                             selected[1].ShowStar();
@@ -79,7 +78,7 @@ public class JT_PL4_109 : BaseContents
                 }
                 else
                 {
-                    data.PlayClip();
+                    audioPlayer.Play(data.clip);
                     selected[0].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected[1].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected.Clear();
@@ -87,7 +86,7 @@ public class JT_PL4_109 : BaseContents
             }
             else
             {
-                data.PlayClip();
+                audioPlayer.Play(data.clip);
                 SetCardIntracable(true);
             }
         };
