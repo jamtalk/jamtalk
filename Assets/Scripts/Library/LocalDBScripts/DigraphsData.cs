@@ -84,8 +84,8 @@ public class DigraphsSource : DataSource
         else
             return 0;
     }
-    public string act { get; protected set; }
-    public string clip { get; protected set; }
+    public string act;
+    public string clip;
     public override bool IsNull => base.IsNull || string.IsNullOrEmpty(act);
 
     public DigraphsSource(eDigraphs type, string value, string act, string clip,int targetLevel) : base(value)

@@ -16,9 +16,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     private Dictionary<eAlphabet, AlphabetData> datas;
     private Dictionary<eDigraphs, DigraphsSource[]> digraphs;
-
+    private ResourceSchema schema;
     public override void Initialize()
     {
+        schema = ResourceSchema.Instance;
         base.Initialize();
         currentAlphabet = eAlphabet.A;
         currentContents = eContents.JT_PL1_102;
@@ -39,7 +40,7 @@ public class GameManager : MonoSingleton<GameManager>
         digraphs = digrpahs
             .ToDictionary(x => x, x => digraphsData.Where(y => y.type == x).ToArray());
     }
-    public AudioClip GetClipCorrectEffect() => LocalDB.Instance.GetCorrectClip();
+    public AudioClip GetClipCorrectEffect() => schema.correctSound;
     public AlphabetData GetResources() => datas[currentAlphabet];
     public AlphabetData GetResources(eAlphabet alphabet) => datas[alphabet];
     public DigraphsSource[] GetDigraphs(eDigraphs type) => digraphs[type];
