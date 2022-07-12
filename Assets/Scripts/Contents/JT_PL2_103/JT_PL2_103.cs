@@ -26,9 +26,9 @@ public class JT_PL2_103 : BaseContents
         throwingLongElements.Select(x => x.GetComponent<WordElement203>()))
         .ToList();
 
-    private VowelSource[] shortVowels;
-    private VowelSource[] longVowels;
-    private VowelSource currentWord => shortVowels[index];
+    private VowelWordsData[] shortVowels;
+    private VowelWordsData[] longVowels;
+    private VowelWordsData currentWord => shortVowels[index];
 
     public UIThrower110 thrower;
 
@@ -67,27 +67,27 @@ public class JT_PL2_103 : BaseContents
             throwingLongElements[i].onDrag += OnDrag;
         }
 
-        var alphabet = currentWord.alphabet;
-        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Short)));
-        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.GetResources(alphabet).VowelAudioData.GetPhanics(eVowelType.Long)));
+        var alphabet = currentWord.Vowel;
+        shortButton.onClick.AddListener(() => audioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_short));
+        longButton.onClick.AddListener(() => audioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_long));
     }
 
     private void GetWords()
     {
         shortVowels = GameManager.Instance.GetResources().Vowels
-            .Where( x => x.type == eVowelType.Short)
+            .Where( x => x.VowelType == eVowelType.Short)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(wordsCount)
             .ToArray();
 
         longVowels = GameManager.Instance.GetResources().Vowels
-            .Where(x => x.type == eVowelType.Long)
+            .Where(x => x.VowelType == eVowelType.Long)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(wordsCount)
             .ToArray();
     }
 
-    private IEnumerator Init(VowelSource data)
+    private IEnumerator Init(VowelWordsData data)
     {
         shortsElements.Clear();
         var list = new List<RectTransform>();
@@ -166,9 +166,9 @@ public class JT_PL2_103 : BaseContents
     {
         for(int i = 0; i < shortVowels.Length; i ++)
         {
-            if (shortVowels[i].value.Contains(target.textValue.text))
+            if (shortVowels[i].key.Contains(target.textValue.text))
                 popupImage.sprite = shortVowels[i].sprite;
-            if(longVowels[i].value.Contains(target.textValue.text))
+            if(longVowels[i].key.Contains(target.textValue.text))
                 popupImage.sprite = longVowels[i].sprite;
         }
 

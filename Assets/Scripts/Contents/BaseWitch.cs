@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
-    where T : DataSource
+    where T : ResourceWordsElement
 {
     protected override int QuestionCount => 6;
     protected override eContents contents => eContents.JT_PL2_108;
@@ -120,7 +120,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
 
 public class Question_Witch<T> : SingleQuestion<T>
-    where T : DataSource
+    where T : ResourceWordsElement
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;

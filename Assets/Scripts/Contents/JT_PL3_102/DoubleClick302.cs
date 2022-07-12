@@ -8,12 +8,12 @@ public class DoubleClick302 : DoubleClickButton
     public Text textPhanix;
     public Image images;
     public bool isCheck = false;
-    public DigraphsSource data { get; private set; }
+    public DigraphsWordsData data { get; private set; }
 
-    public void Init(DigraphsSource data)
+    public void Init(DigraphsWordsData data)
     {
         this.data = data;
-        textPhanix.text = data.type.ToString().ToLower();
+        textPhanix.text = data.Digraphs.ToString().ToLower();
         images.sprite = data.sprite;
 
         

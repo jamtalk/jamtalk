@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, IBeginDragHandler
-    where T : DataSource
+    where T : ResourceWordsElement
 {
     [SerializeField]
     private bool interactable = false;
@@ -28,8 +28,8 @@ public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, I
     public void Init(T data)
     {
         this.data = data;
-        textValue.text = data.value;
-        name = data.value;
+        textValue.text = data.key;
+        name = data.key;
         image.sprite = potionSprites[Random.Range(0, potionSprites.Length)];
         gameObject.SetActive(true);
     }

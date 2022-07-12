@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
+public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
 {
     public EventSystem eventSystem;
     public ButtonExitnction[] buttons;
@@ -45,7 +45,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
                 finger.SetActive(true);
         });
     }
-    private void AddButtonListener(ButtonExitnction button, WordSource data)
+    private void AddButtonListener(ButtonExitnction button, AlphabetWordsData data)
     {
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
@@ -98,8 +98,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
     {
         if (finger != null)
             finger.SetActive(true);
-        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.alphabet);
-        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.alphabet);
+        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.Alphabet);
+        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.Alphabet);
         var questions = question.totalQuestion;
         for(int i = 0;i < buttons.Length; i++)
         {
@@ -108,9 +108,9 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, WordSource>
         }
     }
 }
-public class Question119 : SingleQuestion<WordSource>
+public class Question119 : SingleQuestion<AlphabetWordsData>
 {
-    public Question119(WordSource correct, WordSource[] questions) : base(correct, questions)
+    public Question119(AlphabetWordsData correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
     }
 }

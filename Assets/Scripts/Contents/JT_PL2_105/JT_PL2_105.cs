@@ -6,7 +6,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
+public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_105;
@@ -31,7 +31,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
     private Vector3 defaultPosition;
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
-    private VowelSource[] vowels;
+    private VowelWordsData[] vowels;
     /// <summary>
     /// thrower 사이즈 변경
     /// 별똥별 추가
@@ -52,16 +52,16 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
         var questions = new List<Question2_105>();
         vowels = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-            .Where(x => x.type == eVowelType.Long)
-            .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+            .Where(x => x.VowelType == eVowelType.Long)
+            .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         for (int i = 0; i < QuestionCount; i++)
         {
             var tmp = GameManager.Instance.vowels
                 .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-                .Where(x => x.type == eVowelType.Short)
-                .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+                .Where(x => x.VowelType == eVowelType.Short)
+                .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(elements.Count - 1)
                 .ToArray();
@@ -96,7 +96,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
             AddClickListener(elements[i], data);
         }
     }
-    private void AddClickListener(BubbleElement planet, VowelSource data)
+    private void AddClickListener(BubbleElement planet, VowelWordsData data)
     {
         planet.onClickFirst.RemoveAllListeners();
 
@@ -119,7 +119,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
 
     }
 
-    private IEnumerator InitPlanet(VowelSource data)
+    private IEnumerator InitPlanet(VowelWordsData data)
     {
         yield return new WaitForSecondsRealtime(1f);
         audioPlayer.Play(boomClip);
@@ -145,7 +145,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelSource>
 
 
 
-public class Question2_105 : SingleQuestion<VowelSource>
+public class Question2_105 : SingleQuestion<VowelWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -158,7 +158,7 @@ public class Question2_105 : SingleQuestion<VowelSource>
                 .ToArray();
         }
     }
-    public Question2_105(VowelSource correct, VowelSource[] questions) : base(correct, questions)
+    public Question2_105(VowelWordsData correct, VowelWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

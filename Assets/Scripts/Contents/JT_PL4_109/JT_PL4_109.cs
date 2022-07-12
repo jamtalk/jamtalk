@@ -30,7 +30,7 @@ public class JT_PL4_109 : BaseContents
             .Take(6)
             .Select(x => GameManager.Instance.GetDigraphs(x)
                 .OrderBy(y=>Random.Range(0f,100f)).First())
-            .SelectMany(x=> new DigraphsSource[] {x,x})
+            .SelectMany(x=> new DigraphsWordsData[] {x,x})
             .ToArray();
 
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
@@ -49,7 +49,7 @@ public class JT_PL4_109 : BaseContents
 
         StartCoroutine(StartContent());
     }
-    private void SetCard(Card114 card, DigraphsSource data, string color)
+    private void SetCard(Card114 card, DigraphsWordsData data, string color)
     {
         card.Init(data, color);
         card.card.onClick += () => SetCardIntracable(false);
@@ -58,7 +58,7 @@ public class JT_PL4_109 : BaseContents
             selected.Add(card);
             if (selected.Count == 2)
             {
-                if (selected[0].digraphsData.type == selected[1].digraphsData.type)
+                if (selected[0].DigraphsWordsData.Digraphs == selected[1].DigraphsWordsData.Digraphs)
                 {
                     if (CheckOver())
                     {

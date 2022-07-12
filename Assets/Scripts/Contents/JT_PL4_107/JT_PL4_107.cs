@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
+public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL4_107;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
@@ -19,7 +19,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
 
     [SerializeField]
     private GameObject[] charactor;
-    private DigraphsSource[] current;
+    private DigraphsWordsData[] current;
     [SerializeField]
     private EventSystem eventSystem;
     private float colorFillamount = 0f;
@@ -36,7 +36,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
 
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         
@@ -44,7 +44,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
         {
             var temp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type != GameManager.Instance.currentDigrpahs)
+                .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttonQuestions.Length - 1)
                 .ToArray();
@@ -59,7 +59,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
         for (int i = 0; i < buttonQuestions.Length; i++)
         {
             var data = question.totalQuestion[i];
-            buttonQuestions[i].name = question.totalQuestion[i].value;
+            buttonQuestions[i].name = question.totalQuestion[i].key;
             buttonQuestions[i].image.sprite = question.totalQuestion[i].sprite;
             buttonQuestions[i].image.preserveAspect = true;
             buttonQuestions[i].interactable = false;
@@ -67,10 +67,10 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
             AddListener(buttonQuestions[i], data);
         }
 
-        currentText.text = current[currentQuestionIndex].value;
+        currentText.text = current[currentQuestionIndex].key;
     }
 
-    private void AddListener(Button button, DigraphsSource data)
+    private void AddListener(Button button, DigraphsWordsData data)
     {
         button.onClick.RemoveAllListeners();
 
@@ -136,7 +136,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsSource>
     }
 }
 
-public class Question4_107 : SingleQuestion<DigraphsSource>
+public class Question4_107 : SingleQuestion<DigraphsWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -149,7 +149,7 @@ public class Question4_107 : SingleQuestion<DigraphsSource>
                 .ToArray();
         }
     }
-    public Question4_107(DigraphsSource correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question4_107(DigraphsWordsData correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

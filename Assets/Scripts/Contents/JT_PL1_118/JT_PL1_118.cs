@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
+public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
 {
     public Text textQuestion;
     public Button buttonQuestion;
@@ -13,7 +13,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
     private int alphabetCount = 2;
 
     protected override eContents contents => eContents.JT_PL1_118;
-    private void AddButtonListener(ImageButton button, WordSource data)
+    private void AddButtonListener(ImageButton button, AlphabetWordsData data)
     {
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
@@ -52,7 +52,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
         Debug.LogFormat("{0} / {1}", corrects.Length, incorrects.Length);
         var list = new List<Question118>();
         for(int i = 0; i< corrects.Length; i++)
-            list.Add(new Question118(corrects[i], new WordSource[] { incorrects[i] }));
+            list.Add(new Question118(corrects[i], new AlphabetWordsData[] { incorrects[i] }));
         return list.OrderBy(x=>Random.Range(0f,100f)).ToList();
     }
 
@@ -64,20 +64,20 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, WordSource>
             buttonsAnswer[i].sprite = question.totalQuestion[i].sprite;
         }
 
-        audioPlayer.Play(question.correct.act3);
+        audioPlayer.Play(question.correct.act);
         buttonQuestion.onClick.RemoveAllListeners();
-        buttonQuestion.onClick.AddListener(() => audioPlayer.Play(question.correct.act3));
+        buttonQuestion.onClick.AddListener(() => audioPlayer.Play(question.correct.act));
 
         var randomImage = question.totalQuestion
             .Select(x => x.sprite)
             .ToArray();
 
-        textQuestion.text = question.correct.value;
+        textQuestion.text = question.correct.key;
     }
 }
-public class Question118 : SingleQuestion<WordSource>
+public class Question118 : SingleQuestion<AlphabetWordsData>
 {
-    public Question118(WordSource correct, WordSource[] questions) : base(correct, questions)
+    public Question118(AlphabetWordsData correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
         
     }

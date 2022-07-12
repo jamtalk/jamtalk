@@ -11,7 +11,7 @@ public class JT_PL4_106 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
-    private DigraphsSource current;
+    private DigraphsWordsData current;
     private eDigraphs[] eDig = { eDigraphs.OI, eDigraphs.AI, eDigraphs.EA };
 
     public Text currentText;
@@ -28,18 +28,18 @@ public class JT_PL4_106 : BaseContents
         var random = eDig[Random.Range(0, 2)];
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == random)
+            .Where(x => x.Digraphs == random)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
         var temp = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type != random)
+            .Where(x => x.Digraphs != random)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(2)
             .ToArray();
 
-        var tempList = new List<DigraphsSource>();
+        var tempList = new List<DigraphsWordsData>();
         for(int i = 0; i < temp.Length; i ++)
             tempList.Add(temp[i]);
         tempList.Add(current);
@@ -53,7 +53,7 @@ public class JT_PL4_106 : BaseContents
         }
         SetCurrentColor();
     }
-    private void ButtonAddListener(DoubleClickButton button, DigraphsSource data)
+    private void ButtonAddListener(DoubleClickButton button, DigraphsWordsData data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
@@ -65,7 +65,7 @@ public class JT_PL4_106 : BaseContents
 
         button.onClick.AddListener(() =>
         {
-            if (current.type == data.type)
+            if (current.Digraphs == data.Digraphs)
             {
                 index += 1;
                 audioPlayer.Play(current.clip, () =>
@@ -81,26 +81,26 @@ public class JT_PL4_106 : BaseContents
 
     private void SetCurrentColor()
     {
-        var isCheck = current.value.Contains(current.type.ToString().ToLower());
+        var isCheck = current.key.Contains(current.Digraphs.ToString().ToLower());
         string value = string.Empty;
 
         if (!isCheck)
         {
             string temp = string.Empty;
-            if (current.type == eDigraphs.OI)
+            if (current.Digraphs == eDigraphs.OI)
                 temp = "oy";
-            else if (current.type == eDigraphs.EA)
+            else if (current.Digraphs == eDigraphs.EA)
                 temp = "ee";
-            else if (current.type == eDigraphs.AI)
+            else if (current.Digraphs == eDigraphs.AI)
                 temp = "ay";
 
-            value = current.value.Replace(temp,
+            value = current.key.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");
         }
         else
         {
-            value = current.value.Replace(current.type.ToString().ToLower()
-                , "<color=\"red\">" + current.type.ToString().ToLower() + "</color>");
+            value = current.key.Replace(current.Digraphs.ToString().ToLower()
+                , "<color=\"red\">" + current.Digraphs.ToString().ToLower() + "</color>");
         }
 
         currentText.text = value;

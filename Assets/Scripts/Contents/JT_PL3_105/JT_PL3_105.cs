@@ -14,7 +14,7 @@ public class JT_PL3_105 : BaseContents
     private int index = 0;
     
     private eDigraphs eCurrentDigraphs;
-    private DigraphsSource currentDigraphs;
+    private DigraphsWordsData currentDigraphs;
 
     public Text currentText;
     public GameObject hammer;
@@ -42,12 +42,12 @@ public class JT_PL3_105 : BaseContents
 
         currentDigraphs = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))  
-            .Where(x => x.type == eCurrentDigraphs)
+            .Where(x => x.Digraphs == eCurrentDigraphs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
         audioPlayer.Play(currentDigraphs.clip);
 
-        string value = currentDigraphs.value;
+        string value = currentDigraphs.key;
         currentText.text = value.Replace(eCurrentDigraphs.ToString().ToLower(), "__");
 
         SetMolesPosition();
@@ -97,7 +97,7 @@ public class JT_PL3_105 : BaseContents
                     {
                         audioPlayer.Play(currentDigraphs.clip, () =>
                         {
-                            currentText.text = currentDigraphs.value;
+                            currentText.text = currentDigraphs.key;
                             ProgressBarDoMove();
                         });
                         index += 1;

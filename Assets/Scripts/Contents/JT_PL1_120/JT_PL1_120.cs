@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
+public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
 {
     public EventSystem eventSystem;
     public Button buttonRocket;
@@ -38,14 +38,14 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
         card.onClick += (data) =>
         {
             eventSystem.enabled = false;
-            if (currentQuestion.correct.Select(x=>x.value).Contains(data.value))
+            if (currentQuestion.correct.Select(x=>x.key).Contains(data.key))
             {
                 if (finger != null)
                     finger.gameObject.SetActive(false);
                 var sprite = card.imageButton.image.sprite;
                 roket.valueUI.sprite = sprite;
 
-                audioPlayer.Play(data.act3, () =>
+                audioPlayer.Play(data.act, () =>
                 {
                     roket.Away(sprite, () =>
                     {
@@ -59,7 +59,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
             }
             else
             {
-                audioPlayer.Play(data.act3, () =>
+                audioPlayer.Play(data.act, () =>
                 {
                     card.card.Turnning(onCompleted: () => eventSystem.enabled = true);
                 });
@@ -79,12 +79,12 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
             eventSystem.enabled = true;
         });
         roket.mask.gameObject.SetActive(true);
-        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].alphabet);
+        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].Alphabet);
     }
     private void PlayAudio()
     {
-        var alphabet = currentQuestion.correct[currentQuestion.currentIndex].alphabet;
-        audioPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.phanics);
+        var alphabet = currentQuestion.correct[currentQuestion.currentIndex].Alphabet;
+        audioPlayer.Play(GameManager.Instance.GetResources((eAlphabet)alphabet).AudioData.phanics);
     }
     protected override List<Question120> MakeQuestion()
     {
@@ -106,7 +106,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
 
                 var incorrect = GameManager.Instance.alphabets
                     .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
-                    .Where(x=>!correct.Select(y=>y.value).Contains(x.value))
+                    .Where(x=>!correct.Select(y=>y.key).Contains(x.key))
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(cards.Length - correctCount)
                     .ToArray();
@@ -125,18 +125,18 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,WordSource>
             cards[i].Init(question.totalQuestion[i]);
     }
 }
-public class Question120 : MultiQuestion<WordSource>
+public class Question120 : MultiQuestion<AlphabetWordsData>
 {
     public int currentIndex { get; private set; }
-    public Question120(WordSource[] correct, WordSource[] questions) : base(correct, questions)
+    public Question120(AlphabetWordsData[] correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
         currentIndex = 0;
     }
-    public override void SetAnswer(WordSource answer)
+    public override void SetAnswer(AlphabetWordsData answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;
     }
 
-    protected override bool CheckCorrect(WordSource answer) => correct.Contains(answer);
+    protected override bool CheckCorrect(AlphabetWordsData answer) => correct.Contains(answer);
 }

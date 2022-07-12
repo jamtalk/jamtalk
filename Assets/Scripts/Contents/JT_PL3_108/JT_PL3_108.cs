@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL3_108 : BaseWitch<DigraphsSource>
+public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_108;
 
-    protected override List<Question_Witch<DigraphsSource>> MakeQuestion()
+    protected override List<Question_Witch<DigraphsWordsData>> MakeQuestion()
     {
-        var questions = new List<Question_Witch<DigraphsSource>>();
+        var questions = new List<Question_Witch<DigraphsWordsData>>();
         words = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
             .OrderBy(x => Random.Range(0f, 100f)).ToArray()
@@ -24,7 +24,7 @@ public class JT_PL3_108 : BaseWitch<DigraphsSource>
                 .Take(elements.Length - 1)
                 .ToArray();
 
-            questions.Add(new Question_Witch<DigraphsSource>(words[i], tmp));
+            questions.Add(new Question_Witch<DigraphsWordsData>(words[i], tmp));
         }
         return questions;
     }

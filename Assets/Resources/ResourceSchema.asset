@@ -10,16 +10,11 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc8d5cc90ce41a840bdb6bb8455aeb4d, type: 3}
-  m_Name: ResourceDB
+  m_Name: ResourceSchema
   m_EditorClassIdentifier: 
-  correctSound: {fileID: 0}
-  data:
-    alphabetWords: []
-    alphabetAudio: []
-    vowelWords: []
-    vowelAudio: []
-    digraphsWords: []
-    digrpahsAudio: []
+  orizinal: {fileID: 4900000, guid: dbb6cd89c700f9e4ab6e2c88148807d9, type: 3}
+  alphabetSprite: {fileID: 11400000, guid: 2d4f1af9fb123284aa6f4d7f9188ce5e, type: 2}
+  correctSound: {fileID: 8300000, guid: da37d69cfcc583c4cbfd89286eac5241, type: 3}
   atlas:
     reorderableList:
       canAdd: 1

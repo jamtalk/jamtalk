@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
+public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_106;
 
@@ -59,7 +59,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
         }
         var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,currentQuestion.correct.alphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,currentQuestion.correct.Alphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }
@@ -71,11 +71,11 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
         }
         var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, currentQuestion.correct.alphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, currentQuestion.correct.Alphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }
-    private void AddDoubleClickListener(DoubleClickButton button, WordSource data)
+    private void AddDoubleClickListener(DoubleClickButton button, AlphabetWordsData data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
@@ -120,7 +120,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, WordSource>
     }
 }
 [Serializable]
-public class Question106 : SingleQuestion<WordSource>
+public class Question106 : SingleQuestion<AlphabetWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -133,7 +133,7 @@ public class Question106 : SingleQuestion<WordSource>
                 .ToArray();
         }
     }
-    public Question106(WordSource correct, WordSource[] questions) : base(correct, questions)
+    public Question106(AlphabetWordsData correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x=>x.sprite).ToArray();

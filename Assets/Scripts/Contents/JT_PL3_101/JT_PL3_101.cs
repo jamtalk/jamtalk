@@ -48,7 +48,7 @@ public class JT_PL3_101 : BaseContents
     {
         var temp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type == eDig[index])
+                .Where(x => x.Digraphs == eDig[index])
                 .First();
 
         if (dragElement.isColors)

@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL1_107 : BaseMatchImage<WordSource>
+public class JT_PL1_107 : BaseMatchImage<AlphabetWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_107;
     protected override int GetTotalScore() => drops.Length;
@@ -16,9 +16,9 @@ public class JT_PL1_107 : BaseMatchImage<WordSource>
         SetElement(words);
     }
 
-    protected override void PlayAudio(DataSource word)
+    protected override void PlayAudio(ResourceWordsElement word)
     {
-        var data = (WordSource)word;
+        var data = (AlphabetWordsData)word;
         audioPlayer.Play(data.clip);
     }
 

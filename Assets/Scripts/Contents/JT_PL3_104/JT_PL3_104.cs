@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
+public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL3_104;
@@ -15,7 +15,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
     protected override int QuestionCount => 3;
 
     private float smallBubbleSize = 0.7f;
-    private DigraphsSource[] digraphs;
+    private DigraphsWordsData[] digraphs;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -57,7 +57,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
         var questions = new List<Question3_104>();
         digraphs = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
 
@@ -65,7 +65,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
         {
             var tmp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type != GameManager.Instance.currentDigrpahs)
+                .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(elements.Count - 1)
                 .ToArray();
@@ -87,7 +87,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement bubble, DigraphsSource data)
+    protected virtual void AddDoubleClickListener(BubbleElement bubble, DigraphsWordsData data)
     {
         bubble.onClickFirst.RemoveAllListeners();
         bubble.onClick.RemoveAllListeners();
@@ -115,7 +115,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
             bubble.gameObject.SetActive(false);
             Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
 
-            var digraphs = currentQuestion.correct.type.ToString().ToLower();
+            var digraphs = currentQuestion.correct.Digraphs.ToString().ToLower();
             var temp = bubble.textValue.text.Replace(digraphs, string.Empty);
 
             var tempList = new List<string>();
@@ -123,7 +123,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
                 tempList.Add(item.ToString());
             tempList.Add(digraphs);
 
-            var digraphsIndex = currentQuestion.correct.value.IndexOf(digraphs);
+            var digraphsIndex = currentQuestion.correct.key.IndexOf(digraphs);
             var values = new List<string>();
             foreach (var item in temp)
                 values.Add(item.ToString());
@@ -172,7 +172,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
             StartCoroutine(Init());
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble, DigraphsSource data)
+    protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
     }
@@ -204,7 +204,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsSource>
     }
 }
 
-public class Question3_104 : SingleQuestion<DigraphsSource>
+public class Question3_104 : SingleQuestion<DigraphsWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -217,7 +217,7 @@ public class Question3_104 : SingleQuestion<DigraphsSource>
                 .ToArray();
         }
     }
-    public Question3_104(DigraphsSource correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question3_104(DigraphsWordsData correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

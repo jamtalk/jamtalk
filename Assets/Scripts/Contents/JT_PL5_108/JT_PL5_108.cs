@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
+public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_106;
 
@@ -18,7 +18,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
     public Sprite spritePop;
     public AudioClip clipPop;
 
-    private DigraphsSource current;
+    private DigraphsWordsData current;
 
     protected override List<Question5_108> MakeQuestion()
     {
@@ -32,7 +32,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
         {
             var tmp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type != GameManager.Instance.currentDigrpahs)
+                .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(4)
                 .ToArray();
@@ -76,7 +76,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(current.clip));
     }
-    private void AddDoubleClickListener(DoubleClickButton button, DigraphsSource data)
+    private void AddDoubleClickListener(DoubleClickButton button, DigraphsWordsData data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
@@ -122,7 +122,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsSource>
     }
 }
 [Serializable]
-public class Question5_108 : SingleQuestion<DigraphsSource>
+public class Question5_108 : SingleQuestion<DigraphsWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -135,7 +135,7 @@ public class Question5_108 : SingleQuestion<DigraphsSource>
                 .ToArray();
         }
     }
-    public Question5_108(DigraphsSource correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question5_108(DigraphsWordsData correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

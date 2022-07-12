@@ -13,7 +13,7 @@ public class JT_PL1_110 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-    protected WordSource word;
+    protected AlphabetWordsData word;
 
     protected override eContents contents => eContents.JT_PL1_110;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
@@ -32,7 +32,7 @@ public class JT_PL1_110 : BaseContents
             .First();
     }
 
-    private void SetElement(WordSource words)
+    private void SetElement(AlphabetWordsData words)
     {
         toggles = creator.Create(word);
         for (int i = 0; i < toggles.Length; i++)

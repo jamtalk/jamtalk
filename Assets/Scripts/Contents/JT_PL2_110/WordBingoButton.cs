@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WordBingoButton : BaseBingoButton<WordSource, Text>
+public class WordBingoButton : BaseBingoButton<AlphabetWordsData, Text>
 {
     protected override void SetViewer()
     {
-        viewer.text = value.value;
+        viewer.text = value.key;
     }
 }

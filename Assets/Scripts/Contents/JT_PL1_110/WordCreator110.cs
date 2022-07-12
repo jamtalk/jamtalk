@@ -8,9 +8,9 @@ public class WordCreator110 : MonoBehaviour
     public GameObject element;
     public RectTransform parent => GetComponent<RectTransform>();
 
-    public AlphabetToggle110[] Create(WordSource data)
+    public AlphabetToggle110[] Create(AlphabetWordsData data)
     {
-        var word = data.value.Replace(" ", "");
+        var word = data.key.Replace(" ", "");
         var elements = new List<AlphabetToggle110>();
         for(int i = 0;i < word.Length; i++)
         {
@@ -22,9 +22,9 @@ public class WordCreator110 : MonoBehaviour
         return elements.ToArray();
     }
 
-    public AlphabetToggle110[] Create(DigraphsSource data)
+    public AlphabetToggle110[] Create(DigraphsWordsData data)
     {
-        var word = data.value.Replace(" ", "");
+        var word = data.key.Replace(" ", "");
         var elements = new List<AlphabetToggle110>();
         for (int i = 0; i < word.Length; i++)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL2_107 : BaseMatchImage<VowelSource>
+public class JT_PL2_107 : BaseMatchImage<VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_107;
 
@@ -16,9 +16,9 @@ public class JT_PL2_107 : BaseMatchImage<VowelSource>
         SetElement(words);
     }
 
-    protected override void PlayAudio(DataSource word)
+    protected override void PlayAudio(ResourceWordsElement word)
     {
-        var data = (VowelSource)word;
+        var data = (VowelWordsData)word;
         audioPlayer.Play(data.clip);
     }
 

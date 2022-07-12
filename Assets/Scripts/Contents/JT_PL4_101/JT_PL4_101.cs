@@ -25,7 +25,7 @@ public class JT_PL4_101 : BaseContents
 
     private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
     private List<ePairDigraphs> pairs = new List<ePairDigraphs>();
-    private DigraphsSource data;
+    private DigraphsWordsData data;
     protected override void Awake()
     {
         base.Awake();
@@ -43,10 +43,10 @@ public class JT_PL4_101 : BaseContents
     {
         data = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == digraphs[index])
+            .Where(x => x.Digraphs == digraphs[index])
             .First();
 
-        pairs.Add(DigraphsSource.GetPair(digraphs[index]));
+        pairs.Add(ResourceSchema.GetPair(digraphs[index]));
 
         var digraph = digraphs[index].ToString().ToLower();
         var pair = pairs[index].ToString().ToLower();

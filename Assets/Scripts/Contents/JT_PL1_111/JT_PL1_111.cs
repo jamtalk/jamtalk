@@ -7,7 +7,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
+public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
 {
     protected override int QuestionCount => 2;
     public GameObject finger;
@@ -109,7 +109,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
                 seq.onComplete += () =>
                 {
                     button.gameObject.SetActive(false);
-                    rocket.Away(value.value, () =>
+                    rocket.Away(value.key, () =>
                     {
                         AddAnswer(value);
                         Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}", 
@@ -128,7 +128,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(WordSource word)=> audioPlayer.Play(word.clip);
+    private void PlayWord(AlphabetWordsData word)=> audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         if(finger != null)
@@ -143,17 +143,17 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, WordSource>
         });
     }
 }
-public class Question111 : MultiQuestion<WordSource>
+public class Question111 : MultiQuestion<AlphabetWordsData>
 {
     public int currentIndex { get; private set; } = 0;
-    public WordSource currentCorrect => correct[currentIndex];
+    public AlphabetWordsData currentCorrect => correct[currentIndex];
     
-    public Question111(WordSource[] correct, WordSource[] questions) : base(correct, questions)
+    public Question111(AlphabetWordsData[] correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(WordSource answer) => currentCorrect == answer;
-    public override void SetAnswer(WordSource answer)
+    protected override bool CheckCorrect(AlphabetWordsData answer) => currentCorrect == answer;
+    public override void SetAnswer(AlphabetWordsData answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

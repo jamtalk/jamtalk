@@ -213,7 +213,7 @@ public class STTParam : Param
 
 		Byte[] bytesData = new Byte[samples.Length * 2];
 		//bytesData array is twice the size of
-		//dataSource array because a float converted in Int16 is 2 bytes.
+		//ResourceWordsElement array because a float converted in Int16 is 2 bytes.
 
 		int rescaleFactor = 32767; //to convert float to Int16
 

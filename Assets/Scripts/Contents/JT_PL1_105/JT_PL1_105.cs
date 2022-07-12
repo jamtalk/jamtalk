@@ -16,8 +16,8 @@ public class JT_PL1_105 : BaseContents
 
     private int questionCount => 4;
     private int currentIndex = 0;
-    private WordSource[] questions;
-    private WordSource currentQuestion => questions[currentIndex];
+    private AlphabetWordsData[] questions;
+    private AlphabetWordsData currentQuestion => questions[currentIndex];
     protected override eContents contents => eContents.JT_PL1_105;
     protected override bool CheckOver() => currentIndex == questionCount;
     protected override int GetTotalScore() => questionCount;
@@ -62,7 +62,7 @@ public class JT_PL1_105 : BaseContents
     }
     private void ShowQuestion()
     {
-        alphabetImage.Init(currentQuestion.alphabet);
+        alphabetImage.Init(currentQuestion.Alphabet);
         image.sprite = currentQuestion.sprite;
 
         if (buttonTween != null)
@@ -76,7 +76,7 @@ public class JT_PL1_105 : BaseContents
     private void OnSTTResult(string result)
     {
         value.text = result;
-        if (currentQuestion.value.ToLower() == result.ToLower())
+        if (currentQuestion.key.ToLower() == result.ToLower())
         {
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
             {

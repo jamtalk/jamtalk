@@ -11,7 +11,7 @@ public class JT_PL5_102 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int index = 0;
     private int questionCount = 3;
-    private DigraphsSource[] current;
+    private DigraphsWordsData[] current;
 
     public SlotMachine502 slotMachine;
     public Button tempButton;
@@ -29,7 +29,7 @@ public class JT_PL5_102 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();

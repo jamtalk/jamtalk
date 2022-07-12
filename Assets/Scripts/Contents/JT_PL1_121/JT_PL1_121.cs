@@ -21,11 +21,11 @@ public class JT_PL1_121 : BaseContents
     public UIThrower110 thrower;
     private int index = 0;
     [SerializeField]
-    private SentanceData.SentancesSource[] words;
+    private AlphabetSentanceData[] words;
     public EventSystem eventSystem;
-    private SentanceData.SentancesSource currentSentance => words[index];
+    private AlphabetSentanceData currentSentance => words[index];
     private int questionCount => 2;
-
+    
     protected override eContents contents => eContents.JT_PL1_121;
 
     protected override bool CheckOver() => index == questionCount;
@@ -41,7 +41,7 @@ public class JT_PL1_121 : BaseContents
         index = 0;
         StartCoroutine(Init(currentSentance));
     }
-    private IEnumerator Init(SentanceData.SentancesSource data)
+    private IEnumerator Init(AlphabetSentanceData data)
     {
         Clear();
         elements.Clear();

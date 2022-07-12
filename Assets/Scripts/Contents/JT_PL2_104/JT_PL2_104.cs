@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
+public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_104;
@@ -15,7 +15,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
     protected override int QuestionCount => 3;
 
     private float smallBubbleSize = 0.7f;
-    private VowelSource[] vowels;
+    private VowelWordsData[] vowels;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -57,16 +57,16 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
         var questions = new List<Question2_104>();
         vowels = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-            .Where(x => x.type == eVowelType.Short)
-            .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+            .Where(x => x.VowelType == eVowelType.Short)
+            .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         for ( int i = 0; i < QuestionCount; i++)
         {
             var tmp = GameManager.Instance.vowels
                 .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-                .Where(x => x.type == eVowelType.Long)
-                .Where(x => x.alphabet == GameManager.Instance.currentAlphabet)
+                .Where(x => x.VowelType == eVowelType.Long)
+                .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(elements.Count - 1)
                 .ToArray();
@@ -87,7 +87,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
         }
     }
 
-    protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelSource data)
+    protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelWordsData data)
     {
         bubble.onClickFirst.RemoveAllListeners();
         bubble.onClick.RemoveAllListeners();
@@ -162,7 +162,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
             StartCoroutine(Init());
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble, VowelSource data)
+    protected virtual void ThrowElement(BubbleElement bubble, VowelWordsData data)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
     }
@@ -194,7 +194,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelSource>
     }
 }
 
-public class Question2_104 : SingleQuestion<VowelSource>
+public class Question2_104 : SingleQuestion<VowelWordsData>
 {
     private Sprite spriteCorrect;
     private Sprite[] spriteQuestions;
@@ -207,7 +207,7 @@ public class Question2_104 : SingleQuestion<VowelSource>
                 .ToArray();
         }
     }
-    public Question2_104(VowelSource correct, VowelSource[] questions) : base(correct, questions)
+    public Question2_104(VowelWordsData correct, VowelWordsData[] questions) : base(correct, questions)
     {
         spriteCorrect = correct.sprite;
         spriteQuestions = questions.Select(x => x.sprite).ToArray();

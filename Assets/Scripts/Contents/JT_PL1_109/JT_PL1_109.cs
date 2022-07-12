@@ -47,10 +47,10 @@ public class JT_PL1_109 : BaseContents
         alphabetPlayer.Play(currentQuestion.word.clip);
         for(int i = 0;i < correct.Length; i++)
         {
-            if (word.value.Length > i)
+            if (word.key.Length > i)
             {
                 var type = i > 0 ? eAlphabetType.Lower : eAlphabetType.Upper;
-                var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word.value[i].ToString().ToUpper());
+                var eAlphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word.key[i].ToString().ToUpper());
                 correct[i].gameObject.SetActive(true);
                 correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, eAlphabet);
                 correct[i].preserveAspect = true;
@@ -70,7 +70,7 @@ public class JT_PL1_109 : BaseContents
             .Select(x => x.value.ToString())
             .ToArray();
         
-        var word = currentQuestion.word.value
+        var word = currentQuestion.word.key
             .Select(x => x.ToString().ToUpper())
             .ToArray();
 
@@ -118,13 +118,13 @@ public class Question109
     private int width=>11;
     private int height=>5;
     public eAlphabet[] alphabets;
-    public WordSource word;
+    public AlphabetWordsData word;
     public bool isCompleted;
-    public Question109(WordSource word)
+    public Question109(AlphabetWordsData word)
     {
         this.word = word;
         isCompleted = false;
-        var wordAlphabets = word.value
+        var wordAlphabets = word.key
             .Select(x => (eAlphabet)System.Enum.Parse(typeof(eAlphabet), x.ToString().ToUpper()))
             .ToArray();
 
@@ -148,14 +148,14 @@ public class Question109
             .ToArray();
         var vaildPos = new List<int[]>();
         //세로 정답지 추가
-        if (word.value.Length < height)
+        if (word.key.Length < height)
         {
             for(int i = 0;i < width; i++)
             {
-                for(int j= 0; j < height-word.value.Length; j++)
+                for(int j= 0; j < height-word.key.Length; j++)
                 {
                     var tmp = new List<int>();
-                    for(int k = 0; k < word.value.Length; k++)
+                    for(int k = 0; k < word.key.Length; k++)
                     {
                         tmp.Add(GetIndex(new Vector2(i, j + k)));
                     }
@@ -166,10 +166,10 @@ public class Question109
         //가로 정답지 추가
         for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < width - word.value.Length; j++)
+            for (int j = 0; j < width - word.key.Length; j++)
             {
                 var tmp = new List<int>();
-                for (int k = 0; k < word.value.Length; k++)
+                for (int k = 0; k < word.key.Length; k++)
                 {
                     tmp.Add(GetIndex(new Vector2(j + k, i)));
                 }
@@ -182,7 +182,7 @@ public class Question109
         for(int i = 0;i < selectPos.Length; i++)
             alphabets[selectPos[i]] = wordAlphabets[i];
 
-        //var correctPosition = GetVaildPositions(word.value.Length)
+        //var correctPosition = GetVaildPositions(word.key.Length)
         //    .OrderBy(x => Random.Range(0f, 100f))
         //    .First();
 

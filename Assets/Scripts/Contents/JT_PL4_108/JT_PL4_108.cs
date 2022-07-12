@@ -22,7 +22,7 @@ public class JT_PL4_108 : BaseContents
     public SplitElement_408 potionElement;
     public GameObject textElement;
 
-    private DigraphsSource current;
+    private DigraphsWordsData current;
     private string[] questionTexts;
     private List<string> answerTexts = new List<string>();
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
@@ -37,7 +37,7 @@ public class JT_PL4_108 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
         audioPlayer.Play(current.clip);
@@ -50,12 +50,12 @@ public class JT_PL4_108 : BaseContents
         answerTexts.Clear();
         answerElements.Clear();
 
-        var digraphs = current.type.ToString().ToLower();
+        var digraphs = current.Digraphs.ToString().ToLower();
 
         currentImage.sprite = current.sprite;
         currentImage.preserveAspect = true;
 
-        var temp = current.value.Replace(digraphs, string.Empty);
+        var temp = current.key.Replace(digraphs, string.Empty);
         var tempList = new List<string>();
         foreach (var item in temp)
             tempList.Add(item.ToString());
@@ -66,7 +66,7 @@ public class JT_PL4_108 : BaseContents
             .ToArray();
 
 
-        var digraphsIndex = current.value.IndexOf(digraphs);
+        var digraphsIndex = current.key.IndexOf(digraphs);
 
         foreach (var item in temp)
             answerTexts.Add(item.ToString());
@@ -84,7 +84,7 @@ public class JT_PL4_108 : BaseContents
             AddListener(potion);
 
             var text = Instantiate(textElement, textsParent.transform).GetComponent<SplitElement_408>();
-            if( current.type.ToString() == answerTexts[i].ToUpper())
+            if( current.Digraphs.ToString() == answerTexts[i].ToUpper())
             {
                 var colorText = ("<color=\"red\">" + answerTexts[i] + "</color>");
                 text.Init(colorText, textSprite);

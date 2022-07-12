@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
+public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
 {
     protected override int QuestionCount => 3;
     public GameObject finger;
@@ -47,7 +47,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
 
             var incorrects = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type != GameManager.Instance.currentDigrpahs)
+                .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(incorrectCount)
                 .ToArray();
@@ -66,13 +66,13 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         {
             buttons[i].gameObject.SetActive(true);
             buttons[i].Init(randomQuestions[i]);
-            buttons[i].name = randomQuestions[i].value;
+            buttons[i].name = randomQuestions[i].key;
             buttons[i].button.interactable = false;
             var rt = buttons[i].GetComponent<RectTransform>();
             rt.anchoredPosition = Vector2.zero;
             rt.localScale = Vector3.one;
         }
-        rocket.text.text = question.currentCorrect.value;
+        rocket.text.text = question.currentCorrect.key;
         CallRokect();
     }
     protected override void ShowResult()
@@ -91,7 +91,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         });
         button.onClickData += (value) =>
         {
-            if (value.type == currentQuestion.currentCorrect.type)
+            if (value.Digraphs == currentQuestion.currentCorrect.Digraphs)
             {
                 PlayWord(value);
                 if (finger != null)
@@ -103,7 +103,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
                 DoMove(window, rt, () =>
                 {
                     button.gameObject.SetActive(false);
-                    rocket.Away(value.value, () =>
+                    rocket.Away(value.key, () =>
                     {
                         AddAnswer(value);
 
@@ -137,7 +137,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
     {
         PlayWord(currentQuestion.currentCorrect);
     }
-    private void PlayWord(DigraphsSource word) => audioPlayer.Play(word.clip);
+    private void PlayWord(DigraphsWordsData word) => audioPlayer.Play(word.clip);
     private void CallRokect()
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -155,17 +155,17 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
         });
     }
 }
-public class Question5_104 : MultiQuestion<DigraphsSource>
+public class Question5_104 : MultiQuestion<DigraphsWordsData>
 {
     public int currentIndex { get; private set; } = 0;
-    public DigraphsSource currentCorrect => correct[currentIndex];
+    public DigraphsWordsData currentCorrect => correct[currentIndex];
 
-    public Question5_104(DigraphsSource[] correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question5_104(DigraphsWordsData[] correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(DigraphsSource answer) => currentCorrect == answer;
-    public override void SetAnswer(DigraphsSource answer)
+    protected override bool CheckCorrect(DigraphsWordsData answer) => currentCorrect == answer;
+    public override void SetAnswer(DigraphsWordsData answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

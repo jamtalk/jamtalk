@@ -18,7 +18,7 @@ public class JT_PL1_116 : BaseContents
 
     protected override bool CheckOver() => currentIndex == length;
 
-    private WordSource[] words;
+    private AlphabetWordsData[] words;
     private eAlphabet[] alphabets;
 
     private int currentIndex=0;
@@ -58,7 +58,7 @@ public class JT_PL1_116 : BaseContents
     }
     private void PlayWord()
     {
-        audioPlayer.Play(words[currentIndex].act3);
+        audioPlayer.Play(words[currentIndex].audio.act2);
     }
     
     private void AddButtonListener(AlphabetButton button)
@@ -72,7 +72,7 @@ public class JT_PL1_116 : BaseContents
             {
                 if (selected[0].value == alphabets[currentIndex] &&  selected[1].value == alphabets[currentIndex] && selected[0].type != selected[1].type)
                 {
-                    var clip = words[currentIndex].act3;
+                    var clip = words[currentIndex].act;
                     answerImage.Show(words[currentIndex].sprite);
                     audioPlayer.Play(clip,()=>
                     {

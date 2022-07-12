@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Alphabet Sprite Data.asset", menuName = "LocalDB/Element/Alphabet Sprite Data")]
-public class AlphabetSpriteData : LocalDBElement
+public class AlphabetSpriteData : ScriptableObject
 {
     [Serializable]
     public class AlphabetSpritePair
@@ -34,13 +34,9 @@ public class AlphabetSpriteData : LocalDBElement
             return target;
         }
     }
-
-    public override bool Loadable => false;
     [SerializeField]
     private SerializableDictionaryBase<eAlphabetStyle, AlphabetSpritePair> sprites;
     public AlphabetSpritePair Get(eAlphabetStyle style) => sprites[style];
     public Sprite[] Get(eAlphabetStyle style, eAlphabetType type) => Get(style).Get(type);
     public Sprite Get(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Get(style).Get(type, alphabet);
-
-    public override void Load(List<Hashtable> data) { }
 }

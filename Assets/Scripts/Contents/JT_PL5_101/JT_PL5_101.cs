@@ -19,7 +19,7 @@ public class JT_PL5_101 : BaseContents
     public Image[] alphabetImages;
     public RectTransform[] leftWaypoint;
     public RectTransform[] rightWaypoint;
-    private DigraphsSource digraphs;
+    private DigraphsWordsData digraphs;
     protected override void Awake()
     {
         base.Awake();
@@ -30,11 +30,11 @@ public class JT_PL5_101 : BaseContents
     {
         digraphs = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .First();
 
-        var temp = digraphs.type.ToString().ToCharArray();
+        var temp = digraphs.Digraphs.ToString().ToCharArray();
 
         for(int i = 0; i < temp.Length; i++)
         {

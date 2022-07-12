@@ -7,9 +7,9 @@ public class Card120 : MonoBehaviour
 {
     public TurningCard card;
     public ImageButton imageButton;
-    public event Action<WordSource> onClick;
-    public WordSource data;
-    public void Init(WordSource data)
+    public event Action<AlphabetWordsData> onClick;
+    public AlphabetWordsData data;
+    public void Init(AlphabetWordsData data)
     {
         this.data = data;
         imageButton.sprite = data.sprite;

@@ -13,7 +13,7 @@ public class JT_PL4_105 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
-    private DigraphsSource current;
+    private DigraphsWordsData current;
     private string digraphsValue;
     private Vector3 defaultPosition;
 
@@ -38,7 +38,7 @@ public class JT_PL4_105 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == eDigraphs.AI)
+            .Where(x => x.Digraphs == eDigraphs.AI)
             //.Where(x => x.type == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
@@ -57,16 +57,16 @@ public class JT_PL4_105 : BaseContents
         currentImage.sprite = current.sprite;
         currentImage.preserveAspect = true;
 
-        var digraphs = current.type.ToString().ToLower();
-        var pairDigraphs = current.GetPair().ToString().ToLower();
+        var digraphs = current.Digraphs.ToString().ToLower();
+        var pairDigraphs = current.PairDigrpahs.ToString().ToLower();
 
-        if (!current.value.Contains(current.type.ToString().ToLower()))
+        if (!current.key.Contains(current.Digraphs.ToString().ToLower()))
             digraphsValue = pairDigraphs;
         else
             digraphsValue = digraphs;
 
-        var digraphsIndex = current.value.IndexOf(digraphsValue);
-        var currentTemp = current.value.Replace(digraphsValue, string.Empty);
+        var digraphsIndex = current.key.IndexOf(digraphsValue);
+        var currentTemp = current.key.Replace(digraphsValue, string.Empty);
         var tempList = new List<string>();
 
         foreach (var item in currentTemp)

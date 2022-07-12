@@ -11,26 +11,26 @@ public class BubbleElement : DoubleClickButton
     private bool interactable = false;
 
     public Text textValue;
-    public VowelSource data { get; private set; }
-    public DigraphsSource digraphs { get; private set; }
+    public VowelWordsData data { get; private set; }
+    public DigraphsWordsData digraphs { get; private set; }
 
     private float duration = 1f;
     private Sequence seq;
     private Vector3 defaultPosition;
 
-    public void Init(VowelSource data)
+    public void Init(VowelWordsData data)
     {
         this.data = data;
-        textValue.text = data.value;
-        name = data.value;
+        textValue.text = data.key;
+        name = data.key;
         gameObject.SetActive(true);
     }
 
-    public void Init(DigraphsSource data)
+    public void Init(DigraphsWordsData data)
     {
         digraphs = data;
-        textValue.text = data.value;
-        name = data.value;
+        textValue.text = data.key;
+        name = data.key;
         gameObject.SetActive(true);
     }
 

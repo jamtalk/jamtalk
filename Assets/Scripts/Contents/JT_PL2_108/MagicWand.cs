@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class MagicWand<T> : MonoBehaviour
-    where T : DataSource
+    where T : ResourceWordsElement
 {
     public ParticleSystem particle;
     public Image potionImage;

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotElement502 : SlotMachineElement<DigraphsSource>
+public class SlotElement502 : SlotMachineElement<DigraphsWordsData>
 {
     public Text text;
     public Image image;
-    public override void Init(DigraphsSource data)
+    public override void Init(DigraphsWordsData data)
     {
-        var digraphs = data.type.ToString().ToLower();
-        var value = data.value.Replace(digraphs, "<color=\"red\">" + digraphs + "</color>");
+        var digraphs = data.Digraphs.ToString().ToLower();
+        var value = data.key.Replace(digraphs, "<color=\"red\">" + digraphs + "</color>");
 
         text.text = value;
         image.sprite = data.sprite;

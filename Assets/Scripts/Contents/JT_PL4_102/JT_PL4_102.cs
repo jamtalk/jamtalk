@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
+public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL4_102;
     protected override int QuestionCount => 1;
@@ -26,12 +26,12 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
         {
             var current = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+                .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(answerCount)
                 .ToArray();
 
-            questions.Add(new Question4_102(current, new DigraphsSource[] { }));
+            questions.Add(new Question4_102(current, new DigraphsWordsData[] { }));
         }
         
         return questions;
@@ -48,12 +48,12 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
         }
     }
 
-    private void AddListener(Image button, DigraphsSource data)
+    private void AddListener(Image button, DigraphsWordsData data)
     {
         button.GetComponent<Button>().onClick.AddListener(() =>
         {
             audioPlayer.Play(data.clip);
-            if (data.value == currentQuestion.currentCorrect.value)
+            if (data.key == currentQuestion.currentCorrect.key)
             {
                 for (int i = 0; i < parentImages.Length; i++)
                     parentImages[i].gameObject.SetActive(false);
@@ -74,45 +74,45 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsSource>
         });
     }
 
-    private void SetCurrentColor(DigraphsSource data)
+    private void SetCurrentColor(DigraphsWordsData data)
     {
-        var isCheck = data.value.Contains(data.type.ToString().ToLower());
+        var isCheck = data.key.Contains(data.Digraphs.ToString().ToLower());
         string value = string.Empty;
 
         if (!isCheck)
         {
             string temp = string.Empty;
-            if (data.type == eDigraphs.OI)
+            if (data.Digraphs == eDigraphs.OI)
                 temp = "oy";
-            else if (data.type == eDigraphs.EA)
+            else if (data.Digraphs == eDigraphs.EA)
                 temp = "ee";
-            else if (data.type == eDigraphs.AI)
+            else if (data.Digraphs == eDigraphs.AI)
                 temp = "ay";
 
-            value = data.value.Replace(temp,
+            value = data.key.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");
         }
         else
         {
-            value = data.value.Replace(data.type.ToString().ToLower()
-                , "<color=\"red\">" + data.type.ToString().ToLower() + "</color>");
+            value = data.key.Replace(data.Digraphs.ToString().ToLower()
+                , "<color=\"red\">" + data.Digraphs.ToString().ToLower() + "</color>");
         }
 
         successText.text = value;
     }
 }
 
-public class Question4_102 : MultiQuestion<DigraphsSource>
+public class Question4_102 : MultiQuestion<DigraphsWordsData>
 {
     public int currentIndex { get; private set; } = 0;
-    public DigraphsSource currentCorrect => correct[currentIndex];
+    public DigraphsWordsData currentCorrect => correct[currentIndex];
 
-    public Question4_102(DigraphsSource[] correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question4_102(DigraphsWordsData[] correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(DigraphsSource answer) => true;
-    public override void SetAnswer(DigraphsSource answer)
+    protected override bool CheckCorrect(DigraphsWordsData answer) => true;
+    public override void SetAnswer(DigraphsWordsData answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

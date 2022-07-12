@@ -12,7 +12,7 @@ public class JT_PL3_106 : BaseContents
     protected  int QuestionCount => 3;
     private int index = 0;
 
-    private DigraphsSource currentDigraphs;
+    private DigraphsWordsData currentDigraphs;
 
     public Thrower306 thrower;
     public Text[] texts;
@@ -35,9 +35,9 @@ public class JT_PL3_106 : BaseContents
     {
         index = index > 2 ? index = 2 : index ;
 
-        currentText.text = currentDigraphs.value;
+        currentText.text = currentDigraphs.key;
         currentImage.sprite = currentDigraphs.sprite;
-        currentImage.name = currentDigraphs.value;
+        currentImage.name = currentDigraphs.key;
         currentImage.preserveAspect = true;
         currentImage.gameObject.SetActive(true);
 
@@ -59,15 +59,15 @@ public class JT_PL3_106 : BaseContents
     {
         currentDigraphs = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
-        var value = currentDigraphs.value;
+        var value = currentDigraphs.key;
         currentText.text = value.Replace(
             GameManager.Instance.currentDigrpahs.ToString().ToLower(), "__");
         currentImage.sprite = currentDigraphs.sprite;
-        currentImage.name = currentDigraphs.value;
+        currentImage.name = currentDigraphs.key;
         currentImage.preserveAspect = true;
 
         ShowQuestion();
@@ -83,7 +83,7 @@ public class JT_PL3_106 : BaseContents
         }
     }
 
-    protected virtual void AddDoubleClickListener(DoubleClick306 element, DigraphsSource data)
+    protected virtual void AddDoubleClickListener(DoubleClick306 element, DigraphsWordsData data)
     {
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
@@ -95,7 +95,7 @@ public class JT_PL3_106 : BaseContents
 
         element.onClick.AddListener(() =>
         {  
-            if (currentDigraphs.value.Contains(element.name))
+            if (currentDigraphs.key.Contains(element.name))
             {
                 index += 1;
 

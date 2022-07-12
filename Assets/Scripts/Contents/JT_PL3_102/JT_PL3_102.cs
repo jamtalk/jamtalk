@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
+public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_102;
     protected override int QuestionCount => 3;
@@ -23,11 +23,11 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
         {
             var current = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.type == digraphs[i])
+                .Where(x => x.Digraphs == digraphs[i])
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(answerCount)
                 .ToArray();
-            questions.Add(new Question3_102(current, new DigraphsSource[] { }));
+            questions.Add(new Question3_102(current, new DigraphsWordsData[] { }));
         }
         return questions;
     }
@@ -73,17 +73,17 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsSource>
     }
 }
 
-public class Question3_102 : MultiQuestion<DigraphsSource>
+public class Question3_102 : MultiQuestion<DigraphsWordsData>
 {
     public int currentIndex { get; private set; } = 0;
-    public DigraphsSource currentCorrect => correct[currentIndex];
+    public DigraphsWordsData currentCorrect => correct[currentIndex];
 
-    public Question3_102(DigraphsSource[] correct, DigraphsSource[] questions) : base(correct, questions)
+    public Question3_102(DigraphsWordsData[] correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
     }
 
-    protected override bool CheckCorrect(DigraphsSource answer) => true;
-    public override void SetAnswer(DigraphsSource answer)
+    protected override bool CheckCorrect(DigraphsWordsData answer) => true;
+    public override void SetAnswer(DigraphsWordsData answer)
     {
         base.SetAnswer(answer);
         currentIndex += 1;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class BaseMatchImage<T> : BaseContents
-    where T : DataSource
+    where T : ResourceWordsElement
 {
     public CanvasScaler scaler;
     public DropSpaceShip_107[] drops;
@@ -21,7 +21,7 @@ public abstract class BaseMatchImage<T> : BaseContents
     protected abstract void GetWords();
 
 
-    protected abstract void PlayAudio(DataSource word);
+    protected abstract void PlayAudio(ResourceWordsElement word);
 
     protected override eContents contents => throw new System.NotImplementedException();
     protected override int GetTotalScore() => drops.Length;

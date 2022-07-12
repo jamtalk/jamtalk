@@ -10,9 +10,9 @@ public class Card114 : MonoBehaviour
     public Image image;
     public Text text;
     public Card114Data alhpabetData;
-    public DigraphsSource digraphsData;
+    public DigraphsWordsData DigraphsWordsData;
     public event Action<Card114Data> onSelected;
-    public event Action<DigraphsSource> onSelecte;
+    public event Action<DigraphsWordsData> onSelecte;
     public event Action onDeselected;
 
     public RectTransform star;
@@ -29,11 +29,11 @@ public class Card114 : MonoBehaviour
         },alwaysFrontDisable:true);
     }
 
-    public void Init(DigraphsSource data, string color)
+    public void Init(DigraphsWordsData data, string color)
     {
-        this.digraphsData = data;
-        text.text = data.value.Replace(data.value,
-            "<color=\"" + color + "\">" + data.value + "</color>");
+        this.DigraphsWordsData = data;
+        text.text = data.key.Replace(data.key,
+            "<color=\"" + color + "\">" + data.key + "</color>");
 
         Debug.Log(text.text);
         card.Init(callback: () =>

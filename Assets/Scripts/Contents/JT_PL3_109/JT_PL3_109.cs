@@ -13,7 +13,7 @@ public class JT_PL3_109 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-    protected DigraphsSource word;
+    protected DigraphsWordsData word;
 
     protected override eContents contents => eContents.JT_PL3_109;
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
@@ -33,7 +33,7 @@ public class JT_PL3_109 : BaseContents
             .First();
     }
 
-    private void SetElement(DigraphsSource words)
+    private void SetElement(DigraphsWordsData words)
     {
         toggles = creator.Create(word);
         for (int i = 0; i < toggles.Length; i++)

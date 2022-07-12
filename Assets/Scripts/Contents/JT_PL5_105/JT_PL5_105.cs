@@ -11,7 +11,7 @@ public class JT_PL5_105 : BaseContents
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
-    private DigraphsSource[] current;
+    private DigraphsWordsData[] current;
     private List<ToggleText505> toggles = new List<ToggleText505>();
     private int digraphsIndex = 0;
 
@@ -32,7 +32,7 @@ public class JT_PL5_105 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
@@ -42,9 +42,9 @@ public class JT_PL5_105 : BaseContents
 
     private void ShowQuestion()
     {
-        var digraphs = current[index].type.ToString().ToLower();
-        digraphsIndex = current[index].value.IndexOf(digraphs);
-        var temp = current[index].value.Replace(digraphs, string.Empty);
+        var digraphs = current[index].Digraphs.ToString().ToLower();
+        digraphsIndex = current[index].key.IndexOf(digraphs);
+        var temp = current[index].key.Replace(digraphs, string.Empty);
         var tempList = new List<string>();
         foreach (var item in temp)
             tempList.Add(item.ToString());

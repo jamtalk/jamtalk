@@ -104,7 +104,7 @@ public class Question4_104
     {
         this.value = dig;
         this.isPair = isPair;
-        pair = DigraphsSource.GetPair(dig);
+        pair = ResourceSchema.GetPair(dig);
         if (isPair)
             text = pair.ToString().ToLower();
         else

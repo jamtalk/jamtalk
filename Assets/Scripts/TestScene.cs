@@ -101,7 +101,7 @@ public class TestScene : MonoBehaviour
         //for (int i = 0; i < waitFrame; i++)
         //    yield return new WaitForEndOfFrame();
         loadingBar.gameObject.SetActive(true);
-        yield return LocalDB.Initialize((progress) => loadingBar.value = progress);
+        //yield return LocalDB.Initialize((progress) => loadingBar.value = progress);
         loadingBar.gameObject.SetActive(false);
 
         loading.gameObject.SetActive(false);

@@ -29,13 +29,13 @@ public class JT_PL2_106 : BaseContents
     public AudioClip tabClip;
     public AudioClip currentClip;
 
-    private VowelSource[] shortWords;
-    private VowelSource[] longWords;
+    private VowelWordsData[] shortWords;
+    private VowelWordsData[] longWords;
 
     private Sequence seq;
     private List<Text> textList = new List<Text>();
     private int currentIndex;
-    private List<VowelSource> datas = new List<VowelSource>();
+    private List<VowelWordsData> datas = new List<VowelWordsData>();
 
     protected override void Awake()
     {          
@@ -52,13 +52,13 @@ public class JT_PL2_106 : BaseContents
     private void Init()
     {
         shortWords = GameManager.Instance.GetResources().Vowels
-            .Where(x => x.type == eVowelType.Short)
+            .Where(x => x.VowelType == eVowelType.Short)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(WordsCount)
             .ToArray();
 
         longWords = GameManager.Instance.GetResources().Vowels
-            .Where(x => x.type == eVowelType.Long)
+            .Where(x => x.VowelType == eVowelType.Long)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(WordsCount)
             .ToArray();
@@ -71,8 +71,8 @@ public class JT_PL2_106 : BaseContents
 
             var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<Text>();
             text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            text.text = shortWords[i].value;
-            text.name = shortWords[i].value;
+            text.text = shortWords[i].key;
+            text.name = shortWords[i].key;
 
             textList.Add(text);
             datas.Add(shortWords[i]);
@@ -84,8 +84,8 @@ public class JT_PL2_106 : BaseContents
 
             var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<Text>();
             text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            text.text = longWords[i].value;
-            text.name = longWords[i].value;
+            text.text = longWords[i].key;
+            text.name = longWords[i].key;
 
             textList.Add(text);
             datas.Add(longWords[i]);
@@ -102,7 +102,7 @@ public class JT_PL2_106 : BaseContents
         {
             if (button.name == "ShortButton")
             {
-                if (textList[currentIndex].text.Contains(shortWords[i].value))
+                if (textList[currentIndex].text.Contains(shortWords[i].key))
                 {
                     currentCount[index].isOn = true;
                     index += 1;
@@ -118,7 +118,7 @@ public class JT_PL2_106 : BaseContents
             }
             else if (button.name == "LongButton")
             {
-                if (textList[currentIndex].text.Contains(longWords[i].value))
+                if (textList[currentIndex].text.Contains(longWords[i].key))
                 {
                     currentCount[index].isOn = true;
                     index += 1;
