@@ -17,18 +17,19 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
         AudioClip clip = null;
         if (string.IsNullOrEmpty(key))
         {
-            callback?.Invoke(null);
             Debug.LogWarning("Audio key is null.");
-            return;
+            callback?.Invoke(clip);
         }
-        if (clips.ContainsKey(key))
+        else if (clips.ContainsKey(key))
         {
             clip = clips[key];
             Debug.LogFormat("{0} : {1}", key, clip);
+            callback?.Invoke(clip);
         }
         else
             StartCoroutine(LoadClip(key, callback));
-        callback?.Invoke(clip);
+
+        
 
     }
     private IEnumerator LoadClip(string key, Action<AudioClip> callback)
