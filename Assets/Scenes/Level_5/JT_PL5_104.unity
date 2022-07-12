@@ -881,6 +881,7 @@ MonoBehaviour:
   clipStop: {fileID: 8300000, guid: 52a54ecb70caffa4bbe3140fda33d49e, type: 3}
   clipArrival: {fileID: 8300000, guid: f68c72e3113749e4aa772385fc5400d2, type: 3}
   tempNum: 0
+  text: {fileID: 0}
 --- !u!114 &652548412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1586,7 +1587,7 @@ GameObject:
   - component: {fileID: 1417845887}
   - component: {fileID: 1417845886}
   m_Layer: 5
-  m_Name: TextButton
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1809,7 +1810,7 @@ GameObject:
   - component: {fileID: 1528821554}
   - component: {fileID: 1528821557}
   m_Layer: 5
-  m_Name: TextButton
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2819,7 +2820,7 @@ GameObject:
   - component: {fileID: 2142574930}
   - component: {fileID: 2142574929}
   m_Layer: 5
-  m_Name: TextButton
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
