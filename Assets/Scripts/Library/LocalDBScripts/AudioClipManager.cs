@@ -15,6 +15,12 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
     public void GetClip(string key,Action<AudioClip> callback)
     {
         AudioClip clip = null;
+        if (string.IsNullOrEmpty(key))
+        {
+            callback?.Invoke(null);
+            Debug.LogWarning("Audio key is null.");
+            return;
+        }
         if (clips.ContainsKey(key))
         {
             clip = clips[key];

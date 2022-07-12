@@ -1325,8 +1325,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1041927084}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1369,8 +1368,8 @@ RectTransform:
   - {fileID: 356971742}
   - {fileID: 1264703332}
   - {fileID: 1654316574}
-  m_Father: {fileID: 947208369}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1451,6 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 1865559576}
   currentText: {fileID: 1468190976}
   hammer: {fileID: 1654316573}
   effectImage: {fileID: 1264703333}
@@ -1468,7 +1468,6 @@ MonoBehaviour:
   hammerClip: {fileID: 0}
   moleClip: {fileID: 0}
   effectClip: {fileID: 8300000, guid: 85f75b5d6f69f1246bdf94de863f53de, type: 3}
-  audioPlayer: {fileID: 1865559576}
 --- !u!1 &1142016593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,7 +2437,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1702838963
 GameObject:
@@ -2840,7 +2839,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887089228
 GameObject:
