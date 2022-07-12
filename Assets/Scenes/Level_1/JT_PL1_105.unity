@@ -1042,9 +1042,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 2030932875}
   alphabetImage: {fileID: 1801284723}
   image: {fileID: 1798120681}
-  audioPlayer: {fileID: 2030932875}
   buttonAudio:
   - {fileID: 505905497}
   - {fileID: 1801284724}
@@ -1646,7 +1646,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
