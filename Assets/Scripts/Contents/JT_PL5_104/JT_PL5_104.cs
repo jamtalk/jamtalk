@@ -72,7 +72,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsSource>
             rt.anchoredPosition = Vector2.zero;
             rt.localScale = Vector3.one;
         }
-        
+        rocket.text.text = question.currentCorrect.value;
         CallRokect();
     }
     protected override void ShowResult()
