@@ -181,22 +181,18 @@ public class JT_PL2_103 : BaseContents
 
         
         target.visible = true;
-        if (!shortsElements.Select(x => x.visible).Contains(false)
-            && !longElements.Select(x => x.visible).Contains(false))
-        {
-            index += 1;
-            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-            {
-                if (CheckOver())
-                    ShowResult();
-                else
-                    StartCoroutine(Init(currentWord));
-            });
-        }
     }
     private IEnumerator WaitSeconds()
     {
         yield return new WaitForSecondsRealtime(1);
-        audioPlayer.Play(1f, currentClip, () => popupCureent.gameObject.SetActive(false));
+        audioPlayer.Play(1f, currentClip, () =>
+        {
+            popupCureent.gameObject.SetActive(false);
+            if (!shortsElements.Select(x => x.visible).Contains(false)
+            && !longElements.Select(x => x.visible).Contains(false))
+            {
+                ShowResult();
+            }
+        });
     }
 }
