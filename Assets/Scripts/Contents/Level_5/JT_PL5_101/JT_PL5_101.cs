@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
-//using GJGameLibrary.Util.Bezier.DoTween;
+using Bezier = GJGameLibrary.Util.Bezier.DoTween.BezierTween;
 
 public class JT_PL5_101 : BaseContents
 {
@@ -20,6 +20,7 @@ public class JT_PL5_101 : BaseContents
     public RectTransform[] leftWaypoint;
     public RectTransform[] rightWaypoint;
     private DigraphsWordsData digraphs;
+
     protected override void Awake()
     {
         base.Awake();
@@ -49,15 +50,28 @@ public class JT_PL5_101 : BaseContents
 
     private void ShowQuestion()
     {
-        DoMove(leftWaypoint, alphabetImages[0]);
-        DoMove(rightWaypoint, alphabetImages[1]);
+        List<Vector3> vectorLeft = new List<Vector3>();
+        List<Vector3> vectorRight = new List<Vector3>();
+        for (int i = 0; i < leftWaypoint.Length; i++)
+        {
+            vectorLeft.Add(leftWaypoint[i].position);
+            vectorRight.Add(rightWaypoint[i].position);
+        }
+        var vectorLefts = vectorLeft.ToArray();
+        var vectorRights = vectorRight.ToArray();
 
-        audioPlayer.Play(digraphs.act);
+        var leftTween = Bezier.Curve(alphabetImages[0].transform, 2.5f, 10, vectorLefts);
+        var rightTween = Bezier.Curve(alphabetImages[1].transform, 2.5f, 10, vectorRights);
+
+        leftTween.Play();
+        rightTween.Play();
+
         StartCoroutine(Wait());
     }
     private IEnumerator Wait()
     {
         yield return new WaitForSecondsRealtime(3f);
+        audioPlayer.Play(digraphs.audio.phanics);
 
         DoHoleIn(alphabetImages, () =>
         {
@@ -67,14 +81,13 @@ public class JT_PL5_101 : BaseContents
             ShowResult();
         });
     }
-
-    private void DoMove(RectTransform[] waypoint, Image image)
+    private void DoMove(Image image, RectTransform[] wayPoint)
     {
         var seq = DOTween.Sequence();
 
-        for (int i = 0; i < waypoint.Length; i++)
+        for( int i = 0; i < wayPoint.Length; i++)
         {
-            var tween = image.transform.DOMove(waypoint[i].position, 1f);
+            var tween = image.transform.DOMove(wayPoint[i].position, 1f);
             tween.SetEase(Ease.Linear);
             seq.Append(tween);
         }
