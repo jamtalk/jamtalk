@@ -24,6 +24,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     public Thrower204 thrower;
     public GameObject bubbleElement;
     public Text textPot;
+    public Image effectImage;
 
     [Header("List")]
     public Button[] charactors;
@@ -35,6 +36,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     private Animator[] ani;
 
     [Header("Audio")]
+    public AudioClip effectClip;
     public AudioClip tabClip;
     public AudioClip putClip;
     public AudioClip errorClip;
@@ -174,7 +176,15 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     }
     protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data)
     {
-        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
+        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
+        {
+            effectImage.gameObject.SetActive(true);
+            audioPlayer.Play(1f, effectClip , () =>
+            {
+                effectImage.gameObject.SetActive(false);
+                AddAnswer(data);
+            });
+        });
     }
 
     private IEnumerator Init()

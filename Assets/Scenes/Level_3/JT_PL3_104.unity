@@ -656,6 +656,7 @@ MonoBehaviour:
   thrower: {fileID: 159137180}
   bubbleElement: {fileID: 141426792}
   textPot: {fileID: 55602396}
+  effectImage: {fileID: 40367287}
   charactors:
   - {fileID: 435989713}
   smallBubbles:
@@ -666,11 +667,10 @@ MonoBehaviour:
   - {fileID: 1684392534}
   ani:
   - {fileID: 435989714}
+  effectClip: {fileID: 8300000, guid: 85f75b5d6f69f1246bdf94de863f53de, type: 3}
   tabClip: {fileID: 8300000, guid: 2374a844b2f480d478db436ce178cd50, type: 3}
   putClip: {fileID: 8300000, guid: 563afdd2efe48464cbde0ee8b0d675fa, type: 3}
   errorClip: {fileID: 8300000, guid: ff03b4cb204b1fb46937feb8d9b15800, type: 3}
-  effect: {fileID: 40367285}
-  effectClip: {fileID: 8300000, guid: 85f75b5d6f69f1246bdf94de863f53de, type: 3}
 --- !u!1 &175610742
 GameObject:
   m_ObjectHideFlags: 0
