@@ -33,8 +33,6 @@ public class JT_PL3_106 : BaseContents
 
     private void SetCurrentImage()
     {
-        index = index > 2 ? index = 2 : index ;
-
         currentText.text = currentDigraphs.key;
         currentImage.sprite = currentDigraphs.sprite;
         currentImage.name = currentDigraphs.key;
@@ -88,13 +86,15 @@ public class JT_PL3_106 : BaseContents
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
 
+        var clip = GameManager.Instance.schema.GetDigrpahsAudio(element.eDigraphs);
+
         element.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(data.act);
+            audioPlayer.Play(clip.phanics);
         });
 
         element.onClick.AddListener(() =>
-        {  
+        {
             if (currentDigraphs.key.Contains(element.name))
             {
                 index += 1;
@@ -107,19 +107,22 @@ public class JT_PL3_106 : BaseContents
                 thrower.gameObject.SetActive(true);
                 thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
                 {
+                    currentText.text = data.key;
                     SetBagImage();
 
-                    audioPlayer.Play(currentDigraphs.clip, () => SetCurrentImage());
+                    audioPlayer.Play(currentDigraphs.act, () =>
+                    {
+                        SetCurrentImage();
+                        if (CheckOver())
+                            ShowResult();
+                        else
+                            MakeQuestion();
+                    });
                 });
-
-                if (CheckOver())
-                    ShowResult();
-                else
-                    MakeQuestion();
             }
             else
             {
-                audioPlayer.Play(data.act);
+                audioPlayer.Play(clip.phanics);
             }
         });
     }
