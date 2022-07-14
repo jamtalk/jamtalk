@@ -82,7 +82,8 @@ public class JT_PL4_101 : BaseContents
 
                 if (slideCount >= 2)
                 {
-                    audioPlayer.Play(data.act);
+                    audioPlayer.Play(data.audio.phanics);
+                    
                     StartCoroutine(Reset());
                 }
             }

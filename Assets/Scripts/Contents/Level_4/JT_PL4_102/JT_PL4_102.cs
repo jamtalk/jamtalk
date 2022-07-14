@@ -53,8 +53,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         button.GetComponent<Button>().onClick.AddListener(() =>
         {
             audioPlayer.Play(data.clip);
-            if (data.key == currentQuestion.currentCorrect.key)
-            {
+            //if (data.key == currentQuestion.currentCorrect.key)
+            //{
                 for (int i = 0; i < parentImages.Length; i++)
                     parentImages[i].gameObject.SetActive(false);
 
@@ -66,11 +66,11 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
                     successEffect.gameObject.SetActive(false);
                     for (int i = 0; i < parentImages.Length; i++)
                         parentImages[i].gameObject.SetActive(true);
+                    AddAnswer(currentQuestion.currentCorrect);      
                 });
 
                 button.sprite = successedImage;
-                AddAnswer(currentQuestion.currentCorrect);
-            }
+            //}
         });
     }
 
