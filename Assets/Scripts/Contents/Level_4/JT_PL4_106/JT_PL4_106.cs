@@ -52,6 +52,7 @@ public class JT_PL4_106 : BaseContents
             doubleClick[i].isOn = false;
         }
         SetCurrentColor();
+
     }
     private void ButtonAddListener(DoubleClickButton button, DigraphsWordsData data)
     {
@@ -60,15 +61,17 @@ public class JT_PL4_106 : BaseContents
 
         button.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(data.act);
+            var value = GameManager.Instance.schema.GetDigrpahsAudio(data.digraphs).phanics;
+            audioPlayer.Play(value);
         });
 
         button.onClick.AddListener(() =>
         {
             if (current.Digraphs == data.Digraphs)
             {
+                Debug.Log(index);
                 index += 1;
-                audioPlayer.Play(current.clip, () =>
+                audioPlayer.Play(data.clip, () =>
                 {
                     if (CheckOver())
                         ShowResult();
