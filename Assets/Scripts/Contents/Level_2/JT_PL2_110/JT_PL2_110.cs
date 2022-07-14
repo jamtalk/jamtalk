@@ -23,6 +23,7 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
             .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x.Alphabet))
             .SelectMany(x=>x.Words)
             .Where(x => x.key.Length < 6)
+            .Distinct()
             .Take((int)Mathf.Pow(board.size, 2f))
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray(); 
