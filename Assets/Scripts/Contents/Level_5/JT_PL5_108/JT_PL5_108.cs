@@ -54,10 +54,8 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
         current = question.correct;
         
         var temp = buttonPhanics.GetComponentInChildren<Text>();
-        temp.text = question.correct.act;
+        temp.text = question.correct.digraphs;
 
-        // image 변경
-        //buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(question.correct.act));
     }
@@ -71,8 +69,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
 
         var temp = buttonPhanics.GetComponentInChildren<Text>();
         temp.text = GameManager.Instance.currentDigrpahs.ToString().ToLower();
-        // image 변경
-        //buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
+        
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(current.clip));
     }
@@ -95,7 +92,6 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
             if (currentQuestion.correct == data)
             {
                 button.button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
-                //button.transform.GetChild(0).GetComponent<Image>().sprite = spritePop;
                 button.image.gameObject.SetActive(false);
                 audioPlayer.Play(1f, clipPop);
                 var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
@@ -117,8 +113,8 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
     }
     protected override void ShowResult()
     {
-        // digraphs act3 사운드 변경 
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
+        base.ShowResult();
+        //audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
     }
 }
 [Serializable]
