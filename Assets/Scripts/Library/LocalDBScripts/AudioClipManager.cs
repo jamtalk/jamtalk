@@ -27,9 +27,6 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
         }
         else
             StartCoroutine(LoadClip(key, callback));
-
-        
-
     }
     private IEnumerator LoadClip(string key, Action<AudioClip> callback)
     {

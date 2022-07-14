@@ -19,6 +19,7 @@ public abstract class BaseContents : MonoBehaviour
     public AudioSinglePlayer audioPlayer;
     protected virtual void ShowResult()
     {
+        GC.Collect();
         endTime = DateTime.Now;
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
         result.SetResult(GetResult());
