@@ -30,7 +30,7 @@ public class JT_PL1_102 : BaseContents
         egg.Init();
         currentClickCount = 0;
         var data = GameManager.Instance.GetResources(value);
-        //imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphabetType.Upper, value);
+        imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphabetType.Upper, value);
         imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
     }

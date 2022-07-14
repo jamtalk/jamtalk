@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    private const string AlhpabetSpritePath = "{0}/{1}/{2}";
     public eAlphabet currentAlphabet { get; set; }
     public eContents currentContents { get; set; }
     public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
@@ -24,18 +25,6 @@ public class GameManager : MonoSingleton<GameManager>
             return _schema;
         }
         private set { _schema = value; }
-    }
-    public AlphabetSpriteData _alphabetSprite = null;
-    public AlphabetSpriteData alphabetSprite
-    {
-        get
-        {
-            if (_alphabetSprite == null)
-                _alphabetSprite = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData").WaitForCompletion();
-
-            return _alphabetSprite;
-        }
-        private set { _alphabetSprite = value; }
     }
     public override void Initialize()
     {
@@ -60,11 +49,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
         Debug.LogFormat("스키마 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
         _schema = schemaLoader.Result;
-        var spriteLoader = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData");
-        Debug.Log("이미지 로딩 시작");
-        while (!spriteLoader.IsDone) { yield return null; }
-        Debug.LogFormat("이미지 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", spriteLoader.Status, spriteLoader.OperationException, spriteLoader.Result);
-        _alphabetSprite = spriteLoader.Result;
+        //var spriteLoader = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData");
+        //Debug.Log("이미지 로딩 시작");
+        //while (!spriteLoader.IsDone) { yield return null; }
+        //Debug.LogFormat("이미지 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", spriteLoader.Status, spriteLoader.OperationException, spriteLoader.Result);
+        //_alphabetSprite = spriteLoader.Result;
         callback?.Invoke();
     }
     public AudioClip GetClipCorrectEffect() => schema.correctSound;
@@ -72,9 +61,7 @@ public class GameManager : MonoSingleton<GameManager>
     public AlphabetData GetResources() => GetResources(currentAlphabet);
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
-    public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => alphabetSprite.Get(style);
-    public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => alphabetSprite.Get(style,type);
-    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => alphabetSprite.Get(style, type, alphabet);
+    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
     public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
