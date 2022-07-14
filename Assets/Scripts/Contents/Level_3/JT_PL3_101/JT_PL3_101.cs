@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL3_101 : BaseContents
@@ -22,6 +23,7 @@ public class JT_PL3_101 : BaseContents
 
     public Text[] texts;
     public Text resultText;
+    public EventSystem eventSystem; 
 
     private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
     protected override void Awake()
@@ -54,15 +56,21 @@ public class JT_PL3_101 : BaseContents
         if (dragElement.isColors)
             index += 1;
 
-        if (CheckOver())
-            ShowResult();
-        else
+        resultText.gameObject.SetActive(true);
+        audioPlayer.Play(temp.audio.phanics, () =>
         {
-            audioPlayer.Play(temp.act,() => SetColors());
-
-            dragElement.isColors = false;
-            resultText.gameObject.SetActive(false);
-        }
+            if (CheckOver())
+                ShowResult();
+            else
+            {
+                SetColors();
+                var color = resultColorImage.color;
+                color.a = 0;
+                resultColorImage.color = color;
+                dragElement.isColors = false;
+                resultText.gameObject.SetActive(false);
+            }
+        });
     }
 }
 
