@@ -87,7 +87,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
 
         button.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(button.data.act);
+            audioPlayer.Play(button.data.audio.phanics);
         });
         button.onClickData += (value) =>
         {
