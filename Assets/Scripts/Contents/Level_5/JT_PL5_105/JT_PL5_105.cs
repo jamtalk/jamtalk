@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class JT_PL5_105 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL5_105;
-    protected override bool CheckOver() => !toggles.Select(x => x.toggle.isOn).Contains(true);
+    protected override bool CheckOver() => index == questionCount && !toggles.Select(x => x.toggle.isOn).Contains(true);
     protected override int GetTotalScore() => questionCount;
-    private int questionCount = 3;
+    private int questionCount = 1;
     private int index = 0;
     private DigraphsWordsData[] current;
     private List<ToggleText505> toggles = new List<ToggleText505>();
@@ -36,7 +36,7 @@ public class JT_PL5_105 : BaseContents
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
-
+        
         ShowQuestion();
     }
 
@@ -73,21 +73,14 @@ public class JT_PL5_105 : BaseContents
 
     private void AddListener(DoubleClick505 button, int number)
     {
-        button.onClick.RemoveAllListeners();
         button.onClickFirst.RemoveAllListeners();
 
         button.onClickFirst.AddListener(() =>
         {
-            Debug.Log(button.text.text);
-            // phanics sound 출력 
-        });
-
-        button.onClick.AddListener(() =>
-        {
             if (number >= digraphsIndex)
                 number += 1;
             ThrowElement(button, number);
-        });
+        });;
     }
 
     protected virtual void ThrowElement(DoubleClick505 item, int number)
@@ -98,12 +91,26 @@ public class JT_PL5_105 : BaseContents
             item.gameObject.SetActive(false);
             string.Join(",", toggles.Select(x => x.toggle.isOn));
 
-            index += 1;;
-            if (index == toggles.Count - 1)
+            if (!toggles.Select(x => x.toggle.isOn).Contains(true))
             {
-                if (CheckOver())
-                    ShowResult();
+                audioPlayer.Play(current[index].clip, () =>
+                {
+                    index += 1;
+
+                    if (CheckOver())
+                        ShowResult();
+                    else
+                    {
+                        //Reset();
+                        ShowQuestion();
+                    }
+                });
             }
         });
+    }
+
+    private void Reset()
+    {
+
     }
 }
