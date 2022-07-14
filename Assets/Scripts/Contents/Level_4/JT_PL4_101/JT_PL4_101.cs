@@ -82,8 +82,8 @@ public class JT_PL4_101 : BaseContents
 
                 if (slideCount >= 2)
                 {
-                    audioPlayer.Play(data.audio.phanics);
-                    
+                    var pair = GameManager.Instance.schema.GetDigrpahsAudio(data.PairDigrpahs);
+                    audioPlayer.Play(data.audio.phanics, () => audioPlayer.Play(pair.phanics));
                     StartCoroutine(Reset());
                 }
             }
@@ -106,6 +106,7 @@ public class JT_PL4_101 : BaseContents
             sliders[i].gameObject.SetActive(true);
         }
         successImages.gameObject.SetActive(false);
+
 
         if (CheckOver())
             ShowResult();

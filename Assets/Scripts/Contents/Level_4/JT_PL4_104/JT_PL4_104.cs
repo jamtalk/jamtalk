@@ -47,37 +47,57 @@ public class JT_PL4_104 : BaseContents
 
         button.onClick.AddListener(() =>
         {
+            if (element.isOpen)
+                return;
+
             buttonCount += 1;
             element.Open();
+
+            Debug.LogFormat("pair : {0}, value : {1}"
+                , element.data.pair.ToString(), element.data.value.ToString());
 
             if(buttonCount == 1)
             {
                 selectElement = element;
-                //해당 음가 출력 
+                var value = string.Empty;
+                if (selectElement.data.isPair)
+                    value = GameManager.Instance.schema.GetDigrpahsAudio(selectElement.data.pair).phanics;
+                else
+                    value = GameManager.Instance.schema.GetDigrpahsAudio(selectElement.data.value).phanics;
+
+                audioPlayer.Play(value);
             }
             else if( buttonCount > 1)
             {
-                // 해당 음가 출력 이후 하단 적용 
-                if (selectElement.data.value == element.data.value)
-                {
-                    index += 1;
-                    selectElement.charactor.gameObject.SetActive(false);
-                    element.charactor.gameObject.SetActive(false);
-
-                    if (CheckOver())
-                        ShowResult();
-                }
+                var value = string.Empty;
+                if (element.data.isPair)
+                    value = GameManager.Instance.schema.GetDigrpahsAudio(element.data.pair).phanics;
                 else
+                    value = GameManager.Instance.schema.GetDigrpahsAudio(element.data.value).phanics;
+
+                audioPlayer.Play(value, () =>
                 {
-                    var temp = new List<WordElement404>();
-                    temp.Add(selectElement);
-                    temp.Add(element);
-                    var list = temp.ToArray();
+                    if (selectElement.data.value == element.data.value)
+                    {
+                        index += 1;
+                        selectElement.charactor.gameObject.SetActive(false);
+                        element.charactor.gameObject.SetActive(false);
 
-                    StartCoroutine(Close(list));
-                }
+                        if (CheckOver())
+                            ShowResult();
+                    }
+                    else
+                    {
+                        var temp = new List<WordElement404>();
+                        temp.Add(selectElement);
+                        temp.Add(element);
+                        var list = temp.ToArray();
 
-                buttonCount = 0;
+                        StartCoroutine(Close(list));
+                    }
+
+                    buttonCount = 0;
+                });
             }
         });
     }

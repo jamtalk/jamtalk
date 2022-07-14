@@ -12,20 +12,24 @@ public class WordElement404 : MonoBehaviour
     public Button button;
 
     public Question4_104 data;
+    public bool isOpen { get; private set; }
 
     public void Init(Question4_104 data)
     {
+        isOpen = false;
         this.data = data;
         text.text = data.text;
     }
 
     public void Open()
     {
+        isOpen = true;
         closeImage.gameObject.SetActive(false);
         openImage.gameObject.SetActive(true);
     }
     public void Close()
     {
+        isOpen = false;
         closeImage.gameObject.SetActive(true);
         openImage.gameObject.SetActive(false);
     }
