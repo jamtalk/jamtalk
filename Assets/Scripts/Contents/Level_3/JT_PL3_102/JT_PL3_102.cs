@@ -12,6 +12,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     private eDigraphs[] digraphs = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
     public Sprite backImage;
+    public Sprite frontImage;
     public Image spatulaImage;
     public DoubleClick302[] pancakes;
 
@@ -53,7 +54,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
         button.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(button.data.act);
+            audioPlayer.Play(button.data.audio.phanics);
         });
 
         button.onClick.AddListener(() =>
@@ -62,12 +63,17 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
             {
                 button.isCheck = true;
 
-                audioPlayer.Play(button.data.act);
                 button.image.sprite = backImage;
                 button.textPhanix.gameObject.SetActive(false);
                 button.images.gameObject.SetActive(true);
-
-                AddAnswer(button.data);
+                audioPlayer.Play(button.data.act, () =>
+                {
+                    button.image.sprite = frontImage;
+                    button.textPhanix.text = button.data.key;
+                    button.images.gameObject.SetActive(false);
+                    button.textPhanix.gameObject.SetActive(true);
+                    AddAnswer(button.data);
+                });
             }
         });
     }

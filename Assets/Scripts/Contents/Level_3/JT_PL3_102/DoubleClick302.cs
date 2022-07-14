@@ -15,8 +15,5 @@ public class DoubleClick302 : DoubleClickButton
         this.data = data;
         textPhanix.text = data.Digraphs.ToString().ToLower();
         images.sprite = data.sprite;
-
-        
-
     }
 }
