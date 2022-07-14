@@ -29,14 +29,12 @@ namespace GJGameLibrary
         public void LoadScene(eSceneName nextScene) => StartCoroutine(LoadSceneAsyc(nextScene));
         IEnumerator LoadSceneAsyc(eSceneName scene)
         {
-            //PopupManager.Instance.ShowLoading();
             var op = SceneManager.LoadSceneAsync(scene.ToString());
-            //op.allowSceneActivation = false;
             while (!op.isDone)
             {
-                //var progress = op.progress * 100f;
-                //Debug.LogFormat("{0} 씬 로딩중.. ({1}%)", scene.ToString(), progress.ToString("N2"));
-                yield return new WaitForEndOfFrame();
+                var progress = op.progress * 100f;
+                Debug.LogFormat("{0} 씬 로딩중.. ({1}%)", scene.ToString(), progress.ToString("N2"));
+                yield return null;
             }
             Debug.Log("씬 로딩 완료");
             op.allowSceneActivation = true; 

@@ -8,19 +8,16 @@ using RotaryHeart.Lib.SerializableDictionary;
 using System;
 using GJGameLibrary.DesignPattern;
 using System.Linq;
+using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "ResourceSchema.asset", menuName = "Create DB/ResourceSchema")]
 public class ResourceSchema : ScriptableObject
 {
     [SerializeField]
     private TextAsset orizinal;
-    public AlphabetSpriteData alphabetSprite;
     public AudioClip correctSound;
     [SerializeField]
-    public ResourceData data => JObject.Parse(orizinal.text).ToObject<ResourceData>(); 
-    [SerializeField]
-    private SerializableDictionaryBase<eAtlasType, SpriteAtlas> atlas;
-    public Sprite GetSprite(eAtlasType type, string value) => atlas[type].GetSprite(value);
+    public ResourceData data => JObject.Parse(orizinal.text).ToObject<ResourceData>();
     public AlphabetAudioData GetAlphabetAudio(eAlphabet alphabet) => data.alphabetAudio.ToList().Find(x => x.Alphabet == alphabet);
     public VowelAudioData GetVowelAudio(eAlphabet vowel) => data.vowelAudio.ToList().Find(x => x.Vowel == vowel);
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
@@ -42,7 +39,6 @@ public class ResourceSchema : ScriptableObject
         var num = (int)digraphs;
         return (ePairDigraphs)num;
     }
-    public static ResourceSchema Instance => Resources.Load<ResourceSchema>("ResourceSchema");
 }
 
 #region Base
@@ -56,7 +52,7 @@ public abstract class ResourceWordsElement : ResourceElement
     public string act;
     public string clip;
     protected abstract eAtlasType atalsType { get; }
-    public Sprite sprite => ResourceSchema.Instance.GetSprite(atalsType, key);
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
 }
 #endregion
 
@@ -67,7 +63,7 @@ public class AlphabetWordsData : ResourceWordsElement
     protected override eAtlasType atalsType => eAtlasType.Words;
     public string alphabet;
     public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), alphabet);
-    public AlphabetAudioData audio => ResourceSchema.Instance.data.alphabetAudio.ToList().Find((Predicate<AlphabetAudioData>)(x => x.Alphabet == Alphabet));
+    public AlphabetAudioData audio => GameManager.Instance.schema.data.alphabetAudio.ToList().Find((Predicate<AlphabetAudioData>)(x => x.Alphabet == Alphabet));
 }
 [Serializable]
 public class AlphabetAudioData : ResourceElement
@@ -97,7 +93,7 @@ public class VowelWordsData : ResourceWordsElement
     public string vowel;
     public eVowelType VowelType => (eVowelType)Enum.Parse(typeof(eVowelType), type);
     public eAlphabet Vowel => (eAlphabet)Enum.Parse(typeof(eAlphabet), vowel);
-    public VowelAudioData audio => ResourceSchema.Instance.data.vowelAudio.ToList().Find(x => x.Vowel == Vowel);
+    public VowelAudioData audio => GameManager.Instance.schema.data.vowelAudio.ToList().Find(x => x.Vowel == Vowel);
 }
 [Serializable]
 public class VowelAudioData : ResourceElement
@@ -146,7 +142,7 @@ public class DigraphsWordsData : ResourceWordsElement
         }
     }
     public bool IsPair => ResourceSchema.IsPair(digraphs);
-    public DigraphsAudioData audio => ResourceSchema.Instance.data.digraphsAudio.ToList().Find(x => x.key == digraphs);
+    public DigraphsAudioData audio => GameManager.Instance.schema.data.digraphsAudio.ToList().Find(x => x.key == digraphs);
 
     protected override eAtlasType atalsType => eAtlasType.Digraphs;
 }

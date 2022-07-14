@@ -68,8 +68,8 @@ public class JT_PL2_103 : BaseContents
         }
 
         var alphabet = currentWord.Vowel;
-        shortButton.onClick.AddListener(() => audioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_short));
-        longButton.onClick.AddListener(() => audioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_long));
+        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_short));
+        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long));
     }
 
     private void GetWords()

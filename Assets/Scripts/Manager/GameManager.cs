@@ -13,23 +13,68 @@ public class GameManager : MonoSingleton<GameManager>
     public eContents currentContents { get; set; }
     public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
     public eVowelType currentVowel { get; set; }
+    private ResourceSchema _schema = null;
+    public ResourceSchema schema
+    {
+        get
+        {
+            if (_schema == null)
+                _schema = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema").WaitForCompletion();
 
-    private ResourceSchema schema;
+            return _schema;
+        }
+        private set { _schema = value; }
+    }
+    public AlphabetSpriteData _alphabetSprite = null;
+    public AlphabetSpriteData alphabetSprite
+    {
+        get
+        {
+            if (_alphabetSprite == null)
+                _alphabetSprite = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData").WaitForCompletion();
+
+            return _alphabetSprite;
+        }
+        private set { _alphabetSprite = value; }
+    }
     public override void Initialize()
     {
-        schema = ResourceSchema.Instance;
         base.Initialize();
         currentAlphabet = eAlphabet.A;
         currentContents = eContents.JT_PL1_102;
+    }
+    public void Initialize(Action callback)
+    {
+        StartCoroutine(Initializing(callback));
+    }
+    private IEnumerator Initializing(Action callback=null)
+    {
+        var schemaLoader = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema");
+        var bytes = schemaLoader.GetDownloadStatus().TotalBytes;
+        Debug.LogFormat("스키마 로딩 시작 ({0}MB)",bytes);
+        while (!schemaLoader.IsDone) 
+        { 
+            yield return null;
+            var bytesSatus = schemaLoader.GetDownloadStatus();
+            Debug.LogFormat("로딩중 ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
+        }
+        Debug.LogFormat("스키마 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
+        _schema = schemaLoader.Result;
+        var spriteLoader = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData");
+        Debug.Log("이미지 로딩 시작");
+        while (!spriteLoader.IsDone) { yield return null; }
+        Debug.LogFormat("이미지 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", spriteLoader.Status, spriteLoader.OperationException, spriteLoader.Result);
+        _alphabetSprite = spriteLoader.Result;
+        callback?.Invoke();
     }
     public AudioClip GetClipCorrectEffect() => schema.correctSound;
     public AlphabetData GetResources(eAlphabet alphabet) => new AlphabetData(alphabet);
     public AlphabetData GetResources() => GetResources(currentAlphabet);
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
-    public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => schema.alphabetSprite.Get(style);
-    public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => schema.alphabetSprite.Get(style,type);
-    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => schema.alphabetSprite.Get(style, type, alphabet);
+    public AlphabetSpriteData.AlphabetSpritePair GetAlphbetSprite(eAlphabetStyle style) => alphabetSprite.Get(style);
+    public Sprite[] GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type) => alphabetSprite.Get(style,type);
+    public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => alphabetSprite.Get(style, type, alphabet);
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
     public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
@@ -41,18 +86,19 @@ public class GameManager : MonoSingleton<GameManager>
         pos.z = z;
         return pos;
     }
+
 }
 
 public class AlphabetData
 {
     public eAlphabet Alphabet { get; private set; }
     public bool IsVowel => Vowels == null || Vowels.Length == 0;
-    public AlphabetSentanceData[] Sentances => ResourceSchema.Instance.data.alphabetSentaces.Where(x => x.Alphabet == Alphabet).ToArray();
-    public AlphabetWordsData[] Words => ResourceSchema.Instance.data.alphabetWords.Where(x => x.Alphabet == Alphabet).ToArray();
-    public VowelWordsData[] Vowels => ResourceSchema.Instance.data.vowelWords.Where(x => x.Vowel == Alphabet).ToArray();
+    public AlphabetSentanceData[] Sentances => GameManager.Instance.schema.data.alphabetSentaces.Where(x => x.Alphabet == Alphabet).ToArray();
+    public AlphabetWordsData[] Words => GameManager.Instance.schema.data.alphabetWords.Where(x => x.Alphabet == Alphabet).ToArray();
+    public VowelWordsData[] Vowels => GameManager.Instance.schema.data.vowelWords.Where(x => x.Vowel == Alphabet).ToArray();
 
-    public AlphabetAudioData AudioData => ResourceSchema.Instance.GetAlphabetAudio(Alphabet);
-    public VowelAudioData VowelAudioData => ResourceSchema.Instance.GetVowelAudio(Alphabet);
+    public AlphabetAudioData AudioData => GameManager.Instance.schema.GetAlphabetAudio(Alphabet);
+    public VowelAudioData VowelAudioData => GameManager.Instance.schema.GetVowelAudio(Alphabet);
     public AlphabetData(eAlphabet alphabet)
     {
         Alphabet = alphabet;
@@ -107,8 +153,8 @@ public class AlphabetData
 //        else
 //            return 0;
 //    }
-//    private DigraphsAudioData digrpahsAudio => ResourceSchema.Instance.GetDigrpahsAudio(type);
-//    private DigraphsAudioData pairDigraphsAudio => ResourceSchema.Instance.GetDigrpahsAudio(GetPair());
+//    private DigraphsAudioData digrpahsAudio => GameManager.Instance.Schema.GetDigrpahsAudio(type);
+//    private DigraphsAudioData pairDigraphsAudio => GameManager.Instance.Schema.GetDigrpahsAudio(GetPair());
 //    public string act;
 //    public string clip;
 

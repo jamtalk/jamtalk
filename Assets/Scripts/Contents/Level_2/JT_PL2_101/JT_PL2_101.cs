@@ -97,13 +97,13 @@ public class JT_PL2_101 : BaseContents
     {
         ani.SetBool("Speak", true);
         eAlphabet alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        speakAudioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_short);
+        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_short);
     }
 
     private void LongSpeak(string value)
     {
         var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        speakAudioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabet).phanics_long);
+        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long);
     }
 
     private void Speak()
@@ -113,12 +113,12 @@ public class JT_PL2_101 : BaseContents
         if (index == 5)
         {
             for (int i = 0; i < alphabets.Length; i++)
-                speakAudioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabets[i]).phanics_short);
+                speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabets[i]).phanics_short);
         }
         else
         {
             for (int i = 0; i < alphabets.Length; i++)
-                speakAudioPlayer.Play(ResourceSchema.Instance.GetVowelAudio(alphabets[i]).phanics_long);
+                speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabets[i]).phanics_long);
         }
     }
 }

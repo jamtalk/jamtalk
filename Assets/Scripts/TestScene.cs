@@ -101,7 +101,11 @@ public class TestScene : MonoBehaviour
         //for (int i = 0; i < waitFrame; i++)
         //    yield return new WaitForEndOfFrame();
         loadingBar.gameObject.SetActive(true);
-        //yield return LocalDB.Initialize((progress) => loadingBar.value = progress);
+        var initialized = false;
+        Debug.Log("이니셜라이징 대기중");
+        GameManager.Instance.Initialize(() => initialized = true);
+        while (!initialized) { yield return null; }
+        Debug.Log("이니셜라이징 완료");
         loadingBar.gameObject.SetActive(false);
 
         loading.gameObject.SetActive(false);
