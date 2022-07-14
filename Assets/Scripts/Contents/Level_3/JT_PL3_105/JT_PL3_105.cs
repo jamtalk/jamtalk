@@ -95,27 +95,23 @@ public class JT_PL3_105 : BaseContents
 
                     if (element.text.text.ToUpper().Contains(eCurrentDigraphs.ToString()))
                     {
+                        index += 1;
+                        currentText.text = currentDigraphs.key;
+                        ProgressBarDoMove();
                         audioPlayer.Play(currentDigraphs.clip, () =>
                         {
-                            currentText.text = currentDigraphs.key;
-                            ProgressBarDoMove();
+                            if (CheckOver())
+                                ShowResult();
+                            else
+                                MakeQuestion();
                         });
-                        index += 1;
-
-                        if (CheckOver())
-                            ShowResult();
-                        else
-                            MakeQuestion();
-
                     }
                     else
                     {
                         SetMolesPosition();
                     }
                 });
-                
             });
-            
         });
     }
 
