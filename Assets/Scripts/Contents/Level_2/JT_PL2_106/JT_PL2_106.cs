@@ -22,7 +22,7 @@ public class JT_PL2_106 : BaseContents
     public Toggle[] currentCount;
     public Image rouletteImage;
     public GameObject parent;
-    public Text rouletteText;
+    public TextElement206 rouletteText;
     public Image rouletteEffect;
 
     public AudioClip rouletteClip;
@@ -33,7 +33,7 @@ public class JT_PL2_106 : BaseContents
     private VowelWordsData[] longWords;
 
     private Sequence seq;
-    private List<Text> textList = new List<Text>();
+    private List<TextElement206> textList = new List<TextElement206>();
     private int currentIndex;
     private List<VowelWordsData> datas = new List<VowelWordsData>();
 
@@ -69,10 +69,11 @@ public class JT_PL2_106 : BaseContents
         {
             var angle = 15f + (float)(360 / (WordsCount * 2)) * i;
 
-            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<Text>();
+            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<TextElement206>();
             text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            text.text = shortWords[i].key;
-            text.name = shortWords[i].key;
+            //text.text = shortWords[i].key;
+            //text.name = shortWords[i].key;
+            text.Init(shortWords[i]);
 
             textList.Add(text);
             datas.Add(shortWords[i]);
@@ -82,10 +83,11 @@ public class JT_PL2_106 : BaseContents
         {
             var angle = 15f + (float)(360 / (WordsCount * 2)) * (WordsCount + i);
 
-            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<Text>();
+            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<TextElement206>();
             text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            text.text = longWords[i].key;
-            text.name = longWords[i].key;
+            //text.text = longWords[i].key;
+            //text.name = longWords[i].key;
+            text.Init(longWords[i]);
 
             textList.Add(text);
             datas.Add(longWords[i]);
@@ -169,6 +171,7 @@ public class JT_PL2_106 : BaseContents
         {
             eventSystem.enabled = true;
             rouletteEffect.gameObject.SetActive(false);
+            audioPlayer.Play(textList[currentIndex].data.clip);
         };
         seq.Play();
     }

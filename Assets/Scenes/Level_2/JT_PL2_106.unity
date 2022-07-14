@@ -2499,6 +2499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 261955339}
   eventSystem: {fileID: 1990404956}
   longButton: {fileID: 1737210851}
   shortButton: {fileID: 520114611}
@@ -2513,7 +2514,6 @@ MonoBehaviour:
   parent: {fileID: 1684651892}
   rouletteText: {fileID: 1827047757}
   rouletteEffect: {fileID: 66726810}
-  audioPlayer: {fileID: 261955339}
   rouletteClip: {fileID: 8300000, guid: 6a0a95efb09005d42b10a4a3ecc8b8da, type: 3}
   tabClip: {fileID: 8300000, guid: 2374a844b2f480d478db436ce178cd50, type: 3}
   currentClip: {fileID: 8300000, guid: 82a2acf8b1cadfe439cb15e6198e21e3, type: 3}
@@ -2763,7 +2763,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1827047755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: bd9876d6a03654707bc6733139bbc323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2776,12 +2776,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 680664c8c86c66d4c867c454e8b7a330, type: 3}
-    m_FontSize: 30
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 0
-    m_MaxSize: 50
-    m_Alignment: 3
+    m_MinSize: 7
+    m_MaxSize: 70
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
