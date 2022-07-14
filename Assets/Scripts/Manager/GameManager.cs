@@ -38,22 +38,21 @@ public class GameManager : MonoSingleton<GameManager>
     }
     private IEnumerator Initializing(Action callback=null)
     {
-        var schemaLoader = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema");
-        var bytes = schemaLoader.GetDownloadStatus().TotalBytes;
-        Debug.LogFormat("스키마 로딩 시작 ({0}MB)",bytes);
-        while (!schemaLoader.IsDone) 
-        { 
-            yield return null;
-            var bytesSatus = schemaLoader.GetDownloadStatus();
-            Debug.LogFormat("로딩중 ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
+        if (schema != null)
+        {
+            var schemaLoader = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema");
+            var bytes = schemaLoader.GetDownloadStatus().TotalBytes;
+            Debug.LogFormat("스키마 로딩 시작 ({0}MB)", bytes);
+            while (!schemaLoader.IsDone)
+            {
+                yield return null;
+                var bytesSatus = schemaLoader.GetDownloadStatus();
+                Debug.LogFormat("로딩중 ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
+            }
+            Debug.LogFormat("스키마 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
+            _schema = schemaLoader.Result;
         }
-        Debug.LogFormat("스키마 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
-        _schema = schemaLoader.Result;
-        //var spriteLoader = Addressables.LoadAssetAsync<AlphabetSpriteData>("AlphabetSpriteData");
-        //Debug.Log("이미지 로딩 시작");
-        //while (!spriteLoader.IsDone) { yield return null; }
-        //Debug.LogFormat("이미지 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", spriteLoader.Status, spriteLoader.OperationException, spriteLoader.Result);
-        //_alphabetSprite = spriteLoader.Result;
+
         callback?.Invoke();
     }
     public AudioClip GetClipCorrectEffect() => schema.correctSound;
