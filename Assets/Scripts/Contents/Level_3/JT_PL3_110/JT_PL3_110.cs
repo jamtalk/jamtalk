@@ -29,7 +29,7 @@ public class JT_PL3_110 : BingoContents<DigraphsWordsData, DigraphsBingoButton, 
             .ToArray();
     }
 
-    protected override void PlayClip() => audioPlayer.Play(currentQuestion.act);
+    protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip);
 
     protected override bool IsCurrentAnswer(DigraphsWordsData value) => value == currentQuestion;
 }
