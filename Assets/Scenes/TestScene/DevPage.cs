@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,15 +13,19 @@ public class DevPage : MonoBehaviour
 {
     public Image orizinal;
     public AudioSource audios;
+    public AudioSinglePlayer player;
     public RectTransform parent;
     void Start()
     {
-        var sprites = GetAllSprites();
-        for (int i = 0; i < sprites.Length; i++)
-            orizinal.sprite = sprites[i];
+        var today = GameManager.Instance.schema.GetSiteWordsClip("today.");
+        player.Play(today);
+        //var sprites = GetAllSprites();
+        //for (int i = 0; i < sprites.Length; i++)
+        //    orizinal.sprite = sprites[i];
         //var clips = GetAllClips();
         //for (int i = 0; i < clips.Length; i++)
         //    audios.clip = clips[i];
+        GetSiteWordsClips();
     }
     private Sprite[] GetAllSprites()
     {
@@ -82,5 +87,31 @@ public class DevPage : MonoBehaviour
         var nullValues = values.Where(x => Addressables.LoadAssetAsync<AudioClip>(x).WaitForCompletion()==null);
         Debug.LogFormat("{0}개 Null\n{1}", nullValues.Count(), string.Join("\n", nullValues));
         return values.Select(x => Addressables.LoadAssetAsync<AudioClip>(x).WaitForCompletion()).ToArray();
+    }
+    private void GetSiteWordsClips()
+    {
+        var sen = GameManager.Instance.alphabets
+            .SelectMany(x => GameManager.Instance.GetResources(x).Sentances);
+        var data = sen
+            .SelectMany(x => x.words)
+            .Select(x => GJGameLibrary.GJStringFormatter.OnlyEnglish(x))
+            .Distinct();
+
+
+        //문장엔 있으나, 음원파일이 없는 경우
+        var tmp = data.Where(x => string.IsNullOrEmpty(GameManager.Instance.schema.GetSiteWordsClip(x)));
+
+        //음원 목록엔 있으나, 파일이 없는 경우
+        var _tmp = data.Where(x => !string.IsNullOrEmpty(GameManager.Instance.schema.GetSiteWordsClip(x)))
+            .Select(x => GameManager.Instance.schema.GetSiteWordsClip(x))
+            .Where(x => Addressables.LoadAssetAsync<AudioClip>(x).WaitForCompletion()==null).ToArray();
+
+        //누락된 문장 음원
+        var __tmp = sen.Where(x => Addressables.LoadAssetAsync<AudioClip>(x.clip).WaitForCompletion() == null).Select(x=>x.value);
+
+        Debug.LogFormat("tmp {0}개\n{1}",tmp.Count(), string.Join("\n", tmp));
+        Debug.LogFormat("_tmp {0}개\n{1}",_tmp.Count(), string.Join("\n", _tmp));
+        Debug.LogFormat("__tmp {0}개\n{1}", __tmp.Count(), string.Join("\n", __tmp));
+
     }
 }

@@ -83,5 +83,6 @@ namespace GJGameLibrary
         {
             return Regex.IsMatch(text, @"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?");
         }
+        public static string OnlyEnglish(string value) => Regex.Replace(value, @"[^a-zA-Z]", "");
     }
 }

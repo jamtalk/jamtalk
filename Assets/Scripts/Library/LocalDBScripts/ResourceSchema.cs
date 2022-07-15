@@ -23,7 +23,34 @@ public class ResourceSchema : ScriptableObject
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
+    public string GetSiteWordsClip(string value)
+    {
+        value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
+        var data = this.data.siteWords.ToList().Find(x => x.key == value);
+        if (data != null)
+            return data.clip;
+        else if (value == "i")
+            return GetVowelAudio(eAlphabet.I).phanics_long;
+        else if (value == "a")
+            return GetVowelAudio(eAlphabet.A).phanics_short;
+        else
+        {
+            var word = this.data.vowelWords.Select(x => (ResourceWordsElement)x)
+                .Union(this.data.digraphsWords.Select(x => (ResourceWordsElement)x))
+                .Union(this.data.alphabetWords.Select(x => (ResourceWordsElement)x))
+                .ToList()
+                .Find(x => x.key.ToLower() == value.ToLower());
 
+            if (word != null)
+            {
+                return word.clip;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+    }
     public static bool IsPair(string digrpahs)
     {
         var pair = Enum.GetNames(typeof(ePairDigraphs));
@@ -79,7 +106,7 @@ public class AlphabetSentanceData : ResourceElement
 {
     public string value;
     public string clip;
-    public string[] words => value.Split(' ');
+    public string[] words => value.Split(' ').Where(x=>!string.IsNullOrEmpty(value)).ToArray();
     public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), key);
 }
 #endregion
@@ -154,6 +181,12 @@ public class DigraphsAudioData : ResourceElement
 #endregion
 
 [Serializable]
+public class SiteWordData : ResourceElement
+{
+    public string clip;
+}
+
+[Serializable]
 public class ResourceData
 {
     public AlphabetWordsData[] alphabetWords;
@@ -163,5 +196,6 @@ public class ResourceData
     public DigraphsWordsData[] digraphsWords;
     public DigraphsAudioData[] digraphsAudio;
     public AlphabetSentanceData[] alphabetSentaces;
+    public SiteWordData[] siteWords;
 }
 
