@@ -27,6 +27,7 @@ public class JT_PL5_101 : BaseContents
 
         MakeQuestion();
     }
+
     private void MakeQuestion()
     {
         digraphs = GameManager.Instance.digrpahs
@@ -65,6 +66,7 @@ public class JT_PL5_101 : BaseContents
 
         leftTween.Play();
         rightTween.Play();
+
 
         StartCoroutine(Wait());
     }
