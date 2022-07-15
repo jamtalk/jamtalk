@@ -3,67 +3,85 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class JT_PL5_106 : BaseContents
+public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsData>
 {
+    public float duration;
+    protected override int QuestionCount => 3;
     protected override eContents contents => eContents.JT_PL5_106;
-    protected override bool CheckOver() => questionCount == index;
-    protected override int GetTotalScore() => questionCount;
-    private int questionCount = 3;
-    private int index = 0;
-    private DigraphsWordsData current;
-    private List<string> questionList = new List<string>();
-
-    public RectTransform[] layouts;
-    public GameObject starElement;
-
-
+    public StarElement506 orizinal;
+    public RectTransform elementsParent;
+    public List<StarElement506> elements;
+    public RectTransform[] paths;
+    public ResultStart506 resultStar;
     protected override void Awake()
     {
         base.Awake();
-        
-        MakeQuestion();
     }
-
-    private void MakeQuestion()
+    protected override List<Question_PL5_106> MakeQuestion()
     {
-        current = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
+        return GameManager.Instance.GetDigraphs()
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-
-        ShowQuestion();
+            .Take(QuestionCount)
+            .Select(x => new Question_PL5_106(x))
+            .ToList();
     }
-    private void ShowQuestion()
+
+    protected override void ShowQuestion(Question_PL5_106 question)
     {
-        var digraphs = current.Digraphs.ToString().ToLower();
-        var digraphsIndex = current.key.IndexOf(digraphs);
-        var temp = current.key.Replace(digraphs, string.Empty);
-
-        var first = string.Empty;
-        var last = string.Empty;
-
-        if (digraphsIndex != 0)
+        resultStar.gameObject.SetActive(false);
+        var pos = paths
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Select(x=>x.transform.position)
+            .ToArray();
+        if (elements.Count < question.words.Length)
         {
-            first = current.key.Substring(0, digraphsIndex);
-            questionList.Add(first);
+            var craetCount = question.words.Length - elements.Count;
+            for (int i = 0; i < craetCount; i++)
+                elements.Add(Instantiate(orizinal, elementsParent));
         }
 
-        if(digraphsIndex != current.key.Length - digraphs.Length)
+        for(int i = 0;i < elements.Count; i++)
         {
-            last = current.key.Substring(digraphsIndex + digraphs.Length);
-            questionList.Add(last);
+            if (i < question.words.Length)
+                elements[i].Init(question.words[i], pos[i], duration, OnDrop);
+            else
+                elements[i].gameObject.SetActive(false);
         }
-
-        questionList.Add(digraphs);
-
-        var randomLayout = layouts.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        for (int i = 0; i < questionList.Count ; i++)
+    }
+    private void OnDrop(string value)
+    {
+        var stars = elements.Where(x => x.gameObject.activeSelf).ToArray();
+        var correct = currentQuestion.correct.key.ToLower();
+        if (correct == value)
         {
-            var element = Instantiate(starElement, randomLayout[i]).GetComponent<StarElement506>();
-            element.Init(questionList[i]);
+            resultStar.gameObject.SetActive(true);
+            var seq = resultStar.Show(value, 1f);
+            seq.onComplete += () =>
+            {
+                audioPlayer.Play(currentQuestion.correct.act, () => AddAnswer(currentQuestion.correct));
+            };
         }
+        else
+        {
+            for (int i = 0; i < stars.Length; i++)
+                stars[i].ResetLine();
+        }
+    }
+}
+public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>
+{
+    public string[] words;
+    public Question_PL5_106(DigraphsWordsData correct) : base(correct, new DigraphsWordsData[] { })
+    {
+        words = correct.key
+            .Replace(correct.digraphs.ToLower(), " ")
+            .Split(' ')
+            .Where(x => !string.IsNullOrEmpty(x))
+            .Union(new string[] { correct.digraphs.ToLower() })
+            .OrderBy(x=>Random.Range(0f,100f))
+            .ToArray();
+
     }
 }

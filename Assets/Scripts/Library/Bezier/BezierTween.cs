@@ -8,7 +8,7 @@ namespace GJGameLibrary.Util.Bezier.DoTween
         {
             var pos = Curve(count, points);
             var seq = DOTween.Sequence();
-
+            target.position = pos[0];
             float dis = 0f;
             for (int i = 0; i < pos.Length; i++)
             {
