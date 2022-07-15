@@ -89,13 +89,16 @@ public class JT_PL1_121 : BaseContents
         target.visible = true;
         if (!elements.Select(x => x.visible).Contains(false))
         {
-            index += 1;
-            audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect(), () =>
+            audioPlayer.Play(currentSentance.clip, () =>
             {
-                if (CheckOver())
-                    ShowResult();
-                else
-                    StartCoroutine(Init(currentSentance));
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                {
+                    index += 1;
+                    if (CheckOver())
+                        ShowResult();
+                    else
+                        StartCoroutine(Init(currentSentance));
+                });
             });
         }
     }

@@ -7,12 +7,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler
+public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler,IBeginDragHandler
 {
     [SerializeField]
     private bool intractable = false;
     public event Action<WordElement121> onDrop;
     private Vector3 defaultPosition;
+    [SerializeField]
+    public AudioSinglePlayer audioPlayer;
     private GraphicRaycaster caster => FindObjectOfType<GraphicRaycaster>();
     public void OnDrag(PointerEventData eventData)
     {
@@ -43,5 +45,10 @@ public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler
         }
         else
             transform.position = defaultPosition;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        audioPlayer.Play(GameManager.Instance.schema.GetSiteWordsClip(name));
     }
 }
