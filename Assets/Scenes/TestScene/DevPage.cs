@@ -15,10 +15,10 @@ public class DevPage : MonoBehaviour
     public RectTransform parent;
     void Start()
     {
-        //var sprites = GetAllSprites();
-        //for (int i = 0; i < sprites.Length; i++)
-        //    orizinal.sprite = sprites[i];
-        var clips = GetAllClips();
+        var sprites = GetAllSprites();
+        for (int i = 0; i < sprites.Length; i++)
+            orizinal.sprite = sprites[i];
+        //var clips = GetAllClips();
         //for (int i = 0; i < clips.Length; i++)
         //    audios.clip = clips[i];
     }
