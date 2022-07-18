@@ -1359,9 +1359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dac3d2df1e037440a0cb76d5283fa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetAlphabet: 6
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
-  questions: []
   audioPlayer: {fileID: 1976610220}
+  questions: []
   buttonQuestions:
   - {fileID: 1186361558}
   - {fileID: 1044979534}

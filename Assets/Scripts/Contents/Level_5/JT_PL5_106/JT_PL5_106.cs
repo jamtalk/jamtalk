@@ -17,6 +17,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     public ResultStart506 resultStar;
     protected override void Awake()
     {
+        new Question_PL5_106(GameManager.Instance.schema.data.digraphsWords.ToList().Find(x => x.key.ToLower() == "church"));
         base.Awake();
     }
     protected override List<Question_PL5_106> MakeQuestion()
@@ -76,12 +77,12 @@ public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>
     public Question_PL5_106(DigraphsWordsData correct) : base(correct, new DigraphsWordsData[] { })
     {
         words = correct.key
-            .Replace(correct.digraphs.ToLower(), " ")
+            .Replace(correct.digraphs.ToLower(), string.Format(" {0} ",correct.digraphs.ToLower()))
             .Split(' ')
             .Where(x => !string.IsNullOrEmpty(x))
-            .Union(new string[] { correct.digraphs.ToLower() })
+            .Where(x=>!string.IsNullOrWhiteSpace(x))
             .OrderBy(x=>Random.Range(0f,100f))
             .ToArray();
-
+        Debug.LogFormat("{0}°³\n{1}", words.Length, string.Join("\n",words));
     }
 }
