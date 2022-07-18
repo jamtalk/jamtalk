@@ -23,7 +23,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     {
         return GameManager.Instance.GetDigraphs()
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(QuestionCount)
+            //.Take(QuestionCount)
             .Select(x => new Question_PL5_106(x))
             .ToList();
     }

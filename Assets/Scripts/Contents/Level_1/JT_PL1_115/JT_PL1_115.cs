@@ -23,30 +23,31 @@ public class JT_PL1_115 : BaseContents
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         if(GameManager.Instance.currentAlphabet > eAlphabet.B)
         {
-            targets = targets.Union(GameManager.Instance.alphabets
+            Debug.Log(targets.Length);
+            var preAlphabets = GameManager.Instance.alphabets
                 .Where(x => x < GameManager.Instance.currentAlphabet)
-                .OrderBy(x => Random.Range(0f, 100f)).Take(2)
-                .Where(x => x >= GameManager.Instance.currentAlphabet))
-                .ToArray();
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(2);
+
+            targets = targets.Union(preAlphabets).ToArray();
+
+            Debug.Log(targets.Length);
         }
         else
         {
             targets = targets.SelectMany(x => new eAlphabet[] { x, x }).ToArray();
         }
         var questions = targets
-            .SelectMany(x => new eAlphabet[] { x, x })
+            .SelectMany(x => new Card114Data[] { new Card114Data(x,eAlphabetType.Upper), new Card114Data(x, eAlphabetType.Lower) })
+            .OrderBy(x=>Random.Range(0f,100f))
             .ToArray();
-
+        Debug.Log(questions.Length + "°³\n" + string.Join("\n", questions.Select(x => string.Format("{0} {1}", x.alhpabet, x.type))));
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         for (int i = 0; i < cards.Length; i++)
         {
-            if (i > 0 && i % 2 != 0)
-                continue;
-
-            var upper = i;
-            var lower = i + 1;
-            SetCard(randomCards[upper], questions[upper],eAlphabetType.Upper);
-            SetCard(randomCards[lower], questions[lower], eAlphabetType.Lower);
+            SetCard(randomCards[i], questions[i].alhpabet, questions[i].type);
+            //SetCard(randomCards[upper], questions[upper],eAlphabetType.Upper);
+            //SetCard(randomCards[lower], questions[lower], eAlphabetType.Lower);
         }
 
         StartCoroutine(StartContent());   
@@ -105,3 +106,14 @@ public class JT_PL1_115 : BaseContents
         eventSystem.enabled = true;
     }
 }
+//public class AlphabetQuestion
+//{
+//    public eAlphabet value;
+//    public eAlphabetType type;
+
+//    public AlphabetQuestion(eAlphabet value, eAlphabetType type)
+//    {
+//        this.value = value;
+//        this.type = type;
+//    }
+//}

@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 #region Contents
 public abstract class BaseContents : MonoBehaviour
 {
+    public eAlphabet targetAlphabet;
     [SerializeField]
     private GameObject popupResult;
     protected abstract eContents contents { get; }
@@ -43,6 +44,9 @@ public abstract class BaseContents : MonoBehaviour
         );
     protected virtual void Awake()
     {
+#if UNITY_EDITOR
+        GameManager.Instance.currentAlphabet = targetAlphabet;
+#endif
         startTime = DateTime.Now;
     }
     protected abstract bool CheckOver();

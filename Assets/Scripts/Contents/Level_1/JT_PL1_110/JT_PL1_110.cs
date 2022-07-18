@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_110 : BaseContents
+public class JT_PL1_110 : SingleAnswerContents<Question_PL1_110,AlphabetWordsData>
 {
     public GraphicRaycaster caster;
     private AlphabetToggle110[] toggles;
@@ -13,28 +13,25 @@ public class JT_PL1_110 : BaseContents
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-    protected AlphabetWordsData word;
 
+    protected override int QuestionCount => 2;
+    protected override eGameResult GetResult() => eGameResult.Perfect;
     protected override eContents contents => eContents.JT_PL1_110;
-    protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
-    protected override int GetTotalScore() => 1;
-    protected override void Awake()
-    {
-        base.Awake();
+    //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
 
-        GetWord();
-        SetElement(word);
-    }
-    protected virtual void GetWord()
+    protected override List<Question_PL1_110> MakeQuestion()
     {
-        word = GameManager.Instance.GetResources().Words
-            .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+        return new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
+            .SelectMany(x => GameManager.Instance.GetResources(x).Words.OrderBy(x => Random.Range(0f, 100f)).Take(QuestionCount/2))
+            .Select(x => new Question_PL1_110(x))
+            .OrderBy(x=>Random.Range(0f,100f))
+            .ToList();
     }
 
-    private void SetElement(AlphabetWordsData words)
+    protected override void ShowQuestion(Question_PL1_110 question)
     {
-        toggles = creator.Create(word);
+        creator.Clear();
+        toggles = creator.Create(question.correct);
         for (int i = 0; i < toggles.Length; i++)
             AddToggleListner(toggles[i]);
         var dragables = toggles.Select(x => x.drag).ToArray();
@@ -60,8 +57,8 @@ public class JT_PL1_110 : BaseContents
     {
         toggle.onOn += () =>
         {
-            if (CheckOver())
-                audioPlayer.Play(word.clip, ShowResult);
+            if (!toggles.Select(x=>x.isOn).Contains(false))
+                audioPlayer.Play(currentQuestion.correct.clip, ()=>AddAnswer(currentQuestion.correct));
             else
                 audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };
@@ -96,5 +93,11 @@ public class JT_PL1_110 : BaseContents
 
             drag.ResetPosition();
         };
+    }
+}
+public class Question_PL1_110 : SingleQuestion<AlphabetWordsData>
+{
+    public Question_PL1_110(AlphabetWordsData correct) : base(correct, new AlphabetWordsData[] { })
+    {
     }
 }

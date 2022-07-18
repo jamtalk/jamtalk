@@ -7,10 +7,12 @@ public class JT_PL2_109 : JT_PL1_110
 {
     protected override eContents contents => eContents.JT_PL2_109;
 
-    protected override void GetWord()
+    protected override List<Question_PL1_110> MakeQuestion()
     {
-        word = GameManager.Instance.GetResources().Words
+        return GameManager.Instance.GetResources().Words
+            .Select(x => new Question_PL1_110(x))
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+            .Take(1)
+            .ToList();
     }
 }

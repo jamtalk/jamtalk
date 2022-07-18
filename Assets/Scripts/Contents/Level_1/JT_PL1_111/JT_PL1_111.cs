@@ -36,17 +36,19 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     }
     protected override List<Question111> MakeQuestion()
     {
-        int correctCount = 4;
+        int correctCount = 2;
         int incorrectCount = buttons.Length - correctCount;
         var list = new List<Question111>();
         for(int i = 0;i < QuestionCount; i++)
         {
-            var corrects = GameManager.Instance.GetResources().Words
-               .OrderBy(x => Random.Range(0f,100f))
-               .Take(correctCount)
-               .ToArray();
+
+            var corrects = new eAlphabet[] {GameManager.Instance.currentAlphabet,GameManager.Instance.currentAlphabet+1}
+                .Select(x=>GameManager.Instance.GetResources(x).Words.OrderBy(x=>Random.Range(0f,100f)).First())
+                .Take(correctCount)
+                .ToArray();
             var incorrects = GameManager.Instance.alphabets
                 .Where(x=>x!=GameManager.Instance.currentAlphabet)
+                .Where(x=>x!= GameManager.Instance.currentAlphabet+1)
                 .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(incorrectCount)

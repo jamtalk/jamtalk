@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class JT_PL1_121 : BaseContents
 {
+    public AudioClip stampClip;
     public RectTransform sentanceParent;
     public RectTransform throwingParent;
     public GameObject prefabWordElement;
@@ -87,6 +88,7 @@ public class JT_PL1_121 : BaseContents
     private void OnDrop(WordElement121 target)
     {
         target.visible = true;
+        audioPlayer.Play(1f,stampClip);
         if (!elements.Select(x => x.visible).Contains(false))
         {
             audioPlayer.Play(currentSentance.clip, () =>

@@ -30,10 +30,22 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
     }
     protected override List<Question113> MakeQuestion()
     {
-        var alphabets = GameManager.Instance.alphabets
-            .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(QuestionCount)
+        var alphabets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        if(GameManager.Instance.currentAlphabet < eAlphabet.C)
+        {
+            alphabets = alphabets
+            .SelectMany(x => new eAlphabet[] { x, x })
             .ToArray();
+        }
+        else
+        {
+            var preAlhpabets = GameManager.Instance.alphabets.Where(x => x < GameManager.Instance.currentAlphabet)
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(QuestionCount - alphabets.Length);
+            alphabets = alphabets.Union(preAlhpabets).ToArray();
+        }
+
+        alphabets = alphabets.OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         var list = new List<Question113>();
         for(int i = 0;i < QuestionCount; i++)

@@ -392,11 +392,10 @@ MonoBehaviour:
   button: {fileID: 357004198}
   intracable: 1
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!114 &357004196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,11 +861,10 @@ MonoBehaviour:
   button: {fileID: 914545743}
   intracable: 1
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!114 &914545741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,11 +1130,10 @@ MonoBehaviour:
   button: {fileID: 923797470}
   intracable: 1
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!114 &923797468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,6 +1389,7 @@ GameObject:
   - component: {fileID: 1003981505}
   - component: {fileID: 1003981508}
   - component: {fileID: 1003981507}
+  - component: {fileID: 1003981509}
   m_Layer: 5
   m_Name: Beam
   m_TagString: Untagged
@@ -1565,6 +1563,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1003981509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003981503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8da0131f21bc7142a2d5fc9b2de7f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Parent: {fileID: 1319039986}
 --- !u!1 &1105407051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,11 +2260,10 @@ MonoBehaviour:
   button: {fileID: 1245541932}
   intracable: 1
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!114 &1245541934
 MonoBehaviour:
   m_ObjectHideFlags: 0

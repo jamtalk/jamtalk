@@ -31,17 +31,28 @@ public class JT_PL1_116 : BaseContents
         base.Awake();
         for (int i = 0; i < buttonPlayer.Length; i++)
             buttonPlayer[i].onClick.AddListener(PlayWord);
+        var current = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        if (GameManager.Instance.currentAlphabet < eAlphabet.C)
+            alphabets = current.SelectMany(x => new eAlphabet[] { x, x }).ToArray();
+        else
+        {
+            var pre = GameManager.Instance.alphabets
+                .Where(x => x < GameManager.Instance.currentAlphabet)
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(2);
 
-        alphabets = GameManager.Instance.alphabets
-            .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .Take(2)
-            .SelectMany(x => new eAlphabet[] { x, x })
-            .ToArray();
+            alphabets = current.Union(pre).ToArray();
+        }
+
+        //alphabets = alphabets
+        //    .SelectMany(x => new eAlphabet[] { x, x })
+        //    .ToArray();
 
         words = alphabets
-            .Distinct()
-            .SelectMany(x => GameManager.Instance.GetResources(x).Words.OrderBy(y => Random.Range(0f, 100f)).Take(2))
+            .Select(x => GameManager.Instance.GetResources(x).Words.OrderBy(y => Random.Range(0f, 100f)).First())
             .ToArray();
+
+        Debug.Log(string.Join("\n", words.Select(x => string.Format("{0} : {1}", x.alphabet, x.key))));
 
         upper = upper.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         lower = lower.OrderBy(x => Random.Range(0f, 100f)).ToArray();

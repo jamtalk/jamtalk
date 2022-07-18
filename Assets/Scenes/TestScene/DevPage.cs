@@ -17,15 +17,16 @@ public class DevPage : MonoBehaviour
     public RectTransform parent;
     void Start()
     {
-        var today = GameManager.Instance.schema.GetSiteWordsClip("today.");
-        player.Play(today);
+        //var today = GameManager.Instance.schema.GetSiteWordsClip("today.");
+        //player.Play(today);
         //var sprites = GetAllSprites();
         //for (int i = 0; i < sprites.Length; i++)
         //    orizinal.sprite = sprites[i];
         //var clips = GetAllClips();
         //for (int i = 0; i < clips.Length; i++)
         //    audios.clip = clips[i];
-        GetSiteWordsClips();
+        //GetSiteWordsClips();
+        GetAllDigraphsSound();
     }
     private Sprite[] GetAllSprites()
     {
@@ -113,5 +114,14 @@ public class DevPage : MonoBehaviour
         Debug.LogFormat("_tmp {0}개\n{1}",_tmp.Count(), string.Join("\n", _tmp));
         Debug.LogFormat("__tmp {0}개\n{1}", __tmp.Count(), string.Join("\n", __tmp));
 
+    }
+    private void GetAllDigraphsSound()
+    {
+        var data = GameManager.Instance.schema.data.digraphsAudio.Select(x => x.phanics)
+            .Union(GameManager.Instance.schema.data.digraphsWords.Select(x => x.clip))
+            .Union(GameManager.Instance.schema.data.digraphsWords.Select(x => x.act))
+            .Where(x => Addressables.LoadAssetAsync<AudioClip>(x).WaitForCompletion() == null)
+            .OrderBy(x => x);
+        Debug.LogFormat("총 {0}개\n{1}", data.Count(), string.Join("\n", data));
     }
 }

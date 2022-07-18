@@ -45,8 +45,16 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
         caster.Raycast(eventData, list);
         var components = list
             .Select(x => x.gameObject.GetComponent<DropSapceShip_114>())
-            .Where(x => x != null);
-        if(components.Count()>0)
+            .Where(x => x != null)
+            .Union(
+                list
+                .Select(x => x.gameObject.GetComponent<DropField<DropSapceShip_114>>())
+                .Where(x => x != null)
+                .Select(x=>x.Parent)
+            )
+            .Distinct()
+            .ToArray();
+        if (components.Count() > 0)
         {
             var component = components.First();
             var correct = component.alphabet == alphabet;

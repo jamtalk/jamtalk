@@ -1007,7 +1007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ab5fe72270e2040a4a3e2f23e25311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetAlphabet: 23
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 1347658289}
+  stampClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
   sentanceParent: {fileID: 1754484516}
   throwingParent: {fileID: 1311661864}
   prefabWordElement: {fileID: 8080054674698359951, guid: a0969958c30358f409d05125af382c05, type: 3}
@@ -1016,7 +1019,6 @@ MonoBehaviour:
   thrower: {fileID: 115319375}
   words: []
   eventSystem: {fileID: 53175558}
-  audioPlayer: {fileID: 1347658289}
 --- !u!1 &1606439184
 GameObject:
   m_ObjectHideFlags: 0

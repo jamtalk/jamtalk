@@ -1745,11 +1745,11 @@ RectTransform:
   m_Father: {fileID: 868131867}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -662, y: 582}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -500, y: 500}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!1 &990717812
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,6 +2426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 1053526117}
   caster: {fileID: 1580109400}
   creator: {fileID: 866636544}
   thrower: {fileID: 866636543}
@@ -2433,7 +2434,6 @@ MonoBehaviour:
   - {fileID: 1056221625}
   - {fileID: 342401988}
   startClip: {fileID: 8300000, guid: 701b4cb129366dd41af404c204cf3640, type: 3}
-  audioPlayer: {fileID: 1053526117}
 --- !u!1 &1582810478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,11 +3043,11 @@ RectTransform:
   m_Father: {fileID: 1872366748}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 729, y: -478}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 500, y: -500}
+  m_SizeDelta: {x: 151.21643, y: 163.03558}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &2113020030
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,14 @@ public class WordCreator110 : MonoBehaviour
         }
         return elements.ToArray();
     }
+    public void Clear()
+    {
+        var targets = new List<GameObject>();
+        for (int i = 0; i < parent.childCount; i++)
+            targets.Add(parent.GetChild(i).gameObject);
+        for (int i = 0; i < targets.Count; i++)
+            Destroy(targets[i]);
+    }
 
     public AlphabetToggle110[] Create(DigraphsWordsData data)
     {
