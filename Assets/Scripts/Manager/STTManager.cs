@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -107,7 +108,19 @@ private void SetContext()
         Debug.LogFormat("결과 도착 : {0}", result);
         onResult?.Invoke(result);
     }
-
+    public enum eSTTError
+    {
+        ERROR_NETWORK_TIMEOUT,
+        ERROR_NETWORK,
+        ERROR_AUDIO,
+        ERROR_SERVER,
+        ERROR_CLIENT,
+        ERROR_SPEECH_TIMEOUT,
+        ERROR_NO_MATCH,
+        ERROR_RECOGNIZER_BUSY,
+        ERROR_NO_PERMISSION,
+        UNKNOWN,
+    }
 }
 public class STTResult
 {

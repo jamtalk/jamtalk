@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 public class GameManager : MonoSingleton<GameManager>
 {
     private const string AlhpabetSpritePath = "{0}/{1}/{2}";
-    public eAlphabet currentAlphabet { get; set; }
-    public eContents currentContents { get; set; }
-    public eDigraphs currentDigrpahs { get; set; } = eDigraphs.CH;
-    public eVowelType currentVowel { get; set; }
+    public eAlphabet currentAlphabet { get; set; } = eAlphabet.A;
+    public eContents currentContents { get; set; } = eContents.JT_PL1_102;
+    public eDigraphs currentDigrpahs { get; set; } = eDigraphs.AI;
+    public eVowelType currentVowel { get; set; } = eVowelType.Short;
     private ResourceSchema _schema = null;
     public ResourceSchema schema
     {

@@ -21,6 +21,7 @@ public class TestScene : MonoBehaviour
     public int[] levels;
     public GameObject loading;
     public Slider loadingBar;
+    public eSceneName[] ignoreScenes;
 
     private Coroutine loadingRoutine;
     private void Start()
@@ -66,7 +67,8 @@ public class TestScene : MonoBehaviour
         var scenes = Enum.GetNames(typeof(eSceneName))
             .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
             .Where(x=>x.ToString().Contains("PL"+level))
-            .Where(x=>x != eSceneName.JT_PL2_102 && x!=eSceneName.JT_PL2_111)
+            .Where(x=>!ignoreScenes.Contains(x))
+            //.Where(x=>x != eSceneName.JT_PL2_102 && x!=eSceneName.JT_PL2_111)
             .ToArray();
         Debug.LogFormat("{0}개 생성",scenes.Length);
         for (int i = 0; i < scenes.Length; i++)

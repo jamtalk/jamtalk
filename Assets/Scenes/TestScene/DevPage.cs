@@ -15,6 +15,7 @@ public class DevPage : MonoBehaviour
     public AudioSource audios;
     public AudioSinglePlayer player;
     public RectTransform parent;
+    public Button button;
     void Start()
     {
         //var today = GameManager.Instance.schema.GetSiteWordsClip("today.");
@@ -26,7 +27,17 @@ public class DevPage : MonoBehaviour
         //for (int i = 0; i < clips.Length; i++)
         //    audios.clip = clips[i];
         //GetSiteWordsClips();
-        GetAllDigraphsSound();
+        //GetAllDigraphsSound();
+        Debug.Log("리스너 추가");
+        STTManager.Instance.onResult += (value) => AndroidPluginManager.Instance.Toast(string.Format("STT 결과 도착 : {0}", value));
+        STTManager.Instance.onStarted += () => AndroidPluginManager.Instance.Toast("STT 시작");
+        STTManager.Instance.onEnded += () => AndroidPluginManager.Instance.Toast("STT 종료");
+        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast(string.Format("STT 에러 : {0}", error));
+        Debug.Log("리스너 추가 완료");
+        button.onClick.AddListener(()=>
+        {
+            STTManager.Instance.StartSTT("en-US");
+        });
     }
     private Sprite[] GetAllSprites()
     {

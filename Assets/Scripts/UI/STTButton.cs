@@ -13,18 +13,25 @@ public class STTButton : MonoBehaviour
     public Button button;
     public event Action<string> onSTT;
     public event Action<bool> onRecord;
-    public bool isRecording { get; private set; } = false;
     private void Awake()
     {
         recorder.onSTT += OnSTTEnded;
+        STTManager.Instance.onStarted += () => onRecord?.Invoke(true);
+        STTManager.Instance.onEnded += () =>
+        {
+            onRecord?.Invoke(false);
+            button.interactable = true;
+        };
+        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast("오류 발생 : " + error);
+        STTManager.Instance.onResult += (value) => onSTT(value);
         button.onClick.AddListener(() =>
         {
-            if (isRecording)
-                recorder.Stop();
-            else
-                recorder.Record();
-            isRecording = !isRecording;
-            onRecord?.Invoke(isRecording);
+            button.interactable = false;
+#if UNITY_EDITOR
+            recorder.Record();
+#elif UNITY_ANDROID
+            STTManager.Instance.StartSTT("en-US");
+#endif
         });
     }
     private void OnDisable()
