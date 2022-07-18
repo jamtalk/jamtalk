@@ -35,11 +35,11 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
         if (op.Status==UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
         {
             Debug.LogFormat("{0} : {1} (NEW)", key, op.Result);
+            clips.Add(key, op.Result);
         }
         else
         {
             Debug.LogErrorFormat("{0} : NULL (Load failed)", key);
-            clips.Add(key, op.Result);
         }
         callback?.Invoke(op.Result);
     }

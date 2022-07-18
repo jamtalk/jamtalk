@@ -78,23 +78,42 @@ public class TestScene : MonoBehaviour
             button.gameObject.SetActive(true);
         }
         original.gameObject.SetActive(false);
+        dropContents.onValueChanged.RemoveAllListeners();
         switch (level)
         {
             case 1:
                 dropContents.options = GetAlphabetsOption();
+                dropContents.onValueChanged.AddListener((value) =>
+                {
+                    var alphabet = (eAlphabet)(value * 2);
+                    GameManager.Instance.currentAlphabet = alphabet;
+                    Debug.LogFormat("{0} 설정",GameManager.Instance.currentAlphabet);
+                });
+                var alphabet = (eAlphabet)(dropContents.value * 2);
+                GameManager.Instance.currentAlphabet = alphabet;
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
                 break;
             case 2:
                 dropContents.options = GetVowelOptions();
+                dropContents.onValueChanged.AddListener((value) =>
+                {
+                    GameManager.Instance.currentAlphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), dropContents.options[dropContents.value].text);
+                    Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
+                });
+                GameManager.Instance.currentAlphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), dropContents.options[dropContents.value].text);
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
                 break;
             default:
-                dropContents.options = GetDigrpahsOption();
+                dropContents.options = GetDigrpahsOption(level);
+                dropContents.onValueChanged.AddListener((value) =>
+                {
+                    GameManager.Instance.currentDigrpahs = (eDigraphs)Enum.Parse(typeof(eDigraphs), dropContents.options[dropContents.value].text);
+                    Debug.LogFormat("{0} 설정", GameManager.Instance.currentDigrpahs);
+                });
+                GameManager.Instance.currentDigrpahs = (eDigraphs)Enum.Parse(typeof(eDigraphs), dropContents.options[dropContents.value].text);
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentDigrpahs);
                 break;
         }
-        dropContents.onValueChanged.AddListener((value) =>
-        {
-            var alphabet = (eAlphabet)(value * 2);
-            GameManager.Instance.currentAlphabet = alphabet;
-        });
     }
     private IEnumerator SetLayout()
     {
@@ -141,8 +160,12 @@ public class TestScene : MonoBehaviour
     {
         return GameManager.Instance.vowels.Select(x => new OptionData(x.ToString())).ToList();
     }
-    private List<OptionData> GetDigrpahsOption()
+    private List<OptionData> GetDigrpahsOption(int level)
     {
-        return GameManager.Instance.digrpahs.Select(x => new OptionData(x.ToString())).ToList();
+        return GameManager.Instance.digrpahs
+            .Where(x=>(int)x>=level*100)
+            .Where(x=>(int)x<(level+1)*100)
+            .Select(x => new OptionData(x.ToString()))
+            .ToList();
     }
 }

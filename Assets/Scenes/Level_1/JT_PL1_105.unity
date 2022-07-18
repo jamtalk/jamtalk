@@ -1041,15 +1041,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a422dea479a2b564e9e0600afc286cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 2030932875}
-  alphabetImage: {fileID: 1801284723}
+  valueViewer:
+  - {fileID: 349261876}
+  - {fileID: 300474237}
   image: {fileID: 1798120681}
   buttonAudio:
   - {fileID: 505905497}
   - {fileID: 1801284724}
   buttonSTT: {fileID: 1917061395}
-  value: {fileID: 2111871577}
+  sttResultViewer: {fileID: 2111871577}
 --- !u!1 &1798120679
 GameObject:
   m_ObjectHideFlags: 0

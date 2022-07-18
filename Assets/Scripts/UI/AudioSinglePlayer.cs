@@ -92,7 +92,8 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     IEnumerator OnOverRoutine(Action onOver)
     {
-        yield return new WaitForSeconds(player.clip.length);
+        var len = player.clip == null ? 0 : player.clip.length;
+        yield return new WaitForSeconds(len);
         onOver?.Invoke();
     }
     IEnumerator OnOverRoutine(float duration,Action onOver)

@@ -20,13 +20,13 @@ public class STTButton : MonoBehaviour
         STTManager.Instance.onEnded += () =>
         {
             onRecord?.Invoke(false);
-            button.interactable = true;
+            eventSystem.enabled = true;
         };
         STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast("오류 발생 : " + error);
         STTManager.Instance.onResult += (value) => onSTT(value);
         button.onClick.AddListener(() =>
         {
-            button.interactable = false;
+            eventSystem.enabled = false;
 #if UNITY_EDITOR
             recorder.Record();
 #elif UNITY_ANDROID
