@@ -66,10 +66,10 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
         wordImage.preserveAspect = true;
     }
     protected abstract void ShowValue(Question_STT<TData> question);
-    private void OnSTTResult(string result)
+    protected virtual void OnSTTResult(string result)
     {
         sttResultViewer.text = result;
-        if (currentQuestion.correct.key.ToLower() == result.ToLower())
+        if (CheckCorrect(result))
         {
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
             {
@@ -95,6 +95,7 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
     {
         Debug.LogError(message);
     }
+    protected virtual bool CheckCorrect(string value) => currentQuestion.correct.key.ToLower() == value.ToLower();
 }
 public class Question_STT<TData> : SingleQuestion<TData> where TData : ResourceWordsElement
 {
