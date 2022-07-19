@@ -10,6 +10,7 @@ public class VoiceRecorder : MonoBehaviour
 {
     public event Action<bool, string> onSTT;
     public bool isRecording { get; private set; } = false;
+    public event Action<bool> OnRecord;
     public AudioSource source => GetComponent<AudioSource>();
     private string deviceName;
     public AudioClip clip
@@ -25,9 +26,10 @@ public class VoiceRecorder : MonoBehaviour
         }
         else
         {
-            Debug.Log("녹음 시작");
-            deviceName = Microphone.devices[0];
-            source.clip = Microphone.Start(deviceName, false, 5, 8000);
+            deviceName = Microphone.devices[1];
+            Debug.LogFormat("녹음 시작 : {0}",deviceName);
+            source.clip = Microphone.Start(deviceName, false, 10, 44100);//서버 송신용 8000
+            OnRecord?.Invoke(true);
             //source.Play();
         }
     }
@@ -36,12 +38,13 @@ public class VoiceRecorder : MonoBehaviour
         Debug.Log("종료");
         source.Stop();
         Microphone.End(deviceName);
-        var param = new STTParam(clip);
-        RequestManager.Instance.RequestSTT(param, (response) =>
-        {
-            var result = response.GetResult<STTResult>();
-            onSTT?.Invoke(result.IsSuccessed, result.result);
-        });
+        OnRecord?.Invoke(false);
+        //var param = new STTParam(clip);
+        //RequestManager.Instance.RequestSTT(param, (response) =>
+        //{
+        //    var result = response.GetResult<STTResult>();
+        //    onSTT?.Invoke(result.IsSuccessed, result.result);
+        //});
     }
     public void Play()
     {

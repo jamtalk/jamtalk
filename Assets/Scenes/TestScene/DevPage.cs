@@ -11,33 +11,39 @@ using UnityEngine.UI;
 
 public class DevPage : MonoBehaviour
 {
-    public Image orizinal;
-    public AudioSource audios;
-    public AudioSinglePlayer player;
-    public RectTransform parent;
-    public Button button;
+    public Button buttonRecord;
+    public Button buttonPlay;
+    public Button buttonStop;
+    public Button buttonPause;
+    public VoiceRecorder recorder;
+    public bool recording = false;
     void Start()
     {
-        //var today = GameManager.Instance.schema.GetSiteWordsClip("today.");
-        //player.Play(today);
-        //var sprites = GetAllSprites();
-        //for (int i = 0; i < sprites.Length; i++)
-        //    orizinal.sprite = sprites[i];
-        //var clips = GetAllClips();
-        //for (int i = 0; i < clips.Length; i++)
-        //    audios.clip = clips[i];
-        //GetSiteWordsClips();
-        //GetAllDigraphsSound();
-        Debug.Log("리스너 추가");
-        STTManager.Instance.onResult += (value) => AndroidPluginManager.Instance.Toast(string.Format("STT 결과 도착 : {0}", value));
-        STTManager.Instance.onStarted += () => AndroidPluginManager.Instance.Toast("STT 시작");
-        STTManager.Instance.onEnded += () => AndroidPluginManager.Instance.Toast("STT 종료");
-        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast(string.Format("STT 에러 : {0}", error));
-        Debug.Log("리스너 추가 완료");
-        button.onClick.AddListener(()=>
+        Debug.Log("마이크 목록---\n" + string.Join("\n", Microphone.devices) + "\n-----");
+        STTManager.Instance.onEnded += () =>
         {
+            recording = false;
+            recorder.Stop();
+        };
+        STTManager.Instance.onError += (error) =>
+        {
+            Debug.Log(error);
+        };
+        //STTManager.Instance.onStarted += () => recorder.Record();
+        STTManager.Instance.onResult += (value) => Debug.LogFormat("결과 : {0}", value);
+        buttonRecord.onClick.AddListener(() =>
+        {
+            recorder.Record();
             STTManager.Instance.StartSTT("en-US");
+            //if (recording)
+            //    recorder.Stop();
+            //else
+            //    recorder.Record();
+            //recording = !recording;
         });
+        buttonPlay.onClick.AddListener(recorder.source.Play);
+        buttonStop.onClick.AddListener(recorder.source.Stop);
+        buttonPause.onClick.AddListener(recorder.source.Pause);
     }
     private Sprite[] GetAllSprites()
     {
