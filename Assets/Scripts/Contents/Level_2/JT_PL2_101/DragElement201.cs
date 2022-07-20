@@ -48,7 +48,9 @@ public class DragElement201 : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             .Select(x => x.gameObject)
             .Where(x => x.GetComponent<DragElement201>() == null)
             .Select(x => x.GetComponent<WordElement201>())
-            .Where(x => x != null);
+            .Where(x => x != null)
+            .Where(x => x.name == name);
+        
         if (targets.Count() > 0 && targets.First().name == name)
         {
             gameObject.SetActive(false);
