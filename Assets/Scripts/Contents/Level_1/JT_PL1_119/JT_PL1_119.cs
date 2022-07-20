@@ -85,7 +85,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         {
             var incorrect = GameManager.Instance.alphabets
                 .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
-                .Where(x=>!correct.Contains(x))
+                .Where(x => x.Alphabet != GameManager.Instance.currentAlphabet)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttons.Length - 1)
                 .ToArray();
