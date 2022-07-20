@@ -43,7 +43,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     {
         base.Awake();
 
-        textPot.text = GameManager.Instance.currentAlphabet.ToString();
+        textPot.text = GameManager.Instance.currentAlphabet.ToString().ToLower();
         SetButtonAddListener(charactors);
     }
     private void SetButtonAddListener(Button[] buttons)
