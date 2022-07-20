@@ -35,7 +35,8 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
         if (op.Status==UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
         {
             Debug.LogFormat("{0} : {1} (NEW)", key, op.Result);
-            clips.Add(key, op.Result);
+            if (!clips.ContainsKey(key))
+                clips.Add(key, op.Result);
         }
         else
         {
