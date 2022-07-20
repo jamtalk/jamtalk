@@ -22,7 +22,7 @@ public class JT_PL2_106 : BaseContents
     public Toggle[] currentCount;
     public Image rouletteImage;
     public GameObject parent;
-    public TextElement206 rouletteText;
+    public GameObject rouletteElement;
     public Image rouletteEffect;
 
     public AudioClip rouletteClip;
@@ -63,16 +63,14 @@ public class JT_PL2_106 : BaseContents
             .Take(WordsCount)
             .ToArray();
 
-        rouletteText.gameObject.SetActive(true);
-
         for (int i = 0; i < shortWords.Length; i++)
         {
             var angle = 15f + (float)(360 / (WordsCount * 2)) * i;
 
-            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<TextElement206>();
-            text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            //text.text = shortWords[i].key;
-            //text.name = shortWords[i].key;
+            var layout = Instantiate(rouletteElement, parent.transform);
+            layout.transform.localRotation = Quaternion.Euler(0, 0, angle);
+            var text = layout.GetComponentInChildren<TextElement206>();
+
             text.Init(shortWords[i]);
 
             textList.Add(text);
@@ -83,17 +81,15 @@ public class JT_PL2_106 : BaseContents
         {
             var angle = 15f + (float)(360 / (WordsCount * 2)) * (WordsCount + i);
 
-            var text = Instantiate(rouletteText.gameObject, parent.transform).GetComponent<TextElement206>();
-            text.transform.localRotation = Quaternion.Euler(0, 0, angle);
-            //text.text = longWords[i].key;
-            //text.name = longWords[i].key;
+            var layout = Instantiate(rouletteElement, parent.transform);
+            layout.transform.localRotation = Quaternion.Euler(0, 0, angle);
+            var text = layout.GetComponentInChildren<TextElement206>();
+
             text.Init(longWords[i]);
 
             textList.Add(text);
             datas.Add(longWords[i]);
         }
-
-        rouletteText.gameObject.SetActive(false);
     }
 
     private void ButtonListener(Button button)
