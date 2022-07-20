@@ -25,5 +25,5 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
 
     protected override void PlayClip() => audioPlayer.Play(currentQuestion.AudioData.clip);
 
-    protected override bool IsCurrentAnswer(AlphabetData value) => value == currentQuestion;
+    protected override bool IsCurrentAnswer(AlphabetData value) => value.Alphabet == currentQuestion.Alphabet;
 }
