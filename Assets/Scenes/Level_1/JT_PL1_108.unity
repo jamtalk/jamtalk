@@ -406,11 +406,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 81815575}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &354780453
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,11 +719,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 454167736}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &458946374 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5236799548975862521, guid: 49fba5d87c984374f921a529bee7face, type: 3}
@@ -947,11 +945,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 486246275}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &504180853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,11 +1408,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 653721279}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &773146161 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7913955956664785557, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
@@ -1440,11 +1436,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 960488245}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &860217054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,11 +1816,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 883649732}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &901722411
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,11 +2386,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 1045828122}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &1271406668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,6 +2542,146 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344821399}
   m_CullTransparentMesh: 1
+--- !u!1 &1364781177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1364781180}
+  - component: {fileID: 1364781179}
+  - component: {fileID: 1364781178}
+  m_Layer: 0
+  m_Name: BGM Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1364781178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364781177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66dae426d09b4c61935e8e1a3d7c8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &1364781179
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364781177}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 956cc2f05750141e7871718ddb293340, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1364781180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364781177}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1104.1666, y: 661.9233, z: -1338.6149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1417217525 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6175679149529526022, guid: ffdd68af41bc86e4188cf35685abfd66, type: 3}
@@ -2840,6 +2973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afd0565ac79f6a419734e1629ec74c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1639053182}
   cards:
@@ -3528,11 +3662,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 1817363621}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1 &1836606553
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,11 +4375,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageButton: {fileID: 2118426157}
   data:
+    key: 
+    act: 
+    clip: 
     alphabet: 0
-    value: 
-    sprite: {fileID: 0}
-    clip: {fileID: 0}
-    act3: {fileID: 0}
 --- !u!1001 &6175679148783528691
 PrefabInstance:
   m_ObjectHideFlags: 0
