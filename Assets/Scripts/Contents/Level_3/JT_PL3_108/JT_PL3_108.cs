@@ -19,8 +19,8 @@ public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
         {
             var tmp = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .OrderBy(x => Random.Range(0f, 100f)).ToArray()
                 .Where(x => x != words[currentQuestionIndex])
+                .OrderBy(x => Random.Range(0f, 100f)).ToArray()
                 .Take(elements.Length - 1)
                 .ToArray();
 
