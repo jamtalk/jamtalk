@@ -107,7 +107,11 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
             }
             else
             {
-                ResetQuestion();
+                for (int i = 0; i < buttonQuestions.Length; i++)
+                {
+                    buttonQuestions[i].isOn = false;
+                }
+                //ResetQuestion();
             }
         });
     }
