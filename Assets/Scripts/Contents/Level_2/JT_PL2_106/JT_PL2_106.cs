@@ -150,7 +150,7 @@ public class JT_PL2_106 : BaseContents
         seq = DOTween.Sequence();
         currentIndex = Random.Range(0, textList.Count);
 
-        var targetAngle = 360 - textList[currentIndex].transform.localRotation.eulerAngles.z;
+        var targetAngle = 360 - textList[currentIndex].transform.parent.localRotation.eulerAngles.z;
         var firstTween = rouletteImage.transform.DORotate(new Vector3(0, 0, 360f), 2f, RotateMode.FastBeyond360);
         var secondTween = rouletteImage.transform.DORotate(new Vector3(0, 0, 360f), 2f, RotateMode.FastBeyond360);
         var lastTween = rouletteImage.transform.DORotate(new Vector3(0, 0, targetAngle), 2f,RotateMode.FastBeyond360);
