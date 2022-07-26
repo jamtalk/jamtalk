@@ -12,7 +12,7 @@ public class JT_PL4_109 : BaseContents
 
     private string[] richs =
         { "blue", "cyan", "magenta", "green", "red", "brown"
-            , "grey" , "teal", "orange", "darkblue", "purple"};
+            , "grey" , "teal", "orange", "darkblue", "purple", "maroon"};
     private List<Card114> selected = new List<Card114>();
     public Card114[] cards;
 
@@ -27,14 +27,15 @@ public class JT_PL4_109 : BaseContents
     {
         var question = GameManager.Instance.digrpahs
             .Where(x => x >= GameManager.Instance.currentDigrpahs)
-            .Take(6)
-            .Select(x => GameManager.Instance.GetDigraphs(x)
-                .OrderBy(y=>Random.Range(0f,100f)).First())
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x)
+                .OrderBy(y=>Random.Range(0f,100f)).Take(2))
             .SelectMany(x=> new DigraphsWordsData[] {x,x})
+            .OrderBy(y => Random.Range(0f, 100f))
             .ToArray();
 
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         var randomColor = richs.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
         for (int i = 0; i < cards.Length; i++)
         {
             if (i > 0 && i % 2 != 0)
