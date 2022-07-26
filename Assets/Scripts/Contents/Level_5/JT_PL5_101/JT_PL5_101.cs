@@ -41,13 +41,13 @@ public class JT_PL5_101 : BaseContents
         for(int i = 0; i < temp.Length; i++)
         {
             eAlphabet alphabets = (eAlphabet)Enum.Parse(typeof(eAlphabet), temp[i].ToString());
-            eAlphabetStyle alphaStyle = eAlphabetStyle.Yellow;
+            eAlphabetStyle alphaStyle = eAlphabetStyle.Brown;
             switch(alphabets)
             {
                 case eAlphabet.I:
                 case eAlphabet.U:
                 case eAlphabet.E:
-                    alphaStyle = eAlphabetStyle.Yellow;
+                    alphaStyle = eAlphabetStyle.White;
                     break;
                 case eAlphabet.A:
                     alphaStyle = eAlphabetStyle.BingoBlue;
@@ -56,7 +56,7 @@ public class JT_PL5_101 : BaseContents
                     alphaStyle = eAlphabetStyle.BingoRed;
                     break;
                 case eAlphabet.O:
-                    alphaStyle = eAlphabetStyle.Brown;
+                    alphaStyle = eAlphabetStyle.Yellow;
                     break;
 
             }
