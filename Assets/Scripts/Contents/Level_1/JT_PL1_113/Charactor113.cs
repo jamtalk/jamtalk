@@ -23,7 +23,11 @@ public class Charactor113 : MonoBehaviour
     public Image product;
     private void Awake()
     {
-        button.onClick.AddListener(() => clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics));
+        button.onClick.AddListener(() =>
+        {
+            finger.gameObject.SetActive(false);
+            clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
+        });
     }
     public void Init(eAlphabet value)
     {
