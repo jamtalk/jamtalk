@@ -9,10 +9,13 @@ public class JT_PL1_107 : BaseMatchImage<AlphabetWordsData>
 
     protected override void GetWords()
     {
-        words = GameManager.Instance.GetResources().Words
+        eAlphabet[] targetAlphabets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        var halfLength = drops.Length / targetAlphabets.Length;
+        words = targetAlphabets.SelectMany(x=>GameManager.Instance.GetResources(x).Words
+                .OrderBy(y=>Random.Range(0f,100f)).Take(halfLength))
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(drops.Length)
             .ToArray();
+
         SetElement(words);
     }
 
