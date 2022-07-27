@@ -9,8 +9,10 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
     protected override eContents contents => eContents.JT_PL2_110;
     
     protected override AlphabetWordsData[] correctsTarget =>
-        new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
+        //new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
+        GameManager.Instance.alphabets
         .SelectMany(x => GameManager.Instance.GetResources(x).Words)
+        .Where(x => x.Alphabet == GameManager.Instance.currentAlphabet)
         .Where(x => x.key.Length < 6)
         .Distinct()
         .OrderBy(x => Random.Range(0f, 100f))
