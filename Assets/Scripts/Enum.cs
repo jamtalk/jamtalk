@@ -193,6 +193,11 @@ public enum ePairDigraphs
     AY = eDigraphs.AI,
     EE = eDigraphs.EA,
     OY = eDigraphs.OI,
+    OU = eDigraphs.OW,
+    OW = eDigraphs.OA,
+    AU = eDigraphs.AW,
+    UE = eDigraphs.UI,
+    Y = eDigraphs.IE
 }
 public enum eAlphabetStyle
 {
