@@ -2462,7 +2462,7 @@ GameObject:
   - component: {fileID: 1580109402}
   - component: {fileID: 1580109401}
   - component: {fileID: 1580109400}
-  - component: {fileID: 1580109404}
+  - component: {fileID: 1580109405}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2553,7 +2553,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1580109404
+--- !u!114 &1580109405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2562,12 +2562,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1580109399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3af176b7b4771240bb32356145706fd, type: 3}
+  m_Script: {fileID: 11500000, guid: c014ff49671d3432080d0d18d608a530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
-  audioPlayer: {fileID: 1053526117}
+  audioPlayer: {fileID: 122620620}
   caster: {fileID: 1580109400}
   creator: {fileID: 866636544}
   thrower: {fileID: 866636543}

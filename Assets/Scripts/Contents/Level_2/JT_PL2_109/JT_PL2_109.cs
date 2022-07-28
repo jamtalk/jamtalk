@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL2_109 : JT_PL1_110
+public class JT_PL2_109 : BaseThrowingAlphabet<VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_109;
 
-    protected override List<Question_PL1_110> MakeQuestion()
+    protected override List<Question_ThrowerAlphabet<VowelWordsData>> MakeQuestion()
     {
-        return GameManager.Instance.GetResources().Words
-            .Select(x => new Question_PL1_110(x))
+        var longVowel = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.VowelType == eVowelType.Long)
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(1)
-            .ToList();
+            .First();
+        var shortVowel = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.VowelType == eVowelType.Short)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .First();
+        return new Question_ThrowerAlphabet<VowelWordsData>[]
+        {
+            new Question_ThrowerAlphabet<VowelWordsData>(longVowel),
+            new Question_ThrowerAlphabet<VowelWordsData>(shortVowel)
+        }.OrderBy(x => Random.Range(0f, 100f)).ToList();
     }
 }
