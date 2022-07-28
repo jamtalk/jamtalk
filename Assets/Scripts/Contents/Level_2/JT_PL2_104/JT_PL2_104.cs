@@ -12,10 +12,9 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     protected override eContents contents => eContents.JT_PL2_104;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
-    protected override int QuestionCount => 3;
+    protected override int QuestionCount => 2;
 
     private float smallBubbleSize = 0.7f;
-    private VowelWordsData[] vowels;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -55,17 +54,30 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     protected override List<Question2_104> MakeQuestion()
     {
         var questions = new List<Question2_104>();
-        vowels = GameManager.Instance.vowels
+
+        var longVowel = GameManager.Instance.vowels
+            .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
+            .Where(x => x.VowelType == eVowelType.Long)
+            .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .First();
+
+        var shortVowel = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
             .Where(x => x.VowelType == eVowelType.Short)
             .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .ToArray();
+            .First();
+
+        VowelWordsData[] vowels = { longVowel, shortVowel };
+        vowels = vowels.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
         for ( int i = 0; i < QuestionCount; i++)
         {
+            var vowelType = vowels[i].VowelType == eVowelType.Long ? eVowelType.Short : eVowelType.Long; 
             var tmp = GameManager.Instance.vowels
                 .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-                .Where(x => x.VowelType == eVowelType.Long)
+                .Where(x => x.VowelType == vowelType)
                 .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(elements.Count - 1)
