@@ -31,7 +31,6 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private Vector3 defaultPosition;
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
-    //private VowelWordsData[] vowels;
     /// <summary>
     /// thrower 사이즈 변경
     /// 별똥별 추가
@@ -50,12 +49,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     protected override List<Question2_105> MakeQuestion()
     {
         var questions = new List<Question2_105>();
-        //vowels = GameManager.Instance.vowels
-        //    .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
-        //    .Where(x => x.VowelType == eVowelType.Long)
-        //    .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
-        //    .OrderBy(x => Random.Range(0f, 100f))
-        //    .ToArray();
+
         var longVowel = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
             .Where(x => x.VowelType == eVowelType.Long)
