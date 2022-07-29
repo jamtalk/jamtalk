@@ -50,7 +50,11 @@ public class JT_PL4_108 : BaseContents
         answerTexts.Clear();
         answerElements.Clear();
 
-        var digraphs = current.Digraphs.ToString().ToLower();
+        var digraphs = string.Empty;
+        if(current.key.IndexOf(current.digraphs.ToLower()) < 0)
+            digraphs = current.PairDigrpahs.ToString().ToLower();
+        else
+            digraphs = current.Digraphs.ToString().ToLower();
 
         currentImage.sprite = current.sprite;
         currentImage.preserveAspect = true;
@@ -72,10 +76,10 @@ public class JT_PL4_108 : BaseContents
             answerTexts.Add(item.ToString());
         answerTexts.Insert(digraphsIndex, digraphs);
 
-        SetElements();
+        SetElements(digraphs);
     }
 
-    private void SetElements()
+    private void SetElements(string digraphs)
     {
         for (int i = 0; i < questionTexts.Length; i++)
         {
@@ -84,7 +88,7 @@ public class JT_PL4_108 : BaseContents
             AddListener(potion);
 
             var text = Instantiate(textElement, textsParent.transform).GetComponent<SplitElement_408>();
-            if( current.Digraphs.ToString() == answerTexts[i].ToUpper())
+            if( digraphs == answerTexts[i])
             {
                 var colorText = ("<color=\"red\">" + answerTexts[i] + "</color>");
                 text.Init(colorText, textSprite);
