@@ -12,7 +12,6 @@ public class JT_PL4_106 : BaseContents
     private int questionCount = 3;
     private int index = 0;
     private DigraphsWordsData current;
-    private eDigraphs[] eDig = { eDigraphs.OI, eDigraphs.AI, eDigraphs.EA };
 
     public Text currentText;
     public DoubleClickButton[] doubleClick;
@@ -25,16 +24,15 @@ public class JT_PL4_106 : BaseContents
 
     private void MakeQuestion()
     {
-        var random = eDig[Random.Range(0, 2)];
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == random)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
         var temp = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs != random)
+            .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(2)
             .ToArray();
@@ -62,7 +60,10 @@ public class JT_PL4_106 : BaseContents
         button.onClickFirst.AddListener(() =>
         {
             var value = GameManager.Instance.schema.GetDigrpahsAudio(data.digraphs).phanics;
-            audioPlayer.Play(value);
+            audioPlayer.Play(value, () =>
+            {
+                button.SetFirstImages();
+            });
         });
 
         button.onClick.AddListener(() =>
@@ -71,6 +72,7 @@ public class JT_PL4_106 : BaseContents
             {
                 Debug.Log(index);
                 index += 1;
+                button.SetLastImages();
                 audioPlayer.Play(data.clip, () =>
                 {
                     if (CheckOver())
@@ -89,14 +91,7 @@ public class JT_PL4_106 : BaseContents
 
         if (!isCheck)
         {
-            string temp = string.Empty;
-            if (current.Digraphs == eDigraphs.OI)
-                temp = "oy";
-            else if (current.Digraphs == eDigraphs.EA)
-                temp = "ee";
-            else if (current.Digraphs == eDigraphs.AI)
-                temp = "ay";
-
+            var temp = current.PairDigrpahs.ToString().ToLower();
             value = current.key.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");
         }

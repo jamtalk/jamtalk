@@ -36,4 +36,13 @@ public class DoubleClickButton : ImageButton
             }
         });
     }
+    public void SetFirstImages()
+    {
+        button.image.sprite = spriteNormal;
+    }
+    public void SetLastImages()
+    {
+        button.image.sprite = spriteSelected;
+    }
+
 }
