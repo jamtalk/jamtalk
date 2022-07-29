@@ -9,6 +9,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override eContents contents => eContents.JT_PL4_102;
     protected override int QuestionCount => 1;
     private int answerCount = 6;
+    private DigraphsWordsData[] current;
 
     public Image successEffect;
     public Text successText;
@@ -24,7 +25,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
         for( int i = 0; i < QuestionCount; i++)
         {
-            var current = GameManager.Instance.digrpahs
+            current = GameManager.Instance.digrpahs
                 .SelectMany(x => GameManager.Instance.GetDigraphs(x))
                 .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
                 .OrderBy(x => Random.Range(0f, 100f))
@@ -76,19 +77,12 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
     private void SetCurrentColor(DigraphsWordsData data)
     {
-        var isCheck = data.key.Contains(data.Digraphs.ToString().ToLower());
+        var isCheck = data.key.Contains(current[currentQuestionIndex].Digraphs.ToString().ToLower());
         string value = string.Empty;
 
         if (!isCheck)
         {
-            string temp = string.Empty;
-            if (data.Digraphs == eDigraphs.OI)
-                temp = "oy";
-            else if (data.Digraphs == eDigraphs.EA)
-                temp = "ee";
-            else if (data.Digraphs == eDigraphs.AI)
-                temp = "ay";
-
+            var temp = data.PairDigrpahs.ToString().ToLower();
             value = data.key.Replace(temp,
                 "<color=\"red\">" + temp + "</color>");
         }
