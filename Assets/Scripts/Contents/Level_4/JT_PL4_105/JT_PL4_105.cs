@@ -38,8 +38,7 @@ public class JT_PL4_105 : BaseContents
     {
         current = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == eDigraphs.AI)
-            //.Where(x => x.type == GameManager.Instance.currentDigrpahs)
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
 
@@ -88,6 +87,8 @@ public class JT_PL4_105 : BaseContents
                 textElemet.Init(tempList[i]);
             }
         }
+
+        audioPlayer.Play(current.clip);
     }
 
     private void DigraphsButtonAddListener(Button button, Text text)
