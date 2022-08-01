@@ -15,7 +15,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     protected override int QuestionCount => 3;
 
     private float smallBubbleSize = 0.7f;
-    private DigraphsWordsData[] digraphs;
+    private DigraphsWordsData[] currents;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
     private List<RectTransform> bubbleParents = new List<RectTransform>();
 
@@ -25,6 +25,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     public GameObject bubbleElement;
     public Text textPot;
     public Image effectImage;
+    public FingerAnimation point;
 
     [Header("List")]
     public Button[] charactors;
@@ -57,7 +58,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     protected override List<Question3_104> MakeQuestion()
     {
         var questions = new List<Question3_104>();
-        digraphs = GameManager.Instance.digrpahs
+        currents = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
             .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
@@ -72,7 +73,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
                 .Take(elements.Count - 1)
                 .ToArray();
             
-            questions.Add(new Question3_104(digraphs[i], tmp));
+            questions.Add(new Question3_104(currents[i], tmp));
         }
         return questions;
     }
@@ -102,6 +103,9 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
                 for (int i = 0; i < elements.Count; i++)
                     elements[i].gameObject.SetActive(false);
                 bubble.gameObject.SetActive(true);
+
+                point.gameObject.SetActive(true);
+                point.gameObject.transform.position = bubble.transform.position;
             }
             else
             {
@@ -113,11 +117,19 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
         bubble.onClick.AddListener(() =>
         {
+            point.gameObject.SetActive(false);
+
             audioPlayer.Play(1f, tabClip);
             bubble.gameObject.SetActive(false);
             Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
 
-            var digraphs = currentQuestion.correct.Digraphs.ToString().ToLower();
+            var current = currents[currentQuestionIndex];
+            var digraphs = string.Empty;
+            if (current.key.IndexOf(current.digraphs.ToLower()) < 0)
+                digraphs = current.PairDigrpahs.ToString().ToLower();
+            else
+                digraphs = current.Digraphs.ToString().ToLower();
+
             var temp = bubble.textValue.text.Replace(digraphs, string.Empty);
 
             var tempList = new List<string>();
@@ -147,7 +159,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
                 {
                     audioPlayer.Play(1f, putClip);
                     smallBubbles.isOn = false;
-                    if (GameManager.Instance.currentDigrpahs.ToString().ToLower() == smallBubbles.textValue.text)
+                    if (digraphs == smallBubbles.textValue.text)
                     {
                         ThrowElement(smallBubbles, data);
 
