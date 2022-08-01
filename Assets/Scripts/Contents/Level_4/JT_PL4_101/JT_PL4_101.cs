@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JT_PL4_101 : BaseContents
 {
@@ -15,16 +16,14 @@ public class JT_PL4_101 : BaseContents
     private int slideCount = 0;
 
     public Slider[] sliders;
+    public Button[] buttons;
     public Text[] headTexts;
     public GameObject[] addImages;
     public Animator[] anis;
     public Text[] digraphsTexts;
     public Text[] pairsTexts;
-    public Sprite[] pacmanImages;
     public Image successImages;
 
-    private eDigraphs[] digraphs = { eDigraphs.AI, eDigraphs.OI, eDigraphs.EA };
-    private List<ePairDigraphs> pairs = new List<ePairDigraphs>();
     private DigraphsWordsData data;
     protected override void Awake()
     {
@@ -35,21 +34,19 @@ public class JT_PL4_101 : BaseContents
 
         MakeQuestion();
 
-        for(int i = 0; i < sliders.Length; i++)
-            AddListener(sliders[i], addImages[i]);
+        for(int i = 0; i < buttons.Length; i++)
+            AddListener(buttons[i], addImages[i], i);
     }
 
     private void MakeQuestion()
     {
         data = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == digraphs[index])
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .First();
 
-        pairs.Add(ResourceSchema.GetPair(digraphs[index]));
-
-        var digraph = digraphs[index].ToString().ToLower();
-        var pair = pairs[index].ToString().ToLower();
+        var pair = ResourceSchema.GetPair(data.Digraphs).ToString().ToLower();
+        var digraph = data.digraphs.ToLower();
 
         for (int i = 0; i < digraphsTexts.Length; i++)
         {
@@ -67,14 +64,15 @@ public class JT_PL4_101 : BaseContents
             headTexts[i].text = values[i];
     }
 
-    private void AddListener(Slider slider, GameObject addObj)
+    private void AddListener(Button buttons, GameObject addObj, int index)
     {
-        slider.onValueChanged.AddListener((value) =>
+        buttons.onClick.AddListener(() =>
         {
-            var temp = Convert.ToInt32(slider.value % 5);
-            slider.image.sprite = pacmanImages[temp];
-
-            if (value <= 0.001f)
+            buttons.interactable = false;
+            Slider slider = sliders[index];
+            var seq = DOTween.Sequence();
+            var tween = slider.DOValue(1f, 1.5f, true);
+            seq.onComplete += () =>
             {
                 slideCount += 1;
                 slider.gameObject.SetActive(false);
@@ -83,10 +81,12 @@ public class JT_PL4_101 : BaseContents
                 if (slideCount >= 2)
                 {
                     var pair = GameManager.Instance.schema.GetDigrpahsAudio(data.PairDigrpahs);
-                    audioPlayer.Play(data.audio.phanics, () => audioPlayer.Play(pair.phanics));
+                    audioPlayer.Play(data.audio.phanics);
                     StartCoroutine(Reset());
+                    //audioPlayer.Play(data.audio.phanics, () => audioPlayer.Play(pair.phanics));
                 }
-            }
+            };
+            seq.Append(tween);
         });
     }
 
@@ -101,17 +101,16 @@ public class JT_PL4_101 : BaseContents
         for (int i = 0; i < sliders.Length; i++)
         {
             sliders[i].value = 25;
-            sliders[i].image.sprite = pacmanImages[4];
             addImages[i].gameObject.SetActive(false);
             sliders[i].gameObject.SetActive(true);
         }
         successImages.gameObject.SetActive(false);
 
-
-        if (CheckOver())
-            ShowResult();
-        else
-            MakeQuestion();
+        ShowResult();
+        //if (CheckOver())
+        //    ShowResult();
+        //else
+        //    MakeQuestion();
     }
 
 }
