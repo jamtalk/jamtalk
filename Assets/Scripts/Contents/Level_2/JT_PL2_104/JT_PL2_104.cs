@@ -23,6 +23,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     public Thrower204 thrower;
     public GameObject bubbleElement;
     public Text textPot;
+    public FingerAnimation point;
 
     [Header("List")]
     public Button[] charactors;
@@ -112,6 +113,9 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
                 for (int i = 0; i < elements.Count; i++)
                     elements[i].gameObject.SetActive(false);
                 bubble.gameObject.SetActive(true);
+
+                point.gameObject.SetActive(true);
+                point.gameObject.transform.position = bubble.transform.position;
             }
             else
             {
@@ -123,6 +127,8 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
         bubble.onClick.AddListener(() =>
         {
+            point.gameObject.SetActive(false);
+
             audioPlayer.Play(1f, tabClip);
             bubble.gameObject.SetActive(false);
             Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
