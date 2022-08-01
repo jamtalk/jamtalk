@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Random = UnityEngine.Random;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +15,7 @@ public class JT_PL3_106 : BaseContents
     private int index = 0;
 
     private DigraphsWordsData currentDigraphs;
+    private string digraphs;
 
     public Thrower306 thrower;
     public Text[] texts;
@@ -22,7 +25,6 @@ public class JT_PL3_106 : BaseContents
     public Image bagImage;
     [SerializeField]
     private List<DoubleClick306> elements = new List<DoubleClick306>();
-    private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
     protected override void Awake()
     {
@@ -60,24 +62,36 @@ public class JT_PL3_106 : BaseContents
             .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
-
-        var value = currentDigraphs.key;
-        currentText.text = value.Replace(
-            GameManager.Instance.currentDigrpahs.ToString().ToLower(), "__");
         currentImage.sprite = currentDigraphs.sprite;
         currentImage.name = currentDigraphs.key;
         currentImage.preserveAspect = true;
+
+        if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
+            digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
+        else
+            digraphs = currentDigraphs.Digraphs.ToString().ToLower();
+
+        currentText.text = currentDigraphs.key.Replace(digraphs, "__");
 
         ShowQuestion();
     }
 
     protected void ShowQuestion()
     {
+        var temp = GameManager.Instance.digrpahs
+            .Where(x => x != GameManager.Instance.currentDigrpahs)
+            .Where(x => (int)x < 400)
+            .Select(x => x.ToString())
+            .Take(2)
+            .ToList();
+        temp.Add(digraphs);
+        var icorrect = temp.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
         for (int i = 0; i < elements.Count; i++)
         {
-            elements[i].Init(eDig[i]);    
+            elements[i].Init(icorrect[i]);    
             elements[i].isOn = false;     
-            AddDoubleClickListener(elements[i], currentDigraphs); // current 가 아닌 알맞는 digraphs 삽입 
+            AddDoubleClickListener(elements[i], currentDigraphs); 
         }
     }
 
@@ -85,8 +99,8 @@ public class JT_PL3_106 : BaseContents
     {
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
-
-        var clip = GameManager.Instance.schema.GetDigrpahsAudio(element.eDigraphs);
+        
+        var clip = GameManager.Instance.schema.GetDigrpahsAudio(element.digraphs);
 
         element.onClickFirst.AddListener(() =>
         {
