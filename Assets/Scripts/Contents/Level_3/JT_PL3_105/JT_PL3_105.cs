@@ -13,8 +13,8 @@ public class JT_PL3_105 : BaseContents
     protected int QuestionCount => 5;
     private int index = 0;
     
-    private eDigraphs eCurrentDigraphs;
     private DigraphsWordsData currentDigraphs;
+    private string digraphs;
 
     public Text currentText;
     public GameObject hammer;
@@ -26,8 +26,6 @@ public class JT_PL3_105 : BaseContents
     public AudioClip moleClip;
     public AudioClip effectClip;
 
-    private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
-
     protected override void Awake()
     {
         base.Awake();
@@ -38,17 +36,21 @@ public class JT_PL3_105 : BaseContents
 
     protected void MakeQuestion()
     {
-        eCurrentDigraphs = eDig[Random.Range(0, eDig.Length)];
-
         currentDigraphs = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))  
-            .Where(x => x.Digraphs == eCurrentDigraphs)
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
+            .Distinct()
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
         audioPlayer.Play(currentDigraphs.clip);
 
+        if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
+            digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
+        else
+            digraphs = currentDigraphs.Digraphs.ToString().ToLower();
+
         string value = currentDigraphs.key;
-        currentText.text = value.Replace(eCurrentDigraphs.ToString().ToLower(), "__");
+        currentText.text = value.Replace(digraphs, "__");
 
         SetMolesPosition();
     }
@@ -60,9 +62,19 @@ public class JT_PL3_105 : BaseContents
             .Take(3)
             .ToArray();
 
+        var temp = GameManager.Instance.digrpahs
+            .Where(x => x != GameManager.Instance.currentDigrpahs)
+            .Where(x => (int)x < 400)
+            .Select(x => x.ToString())
+            .Take(2)
+            .ToList();
+        temp.Add(digraphs);
+        var icorrect = temp.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+
         for (int i = 0; i < elements.Length; i++)
         {
             elements[i].transform.position = tempLayouts[i].position;
+            elements[i].Init(icorrect[i]);
             elements[i].gameObject.SetActive(true);
             AddListener(elements[i]);
         }
@@ -93,7 +105,7 @@ public class JT_PL3_105 : BaseContents
                 {
                     effectImage.gameObject.SetActive(false);
 
-                    if (element.text.text.ToUpper().Contains(eCurrentDigraphs.ToString()))
+                    if (element.text.text.Contains(digraphs))
                     {
                         index += 1;
                         currentText.text = currentDigraphs.key;
