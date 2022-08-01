@@ -45,6 +45,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         {
             var data = question.totalQuestion[i];
             childrenImages[i].sprite = data.sprite;
+            childrenImages[i].preserveAspect = true;
             AddListener(parentImages[i], data);
         }
     }
@@ -56,21 +57,22 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
             audioPlayer.Play(data.clip);
             //if (data.key == currentQuestion.currentCorrect.key)
             //{
+            for (int i = 0; i < parentImages.Length; i++)
+                parentImages[i].gameObject.SetActive(false);
+
+            successImage.sprite = data.sprite;
+            successImage.preserveAspect = true;
+            SetCurrentColor(data);
+            successEffect.gameObject.SetActive(true);
+            audioPlayer.Play(data.act, () =>
+            {
+                successEffect.gameObject.SetActive(false);
                 for (int i = 0; i < parentImages.Length; i++)
-                    parentImages[i].gameObject.SetActive(false);
+                    parentImages[i].gameObject.SetActive(true);
+                AddAnswer(currentQuestion.currentCorrect);
+            });
 
-                successImage.sprite = data.sprite;
-                SetCurrentColor(data);
-                successEffect.gameObject.SetActive(true);
-                audioPlayer.Play(data.act, () =>
-                {
-                    successEffect.gameObject.SetActive(false);
-                    for (int i = 0; i < parentImages.Length; i++)
-                        parentImages[i].gameObject.SetActive(true);
-                    AddAnswer(currentQuestion.currentCorrect);      
-                });
-
-                button.sprite = successedImage;
+            button.sprite = successedImage;
             //}
         });
     }
