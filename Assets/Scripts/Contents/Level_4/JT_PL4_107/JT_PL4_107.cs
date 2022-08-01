@@ -13,6 +13,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     protected override int GetTotalScore() => QuestionCount;
     protected override int QuestionCount => 3;
 
+    public FingerAnimation Point;
     public Text currentText;
     public Button buttonCharactor;
     public Button[] buttonQuestions;
@@ -98,6 +99,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
 
     private void CharactorAddListener()
     {
+        Point.gameObject.SetActive(false);
         DoMove(() =>
         {
             colorFillamount += 0.33f;
