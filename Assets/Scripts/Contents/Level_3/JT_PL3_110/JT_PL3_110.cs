@@ -31,5 +31,5 @@ public class JT_PL3_110 : BingoContents<DigraphsWordsData, DigraphsBingoButton, 
 
     protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip);
 
-    protected override bool IsCurrentAnswer(DigraphsWordsData value) => value == currentQuestion;
+    protected override bool IsCurrentAnswer(DigraphsWordsData value) => value.key == currentQuestion.key;
 }
