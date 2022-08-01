@@ -33,5 +33,5 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
 
     protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip);
 
-    protected override bool IsCurrentAnswer(AlphabetWordsData value) => value == currentQuestion;
+    protected override bool IsCurrentAnswer(AlphabetWordsData value) => value.key == currentQuestion.key;
 }
