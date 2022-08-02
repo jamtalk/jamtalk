@@ -39,7 +39,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
     }
     protected abstract void GetSentance();
 
-    private IEnumerator Init(AlphabetSentanceData data)
+    private IEnumerator Init(T data)
     {
         Clear();
         elements.Clear();
