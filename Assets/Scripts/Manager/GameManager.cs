@@ -42,14 +42,14 @@ public class GameManager : MonoSingleton<GameManager>
         {
             var schemaLoader = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema");
             var bytes = schemaLoader.GetDownloadStatus().TotalBytes;
-            Debug.LogFormat("스키마 로딩 시작 ({0}MB)", bytes);
+            Debug.LogFormat("?????? ???? ???? ({0}MB)", bytes);
             while (!schemaLoader.IsDone)
             {
                 yield return null;
                 var bytesSatus = schemaLoader.GetDownloadStatus();
-                Debug.LogFormat("로딩중 ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
+                Debug.LogFormat("?????? ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
             }
-            Debug.LogFormat("스키마 로딩 결과\n상태 : {0}\n오류 : {1}\n결과 : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
+            Debug.LogFormat("?????? ???? ????\n???? : {0}\n???? : {1}\n???? : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
             _schema = schemaLoader.Result;
         }
 
