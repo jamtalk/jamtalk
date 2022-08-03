@@ -109,7 +109,7 @@ public class DevPage : MonoBehaviour
     private void GetSiteWordsClips()
     {
         var sen = GameManager.Instance.alphabets
-            .SelectMany(x => GameManager.Instance.GetResources(x).Sentances);
+            .SelectMany(x => GameManager.Instance.GetResources(x).AlphabetSentances);
         var data = sen
             .SelectMany(x => x.words)
             .Select(x => GJGameLibrary.GJStringFormatter.OnlyEnglish(x))
