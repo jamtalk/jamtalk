@@ -79,11 +79,11 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
             eventSystem.enabled = true;
         });
         roket.mask.gameObject.SetActive(true);
-        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].Alphabet);
+        roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].Key);
     }
     private void PlayAudio()
     {
-        var alphabet = currentQuestion.correct[currentQuestion.currentIndex].Alphabet;
+        var alphabet = currentQuestion.correct[currentQuestion.currentIndex].Key;
         audioPlayer.Play(GameManager.Instance.GetResources((eAlphabet)alphabet).AudioData.phanics);
     }
     protected override List<Question120> MakeQuestion()

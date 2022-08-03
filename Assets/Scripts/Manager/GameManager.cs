@@ -60,6 +60,11 @@ public class GameManager : MonoSingleton<GameManager>
     public AlphabetData GetResources() => GetResources(currentAlphabet);
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
+    /// <summary>
+    /// eDigraphs 값만 비교
+    /// </summary>
+    public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
+    public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
@@ -79,8 +84,8 @@ public class AlphabetData
 {
     public eAlphabet Alphabet { get; private set; }
     public bool IsVowel => Vowels == null || Vowels.Length == 0;
-    public AlphabetSentanceData[] Sentances => GameManager.Instance.schema.data.alphabetSentaces.Where(x => x.Alphabet == Alphabet).ToArray();
-    public AlphabetWordsData[] Words => GameManager.Instance.schema.data.alphabetWords.Where(x => x.Alphabet == Alphabet).ToArray();
+    public AlphabetSentanceData[] AlphabetSentances => GameManager.Instance.schema.data.alphabetSentaces.Where(x => x.Key == Alphabet).ToArray();
+    public AlphabetWordsData[] Words => GameManager.Instance.schema.data.alphabetWords.Where(x => x.Key == Alphabet).ToArray();
     public VowelWordsData[] Vowels => GameManager.Instance.schema.data.vowelWords.Where(x => x.Vowel == Alphabet).ToArray();
 
     public AlphabetAudioData AudioData => GameManager.Instance.schema.GetAlphabetAudio(Alphabet);

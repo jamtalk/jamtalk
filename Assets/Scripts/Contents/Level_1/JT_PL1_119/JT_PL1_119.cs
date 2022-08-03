@@ -85,7 +85,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         {
             var incorrect = GameManager.Instance.alphabets
                 .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
-                .Where(x => x.Alphabet != GameManager.Instance.currentAlphabet)
+                .Where(x => x.Key != GameManager.Instance.currentAlphabet)
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttons.Length - 1)
                 .ToArray();
@@ -98,8 +98,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
     {
         if (finger != null)
             finger.SetActive(true);
-        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.Alphabet);
-        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.Alphabet);
+        imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.Key);
+        imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.Key);
         var questions = question.totalQuestion;
         for(int i = 0;i < buttons.Length; i++)
         {

@@ -59,7 +59,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         }
         var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,currentQuestion.correct.Alphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown,eAlphabetType.Upper,currentQuestion.correct.Key);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }
@@ -71,7 +71,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         }
         var phanics = currentQuestion.correct.audio.phanics;
         audioPlayer.Play(phanics);
-        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, currentQuestion.correct.Alphabet);
+        buttonPhanics.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Brown, eAlphabetType.Upper, currentQuestion.correct.Key);
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(phanics));
     }

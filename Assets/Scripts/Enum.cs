@@ -188,6 +188,14 @@ public enum eDigraphs
     IR = 501,
     OR = 502,
 }
+public enum eDigraphsType
+{
+    None,
+    Soft,
+    Hard,
+    Short,
+    Long
+}
 public enum ePairDigraphs
 {
     AY = eDigraphs.AI,

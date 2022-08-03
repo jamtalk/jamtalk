@@ -12,7 +12,7 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
         //new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
         GameManager.Instance.alphabets
         .SelectMany(x => GameManager.Instance.GetResources(x).Words)
-        .Where(x => x.Alphabet == GameManager.Instance.currentAlphabet)
+        .Where(x => x.Key == GameManager.Instance.currentAlphabet)
         .Where(x => x.key.Length < 6)
         .Distinct()
         .OrderBy(x => Random.Range(0f, 100f))
@@ -22,7 +22,7 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
     {
         return GameManager.Instance.alphabets
             .Select(x => GameManager.Instance.GetResources(x))
-            .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x.Alphabet))
+            .Where(x => !correctsTarget.Select(y => y.Key).Contains(x.Alphabet))
             .SelectMany(x=>x.Words)
             .Where(x => x.key.Length < 6)
             .Distinct()

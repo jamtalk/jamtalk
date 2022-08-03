@@ -82,6 +82,13 @@ public abstract class ResourceWordsElement : ResourceElement
     public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
 }
 #endregion
+public class BaseSentanceData<TKey> : ResourceElement where TKey : Enum
+{
+    public string value;
+    public string clip;
+    public string[] words => value.Split(' ').Where(x => !string.IsNullOrEmpty(value)).ToArray();
+    public TKey Key => (TKey)Enum.Parse(typeof(TKey), key);
+}
 
 #region Alphabet Data
 [Serializable]
@@ -89,8 +96,8 @@ public class AlphabetWordsData : ResourceWordsElement
 {
     protected override eAtlasType atalsType => eAtlasType.Words;
     public string alphabet;
-    public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), alphabet);
-    public AlphabetAudioData audio => GameManager.Instance.schema.data.alphabetAudio.ToList().Find((Predicate<AlphabetAudioData>)(x => x.Alphabet == Alphabet));
+    public eAlphabet Key => (eAlphabet)Enum.Parse(typeof(eAlphabet), alphabet);
+    public AlphabetAudioData audio => GameManager.Instance.schema.data.alphabetAudio.ToList().Find((Predicate<AlphabetAudioData>)(x => x.Alphabet == Key));
 }
 [Serializable]
 public class AlphabetAudioData : ResourceElement
@@ -102,13 +109,7 @@ public class AlphabetAudioData : ResourceElement
     public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), key);
 }
 [Serializable]
-public class AlphabetSentanceData : ResourceElement
-{
-    public string value;
-    public string clip;
-    public string[] words => value.Split(' ').Where(x=>!string.IsNullOrEmpty(value)).ToArray();
-    public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), key);
-}
+public class AlphabetSentanceData : BaseSentanceData<eAlphabet> { }
 #endregion
 
 #region VowelData
@@ -178,6 +179,11 @@ public class DigraphsAudioData : ResourceElement
 {
     public string phanics;
 }
+
+public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
+{
+    public eDigraphsType type;
+}
 #endregion
 
 [Serializable]
@@ -196,6 +202,7 @@ public class ResourceData
     public DigraphsWordsData[] digraphsWords;
     public DigraphsAudioData[] digraphsAudio;
     public AlphabetSentanceData[] alphabetSentaces;
+    public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
 }
 

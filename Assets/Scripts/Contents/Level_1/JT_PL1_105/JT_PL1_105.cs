@@ -21,7 +21,7 @@ public class JT_PL1_105 : STTContents<AlphabetWordsData, Image[]>
 
     protected override void ShowValue(Question_STT<AlphabetWordsData> question)
     {
-        valueViewer[0].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, question.correct.Alphabet);
-        valueViewer[1].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Lower, question.correct.Alphabet);
+        valueViewer[0].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, question.correct.Key);
+        valueViewer[1].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Lower, question.correct.Key);
     }
 }

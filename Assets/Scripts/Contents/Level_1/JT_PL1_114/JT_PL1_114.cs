@@ -100,7 +100,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
 }
 public class Question114 : SingleQuestion<AlphabetWordsData>
 {
-    public eAlphabet alphabet => correct.Alphabet;
+    public eAlphabet alphabet => correct.Key;
     public Question114(AlphabetWordsData correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
     }
