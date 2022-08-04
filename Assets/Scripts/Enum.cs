@@ -33,6 +33,7 @@
     JT_PL2_109,
     JT_PL2_110,
     JT_PL2_111,
+    JT_PL2_112,
     JT_PL3_101,
     JT_PL3_102,
     JT_PL3_103,
@@ -43,6 +44,7 @@
     JT_PL3_108,
     JT_PL3_109,
     JT_PL3_110,
+    JT_PL3_111,
     JT_PL4_101,
     JT_PL4_102,
     JT_PL4_103,
@@ -53,6 +55,7 @@
     JT_PL4_108,
     JT_PL4_109,
     JT_PL4_110,
+    JT_PL4_111,
     JT_PL5_101,
     JT_PL5_102,
     JT_PL5_103,
@@ -63,6 +66,7 @@
     JT_PL5_108,
     JT_PL5_109,
     JT_PL5_110,
+    JT_PL5_111,
 }
 
 public enum eContents
@@ -98,6 +102,7 @@ public enum eContents
     JT_PL2_109 = 109,
     JT_PL2_110 = 110,
     JT_PL2_111 = 111,
+    JT_PL2_112 = 112,
     JT_PL3_101 = 101,
     JT_PL3_102 = 102,
     JT_PL3_103 = 103,
@@ -108,6 +113,7 @@ public enum eContents
     JT_PL3_108 = 108,
     JT_PL3_109 = 109,
     JT_PL3_110 = 110,
+    JT_PL3_111 = 111,
     JT_PL4_101 = 101,
     JT_PL4_102 = 102,
     JT_PL4_103 = 103,
@@ -118,6 +124,7 @@ public enum eContents
     JT_PL4_108 = 108,
     JT_PL4_109 = 109,
     JT_PL4_110 = 110,
+    JT_PL4_111 = 111,
     JT_PL5_101 = 101,
     JT_PL5_102 = 102,
     JT_PL5_103 = 103,
@@ -128,6 +135,7 @@ public enum eContents
     JT_PL5_108 = 108,
     JT_PL5_109 = 109,
     JT_PL5_110 = 110,
+    JT_PL5_111 = 111,
 }
 
 public enum eAlphabet
