@@ -15,6 +15,5 @@ public class JT_PL1_121 : BaseMatchSentances<AlphabetSentanceData>
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
-        index = 0;
     }
 }

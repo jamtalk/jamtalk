@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class BaseMatchSentances<T> : BaseContents
-    where T : AlphabetSentanceData
+public abstract class BaseMatchSentances<T> : BaseContents 
+    where T : BaseSentanceData
 {
     protected override eContents contents => throw new System.NotImplementedException();
     protected override bool CheckOver() => index == questionCount;
