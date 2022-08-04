@@ -82,11 +82,14 @@ public abstract class ResourceWordsElement : ResourceElement
     public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
 }
 #endregion
-public class BaseSentanceData<TKey> : ResourceElement where TKey : Enum
+public class BaseSentanceData : ResourceElement
 {
     public string value;
     public string clip;
     public string[] words => value.Split(' ').Where(x => !string.IsNullOrEmpty(value)).ToArray();
+}
+public class BaseSentanceData<TKey> : BaseSentanceData where TKey : Enum
+{
     public TKey Key => (TKey)Enum.Parse(typeof(TKey), key);
 }
 
