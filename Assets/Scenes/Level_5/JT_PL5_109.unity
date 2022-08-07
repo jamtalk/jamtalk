@@ -339,11 +339,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 81497273}
   text: {fileID: 81497279}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1192142534}
 --- !u!114 &81497279 stripped
 MonoBehaviour:
@@ -536,11 +537,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 86782095}
   text: {fileID: 86782101}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1835666878}
 --- !u!114 &86782101 stripped
 MonoBehaviour:
@@ -926,6 +928,146 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &200176882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 200176885}
+  - component: {fileID: 200176884}
+  - component: {fileID: 200176883}
+  m_Layer: 0
+  m_Name: BGM Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &200176883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200176882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66dae426d09b4c61935e8e1a3d7c8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &200176884
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200176882}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a1d0b00f05b9444418db253b1ba6dc9e, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &200176885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200176882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1104.1666, y: 661.9233, z: -1338.6149}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &232759755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1106,11 +1248,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 232759758}
   text: {fileID: 232759764}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1391706264}
 --- !u!114 &232759764 stripped
 MonoBehaviour:
@@ -1395,11 +1538,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 321990110}
   text: {fileID: 321990116}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1486886623}
 --- !u!114 &321990116 stripped
 MonoBehaviour:
@@ -1694,11 +1838,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 438198915}
   text: {fileID: 438198921}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1328823243}
 --- !u!114 &438198921 stripped
 MonoBehaviour:
@@ -2406,11 +2551,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 735498346}
   text: {fileID: 735498352}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1032682125}
 --- !u!114 &735498352 stripped
 MonoBehaviour:
@@ -2767,11 +2913,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 972641388}
   text: {fileID: 972641394}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 166281801}
 --- !u!114 &972641394 stripped
 MonoBehaviour:
@@ -2964,11 +3111,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 987752548}
   text: {fileID: 987752554}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1068570132}
 --- !u!114 &987752554 stripped
 MonoBehaviour:
@@ -3540,7 +3688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6dcad8f27ea8426984e21484876bccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 155458490}
   cards:
   - {fileID: 81497278}
   - {fileID: 2101416940}
@@ -3554,7 +3704,6 @@ MonoBehaviour:
   - {fileID: 86782100}
   - {fileID: 438198920}
   - {fileID: 735498351}
-  audioPlayer: {fileID: 155458490}
 --- !u!1 &1192142533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,11 +4070,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1252022467}
   text: {fileID: 1252022473}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 455036347}
 --- !u!114 &1252022473 stripped
 MonoBehaviour:
@@ -4118,11 +4268,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1263907054}
   text: {fileID: 1263907060}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1651969178}
 --- !u!114 &1263907060 stripped
 MonoBehaviour:
@@ -5299,11 +5450,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1937618120}
   text: {fileID: 1937618126}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1566486827}
 --- !u!114 &1937618126 stripped
 MonoBehaviour:
@@ -5598,11 +5750,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2101416935}
   text: {fileID: 2101416941}
-  data:
-    value: 
-    type: 0
-    actValue: 
-  alphabet: 0
+  DigraphsWordsData:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
   star: {fileID: 1066070182}
 --- !u!114 &2101416941 stripped
 MonoBehaviour:
