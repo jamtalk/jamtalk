@@ -17,7 +17,7 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     public event Action onDrag;
     public bool intracable;
     public AlphabetWordsData data;
-    public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), image.sprite.name.First().ToString().ToUpper());
+    public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), data.alphabet);
     private void Awake()
     {
         button.onClick.AddListener(() => audioPlayer.Play(data.clip));
@@ -33,7 +33,9 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     {
         if (!intracable)
             return;
-        rt.position = eventData.position;
+        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+        pos.z = rt.position.z;
+        rt.position = pos;
         onDrag?.Invoke();
     }
 

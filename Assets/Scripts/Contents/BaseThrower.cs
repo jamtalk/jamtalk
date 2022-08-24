@@ -5,21 +5,31 @@ using DG.Tweening;
 
 public abstract class BaseThrower<T> : MonoBehaviour
 {
-    protected float upperTime;
-    protected float moveTime;
-    protected float lowerTime;
-    protected float inertTime;
-    protected float upperSize = 1.5f;
+    protected abstract float upperTime { get; }
+    protected abstract float lowerTime { get; }
+    protected abstract float inertTime { get; }
+    protected virtual float upperSize => 1.5f;
+    protected virtual float moveTime
+    {
+        get
+        {
+            var currentPos = Camera.main.ScreenToWorldPoint(transform.position);
+            var targetPos = Camera.main.ScreenToWorldPoint(target.position);
+            var distance = Vector3.Distance(currentPos, targetPos);
+            return distance / speed;
+        }
+    }
+    public float speed = .1f;
     protected RectTransform rt => GetComponent<RectTransform>();
+    protected RectTransform target;
     protected Sequence seq = null;
 
     protected abstract void SetItem(T item);
-    protected abstract void SetTime(RectTransform target);
     public void Throw(T item, RectTransform target, System.Action onCompleted)
     {
         SetItem(item);
         transform.localScale = Vector3.one;
-        SetTime(target);
+        this.target = target;
 
         gameObject.SetActive(true);
 

@@ -9,13 +9,11 @@ public class Thrower204 : BaseThrower<BubbleElement>
     public Image imageProduct;
     public Text textValue;
 
-    protected override void SetTime(RectTransform target)
-    {
-        upperTime = 0.5f;
-        moveTime = Vector3.Distance(transform.position, target.position) / 10f;
-        lowerTime = 0.5f;
-        inertTime = 0.5f;
-    }
+    protected override float upperTime => .5f;
+
+    protected override float lowerTime => .5f;
+
+    protected override float inertTime => .5f;
     protected override void SetItem(BubbleElement item)
     {
         textValue.text = item.textValue.text;

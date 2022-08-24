@@ -76,16 +76,19 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
 
     protected override List<Question119> MakeQuestion()
     {
-        var correct = GameManager.Instance.GetResources().Words
+        var correct = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 }
+            .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .ToArray();
         var list = new List<Question119>();
         for (int i = 0;i < QuestionCount; i++)
         {
+            var words = GameManager.Instance.GetResources(correct[i].Key).Words.Select(x=>x.key);
             var incorrect = GameManager.Instance.alphabets
                 .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
                 .Where(x => x.Key != GameManager.Instance.currentAlphabet)
+                .Where(x=>!words.Contains(x.key))
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(buttons.Length - 1)
                 .ToArray();

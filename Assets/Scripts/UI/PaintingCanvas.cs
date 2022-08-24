@@ -42,10 +42,13 @@ public class PaintingCanvas : MonoBehaviour, IDragHandler, IPointerUpHandler,IPo
         }
         set
         {
+            var pix = value.GetRawTextureData();
+            var orizin = new Texture2D(value.width, value.height, value.format, false);
+            orizin.LoadRawTextureData(pix);
             var texture = new Texture2D(value.width, value.height);
             for (int i = 0; i < texture.width; i++)
                 for (int j = 0; j < texture.height; j++)
-                    texture.SetPixel(i, j, value.GetPixel(i,j));
+                    texture.SetPixel(i, j, orizin.GetPixel(i,j));
             texture.Apply();
             canvas.texture = texture;
         }

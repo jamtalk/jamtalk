@@ -61,6 +61,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
             var correctWord = GameManager.Instance.GetResources(correct[i]).Words
             .OrderBy(y => UnityEngine.Random.Range(0f, 100f))
             .First();
+            //var correctWord = GameManager.Instance.GetResources(eAlphabet.X).Words.Where(x => x.key == "fox").First();
 
             var incorrect = GameManager.Instance.alphabets
                 .Where(x => !correct.Contains(x))

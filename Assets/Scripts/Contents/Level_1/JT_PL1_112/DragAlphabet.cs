@@ -20,7 +20,9 @@ public class DragAlphabet : MonoBehaviour, IDragHandler, IEndDragHandler
         if (!intracable)
             return;
         var rt = GetComponent<RectTransform>();
-        rt.position = eventData.position;
+        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+        pos.z = transform.position.z;
+        rt.position = pos;
     }
 
     public void OnEndDrag(PointerEventData eventData)

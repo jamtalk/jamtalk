@@ -9,6 +9,7 @@ public class JT_PL1_104 : BaseContents
     public DrawAlphabet drawAlphabet;
     public GameObject mask;
     public CanvasScaler scaler;
+    public eAlphabetType type;
     protected override eContents contents => eContents.JT_PL1_104;
     protected override int GetTotalScore() => 1;
 
@@ -29,12 +30,12 @@ public class JT_PL1_104 : BaseContents
             {
                 currentIndex += 1;
                 if (currentIndex < targets.Length)
-                    drawAlphabet.Init(targets[currentIndex], eAlphabetType.Upper);
+                    drawAlphabet.Init(targets[currentIndex], type);
                 else
                     ShowResult();
             });
         };
-        drawAlphabet.Init(GameManager.Instance.currentAlphabet, eAlphabetType.Upper);
+        drawAlphabet.Init(GameManager.Instance.currentAlphabet, type);
     }
 
     protected override bool CheckOver() => true;

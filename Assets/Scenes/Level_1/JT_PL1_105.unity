@@ -993,8 +993,8 @@ Canvas:
   m_GameObject: {fileID: 1580109399}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1836606555}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   valueViewer:
   - {fileID: 349261876}
   - {fileID: 300474237}
-  image: {fileID: 1798120681}
+  wordImage: {fileID: 0}
   buttonAudio:
   - {fileID: 505905497}
   - {fileID: 1801284724}

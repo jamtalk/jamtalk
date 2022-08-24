@@ -77,7 +77,6 @@ public class GameManager : MonoSingleton<GameManager>
         pos.z = z;
         return pos;
     }
-
 }
 
 public class AlphabetData

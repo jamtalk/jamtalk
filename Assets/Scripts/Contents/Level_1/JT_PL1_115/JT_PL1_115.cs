@@ -16,7 +16,11 @@ public class JT_PL1_115 : BaseContents
 
     protected override bool CheckOver() => !cards.Select(x => x.card.IsFornt).Contains(false);
     protected override int GetTotalScore() => cards.Where(x => x.card.IsFornt).Count();
-
+    protected override void ShowResult()
+    {
+        eventSystem.enabled = true;
+        base.ShowResult();
+    }
     protected override void Awake()
     {
         base.Awake();

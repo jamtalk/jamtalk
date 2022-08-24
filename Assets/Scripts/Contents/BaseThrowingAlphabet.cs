@@ -64,7 +64,9 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         drag.onDrag += (eventData) =>
         {
             var rt = drag.GetComponent<RectTransform>();
-            rt.position = eventData.position;
+            var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+            pos.z = rt.position.z;
+            rt.position = pos;
         };
 
         drag.onDrop += (eventData) =>

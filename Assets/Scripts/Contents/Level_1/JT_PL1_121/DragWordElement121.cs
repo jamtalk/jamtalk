@@ -20,7 +20,9 @@ public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler,I
     {
         if (!intractable)
             return;
-        transform.position = eventData.position;
+        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+        pos.z = transform.position.z;
+        transform.position = pos;
     }
     public void SetDefaultPosition()
     {
@@ -49,6 +51,7 @@ public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler,I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        audioPlayer.Play(GameManager.Instance.schema.GetSiteWordsClip(name));
+        AndroidPluginManager.Instance.PlayTTS(name);
+        //audioPlayer.Play(GameManager.Instance.schema.GetSiteWordsClip(name));
     }
 }
