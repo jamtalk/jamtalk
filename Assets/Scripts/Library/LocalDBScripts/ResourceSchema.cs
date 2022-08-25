@@ -53,8 +53,8 @@ public class ResourceSchema : ScriptableObject
     }
     public static bool IsPair(string digrpahs)
     {
-        var pair = Enum.GetNames(typeof(ePairDigraphs));
-        return pair.Contains(digrpahs);
+        var pair = Enum.GetNames(typeof(eDigraphs));
+        return !pair.Contains(digrpahs);
     }
     public static eDigraphs GetPair(ePairDigraphs digraphs)
     {
@@ -173,8 +173,30 @@ public class DigraphsWordsData : ResourceWordsElement
         }
     }
     public bool IsPair => ResourceSchema.IsPair(digraphs);
-    public DigraphsAudioData audio => GameManager.Instance.schema.data.digraphsAudio.ToList().Find(x => x.key == digraphs);
+    public DigraphsAudioData audio
+    {
+        get
+        {
+            var result = GameManager.Instance.schema.data.digraphsAudio.ToList().Find(x => x.key == Digraphs.ToString());
+            if(result == null)
+                result = GameManager.Instance.schema.data.digraphsAudio.ToList().Find(x => x.key == PairDigrpahs.ToString());
 
+            return result;
+        }
+    }
+
+    public string IncludedDigraphs
+    {
+        get
+        {
+            if (key.ToLower().Contains(Digraphs.ToString().ToLower()))
+                return Digraphs.ToString().ToLower();
+            else if (key.ToLower().Contains(PairDigrpahs.ToString().ToLower()))
+                return PairDigrpahs.ToString().ToLower();
+            else
+                return null;
+        }
+    }
     protected override eAtlasType atalsType => eAtlasType.Digraphs;
 }
 [Serializable]

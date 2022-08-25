@@ -25,10 +25,9 @@ public class JT_PL4_109 : BaseContents
 
     private void MakeQuestion()
     {
-        var question = GameManager.Instance.digrpahs
-            .Where(x => x >= GameManager.Instance.currentDigrpahs)
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x)
-                .OrderBy(y=>Random.Range(0f,100f)).Take(2))
+        var question = GameManager.Instance.GetDigraphs()
+            .OrderBy(x=>Random.Range(0f,100f))
+            .Take(cards.Length/2)
             .SelectMany(x=> new DigraphsWordsData[] {x,x})
             .OrderBy(y => Random.Range(0f, 100f))
             .ToArray();

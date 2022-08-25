@@ -6,16 +6,16 @@ using Random = UnityEngine.Random;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_106 : BaseContents
+public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_106;
-    protected override bool CheckOver() => index == QuestionCount;
+    //protected override bool CheckOver() => index == QuestionCount;
     protected override int GetTotalScore() => QuestionCount;
-    protected  int QuestionCount => 3;
-    private int index = 0;
+    protected override int QuestionCount => 3;
+    //private int index = 0;
 
-    private DigraphsWordsData currentDigraphs;
-    private string digraphs;
+    //private DigraphsWordsData currentDigraphs;
+    //private string digraphs;
 
     public Thrower306 thrower;
     public Text[] texts;
@@ -29,25 +29,51 @@ public class JT_PL3_106 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-
+        currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
         MakeQuestion();
     }
 
-    private void SetCurrentImage()
+
+    protected override List<Question_PL3_106> MakeQuestion()
     {
-        currentText.text = currentDigraphs.key;
-        currentImage.sprite = currentDigraphs.sprite;
-        currentImage.name = currentDigraphs.key;
+        var questions = new List<Question_PL3_106>();
+        var corrects = GameManager.Instance.GetDigraphs()
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Take(QuestionCount)
+            .ToList();
+        for (int i = 0; i < corrects.Count; i++)
+        {
+            var incorrects = GameManager.Instance.digrpahs
+                .Select(x => GameManager.Instance.GetDigraphs(x).OrderBy(y => Random.Range(0f, 100f)).First())
+                .Where(x => !corrects.Select(y => y.digraphs).Contains(x.digraphs))
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(elements.Count - 1)
+                .ToArray();
+            questions.Add(new Question_PL3_106(corrects[i], incorrects));
+        }
+        return questions;
+    }
+
+    protected override void ShowQuestion(Question_PL3_106 question)
+    {
+        currentImage.sprite = question.correct.sprite;
+        currentImage.name = question.correct.key;
         currentImage.preserveAspect = true;
         currentImage.gameObject.SetActive(true);
-
-        for (int i = 0; i < elements.Count; i++)
-            elements[i].gameObject.SetActive(true);
+        currentText.text = question.correct.key.Replace(question.correct.IncludedDigraphs, "__");
 
         thrower.gameObject.SetActive(false);
         bagImage.gameObject.SetActive(false);
-    }
 
+        //var incorrects = question.questions.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+        for (int i = 0;i < elements.Count; i++)
+        {
+            elements[i].Init(question.totalQuestion[i]);
+            elements[i].isOn = false;
+            elements[i].gameObject.SetActive(true);
+            AddDoubleClickListener(elements[i], question.totalQuestion[i]);
+        }
+    }
     private void SetBagImage()
     {
         bagImage.sprite = currentImage.sprite;
@@ -55,78 +81,38 @@ public class JT_PL3_106 : BaseContents
         bagImage.gameObject.SetActive(true);
     }
 
-    protected void MakeQuestion()
-    {
-        currentDigraphs = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
-            .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-        currentImage.sprite = currentDigraphs.sprite;
-        currentImage.name = currentDigraphs.key;
-        currentImage.preserveAspect = true;
-
-        if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
-            digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
-        else
-            digraphs = currentDigraphs.Digraphs.ToString().ToLower();
-
-        currentText.text = currentDigraphs.key.Replace(digraphs, "__");
-
-        ShowQuestion();
-    }
-
-    protected void ShowQuestion()
-    {
-        var temp = GameManager.Instance.digrpahs
-            .Where(x => x != GameManager.Instance.currentDigrpahs)
-            .Where(x => (int)x < 400)
-            .Select(x => x.ToString())
-            .Take(2)
-            .ToList();
-        temp.Add(digraphs);
-        var icorrect = temp.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        for (int i = 0; i < elements.Count; i++)
-        {
-            elements[i].Init(icorrect[i]);    
-            elements[i].isOn = false;     
-            AddDoubleClickListener(elements[i], currentDigraphs); 
-        }
-    }
-
     protected virtual void AddDoubleClickListener(DoubleClick306 element, DigraphsWordsData data)
     {
         element.onClickFirst.RemoveAllListeners();
         element.onClick.RemoveAllListeners();
-        
-        var clip = GameManager.Instance.schema.GetDigrpahsAudio(element.digraphs);
 
         element.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(clip.phanics);
+            audioPlayer.Play(data.audio.phanics);
         });
 
         element.onClick.AddListener(() =>
         {
-            if (currentDigraphs.key.Contains(element.name))
+            if (currentQuestion.correct.key.Contains(element.name))
             {
-                index += 1;
-
                 for (int i = 0; i < elements.Count; i++)
                     elements[i].gameObject.SetActive(false);
                 currentImage.gameObject.SetActive(false);
 
-                thrower.GetComponent<Image>().sprite = currentImage.sprite;
+                var trowerImage = thrower.GetComponent<Image>();
+                trowerImage.sprite = currentImage.sprite;
+                trowerImage.preserveAspect = true;
+
                 thrower.gameObject.SetActive(true);
                 thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
                 {
                     currentText.text = data.key;
                     SetBagImage();
 
-                    audioPlayer.Play(currentDigraphs.act, () =>
+                    audioPlayer.Play(currentQuestion.correct.act, () =>
                     {
-                        SetCurrentImage();
+                        AddAnswer(currentQuestion.correct);
+
                         if (CheckOver())
                             ShowResult();
                         else
@@ -136,8 +122,15 @@ public class JT_PL3_106 : BaseContents
             }
             else
             {
-                audioPlayer.Play(clip.phanics);
+                audioPlayer.Play(data.audio.phanics);
             }
         });
+    }
+}
+
+public class Question_PL3_106 : SingleQuestion<DigraphsWordsData>
+{
+    public Question_PL3_106(DigraphsWordsData correct, DigraphsWordsData[] questions) : base(correct, questions)
+    {
     }
 }

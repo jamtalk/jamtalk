@@ -7,14 +7,13 @@ using UnityEngine.UI;
 public class DoubleClick306 : DoubleClickButton
 {
     public Text textValue;
-    public string value;
-    public eDigraphs digraphs { get; private set; }
+    public DigraphsWordsData value;
+    public eDigraphs digraphs => value.Digraphs;
 
-    public void Init(string value)
+    public void Init(DigraphsWordsData value)
     {
         this.value = value;
-        textValue.text = value.ToLower();
-        name = value;
-        digraphs = (eDigraphs)Enum.Parse(typeof(eDigraphs), value.ToUpper());
+        name = value.key;
+        textValue.text = value.IncludedDigraphs.ToLower();
     }
 }

@@ -8,8 +8,6 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_102;
     protected override int QuestionCount => 3;
-    private int answerCount = 6;
-    private eDigraphs[] digraphs = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
 
     public Sprite backImage;
     public Sprite frontImage;
@@ -19,16 +17,19 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     protected override List<Question3_102> MakeQuestion()
     {
         var questions = new List<Question3_102>();
-
         for ( int i = 0; i < QuestionCount; i++)
         {
-            var current = GameManager.Instance.digrpahs
-                .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.Digraphs == digraphs[i])
-                .OrderBy(x => Random.Range(0f, 100f))
-                .Take(answerCount)
-                .ToArray();
-            questions.Add(new Question3_102(current, new DigraphsWordsData[] { }));
+            var corrects = GameManager.Instance.GetDigraphs().Take(pancakes.Length).ToList();
+            if(corrects.Count< pancakes.Length)
+            {
+                var tmp = new List<DigraphsWordsData>();
+                for(int j = 0; j < pancakes.Length; j++)
+                {
+                    tmp.Add(corrects[j % corrects.Count]);
+                }
+                corrects = tmp;
+            }
+            questions.Add(new Question3_102(corrects.OrderBy(x => Random.Range(0f, 100f)).ToArray(), new DigraphsWordsData[] { }));
         }
         return questions;
     }

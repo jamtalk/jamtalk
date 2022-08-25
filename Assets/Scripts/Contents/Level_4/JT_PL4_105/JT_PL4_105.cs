@@ -17,7 +17,7 @@ public class JT_PL4_105 : BaseContents
     private string digraphsValue;
     private Vector3 defaultPosition;
 
-    public Image currentImage;
+    public Button currentButton;
     public RectTransform wordLayout;
     public GameObject wordElement;
     public GameObject digraphsElement;
@@ -29,8 +29,8 @@ public class JT_PL4_105 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-
-        defaultPosition = currentImage.transform.position;
+        currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
+        defaultPosition = currentButton.transform.position;
         MakeQuestion();
     }
 
@@ -51,10 +51,10 @@ public class JT_PL4_105 : BaseContents
         eventSystem.enabled = true;
         wordLayout.gameObject.SetActive(true);
         balloon.gameObject.SetActive(true);
-        currentImage.fillAmount = 1f;
+        currentButton.image.fillAmount = 1f;
 
-        currentImage.sprite = current.sprite;
-        currentImage.preserveAspect = true;
+        currentButton.image.sprite = current.sprite;
+        currentButton.image.preserveAspect = true;
 
         var digraphs = current.Digraphs.ToString().ToLower();
         var pairDigraphs = current.PairDigrpahs.ToString().ToLower();
@@ -120,9 +120,9 @@ public class JT_PL4_105 : BaseContents
         Sequence seq = DOTween.Sequence();
 
         var duration = 1f;
-        Tween startTween = currentImage.transform.DOMove(firstRect.position, duration);
-        Tween endTween = currentImage.transform.DOMove(lastRect.position, duration);
-        Tween fillTween = currentImage.DOFillAmount(0, 1f);
+        Tween startTween = currentButton.transform.DOMove(firstRect.position, duration);
+        Tween endTween = currentButton.transform.DOMove(lastRect.position, duration);
+        Tween fillTween = currentButton.image.DOFillAmount(0, 1f);
 
         startTween.SetEase(Ease.Linear);
         fillTween.SetEase(Ease.Linear);
@@ -137,7 +137,7 @@ public class JT_PL4_105 : BaseContents
 
     private void Clear()
     {
-        currentImage.transform.position = defaultPosition;
+        currentButton.transform.position = defaultPosition;
 
         var targets = new List<GameObject>();
         for (int i = 0; i < wordLayout.childCount; i++)
@@ -145,5 +145,10 @@ public class JT_PL4_105 : BaseContents
         for (int i = 0; i < targets.Count; i++)
             Destroy(targets[i]);
         targets.Clear();
+    }
+    protected override void ShowResult()
+    {
+        base.ShowResult();
+        eventSystem.enabled = true;
     }
 }

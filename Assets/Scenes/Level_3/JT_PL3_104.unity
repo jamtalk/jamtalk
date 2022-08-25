@@ -520,6 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c917158f47e6340fc99577c3dccfbb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.1
   imageProduct: {fileID: 659113521}
   textValue: {fileID: 1149786817}
 --- !u!222 &159137181
@@ -1428,7 +1429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5236799548975862520, guid: 49fba5d87c984374f921a529bee7face, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5236799548975862520, guid: 49fba5d87c984374f921a529bee7face, type: 3}
       propertyPath: m_AnchorMax.x

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class JT_PL4_108 : BaseContents
 {
@@ -21,31 +23,43 @@ public class JT_PL4_108 : BaseContents
     public RectTransform textsParent;
     public SplitElement_408 potionElement;
     public GameObject textElement;
-
-    private DigraphsWordsData current;
+    private DigraphsWordsData[] questions;
+    private DigraphsWordsData current => questions[index];
     private string[] questionTexts;
     private List<string> answerTexts = new List<string>();
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
     protected override void Awake()
     {
-        base.Awake();
-        MakeQuestion();
-        currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
-    }
+        StartCoroutine(WaitFrame(() =>
+        {
+            currentImage.gameObject.SetActive(true);
+            Resize();
+            base.Awake();
+            questions = GameManager.Instance.GetDigraphs()
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Take(questionCount)
+                .ToArray();
 
-    private void MakeQuestion()
+            currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
+            ShowQuestion();
+        }));
+    }
+    private void Resize()
     {
-        current = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
-            .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-        audioPlayer.Play(current.clip);
-        ShowQuestion();
+        Resize(potionElement.GetComponent<RectTransform>(), potionParent);
+        Resize(textElement.GetComponent<RectTransform>(), textsParent);
+    }
+    private void Resize(RectTransform target, RectTransform parent)
+    {
+        var sprite = target.GetComponent<Image>().sprite;
+        var height = parent.rect.height;
+        var width = parent.rect.height * sprite.texture.width / sprite.texture.height;
+        target.sizeDelta = new Vector2(width, height);
     }
 
     private void ShowQuestion()
     {
+        audioPlayer.Play(current.clip);
         Clear();
         answerTexts.Clear();
         answerElements.Clear();
@@ -119,7 +133,7 @@ public class JT_PL4_108 : BaseContents
                     if (CheckOver())
                         ShowResult();
                     else
-                        MakeQuestion();
+                        ShowQuestion();
                 });
             }
         });
@@ -138,5 +152,11 @@ public class JT_PL4_108 : BaseContents
         for (int i = 0; i < targets.Count; i++)
             Destroy(targets[i]);
         targets.Clear();
+    }
+
+    private IEnumerator WaitFrame(Action callback)
+    {
+        yield return new WaitForEndOfFrame();
+        callback?.Invoke();
     }
 }

@@ -2,105 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL4_106 : BaseContents
+public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
 {
+    public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL4_106;
-    protected override bool CheckOver() => index == questionCount;
-    protected override int GetTotalScore() => questionCount;
-    private int questionCount = 3;
-    private int index = 0;
-    private DigraphsWordsData current;
+
+    protected override int QuestionCount => 4;
 
     public Text currentText;
-    public DoubleClickButton[] doubleClick;
-    protected override void Awake()
+
+    public DoubleClickButton4_104[] buttons;
+    protected override List<Question4_106> MakeQuestion()
     {
-        base.Awake();
-
-        MakeQuestion();    
-    }
-
-    private void MakeQuestion()
-    {
-        current = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
+        var corrects = GameManager.Instance.GetDigraphs()
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-
-        var temp = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs != GameManager.Instance.currentDigrpahs)
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Take(2)
+            .Take(QuestionCount)
             .ToArray();
 
-        var tempList = new List<DigraphsWordsData>();
-        for(int i = 0; i < temp.Length; i ++)
-            tempList.Add(temp[i]);
-        tempList.Add(current);
+        var incorrects = GameManager.Instance.schema.data.digraphsWords
+            .Where(x => !corrects.Select(y => y.Digraphs).Contains(x.Digraphs))
+            .Where(x => !corrects.Select(y => y.IncludedDigraphs).Contains(x.IncludedDigraphs));
 
-        var list = tempList.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-
-        for (int i = 0; i < doubleClick.Length; i++)
+        var list = new List<Question4_106>();
+        for (int i = 0; i < QuestionCount; i++)
         {
-            ButtonAddListener(doubleClick[i], list[i]);
-            doubleClick[i].isOn = false;
+            list.Add(new Question4_106(corrects[i], 
+                incorrects
+                    .OrderBy(x => Random.Range(0f, 100f))
+                    .Take(buttons.Length - 1)
+                    .ToArray()));
         }
-        SetCurrentColor();
 
+        return list;
     }
-    private void ButtonAddListener(DoubleClickButton button, DigraphsWordsData data)
+    protected override void ShowQuestion(Question4_106 question)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            ButtonAddListener(buttons[i], question.totalQuestion[i]);
+            buttons[i].isOn = false;
+            buttons[i].incorrectMark.SetActive(false);
+            buttons[i].button.interactable = true;
+        }
+        audioPlayer.Play(question.correct.clip);
+        currentText.text = question.correct.key.Replace(question.correct.IncludedDigraphs
+                , "<color=\"red\">" + question.correct.IncludedDigraphs + "</color>");
+    }
+    private void ButtonAddListener(DoubleClickButton4_104 button, DigraphsWordsData data)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
 
         button.onClickFirst.AddListener(() =>
         {
-            var value = GameManager.Instance.schema.GetDigrpahsAudio(data.digraphs).phanics;
-            audioPlayer.Play(value, () =>
+            for (int i = 0; i < buttons.Length; i++)
+                buttons[i].isOn = buttons[i] == button;
+
+            eventSystem.enabled = false;
+
+            var isCorrect = currentQuestion.correct.IncludedDigraphs == data.IncludedDigraphs;
+            button.incorrectMark.SetActive(!isCorrect);
+            button.button.interactable = isCorrect;
+            Debug.Log("??");
+            audioPlayer.Play(data.audio.phanics, () =>
             {
+                button.isOn = currentQuestion.correct.Digraphs == data.Digraphs;
                 button.SetFirstImages();
+                eventSystem.enabled = true;
             });
         });
 
         button.onClick.AddListener(() =>
         {
-            if (current.Digraphs == data.Digraphs)
+            eventSystem.enabled = false;
+            button.SetLastImages();
+            audioPlayer.Play(data.act, () =>
             {
-                Debug.Log(index);
-                index += 1;
-                button.SetLastImages();
-                audioPlayer.Play(data.clip, () =>
+                audioPlayer.Play(.8f,GameManager.Instance.GetClipCorrectEffect(), () =>
                 {
+                    eventSystem.enabled = true;
                     if (CheckOver())
                         ShowResult();
                     else
-                        MakeQuestion();
+                        AddAnswer(currentQuestion.correct);
                 });
-            }
+            });
         });
     }
+}
 
-    private void SetCurrentColor()
+public class Question4_106 : SingleQuestion<DigraphsWordsData>
+{
+    public Question4_106(DigraphsWordsData correct, DigraphsWordsData[] questions) : base(correct, questions)
     {
-        var isCheck = current.key.Contains(current.Digraphs.ToString().ToLower());
-        string value = string.Empty;
-
-        if (!isCheck)
-        {
-            var temp = current.PairDigrpahs.ToString().ToLower();
-            value = current.key.Replace(temp,
-                "<color=\"red\">" + temp + "</color>");
-        }
-        else
-        {
-            value = current.key.Replace(current.Digraphs.ToString().ToLower()
-                , "<color=\"red\">" + current.Digraphs.ToString().ToLower() + "</color>");
-        }
-
-        currentText.text = value;
     }
 }

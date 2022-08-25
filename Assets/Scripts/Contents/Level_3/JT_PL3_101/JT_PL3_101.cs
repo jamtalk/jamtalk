@@ -11,7 +11,7 @@ public class JT_PL3_101 : BaseContents
     protected override eContents contents => eContents.JT_PL3_101;
 
     protected int index = 0;
-    protected virtual int questionCount => 3;
+    protected virtual int questionCount => 1;
     protected override int GetTotalScore() => index;
     protected override bool CheckOver() => questionCount == index;
 
@@ -23,47 +23,43 @@ public class JT_PL3_101 : BaseContents
 
     public Text[] texts;
     public Text resultText;
-    public EventSystem eventSystem; 
+    public EventSystem eventSystem;
 
-    private eDigraphs[] eDig = { eDigraphs.CH, eDigraphs.SH, eDigraphs.TH };
+    private string clip;
     protected override void Awake()
     {
         base.Awake();
-        SetColors();
+        SetColors(GameManager.Instance.currentDigrpahs);
         dragElement.onDrop += OnDrop;
     }
 
-    private void SetColors()
+    private void SetColors(eDigraphs digraphs)
     {
-        var reslutValue = "";
+        clip = GameManager.Instance.GetDigraphs(digraphs).First().audio.phanics;
+        var targetColor = colors[index % colors.Length];
+        var alphabets = digraphs.ToString().Select(x => x.ToString().ToUpper()).ToArray();
         for (int i = 0; i < colorImages.Length; i++)
         {
-            colorImages[i].sprite = colors[index].colors[i].color;
-            texts[i].text = colors[index].colors[i].alhpabet.ToString();
-            reslutValue += colors[index].colors[i].alhpabet.ToString();
+            colorImages[i].sprite = targetColor.colors[i];
+            texts[i].text = alphabets[i];
         }
-        resultText.text = reslutValue;
+        resultText.text = digraphs.ToString().ToUpper();
         resultColorImage.sprite = colors[index].result;
     }
 
     private void OnDrop(DragElement301 target)
     {
-        var temp = GameManager.Instance.digrpahs
-                .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-                .Where(x => x.Digraphs == eDig[index])
-                .First();
-        
         if (dragElement.isColors)
             index += 1;
 
         resultText.gameObject.SetActive(true);
-        audioPlayer.Play(temp.audio.phanics, () =>
+        audioPlayer.Play(clip, () =>
         {
             if (CheckOver())
                 ShowResult();
             else
             {
-                SetColors();
+                //SetColors();
                 var color = resultColorImage.color;
                 color.a = 0;
                 resultColorImage.color = color;
@@ -77,13 +73,6 @@ public class JT_PL3_101 : BaseContents
 [Serializable]
 public class PairColor
 {
-    public AlphabetColor[] colors;
+    public Sprite[] colors;
     public Sprite result;
-}
-
-[Serializable]
-public class AlphabetColor
-{
-    public eAlphabet alhpabet;
-    public Sprite color;
 }

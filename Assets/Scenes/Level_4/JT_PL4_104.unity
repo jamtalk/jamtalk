@@ -415,6 +415,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 7585d7921d458144c8be2b246d47c122, type: 3}
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -532,6 +536,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 91a9d9d122b07074e82efba46abf9d21, type: 3}
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -649,6 +657,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3ae6e1fd9d25e6446aaa11f6b7dfbfab, type: 3}
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1042,6 +1054,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1462536444}
     m_Modifications:
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1159,6 +1175,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5cb4e862096f43a48b62e3da579135d0, type: 3}
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1382,6 +1402,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 77782824}
+  eventSystem: {fileID: 671067910}
   elements:
   - {fileID: 1093367001}
   - {fileID: 713249598}
@@ -1396,6 +1417,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1462536444}
     m_Modifications:
+    - target: {fileID: 8942768093861022293, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8942768094059195372, guid: 360ef44dded46413fa639e30eed5ddef, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

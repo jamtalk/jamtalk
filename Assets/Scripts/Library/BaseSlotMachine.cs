@@ -12,7 +12,7 @@ public class BaseSlotMachine<TData,TElement> : MonoBehaviour where TElement:Slot
     public RectTransform content;
     protected virtual float duration => 5;
     private List<RectTransform> elements = new List<RectTransform>();
-    public void Sloting(TData[] datas, TweenCallback onDone)
+    public virtual void Sloting(TData[] datas, TweenCallback onDone)
     {
         StartCoroutine(PlaySloting(datas, onDone));
     }

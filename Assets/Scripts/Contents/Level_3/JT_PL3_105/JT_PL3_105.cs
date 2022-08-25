@@ -4,9 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class JT_PL3_105 : BaseContents
 {
+    public EventSystem eventSystem;
+    public Button buttonBox;
     protected override eContents contents => eContents.JT_PL3_105;
     protected override bool CheckOver() => index == QuestionCount;
     protected override int GetTotalScore() => QuestionCount;
@@ -29,7 +32,6 @@ public class JT_PL3_105 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-
         MakeQuestion();
     }
 
@@ -43,7 +45,6 @@ public class JT_PL3_105 : BaseContents
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
         audioPlayer.Play(currentDigraphs.clip);
-
         if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
             digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
         else
@@ -53,6 +54,8 @@ public class JT_PL3_105 : BaseContents
         currentText.text = value.Replace(digraphs, "__");
 
         SetMolesPosition();
+        buttonBox.onClick.RemoveAllListeners();
+        buttonBox.onClick.AddListener(() => audioPlayer.Play(currentDigraphs.clip));
     }
 
     protected void SetMolesPosition()
@@ -87,6 +90,7 @@ public class JT_PL3_105 : BaseContents
 
         button.onClick.AddListener(() =>
         {
+            eventSystem.enabled = false;
             hammer.transform.position = element.transform.position;
             var hammerRt = hammer.GetComponent<RectTransform>();
             var hammerWidth = hammerRt.rect.width;
@@ -112,6 +116,7 @@ public class JT_PL3_105 : BaseContents
                         ProgressBarDoMove();
                         audioPlayer.Play(currentDigraphs.clip, () =>
                         {
+                            eventSystem.enabled = true;
                             if (CheckOver())
                                 ShowResult();
                             else
@@ -121,6 +126,7 @@ public class JT_PL3_105 : BaseContents
                     else
                     {
                         SetMolesPosition();
+                        eventSystem.enabled = true;
                     }
                 });
             });

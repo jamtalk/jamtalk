@@ -26,7 +26,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     {
         return GameManager.Instance.GetDigraphs()
             .OrderBy(x => Random.Range(0f, 100f))
-            //.Take(QuestionCount)
+            .Take(QuestionCount)
             .Select(x => new Question_PL5_106(x))
             .ToList();
     }
@@ -85,7 +85,7 @@ public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>
     public Question_PL5_106(DigraphsWordsData correct) : base(correct, new DigraphsWordsData[] { })
     {
         words = correct.key
-            .Replace(correct.digraphs.ToLower(), string.Format(" {0} ",correct.digraphs.ToLower()))
+            .Replace(correct.IncludedDigraphs, string.Format(" {0} ",correct.IncludedDigraphs))
             .Split(' ')
             .Where(x => !string.IsNullOrEmpty(x))
             .Where(x=>!string.IsNullOrWhiteSpace(x))

@@ -190,6 +190,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {
+            effectImage.sprite = data.sprite;
             effectImage.gameObject.SetActive(true);
             audioPlayer.Play(1f, effectClip , () =>
             {

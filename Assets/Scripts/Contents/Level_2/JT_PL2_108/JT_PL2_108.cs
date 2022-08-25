@@ -15,8 +15,7 @@ public class JT_PL2_108 : BaseWitch<VowelWordsData>
             .OrderBy(x => Random.Range(0f, 100f)).ToArray()
             .Take(QuestionCount)
             .ToArray();
-        Debug.Log(words.Length);
-        Debug.Log(QuestionCount);
+
         for (int i = 0; i < QuestionCount - 1; i++)
         {
             var tmp = GameManager.Instance.alphabets

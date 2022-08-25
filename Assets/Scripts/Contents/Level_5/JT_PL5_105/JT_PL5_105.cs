@@ -136,7 +136,7 @@ public class JT_PL5_105 : BaseContents
                             ShowResult();
                         else
                         {
-                            Reset();
+                            ResetElement();
                             ShowQuestion();
                         }
                     });
@@ -163,7 +163,7 @@ public class JT_PL5_105 : BaseContents
 
         seq.Play();
     }
-    private void Reset()
+    private void ResetElement()
     {
         var targets = new List<GameObject>();
         for (int i = 0; i < layoutCount; i++)

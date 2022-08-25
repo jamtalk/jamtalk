@@ -15,7 +15,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     public Text successText;
     public Image successImage;
     public Sprite successedImage;
-    public Image[] parentImages;
+    public ImageButton[] buttons;
     public Image[] childrenImages;
 
     protected override List<Question4_102> MakeQuestion()
@@ -41,60 +41,44 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override void ShowQuestion(Question4_102 question)
     {
         Debug.Log(question.totalQuestion.Length);
-        for(int i = 0; i < childrenImages.Length; i ++)
+        for(int i = 0; i < buttons.Length; i ++)
         {
             var data = question.totalQuestion[i];
-            childrenImages[i].sprite = data.sprite;
-            childrenImages[i].preserveAspect = true;
-            AddListener(parentImages[i], data);
+            buttons[i].sprite = data.sprite;
+            AddListener(buttons[i], data);
         }
     }
 
-    private void AddListener(Image button, DigraphsWordsData data)
+    private void AddListener(ImageButton imageButton, DigraphsWordsData data)
     {
-        button.GetComponent<Button>().onClick.AddListener(() =>
+        var button = imageButton.button;
+        button.onClick.AddListener(() =>
         {
+            button.interactable = false;
             audioPlayer.Play(data.clip);
-            //if (data.key == currentQuestion.currentCorrect.key)
-            //{
-            for (int i = 0; i < parentImages.Length; i++)
-                parentImages[i].gameObject.SetActive(false);
+            for (int i = 0; i < buttons.Length; i++)
+                buttons[i].gameObject.SetActive(false);
 
             successImage.sprite = data.sprite;
             successImage.preserveAspect = true;
-            SetCurrentColor(data);
+            successText.text = data.key.Replace(data.IncludedDigraphs,
+                    "<color=\"red\">" + data.IncludedDigraphs + "</color>");
+
             successEffect.gameObject.SetActive(true);
             audioPlayer.Play(data.act, () =>
             {
                 successEffect.gameObject.SetActive(false);
-                for (int i = 0; i < parentImages.Length; i++)
-                    parentImages[i].gameObject.SetActive(true);
+                for (int i = 0; i < buttons.Length; i++)
+                    buttons[i].gameObject.SetActive(true);
                 AddAnswer(currentQuestion.currentCorrect);
             });
 
-            button.sprite = successedImage;
-            //}
+            button.image.sprite = successedImage;
         });
     }
 
     private void SetCurrentColor(DigraphsWordsData data)
     {
-        var isCheck = data.key.Contains(current[currentQuestionIndex].Digraphs.ToString().ToLower());
-        string value = string.Empty;
-
-        if (!isCheck)
-        {
-            var temp = data.PairDigrpahs.ToString().ToLower();
-            value = data.key.Replace(temp,
-                "<color=\"red\">" + temp + "</color>");
-        }
-        else
-        {
-            value = data.key.Replace(data.Digraphs.ToString().ToLower()
-                , "<color=\"red\">" + data.Digraphs.ToString().ToLower() + "</color>");
-        }
-
-        successText.text = value;
     }
 }
 
