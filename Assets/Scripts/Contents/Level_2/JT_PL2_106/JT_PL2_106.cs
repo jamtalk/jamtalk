@@ -36,6 +36,7 @@ public class JT_PL2_106 : BaseContents
     private List<TextElement206> textList = new List<TextElement206>();
     private int currentIndex;
     private List<VowelWordsData> datas = new List<VowelWordsData>();
+    public GameObject pointer;
 
     protected override void Awake()
     {          
@@ -135,6 +136,9 @@ public class JT_PL2_106 : BaseContents
 
     private void Spin()
     {
+        if (pointer.activeSelf)
+            pointer.SetActive(false);
+
         rouletteEffect.gameObject.SetActive(true);
         shortButton.interactable = true;
         longButton.interactable = true;
@@ -165,9 +169,11 @@ public class JT_PL2_106 : BaseContents
 
         seq.onComplete += () =>
         {
-            eventSystem.enabled = true;
             rouletteEffect.gameObject.SetActive(false);
-            audioPlayer.Play(textList[currentIndex].data.clip);
+            audioPlayer.Play(textList[currentIndex].data.clip, () =>
+            {
+                eventSystem.enabled = true;
+            });
         };
         seq.Play();
     }

@@ -21,8 +21,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     public PotElement prefabPot;
     public GameObject prefabMark;
     public MagicWand<T> magicWand;
-    public GameObject successEffect;
-    public Sprite successImage;
+    public WitchResult result;
     public AudioClip potSound;
     public AudioClip potionSound;
     public AudioClip effectSound;
@@ -47,6 +46,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
     protected override void ShowQuestion(Question_Witch<T> question)
     {
+        result.gameObject.SetActive(false);
         Debug.Log(question.totalQuestion.Length);
         Speak();
         for (int i = 0; i < question.totalQuestion.Length; i++)
@@ -62,9 +62,11 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         if (currentQuestion.correct == target.data)
         {
             magicWand.gameObject.SetActive(false);
-            successEffect.GetComponent<Image>().sprite = target.data.sprite;
-            successEffect.SetActive(true);
-            StartCoroutine(SetEffectImage());
+            result.ShowResult(target.data.sprite, .5f);
+            audioPlayer.Play(1.5f, effectSound, () =>
+            {
+                AddAnswer(target.data);
+            });
         }
         else
             target.ResetPosition();
@@ -97,23 +99,6 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
         for (int i = 0; i < words.Length; i++)
             elements[i].SetDefaultPosition();
-    }
-
-    private IEnumerator SetEffectImage()
-    {
-        successEffect.GetComponent<Image>().sprite = successImage;
-        successEffect.GetComponent<Image>().preserveAspect = true;
-        yield return new WaitForSecondsRealtime(1);
-
-        successEffect.SetActive(false);
-        yield return new WaitForSecondsRealtime(0.25f);
-        successEffect.GetComponent<Image>().sprite = currentQuestion.correct.sprite;
-
-        successEffect.SetActive(true);
-        audioPlayer.Play(1f, effectSound, () => AddAnswer(currentQuestion.correct));
-
-        yield return new WaitForSecondsRealtime(1);
-        successEffect.SetActive(false);
     }
 }
 

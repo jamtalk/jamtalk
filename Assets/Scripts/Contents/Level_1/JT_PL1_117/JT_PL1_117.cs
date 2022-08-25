@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoBoard>
 {
     protected override eContents contents => eContents.JT_PL1_117;
-    protected AlphabetData[] _correctsTarget = null;
-
     protected override AlphabetData[] correctsTarget
     {
         get

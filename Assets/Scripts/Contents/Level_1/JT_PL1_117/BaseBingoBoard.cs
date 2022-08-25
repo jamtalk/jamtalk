@@ -3,13 +3,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
+using System.Collections;
 
 public abstract class BaseBingoBoard<TValue, TViewer, TButton> : MonoBehaviour
     where TButton : BaseBingoButton<TValue, TViewer>
     where TViewer : MonoBehaviour
 {
+    public GameObject cover;
     public TButton[] buttons;
     public Sprite[] stamps;
+    public GridLayoutGroup layoutGroup;
     public int size => (int)Mathf.Sqrt(buttons.Length);
 
     public virtual void Init(TValue[] values, TValue[] corrects, Func<TValue, bool> isCorrect, Action<TValue> onClick)
@@ -59,5 +63,23 @@ public abstract class BaseBingoBoard<TValue, TViewer, TButton> : MonoBehaviour
         if (diagonalCount > 0 && diagonalCount % size == 0)
             count += diagonalCount / size;
         return count;
+    }
+
+    public void ResizeBoard(Action callback) => StartCoroutine(Resize(callback));
+    private IEnumerator Resize(Action callback)
+    {
+        var rt = GetComponent<RectTransform>();
+        yield return new WaitForEndOfFrame();
+        var size = rt.rect.size.y * 1f;
+        var sizeDelta = rt.sizeDelta;
+        sizeDelta.x = size;
+        rt.sizeDelta = sizeDelta;
+
+        rt = layoutGroup.GetComponent<RectTransform>();
+        var cellSize = rt.rect.width / this.size;
+        layoutGroup.cellSize = new Vector2(cellSize * .9f, cellSize * .9f);
+        layoutGroup.spacing = new Vector2(cellSize * .1f, cellSize * .1f);
+        cover.gameObject.SetActive(false);
+        callback?.Invoke();
     }
 }

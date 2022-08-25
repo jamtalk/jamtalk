@@ -21,18 +21,22 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
     protected override int GetTotalScore() => BingoCount;
 
+    protected TValue[] _correctsTarget = null;
     protected abstract TValue[] correctsTarget { get; }
     protected override void Awake()
     {
-        base.Awake();
-        buttonSound.onClick.AddListener(PlaySound);
-        scoreBoard.onFailed += ShowResult;
+        board.ResizeBoard(()=>
+        {
+            base.Awake();
+            buttonSound.onClick.AddListener(PlaySound);
+            scoreBoard.onFailed += ShowResult;
 
-        questions = GetQuestion();
+            questions = GetQuestion();
 
-        currentIndex = 0;
-        PlaySound();
-        board.Init(questions, corrects, IsCurrentAnswer, OnClick);
+            currentIndex = 0;
+            PlaySound();
+            board.Init(questions, corrects, IsCurrentAnswer, OnClick);
+        });
     }
 
     public abstract TValue[] GetQuestionType();
@@ -47,8 +51,15 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         //    .ToArray();
         //?????? ????
         var corrects = new List<TValue>();
-        for (int i = 0; i < board.size; i++)
-            corrects.Add(correctsTarget.OrderBy(x => Random.Range(0f, 100f)).First());
+        if(correctsTarget.Length <board.size)
+        {
+            for (int i = 0; i < board.size; i++)
+                corrects.Add(correctsTarget[i%board.size]);
+        }
+        else
+        {
+            corrects = correctsTarget.OrderBy(x => Random.Range(0f, 100f)).Take(board.size).ToList();
+        }
         this.corrects = corrects.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         //???? ?????? ????
         var startPosX = Random.Range(0, board.size);

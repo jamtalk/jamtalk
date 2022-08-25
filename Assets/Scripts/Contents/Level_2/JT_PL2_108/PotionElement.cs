@@ -33,10 +33,10 @@ public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, I
 
         var imageIndex = Random.Range(0, potionSprites.Length);
         image.sprite = potionSprites[imageIndex];
-        if(imageIndex == 0)
-        {
-            textValue.rectTransform.anchorMin = new Vector2(0.25f, 0.05f);
-        }
+        //if(imageIndex == 0)
+        //{
+        //    textValue.rectTransform.anchorMin = new Vector2(0.25f, 0.05f);
+        //}
 
         gameObject.SetActive(true);
     }
