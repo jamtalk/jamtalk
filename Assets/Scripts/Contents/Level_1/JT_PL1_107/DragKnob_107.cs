@@ -61,8 +61,9 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
         {
             var target = drop[0].point;
             drop[0].isConnected = true;
-            SetLine(target.position);
-            SetCover(target.position);
+            var pos = Camera.main.WorldToScreenPoint(target.position);
+            SetLine(pos);
+            SetCover(pos);
         }
         else
         {
@@ -74,12 +75,10 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     private void SetLine(Vector2 position)
     {
         line.gameObject.SetActive(true);
-        Debug.Log(Camera.main.ScreenToViewportPoint(position));
         var v1 = position - (Vector2)Camera.main.WorldToScreenPoint(line_rt.position);
         var angle = Mathf.Atan2(v1.y, v1.x) * Mathf.Rad2Deg - 90f;
         line_rt.rotation = Quaternion.Euler(0, 0, angle);
 
-        Debug.DrawLine(line_rt.position, position);
         var size = line_rt.sizeDelta;
         size.y = v1.magnitude;
         line_rt.sizeDelta = size;
@@ -90,9 +89,9 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
         intractable = false;
         isConnected = true;
 
-        var dis = Vector2.Distance(FactorPos(line_rt.position), FactorPos(position));
+        var v1 = position - (Vector2)Camera.main.WorldToScreenPoint(line_rt.position);
         var size = cover.sizeDelta;
-        size.y = dis;
+        size.y = v1.magnitude;
         var tween = cover.DOSizeDelta(size, .25f);
         tween.onComplete += () => onDrop?.Invoke();
     }

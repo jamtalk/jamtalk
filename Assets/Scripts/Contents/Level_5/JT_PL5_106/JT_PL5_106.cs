@@ -15,8 +15,10 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     public List<StarElement506> elements;
     public RectTransform[] paths;
     public ResultStart506 resultStar;
+    public CanvasScaler scaler;
     protected override void Awake()
     {
+        scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         new Question_PL5_106(GameManager.Instance.schema.data.digraphsWords.ToList().Find(x => x.key.ToLower() == "church"));
         base.Awake();
     }
@@ -31,25 +33,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
 
     protected override void ShowQuestion(Question_PL5_106 question)
     {
-        resultStar.gameObject.SetActive(false);
-        var pos = paths
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Select(x=>x.transform.position)
-            .ToArray();
-        if (elements.Count < question.words.Length)
-        {
-            var craetCount = question.words.Length - elements.Count;
-            for (int i = 0; i < craetCount; i++)
-                elements.Add(Instantiate(orizinal, elementsParent));
-        }
-
-        for(int i = 0;i < elements.Count; i++)
-        {
-            if (i < question.words.Length)
-                elements[i].Init(question.words[i], pos[i], duration, OnDrop);
-            else
-                elements[i].gameObject.SetActive(false);
-        }
+        StartCoroutine(ShowQuestionRoutine(question));
     }
     private void OnDrop(string value)
     {
@@ -68,6 +52,30 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
         {
             for (int i = 0; i < stars.Length; i++)
                 stars[i].ResetLine();
+        }
+    }
+
+    private IEnumerator ShowQuestionRoutine(Question_PL5_106 question)
+    {
+        yield return new WaitForEndOfFrame();
+        resultStar.gameObject.SetActive(false);
+        var pos = paths
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Select(x => x.transform.position)
+            .ToArray();
+        if (elements.Count < question.words.Length)
+        {
+            var craetCount = question.words.Length - elements.Count;
+            for (int i = 0; i < craetCount; i++)
+                elements.Add(Instantiate(orizinal, elementsParent));
+        }
+
+        for (int i = 0; i < elements.Count; i++)
+        {
+            if (i < question.words.Length)
+                elements[i].Init(question.words[i], pos[i], duration, OnDrop);
+            else
+                elements[i].gameObject.SetActive(false);
         }
     }
 }

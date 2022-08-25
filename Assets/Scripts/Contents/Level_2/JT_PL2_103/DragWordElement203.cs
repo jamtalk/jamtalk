@@ -29,7 +29,9 @@ public class DragWordElement203 : WordElement203, IDragHandler, IEndDragHandler,
     {
         if (!intractable)
             return;
-        transform.position = eventData.position;
+        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+        pos.z = transform.position.z;
+        transform.position = pos;
     }
     public void SetDefaultPosition()
     {

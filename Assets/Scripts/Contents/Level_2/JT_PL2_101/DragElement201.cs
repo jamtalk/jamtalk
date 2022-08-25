@@ -35,7 +35,9 @@ public class DragElement201 : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         if (!intractable)
             return;
-        transform.position = eventData.position;
+        var pos = Camera.main.ScreenToWorldPoint(eventData.position);
+        pos.z = transform.position.z;
+        transform.position = pos;
     }
 
     public void OnEndDrag(PointerEventData eventData)

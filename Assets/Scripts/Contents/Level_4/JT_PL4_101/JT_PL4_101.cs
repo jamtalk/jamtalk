@@ -82,7 +82,7 @@ public class JT_PL4_101 : BaseContents
                 {
                     var pair = GameManager.Instance.schema.GetDigrpahsAudio(data.PairDigrpahs);
                     audioPlayer.Play(data.audio.phanics);
-                    StartCoroutine(Reset());
+                    StartCoroutine(ResetScene());
                     //audioPlayer.Play(data.audio.phanics, () => audioPlayer.Play(pair.phanics));
                 }
             };
@@ -90,7 +90,7 @@ public class JT_PL4_101 : BaseContents
         });
     }
 
-    private IEnumerator Reset()
+    private IEnumerator ResetScene()
     {
         successImages.gameObject.SetActive(true);
 

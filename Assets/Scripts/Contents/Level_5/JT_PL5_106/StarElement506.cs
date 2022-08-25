@@ -50,6 +50,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
             if (target.orizinalLine != dragLine)
                 SetLine(target);
         }
+
         SetLine(eventData.position);
     }
 
@@ -63,14 +64,12 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
     private void SetLine(Vector2 position)
     {
         orizinalLine.gameObject.SetActive(true);
-        var v1 = position - (Vector2)line_rt.position;
+        var v1 = position - (Vector2)Camera.main.WorldToScreenPoint(line_rt.position);
         var angle = Mathf.Atan2(v1.y, v1.x) * Mathf.Rad2Deg;
         line_rt.rotation = Quaternion.Euler(0, 0, angle);
 
-        var dis = Vector2.Distance(FactorPos(line_rt.position), FactorPos(position));
-        Debug.DrawLine(line_rt.position, position);
         var size = line_rt.sizeDelta;
-        size.x = dis;
+        size.x = v1.magnitude;
         line_rt.sizeDelta = size;
     }
 
@@ -83,7 +82,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
     }
     private void SetLine(StarElement506 target)
     {
-        SetLine(target.line_rt.position);
+        SetLine(Camera.main.WorldToScreenPoint(target.line_rt.position));
         dragLine = target.dragLine;
         value += target.orizinalValue;
     }

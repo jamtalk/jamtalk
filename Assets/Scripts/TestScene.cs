@@ -129,6 +129,8 @@ public class TestScene : MonoBehaviour
         Debug.Log("이니셜라이징 완료");
         loadingBar.gameObject.SetActive(false);
 
+        var sprite = GameManager.Instance.GetResources().Words.First().sprite;
+
         loading.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
         var size = scrollRect.GetComponent<RectTransform>().rect.size;

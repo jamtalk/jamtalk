@@ -68,7 +68,7 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
             var target = drop[0].point;
             drop[0].isConnected = true;
             drop[0].intractable = false;
-            var pos = target.position;
+            var pos = Camera.main.WorldToScreenPoint(target.position);
             pos.y += 15f;
             SetLine(pos);
             SetCover(pos);
@@ -84,14 +84,12 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         line_rt.gameObject.SetActive(true);
 
-        var v1 = position - (Vector2)line_rt.position;
+        var v1 = position - (Vector2)Camera.main.WorldToScreenPoint(line_rt.position);
         var angle = Mathf.Atan2(v1.y, v1.x) * Mathf.Rad2Deg - 90f;
         line_rt.rotation = Quaternion.Euler(0, 0, angle);
 
-        var dis = Vector2.Distance(FactorPos(line_rt.position), FactorPos(position));
-        Debug.DrawLine(line_rt.position, position);
         var size = line_rt.sizeDelta;
-        size.y = dis;
+        size.y = v1.magnitude;
         line_rt.sizeDelta = size;
     }
     private void SetCover(Vector2 position)
@@ -101,9 +99,9 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
         intractable = false;
         isConnected = true;
 
-        var dis = Vector2.Distance(FactorPos(line_rt.position), FactorPos(position));
+        var v1 = position - (Vector2)Camera.main.WorldToScreenPoint(line_rt.position);
         var size = cover.sizeDelta;
-        size.y = dis;
+        size.y = v1.magnitude;
         var tween = cover.DOSizeDelta(size, .25f);
         tween.onComplete += () => onDrop?.Invoke();
     }

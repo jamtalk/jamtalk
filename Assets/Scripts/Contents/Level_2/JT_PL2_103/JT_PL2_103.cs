@@ -43,6 +43,7 @@ public class JT_PL2_103 : BaseContents
 
     [Header("UI")]
     public GameObject popupCureent;
+    public Button buttonCurrent;
     public Image popupImage;
     public Sprite longImage;
     public Button shortButton;
@@ -59,6 +60,7 @@ public class JT_PL2_103 : BaseContents
         GetWords();
         StartCoroutine(Init(currentWord));
 
+        buttonCurrent.onClick.AddListener(OnClickCurrent);
         audioPlayer.Play(startClip);
 
         for(int i = 0; i < throwingElements.Count; i++)
@@ -184,15 +186,20 @@ public class JT_PL2_103 : BaseContents
     }
     private IEnumerator WaitSeconds()
     {
+        eventSystem.enabled = false;
         yield return new WaitForSecondsRealtime(1);
         audioPlayer.Play(1f, currentClip, () =>
         {
-            popupCureent.gameObject.SetActive(false);
-            if (!shortsElements.Select(x => x.visible).Contains(false)
-            && !longElements.Select(x => x.visible).Contains(false))
-            {
-                ShowResult();
-            }
+            eventSystem.enabled = true;
         });
+    }
+    private void OnClickCurrent()
+    {
+        popupCureent.gameObject.SetActive(false);
+        if (!shortsElements.Select(x => x.visible).Contains(false)
+        && !longElements.Select(x => x.visible).Contains(false))
+        {
+            ShowResult();
+        }
     }
 }

@@ -26,7 +26,7 @@ public class VoiceRecorder : MonoBehaviour
         }
         else
         {
-            deviceName = Microphone.devices[1];
+            deviceName = Microphone.devices[0];
             Debug.LogFormat("녹음 시작 : {0}",deviceName);
             source.clip = Microphone.Start(deviceName, false, 10, 44100);//서버 송신용 8000
             OnRecord?.Invoke(true);

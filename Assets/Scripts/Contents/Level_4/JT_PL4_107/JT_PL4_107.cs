@@ -19,7 +19,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     public Button[] buttonQuestions;
 
     [SerializeField]
-    private GameObject[] charactor;
+    private RectTransform[] charactor;
     private DigraphsWordsData[] current;
     [SerializeField]
     private EventSystem eventSystem;
@@ -29,7 +29,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     {
         base.Awake();
 
-        buttonCharactor.onClick.AddListener(() => CharactorAddListener());
+        buttonCharactor.onClick.AddListener(OnClickCharactor);
     }
     protected override List<Question4_107> MakeQuestion()
     {
@@ -97,10 +97,23 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
         });
     }
 
-    private void CharactorAddListener()
+    private void OnClickCharactor()
     {
         Point.gameObject.SetActive(false);
-        DoMove(() =>
+        eventSystem.enabled = false;
+        Sequence seq = DOTween.Sequence();
+        var duration = 1f;
+
+        for (int i = 0; i < charactor.Length; i++)
+        {
+            var rt = charactor[i];
+            var tween = rt.DOAnchorPosY(-50f, duration / 2);
+            tween.SetEase(Ease.Linear);
+            tween.SetLoops(2, LoopType.Yoyo);
+            seq.Insert(0, tween);
+        }
+
+        seq.onComplete += () =>
         {
             colorFillamount += 0.33f;
             var color = Color.black;
@@ -113,27 +126,8 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
                     buttonQuestions[i].interactable = true;
             }
             eventSystem.enabled = true;
-        });
-    }
+        };
 
-    private void DoMove(TweenCallback callback)
-    {
-        eventSystem.enabled = false;
-        Sequence seq = DOTween.Sequence();
-
-        for (int i = 0; i < charactor.Length; i++)
-        {
-            var duration = 1f;
-            var transform = charactor[i].transform.position.y;
-            Tween startTween = charactor[i].transform.DOMoveY(transform - 50, duration);
-            Tween lastTween = charactor[i].transform.DOMoveY(transform, duration);
-            startTween.SetEase(Ease.Linear);
-            lastTween.SetEase(Ease.Linear);
-            seq.Insert(0, startTween);
-            seq.Insert(duration, lastTween);
-        }
-
-        seq.onComplete += callback;
         seq.Play();
     }
 }
