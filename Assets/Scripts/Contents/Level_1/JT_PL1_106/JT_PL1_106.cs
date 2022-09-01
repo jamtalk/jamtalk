@@ -116,7 +116,17 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     }
     protected override void ShowResult()
     {
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
+        var value = GameManager.Instance.GetResources().AudioData.act2;
+        audioPlayer.Play(value, () =>
+        {
+            var index = value.LastIndexOf("-") + 1;
+            var before = value.Substring(index);
+            var after = (int.Parse(value.Substring(index)) + 1).ToString();
+            after = int.Parse(after) > 10 ? after : "0" + after;
+            var next = value.Replace(before, after);
+
+            audioPlayer.Play(next, base.ShowResult);
+        });
     }
 }
 [Serializable]
