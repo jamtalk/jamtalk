@@ -29,7 +29,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
     protected T[] words;
     public EventSystem eventSystem;
     private T currentSentance => words[index];
-    protected int questionCount => 2;
+    protected int questionCount => 6;
 
     protected override void Awake()
     {
