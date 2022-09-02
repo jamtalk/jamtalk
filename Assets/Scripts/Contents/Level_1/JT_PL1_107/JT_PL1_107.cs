@@ -27,7 +27,14 @@ public class JT_PL1_107 : BaseMatchImage<AlphabetWordsData>
 
     protected override void ShowResult()
     {
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
+        var value = GameManager.Instance.GetResources().AudioData.act2;
+        var nextAlphabet = (GameManager.Instance.currentAlphabet) + 1;
+        var nextAudio = GameManager.Instance.GetResources(nextAlphabet).AudioData.act2;
+
+        audioPlayer.Play(value, () =>
+        {
+            audioPlayer.Play(nextAudio, base.ShowResult);
+        });
     }
 }
 

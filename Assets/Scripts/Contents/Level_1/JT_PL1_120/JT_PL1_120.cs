@@ -12,6 +12,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
     public ImageRocket roket;
     public Card120[] cards;
     public GameObject finger;
+    public Text selectText;
 
     private int correctCount => 2;
     private int sameAlphabetCount => 2;
@@ -37,6 +38,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
     {
         card.onClick += (data) =>
         {
+            selectText.text = data.key;
             eventSystem.enabled = false;
             if (currentQuestion.correct.Select(x=>x.key).Contains(data.key))
             {
@@ -54,6 +56,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
                             CallRocket();
                         else
                             eventSystem.enabled = true;
+                        selectText.text = string.Empty;
                     });
                 });
             }
@@ -62,6 +65,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
                 audioPlayer.Play(data.act, () =>
                 {
                     card.card.Turnning(onCompleted: () => eventSystem.enabled = true);
+                    selectText.text = string.Empty;
                 });
             }
         };
