@@ -26,6 +26,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     public Text textPot;
     public Image effectImage;
     public FingerAnimation point;
+    public Text textCurrent;
 
     [Header("List")]
     public Button[] charactors;
@@ -190,12 +191,14 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {
+            textCurrent.text = data.key;
             effectImage.sprite = data.sprite;
             effectImage.gameObject.SetActive(true);
             audioPlayer.Play(1f, effectClip , () =>
             {
                 effectImage.gameObject.SetActive(false);
                 AddAnswer(data);
+                textCurrent.text = string.Empty;
             });
         });
     }
