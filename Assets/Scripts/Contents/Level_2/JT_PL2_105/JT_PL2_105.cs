@@ -12,7 +12,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     protected override eContents contents => eContents.JT_PL2_105;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
-    protected override int QuestionCount => 2;
+    protected override int QuestionCount => 6;
 
     [SerializeField]
     private List<BubbleElement> elements = new List<BubbleElement>();
@@ -31,11 +31,8 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private Vector3 defaultPosition;
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
-    /// <summary>
-    /// thrower 사이즈 변경
-    /// 별똥별 추가
-    /// throewer 이미지 변경
-    /// </summary>
+
+
     protected override void Awake()
     {   
         base.Awake();
@@ -55,16 +52,18 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
             .Where(x => x.VowelType == eVowelType.Long)
             .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+            .Take(QuestionCount / 2)
+            .ToArray();
 
         var shortVowel = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
             .Where(x => x.VowelType == eVowelType.Short)
             .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+            .Take(QuestionCount / 2)
+            .ToArray();
 
-        VowelWordsData[] vowels = { longVowel, shortVowel };
+        VowelWordsData[] vowels = longVowel.Concat(shortVowel).ToArray();
         vowels = vowels.OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         for (int i = 0; i < QuestionCount; i++)
@@ -104,6 +103,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
 
             elements[i].transform.localPosition = Vector2.zero;
             var tween = elements[i].transform.DOLocalMoveY(30, 1).SetLoops(-1, LoopType.Yoyo);
+            tween.SetDelay(0.3f * i);
             tweens.Add(tween);
             AddClickListener(elements[i], data);
         }

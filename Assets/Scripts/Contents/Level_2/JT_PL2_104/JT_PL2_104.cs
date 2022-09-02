@@ -12,7 +12,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     protected override eContents contents => eContents.JT_PL2_104;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
-    protected override int QuestionCount => 2;
+    protected override int QuestionCount => 6;
 
     private float smallBubbleSize = 0.7f;
     protected List<BubbleElement> bubbles = new List<BubbleElement>();
@@ -61,16 +61,19 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
             .Where(x => x.VowelType == eVowelType.Long)
             .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+            .Take(QuestionCount / 2)
+            .ToArray();
 
         var shortVowel = GameManager.Instance.vowels
             .SelectMany(x => GameManager.Instance.GetResources(x).Vowels)
             .Where(x => x.VowelType == eVowelType.Short)
             .Where(x => x.Vowel == GameManager.Instance.currentAlphabet)
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+            .Take(QuestionCount / 2)
+            .ToArray();
 
-        VowelWordsData[] vowels = { longVowel, shortVowel };
+
+        VowelWordsData[] vowels = longVowel.Concat(shortVowel).ToArray();
         vowels = vowels.OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         for ( int i = 0; i < QuestionCount; i++)
