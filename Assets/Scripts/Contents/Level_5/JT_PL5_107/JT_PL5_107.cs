@@ -11,7 +11,7 @@ public class JT_PL5_107 : JT_PL3_107
     {
         words = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == eDig[digraphsIndex])
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(drops.Length)
             .ToArray();
