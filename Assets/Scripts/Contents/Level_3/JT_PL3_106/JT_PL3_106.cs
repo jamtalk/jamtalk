@@ -11,7 +11,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     protected override eContents contents => eContents.JT_PL2_106;
     //protected override bool CheckOver() => index == QuestionCount;
     protected override int GetTotalScore() => QuestionCount;
-    protected override int QuestionCount => 3;
+    protected override int QuestionCount => 5;
     //private int index = 0;
 
     //private DigraphsWordsData currentDigraphs;
