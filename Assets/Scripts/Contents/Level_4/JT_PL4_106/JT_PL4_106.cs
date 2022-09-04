@@ -13,8 +13,18 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     protected override int QuestionCount => 4;
 
     public Text currentText;
-
+    public Button charactorButton;
     public DoubleClickButton4_104[] buttons;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        charactorButton.onClick.AddListener(() =>
+        {
+            audioPlayer.Play(currentQuestion.correct.clip);
+        });
+    }
     protected override List<Question4_106> MakeQuestion()
     {
         var corrects = GameManager.Instance.GetDigraphs()
