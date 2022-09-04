@@ -165,6 +165,7 @@ public class JT_PL5_105 : BaseContents
     }
     private void ResetElement()
     {
+        Debug.Log("Reset");
         var targets = new List<GameObject>();
         for (int i = 0; i < layoutCount; i++)
         {

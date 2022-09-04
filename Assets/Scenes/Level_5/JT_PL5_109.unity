@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 81497273}
+  backImage: {fileID: 81497281}
   text: {fileID: 81497279}
   DigraphsWordsData:
     key: 
@@ -355,6 +356,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &81497281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 81497270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81497275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &86782092
@@ -536,6 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 86782095}
+  backImage: {fileID: 86782103}
   text: {fileID: 86782101}
   DigraphsWordsData:
     key: 
@@ -553,6 +566,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &86782103 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 86782092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86782097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &155458489
@@ -1247,6 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 232759758}
+  backImage: {fileID: 232759766}
   text: {fileID: 232759764}
   DigraphsWordsData:
     key: 
@@ -1264,6 +1289,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &232759766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 232759755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232759760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &301603554
@@ -1537,6 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 321990110}
+  backImage: {fileID: 321990118}
   text: {fileID: 321990116}
   DigraphsWordsData:
     key: 
@@ -1554,6 +1591,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &321990118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 321990107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321990112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &373726213
@@ -1837,6 +1885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 438198915}
+  backImage: {fileID: 438198923}
   text: {fileID: 438198921}
   DigraphsWordsData:
     key: 
@@ -1854,6 +1903,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &438198923 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 438198912}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438198917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &455036346
@@ -2550,6 +2610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 735498346}
+  backImage: {fileID: 735498354}
   text: {fileID: 735498352}
   DigraphsWordsData:
     key: 
@@ -2567,6 +2628,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &735498354 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 735498343}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735498348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &753842527
@@ -2912,6 +2984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 972641388}
+  backImage: {fileID: 972641396}
   text: {fileID: 972641394}
   DigraphsWordsData:
     key: 
@@ -2929,6 +3002,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &972641396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 972641385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972641390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &987752545
@@ -3110,6 +3194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 987752548}
+  backImage: {fileID: 987752556}
   text: {fileID: 987752554}
   DigraphsWordsData:
     key: 
@@ -3127,6 +3212,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &987752556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 987752545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987752550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1000891499
@@ -3704,6 +3800,15 @@ MonoBehaviour:
   - {fileID: 86782100}
   - {fileID: 438198920}
   - {fileID: 735498351}
+  cardImages:
+  - {fileID: 21300000, guid: af76f121a79c540248e637a6045f4416, type: 3}
+  - {fileID: 21300000, guid: a7e930fcae9f04e1aba49d2ddc7953e2, type: 3}
+  - {fileID: 21300000, guid: 412aa4989dc504013ae8ff2b29a36869, type: 3}
+  - {fileID: 21300000, guid: f9155c40eeef84dd8ae964f7e8af23fd, type: 3}
+  - {fileID: 21300000, guid: c841be0f8e4b442058e6c3a75f17cf48, type: 3}
+  - {fileID: 21300000, guid: 709867e5331d3417991150fca1a4babd, type: 3}
+  - {fileID: 21300000, guid: e68fb01ef5bdb4e50a6a036b56b85677, type: 3}
+  - {fileID: 21300000, guid: ea299f082d83440caa63997a94588085, type: 3}
 --- !u!1 &1192142533
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,6 +4174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1252022467}
+  backImage: {fileID: 1252022475}
   text: {fileID: 1252022473}
   DigraphsWordsData:
     key: 
@@ -4086,6 +4192,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1252022475 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 1252022464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252022469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1263907051
@@ -4267,6 +4384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1263907054}
+  backImage: {fileID: 1263907062}
   text: {fileID: 1263907060}
   DigraphsWordsData:
     key: 
@@ -4284,6 +4402,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1263907062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 1263907051}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263907056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1292305965
@@ -5448,6 +5577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1937618120}
+  backImage: {fileID: 1937618128}
   text: {fileID: 1937618126}
   DigraphsWordsData:
     key: 
@@ -5465,6 +5595,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1937618128 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 1937618117}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937618122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1984432909
@@ -5748,6 +5889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2101416935}
+  backImage: {fileID: 2101416943}
   text: {fileID: 2101416941}
   DigraphsWordsData:
     key: 
@@ -5765,6 +5907,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2101416943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7913955956316518443, guid: eddf0df72fcdd5a4c96be5a3e0781f20, type: 3}
+  m_PrefabInstance: {fileID: 2101416932}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101416937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2120587327
