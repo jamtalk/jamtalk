@@ -13,6 +13,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
     public Image imageAlphabetLower;
     public Button[] buttonSound;
     public GameObject finger;
+    private AlphabetWordsData data;
     protected override int QuestionCount
     {
         get
@@ -32,8 +33,8 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         for (int i = 0; i < buttonSound.Length; i++)
             buttonSound[i].onClick.AddListener(() =>
             {
-                audioPlayer.Play(GameManager.Instance.GetResources().AudioData.phanics);
-                if(finger!=null)
+                audioPlayer.Play(currentQuestion.correct.audio.phanics);
+                if (finger!=null)
                 {
                     Destroy(finger);
                     finger = null;
