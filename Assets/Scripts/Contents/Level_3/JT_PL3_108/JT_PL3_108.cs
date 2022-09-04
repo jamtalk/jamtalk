@@ -12,6 +12,7 @@ public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
         var questions = new List<Question_Witch<DigraphsWordsData>>();
         words = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f)).ToArray()
             .Take(QuestionCount)
             .ToArray();
