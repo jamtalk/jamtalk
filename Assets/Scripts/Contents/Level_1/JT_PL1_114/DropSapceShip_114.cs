@@ -17,6 +17,9 @@ public class DropSapceShip_114 : MonoBehaviour
     public void Awake()
     {
         button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2));
+        var rect = button.GetComponent<RectTransform>();
+        var tween = rect.DOLocalMoveY(30,1).SetLoops(-1, LoopType.Yoyo);
+        tween.Play();
     }
     public void SetInner()
     {
