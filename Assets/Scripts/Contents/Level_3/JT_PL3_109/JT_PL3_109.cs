@@ -29,6 +29,7 @@ public class JT_PL3_109 : BaseContents
     {
         word = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
     }
