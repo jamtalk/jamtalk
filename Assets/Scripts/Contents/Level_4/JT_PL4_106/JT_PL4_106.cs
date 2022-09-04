@@ -45,6 +45,7 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
             ButtonAddListener(buttons[i], question.totalQuestion[i]);
             buttons[i].isOn = false;
             buttons[i].incorrectMark.SetActive(false);
+            buttons[i].inCorrectCnt = 0;
             buttons[i].button.interactable = true;
         }
         audioPlayer.Play(question.correct.clip);
@@ -63,10 +64,13 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
 
             eventSystem.enabled = false;
 
-            var isCorrect = currentQuestion.correct.IncludedDigraphs == data.IncludedDigraphs;
-            button.incorrectMark.SetActive(!isCorrect);
-            button.button.interactable = isCorrect;
-            Debug.Log("??");
+            button.inCorrectCnt++;
+            if (button.inCorrectCnt > 1)
+            {
+                var isCorrect = currentQuestion.correct.IncludedDigraphs == data.IncludedDigraphs;
+                button.incorrectMark.SetActive(!isCorrect);
+                button.button.interactable = isCorrect;
+            }
             audioPlayer.Play(data.audio.phanics, () =>
             {
                 button.isOn = currentQuestion.correct.Digraphs == data.Digraphs;
