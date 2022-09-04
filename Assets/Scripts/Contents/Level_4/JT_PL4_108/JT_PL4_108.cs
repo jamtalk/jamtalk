@@ -11,7 +11,7 @@ public class JT_PL4_108 : BaseContents
     protected override eContents contents => eContents.JT_PL4_108;
     protected override bool CheckOver() => questionCount == index;
     protected override int GetTotalScore() => questionCount;
-    private int questionCount = 3;
+    private int questionCount = 6;
     private int index = 0;
 
     private int answerIndex = 0;
