@@ -790,8 +790,8 @@ GameObject:
   - component: {fileID: 652548408}
   - component: {fileID: 652548410}
   - component: {fileID: 652548409}
-  - component: {fileID: 652548411}
   - component: {fileID: 652548412}
+  - component: {fileID: 652548413}
   m_Layer: 5
   m_Name: Rocket
   m_TagString: Untagged
@@ -861,27 +861,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652548407}
   m_CullTransparentMesh: 1
---- !u!114 &652548411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652548407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a4fd9b7d9de0f40a657942dbad49c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direction: 2
-  mask: {fileID: 2094901407}
-  valueUI: {fileID: 1449815015}
-  audioPlayer: {fileID: 1036569291}
-  clipMove: {fileID: 8300000, guid: d703c163947bfe44cb42f13051c43cef, type: 3}
-  clipStop: {fileID: 8300000, guid: 52a54ecb70caffa4bbe3140fda33d49e, type: 3}
-  clipArrival: {fileID: 8300000, guid: f68c72e3113749e4aa772385fc5400d2, type: 3}
-  tempNum: 0
-  text: {fileID: 196262036}
 --- !u!114 &652548412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +905,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &652548413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652548407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b833b3caeccf24781f7954b2c1aafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 2
+  mask: {fileID: 2094901407}
+  valueUI: {fileID: 970977968}
+  audioPlayer: {fileID: 1036569291}
+  clipMove: {fileID: 8300000, guid: d703c163947bfe44cb42f13051c43cef, type: 3}
+  clipStop: {fileID: 8300000, guid: 52a54ecb70caffa4bbe3140fda33d49e, type: 3}
+  clipArrival: {fileID: 8300000, guid: f68c72e3113749e4aa772385fc5400d2, type: 3}
+  tempNum: 0
+  text: {fileID: 196262036}
 --- !u!1 &758709937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,8 +1108,8 @@ RectTransform:
   m_Father: {fileID: 2142574928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25, y: 0.15}
-  m_AnchorMax: {x: 0.75, y: 0.35}
+  m_AnchorMin: {x: 0.25, y: 0.1}
+  m_AnchorMax: {x: 0.75, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.43137258, g: 0.227451, b: 0.58431375, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1775,6 +1775,7 @@ MonoBehaviour:
   onClickFirst:
     m_PersistentCalls:
       m_Calls: []
+  text: {fileID: 2089497032}
 --- !u!114 &1417845887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2080,6 +2081,7 @@ MonoBehaviour:
   onClickFirst:
     m_PersistentCalls:
       m_Calls: []
+  text: {fileID: 1534286906}
 --- !u!1 &1534286904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,8 +2114,8 @@ RectTransform:
   m_Father: {fileID: 1528821553}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25, y: 0.15}
-  m_AnchorMax: {x: 0.75, y: 0.35}
+  m_AnchorMin: {x: 0.25, y: 0.1}
+  m_AnchorMax: {x: 0.75, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2130,7 +2132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.43137258, g: 0.227451, b: 0.58431375, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2279,7 +2281,7 @@ MonoBehaviour:
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 415528917}
   finger: {fileID: 1322307635}
-  rocket: {fileID: 652548411}
+  rocket: {fileID: 652548413}
   buttons:
   - {fileID: 1528821557}
   - {fileID: 2142574929}
@@ -2672,8 +2674,8 @@ RectTransform:
   m_Father: {fileID: 1417845885}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25, y: 0.15}
-  m_AnchorMax: {x: 0.75, y: 0.35}
+  m_AnchorMin: {x: 0.25, y: 0.1}
+  m_AnchorMax: {x: 0.75, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2690,7 +2692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.43137258, g: 0.227451, b: 0.58431375, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3009,6 +3011,7 @@ MonoBehaviour:
   onClickFirst:
     m_PersistentCalls:
       m_Calls: []
+  text: {fileID: 937843530}
 --- !u!114 &2142574930
 MonoBehaviour:
   m_ObjectHideFlags: 0

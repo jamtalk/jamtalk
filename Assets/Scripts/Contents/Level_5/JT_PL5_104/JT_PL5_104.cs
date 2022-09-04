@@ -11,7 +11,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     public GameObject finger;
 
     protected override eContents contents => eContents.JT_PL5_104;
-    public TextRocket rocket;
+    public ImageRocket rocket;
     public DoubleClick504[] buttons;
     public Button buttonRocket;
 
@@ -68,6 +68,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
             buttons[i].gameObject.SetActive(true);
             buttons[i].Init(randomQuestions[i]);
             buttons[i].name = randomQuestions[i].key;
+            buttons[i].text.text = randomQuestions[i].digraphs;
             buttons[i].button.interactable = false;
             var rt = buttons[i].GetComponent<RectTransform>();
             rt.anchoredPosition = Vector2.zero;
@@ -104,7 +105,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
                 DoMove(window, rt, () =>
                 {
                     button.gameObject.SetActive(false);
-                    rocket.Away(value.key, () =>
+                    rocket.Away(value.sprite, () =>
                     {
                         AddAnswer(value);
 
