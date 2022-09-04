@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
 {
-    protected override eContents contents => eContents.JT_PL1_106;
+    protected override eContents contents => eContents.JT_PL5_108;
 
     protected override int QuestionCount => 4;
 
@@ -25,9 +25,11 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
         var questions = new List<Question5_108>();
         var correctWord = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f)).ToArray()
             .Take(QuestionCount)
             .ToArray();
+
         for (int i = 0; i < QuestionCount; i++)
         {
             var tmp = GameManager.Instance.digrpahs
