@@ -111,7 +111,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
                 {
                     buttonQuestions[i].isOn = false;
                 }
-                //ResetQuestion();
+                ResetQuestion();
             }
         });
     }
