@@ -8,6 +8,7 @@ public class Card114 : MonoBehaviour
 {
     public TurningCard card => GetComponent<TurningCard>();
     public Image image;
+    public Image backImage;
     public Text text;
     public Card114Data alhpabetData;
     public DigraphsWordsData DigraphsWordsData;

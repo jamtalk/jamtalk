@@ -15,6 +15,7 @@ public class JT_PL4_109 : BaseContents
             , "grey" , "teal", "orange", "darkblue", "purple", "maroon"};
     private List<Card114> selected = new List<Card114>();
     public Card114[] cards;
+    public Sprite[] cardImages;
 
     protected override void Awake()
     {
@@ -37,6 +38,7 @@ public class JT_PL4_109 : BaseContents
 
         for (int i = 0; i < cards.Length; i++)
         {
+            cards[i].backImage.sprite = cardImages.OrderBy(x => Random.Range(0f, 100f)).First();
             if (i > 0 && i % 2 != 0)
                 continue;
             
