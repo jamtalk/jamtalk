@@ -12,6 +12,7 @@ namespace GJGameLibrary
 {
     public class GJSceneLoader : MonoSingleton<GJSceneLoader>
     {
+        public eSceneName currentScene { get; private set; }
         private Dictionary<eSceneName, AudioClip> _bgm = null;
         private Dictionary<eSceneName,AudioClip> bgm
         {
@@ -29,6 +30,7 @@ namespace GJGameLibrary
         public void LoadScene(eSceneName nextScene) => StartCoroutine(LoadSceneAsyc(nextScene));
         IEnumerator LoadSceneAsyc(eSceneName scene)
         {
+            currentScene = scene;
             var op = SceneManager.LoadSceneAsync(scene.ToString());
             while (!op.isDone)
             {

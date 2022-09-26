@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GJGameLibrary.DesignPattern;
 using System;
@@ -78,7 +77,6 @@ public class GameManager : MonoSingleton<GameManager>
         return pos;
     }
 }
-
 public class AlphabetData
 {
     public eAlphabet Alphabet { get; private set; }

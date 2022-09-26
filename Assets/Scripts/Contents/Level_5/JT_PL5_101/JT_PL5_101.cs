@@ -41,26 +41,27 @@ public class JT_PL5_101 : BaseContents
         for(int i = 0; i < temp.Length; i++)
         {
             eAlphabet alphabets = (eAlphabet)Enum.Parse(typeof(eAlphabet), temp[i].ToString());
-            eAlphabetStyle alphaStyle = eAlphabetStyle.Brown;
-            switch(alphabets)
-            {
-                case eAlphabet.I:
-                case eAlphabet.U:
-                case eAlphabet.E:
-                    alphaStyle = eAlphabetStyle.White;
-                    break;
-                case eAlphabet.A:
-                    alphaStyle = eAlphabetStyle.BingoBlue;
-                    break;
-                case eAlphabet.R:
-                    alphaStyle = eAlphabetStyle.BingoRed;
-                    break;
-                case eAlphabet.O:
-                    alphaStyle = eAlphabetStyle.Yellow;
-                    break;
+            //White 는 Upper 이미지가 없음
+            //eAlphabetStyle alphaStyle = eAlphabetStyle.Brown;
+            //switch(alphabets)
+            //{
+            //    case eAlphabet.I:
+            //    case eAlphabet.U:
+            //    case eAlphabet.E:
+            //        alphaStyle = eAlphabetStyle.White;
+            //        break;
+            //    case eAlphabet.A:
+            //        alphaStyle = eAlphabetStyle.BingoBlue;
+            //        break;
+            //    case eAlphabet.R:
+            //        alphaStyle = eAlphabetStyle.BingoRed;
+            //        break;
+            //    case eAlphabet.O:
+            //        alphaStyle = eAlphabetStyle.Yellow;
+            //        break;
 
-            }
-            var alphabet = GameManager.Instance.GetAlphbetSprite(alphaStyle, eAlphabetType.Upper, alphabets);
+            //}
+            var alphabet = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, alphabets);
             alphabetImages[i].sprite = alphabet;
             alphabetImages[i].preserveAspect = true;
         }

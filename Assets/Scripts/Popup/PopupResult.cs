@@ -1,3 +1,4 @@
+using GJGameLibrary;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class PopupResult : BasePopup
     [Header("UI")]
     public Image imageResult;
     public Button buttonPre;
-    public Button[] buttonNext;
+    public Button buttonNext;
+    public Button buttonConfirm;
     public AudioSource source;
     [Header("Sprites")]
     public Sprite spritePerfect;
@@ -20,8 +22,10 @@ public class PopupResult : BasePopup
     {
         base.Awake();
         buttonPre.onClick.AddListener(OnClickPre);
-        for (int i = 0; i < buttonNext.Length; i++)
-            buttonNext[i].onClick.AddListener(OnClickNext);
+        buttonNext.onClick.AddListener(OnClickNext);
+        buttonConfirm.onClick.AddListener(() => GJSceneLoader.Instance.LoadScene(eSceneName.AD_003));
+        buttonPre.gameObject.SetActive(GameManager.Instance.currentContents > eContents.JT_PL1_102);
+
     }
     public void SetResult(eGameResult result)
     {
@@ -43,7 +47,7 @@ public class PopupResult : BasePopup
     private void OnClickNext()
     {
         if (GameManager.Instance.currentAlphabet + 1 < eAlphabet.Z)
-            GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
+            GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
         else
         {
             GameManager.Instance.currentAlphabet += 2;
@@ -52,6 +56,7 @@ public class PopupResult : BasePopup
     }
     private void OnClickPre()
     {
-        GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.Test);
+        GJSceneLoader.Instance.LoadScene(GJSceneLoader.Instance.currentScene +1);
+        GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
     }
 }

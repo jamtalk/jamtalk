@@ -82,6 +82,7 @@ public abstract class ResourceWordsElement : ResourceElement
     public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
 }
 #endregion
+
 public class BaseSentanceData : ResourceElement
 {
     public string value;

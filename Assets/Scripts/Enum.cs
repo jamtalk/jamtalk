@@ -1,6 +1,17 @@
 ﻿public enum eSceneName
 {
+    AD_001,
+    AD_002,
+    AD_003,
+    AD_008,
+    AD_009,
+    AD_013,
+    AD_014,
+    AD_014_1,
+    AC_004,
+
     Test,
+
     JT_PL1_102,
     JT_PL1_103,
     JT_PL1_104,
@@ -72,71 +83,71 @@
 
 public enum eContents
 {
-    JT_PL1_102 = 102,
-    JT_PL1_103 = 103,
-    JT_PL1_104 = 104,
-    JT_PL1_105 = 105,
-    JT_PL1_106 = 106,
-    JT_PL1_107 = 107,
-    JT_PL1_108 = 108,
-    JT_PL1_109 = 109,
-    JT_PL1_110 = 110,
-    JT_PL1_111 = 111,
-    JT_PL1_112 = 112,
-    JT_PL1_113 = 113,
-    JT_PL1_114 = 114,
-    JT_PL1_115 = 115,
-    JT_PL1_116 = 116,
-    JT_PL1_117 = 117,
-    JT_PL1_118 = 118,
-    JT_PL1_119 = 119,
-    JT_PL1_120 = 120,
-    JT_PL1_121 = 121,
-    JT_PL2_101 = 101,
-    JT_PL2_102 = 102,
-    JT_PL2_103 = 103,
-    JT_PL2_104 = 104,
-    JT_PL2_105 = 105,
-    JT_PL2_106 = 106,
-    JT_PL2_107 = 107,
-    JT_PL2_108 = 108,
-    JT_PL2_109 = 109,
-    JT_PL2_110 = 110,
-    JT_PL2_111 = 111,
-    JT_PL2_112 = 112,
-    JT_PL3_101 = 101,
-    JT_PL3_102 = 102,
-    JT_PL3_103 = 103,
-    JT_PL3_104 = 104,
-    JT_PL3_105 = 105,
-    JT_PL3_106 = 106,
-    JT_PL3_107 = 107,
-    JT_PL3_108 = 108,
-    JT_PL3_109 = 109,
-    JT_PL3_110 = 110,
-    JT_PL3_111 = 111,
-    JT_PL4_101 = 101,
-    JT_PL4_102 = 102,
-    JT_PL4_103 = 103,
-    JT_PL4_104 = 104,
-    JT_PL4_105 = 105,
-    JT_PL4_106 = 106,
-    JT_PL4_107 = 107,
-    JT_PL4_108 = 108,
-    JT_PL4_109 = 109,
-    JT_PL4_110 = 110,
-    JT_PL4_111 = 111,
-    JT_PL5_101 = 101,
-    JT_PL5_102 = 102,
-    JT_PL5_103 = 103,
-    JT_PL5_104 = 104,
-    JT_PL5_105 = 105,
-    JT_PL5_106 = 106,
-    JT_PL5_107 = 107,
-    JT_PL5_108 = 108,
-    JT_PL5_109 = 109,
-    JT_PL5_110 = 110,
-    JT_PL5_111 = 111,
+    JT_PL1_102 = 100,
+    JT_PL1_103 = 101,
+    JT_PL1_104 = 102,
+    JT_PL1_105 = 103,
+    JT_PL1_106 = 104,
+    JT_PL1_107 = 105,
+    JT_PL1_108 = 106,
+    JT_PL1_109 = 107,
+    JT_PL1_110 = 108,
+    JT_PL1_111 = 109,
+    JT_PL1_112 = 110,
+    JT_PL1_113 = 111,
+    JT_PL1_114 = 112,
+    JT_PL1_115 = 113,
+    JT_PL1_116 = 114,
+    JT_PL1_117 = 115,
+    JT_PL1_118 = 116,
+    JT_PL1_119 = 117,
+    JT_PL1_120 = 118,
+    JT_PL1_121 = 119,
+    JT_PL2_101 = 200,
+    JT_PL2_102 = 201,
+    JT_PL2_103 = 202,
+    JT_PL2_104 = 203,
+    JT_PL2_105 = 204,
+    JT_PL2_106 = 205,
+    JT_PL2_107 = 206,
+    JT_PL2_108 = 207,
+    JT_PL2_109 = 208,
+    JT_PL2_110 = 209,
+    JT_PL2_111 = 210,
+    JT_PL2_112 = 211,
+    JT_PL3_101 = 300,
+    JT_PL3_102 = 301,
+    JT_PL3_103 = 302,
+    JT_PL3_104 = 303,
+    JT_PL3_105 = 304,
+    JT_PL3_106 = 305,
+    JT_PL3_107 = 306,
+    JT_PL3_108 = 307,
+    JT_PL3_109 = 308,
+    JT_PL3_110 = 309,
+    JT_PL3_111 = 310,
+    JT_PL4_101 = 400,
+    JT_PL4_102 = 401,
+    JT_PL4_103 = 402,
+    JT_PL4_104 = 403,
+    JT_PL4_105 = 404,
+    JT_PL4_106 = 405,
+    JT_PL4_107 = 406,
+    JT_PL4_108 = 407,
+    JT_PL4_109 = 408,
+    JT_PL4_110 = 409,
+    JT_PL4_111 = 410,
+    JT_PL5_101 = 500,
+    JT_PL5_102 = 501,
+    JT_PL5_103 = 502,
+    JT_PL5_104 = 503,
+    JT_PL5_105 = 504,
+    JT_PL5_106 = 505,
+    JT_PL5_107 = 506,
+    JT_PL5_108 = 507,
+    JT_PL5_109 = 508,
+    JT_PL5_110 = 509,
+    JT_PL5_111 = 510,
 }
 
 public enum eAlphabet
@@ -299,16 +310,20 @@ public enum eCharactorDirection
 }
 public enum eAPIAct
 {
-    register,       //????????
-    memberinfo,     //????????????
-    exists,         //??????????????
-    member,         //????????????
-    login,          //??????
-    memberout,      //????????
-    board,          //??????????
-    couponreg,      //????????
-    edulog,         //????????
-    edulog_view,    //???????? ????
+    register,       //회원가입
+    memberinfo,     //회원정보 수정
+    exists,         //아이디 존재 여부
+    member,         //회원정보 읽기
+    login,          //로그인
+    memberout,      //회원탈퇴
+    board,          //게시판 조회
+    couponreg,      //쿠폰생성
+    edulog,         //학습 기록하기
+    edulog_view,    //학습기록 조회
+    dashboard,      //대시보드
+    award,          //어워드 달성 기록하기
+    child,          //자녀 등록
+    childout,       //자녀 정보 수정
 }
 
 public enum eAtlasType
@@ -316,4 +331,11 @@ public enum eAtlasType
     Words,
     Vowels,
     Digraphs
+}
+
+public enum eErrorCode
+{
+    Success = 200,
+    WrongPW = 401,
+    NonexistID = 402,
 }
