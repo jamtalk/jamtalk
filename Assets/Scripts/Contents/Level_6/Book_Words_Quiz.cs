@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-public class BookWordQuiz : SingleAnswerContents<BookWordQuizeQuestion, BookWordData>
+public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookWordData>
 {
     public override eSceneName HomeScene => eSceneName.AC_004;
     public EventSystem eventSystem;
