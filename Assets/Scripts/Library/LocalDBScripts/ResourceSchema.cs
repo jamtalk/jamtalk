@@ -91,6 +91,7 @@ public class BaseSentanceData : ResourceElement
 }
 public class BaseSentanceData<TKey> : BaseSentanceData where TKey : Enum
 {
+    [JsonIgnore]
     public TKey Key => (TKey)Enum.Parse(typeof(TKey), key);
 }
 

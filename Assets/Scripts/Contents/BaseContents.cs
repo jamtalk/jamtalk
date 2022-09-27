@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 #region Contents
 public abstract class BaseContents : MonoBehaviour
 {
-    public virtual eSceneName HomeScene => eSceneName.AD_003;
+    public virtual eSceneName NextScene => eSceneName.AD_003;
     public eAlphabet targetAlphabet;
     [SerializeField]
     private GameObject popupResult;
@@ -28,11 +28,11 @@ public abstract class BaseContents : MonoBehaviour
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
         result.Init(() =>
         {
-            GJSceneLoader.Instance.LoadScene(HomeScene);
+            GJSceneLoader.Instance.LoadScene(NextScene);
         }, () =>
         {
             if (GameManager.Instance.currentAlphabet + 1 < eAlphabet.Z)
-                GJSceneLoader.Instance.LoadScene(HomeScene);
+                GJSceneLoader.Instance.LoadScene(NextScene);
             else
             {
                 GameManager.Instance.currentAlphabet += 2;
@@ -41,7 +41,7 @@ public abstract class BaseContents : MonoBehaviour
         }, () =>
         {
             GJSceneLoader.Instance.LoadScene(GJSceneLoader.Instance.currentScene + 1);
-            GJSceneLoader.Instance.LoadScene(HomeScene);
+            GJSceneLoader.Instance.LoadScene(NextScene);
         });
 
         result.SetResult(GetResult());

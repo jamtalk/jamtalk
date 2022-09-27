@@ -6,11 +6,11 @@ using UnityEngine;
 public class JT_PL5_111 : BaseMatchSentances<DigraphsSentanceData>
 {
     protected override eContents contents => eContents.JT_PL5_111;
-    protected override void GetSentance()
+    protected override DigraphsSentanceData[] GetSentance()
     {
-        words = GameManager.Instance.GetDigraphsSentance()
+        return GameManager.Instance.GetDigraphsSentance()
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(questionCount)
+            .Take(QuestionCount)
             .ToArray();
     }
 }

@@ -38,51 +38,39 @@ public class BookData
     public BookConversationData[] conversations { get; private set; }
     public BookSentanceData[] sentances { get; private set; }
     public BookWordData[] bookWords { get; private set; }
-
-    [JsonIgnore]
-    public Dictionary<eBookType, BookConversationData[]> ConverSationData => GetMultipleDictionary(conversations);
-
-    [JsonIgnore]
-    public Dictionary<eBookType, BookSentanceData[]> SentanceData => GetMultipleDictionary(sentances);
-
-    private Dictionary<eBookType, TValue[]> GetMultipleDictionary<TValue>(TValue[] values) where TValue:BookDataElement
-    {
-        return values
-            .Select(x => x.type)
-            .Distinct()
-            .ToDictionary(x => x, x => values.Where(y => y.type == x).ToArray());
-    }
 }
-
-public abstract class BookDataElement
+public class BookConversationData : ResourceElement
 {
-    public string key;
     [JsonIgnore]
     public eBookType type => (eBookType)Enum.Parse(typeof(eBookType), key);
     public string name;
-    public string number;
+    public int number;
     public int page;
     public int priority;
     public string clip;
     [JsonIgnore]
     public AudioClip Clip => Addressables.LoadAssetAsync<AudioClip>(clip).WaitForCompletion();
-}
-public class BookConversationData : BookDataElement
-{
     public string speaker;
     public string value;
 }
-public class BookSentanceData : BookDataElement
+public class BookSentanceData : BaseSentanceData<eBookType>
 {
+    public string name;
+    public int number;
+    public int page;
+    public int priority;
+    [JsonIgnore]
+    public AudioClip Clip => Addressables.LoadAssetAsync<AudioClip>(clip).WaitForCompletion();
     public string value_kr;
-    public string value_en;
+    public string image;
+    [JsonIgnore]
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
 }
-public class BookWordData
+public class BookWordData : ResourceElement
 {
     public eBookType type;
     public int bookNumber;
-    public string value;
     [JsonIgnore]
-    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(value).WaitForCompletion();
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
 }
 

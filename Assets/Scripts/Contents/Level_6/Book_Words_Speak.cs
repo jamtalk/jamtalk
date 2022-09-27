@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, BookWordData>
 {
+    public override eSceneName NextScene => eSceneName.Book_Words_Quiz;
     public EventSystem eventSystem;
     public Button button;
     public Text text;
@@ -36,7 +37,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
 
     public void OnSTT(string value)
     {
-        if(value == currentQuestion.correct.value)
+        if(value == currentQuestion.correct.key)
         {
             AddAnswer(currentQuestion.correct);
         }
@@ -46,13 +47,13 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
     {
         button.image.sprite = question.correct.sprite;
         button.image.preserveAspect = true;
-        text.text = question.correct.value;
+        text.text = question.correct.key;
         PlayCorrect(question);
     }
 
     private void PlayCorrect(BookWordsSpeakQuestion question)
     {
-        AndroidPluginManager.Instance.PlayTTS(question.correct.value);
+        AndroidPluginManager.Instance.PlayTTS(question.correct.key);
     }
 }
 public class BookWordsSpeakQuestion : SingleQuestion<BookWordData>

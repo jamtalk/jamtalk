@@ -9,8 +9,8 @@ public abstract class BaseMatchSentances<T> : BaseContents
     where T : BaseSentanceData
 {
     protected override eContents contents => throw new System.NotImplementedException();
-    protected override bool CheckOver() => index == questionCount;
-    protected override int GetTotalScore() => questionCount;
+    protected override bool CheckOver() => index == QuestionCount;
+    protected override int GetTotalScore() => QuestionCount;
 
     public AudioClip stampClip;
     public RectTransform sentanceParent;
@@ -26,18 +26,22 @@ public abstract class BaseMatchSentances<T> : BaseContents
     public UIThrower110 thrower;
     protected int index = 0;
     [SerializeField]
-    protected T[] words;
+    protected T[] words { get; private set; }
     public EventSystem eventSystem;
-    private T currentSentance => words[index];
-    protected int questionCount => 6;
+    protected T currentSentance => words[index];
+    protected virtual int QuestionCount => 6;
 
     protected override void Awake()
     {
         base.Awake();
-        GetSentance();
+        words = GetSentance();
+        ShowQuestion();
+    }
+    protected virtual void ShowQuestion()
+    {
         StartCoroutine(Init(currentSentance));
     }
-    protected abstract void GetSentance();
+    protected abstract T[] GetSentance();
 
     private IEnumerator Init(T data)
     {
@@ -88,7 +92,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
         audioPlayer.Play(1f, stampClip);
         if (!elements.Select(x => x.visible).Contains(false))
         {
-            audioPlayer.Play(currentSentance.clip, () =>
+            PlayCurrentSentance(() =>
             {
                 audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
                 {
@@ -96,10 +100,15 @@ public abstract class BaseMatchSentances<T> : BaseContents
                     if (CheckOver())
                         ShowResult();
                     else
-                        StartCoroutine(Init(currentSentance));
+                        ShowQuestion();
                 });
             });
         }
+    }
+
+    protected virtual void PlayCurrentSentance(System.Action onOver)
+    {
+        audioPlayer.Play(currentSentance.clip, onOver);
     }
 
     private void Clear()

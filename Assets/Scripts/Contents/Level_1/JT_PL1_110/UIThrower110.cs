@@ -23,6 +23,7 @@ public class UIThrower110 : MonoBehaviour
         yield return new WaitForEndOfFrame();
         paths = paths.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         var seq = DOTween.Sequence();
+        Debug.Log(paths.Length);
         for (int i = 0; i < targets.Length; i++)
         {
             var tween = MakeTween(targets[i], paths[i], duration);

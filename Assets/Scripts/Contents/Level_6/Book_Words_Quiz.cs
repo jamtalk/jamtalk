@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookWordData>
 {
-    public override eSceneName HomeScene => eSceneName.AC_004;
+    public override eSceneName NextScene => eSceneName.AC_004;
     public EventSystem eventSystem;
     public Image quizImage;
     public Button[] buttons;
@@ -26,7 +26,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
             .Select(x =>
             {
                 var incorrects = BookData.Instance.bookWords
-                    .Where(y => y.value != x.value)
+                    .Where(y => y.key != x.key)
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(buttons.Length-1)
                     .ToArray();
@@ -41,7 +41,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
         buttons = buttons.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         for(int i = 0;i < question.totalQuestion.Length; i++)
         {
-            buttons[i].transform.GetChild(0).GetComponent<Text>().text = question.totalQuestion[i].value;
+            buttons[i].transform.GetChild(0).GetComponent<Text>().text = question.totalQuestion[i].key;
             AddListener(buttons[i], question.totalQuestion[i]);
         }
     }
@@ -51,7 +51,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
         button.onClick.AddListener(() =>
         {
             eventSystem.enabled = false;
-            AndroidPluginManager.Instance.PlayTTS(data.value, () =>
+            AndroidPluginManager.Instance.PlayTTS(data.key, () =>
             {
                 if (data == currentQuestion.correct)
                     AddAnswer(data);
