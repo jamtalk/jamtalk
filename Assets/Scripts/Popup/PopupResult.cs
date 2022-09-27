@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using Random = UnityEngine.Random;
 
 public class PopupResult : BasePopup
 {
@@ -25,7 +27,17 @@ public class PopupResult : BasePopup
         buttonNext.onClick.AddListener(OnClickNext);
         buttonConfirm.onClick.AddListener(() => GJSceneLoader.Instance.LoadScene(eSceneName.AD_003));
         buttonPre.gameObject.SetActive(GameManager.Instance.currentContents > eContents.JT_PL1_102);
+    }
 
+    public void Init(Action onClickConfirm, Action onClickNext = null, Action onClickPre = null)
+    {
+        buttonConfirm.onClick.AddListener(() => onClickConfirm?.Invoke());
+
+        buttonNext.gameObject.SetActive(onClickNext != null);
+        buttonNext.onClick.AddListener(() => onClickNext?.Invoke());
+
+        buttonPre.gameObject.SetActive(onClickPre != null);
+        buttonPre.onClick.AddListener(() => onClickPre?.Invoke());
     }
     public void SetResult(eGameResult result)
     {
@@ -47,7 +59,7 @@ public class PopupResult : BasePopup
     private void OnClickNext()
     {
         if (GameManager.Instance.currentAlphabet + 1 < eAlphabet.Z)
-            GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
+            GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
         else
         {
             GameManager.Instance.currentAlphabet += 2;

@@ -45,6 +45,5 @@ public class MainScene : UserInfoScene
         int level = 0;  //사용자의 레벨 불러와야함
         imageLevel.sprite = levelIcons[level];
         textDay.text = string.Format("Day {0}", UserDataManager.Instance.DashBoard.day.ToString());
-        Debug.Log("??");
     }
 }

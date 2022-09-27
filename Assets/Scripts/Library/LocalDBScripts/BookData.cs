@@ -1,4 +1,7 @@
 using GJGameLibrary.DesignPattern;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -10,29 +13,37 @@ public enum eBookType
 {
     LD
 }
-public class BookData : Singleton<BookData>
+public class BookData
 {
-    private BookConversationData[] conversations;
-    private BookSentanceData[] sentances;
-    public Dictionary<eBookType, BookConversationData[]> ConverSationData;
-    public Dictionary<eBookType, BookSentanceData[]> SentanceData;
-    public bool Initialized { get; private set; } = false;
-    public override void Initialize()
+    private static BookData instance = null;
+    [JsonIgnore]
+    public static BookData Instance
     {
-        if (!Initialized)
+        get
         {
-            conversations = JObject.Parse(Resources.Load<TextAsset>("").text).ToObject<BookConversationData[]>();
-            ConverSationData = GetMultipleDictionary(conversations);
+            if(instance == null)
+            {
+                var text = Resources.Load<TextAsset>("BookData").text;
+                var json = JObject.Parse(text);
 
-            sentances = JObject.Parse(Resources.Load<TextAsset>("").text).ToObject<BookSentanceData[]>();
-            SentanceData = GetMultipleDictionary(sentances);
+                instance = new BookData();
 
-            Initialized = true;
-            base.Initialize();
+                instance.conversations = JArray.FromObject(json.SelectToken("conversations")).Select(x => x.ToObject<BookConversationData>()).ToArray();
+                instance.sentances = JArray.FromObject(json.SelectToken("sentances")).Select(x => x.ToObject<BookSentanceData>()).ToArray();
+                instance.bookWords = JArray.FromObject(json.SelectToken("bookWords")).Select(x => x.ToObject<BookWordData>()).ToArray();
+            }
+            return instance;
         }
-        else
-            return;
     }
+    public BookConversationData[] conversations { get; private set; }
+    public BookSentanceData[] sentances { get; private set; }
+    public BookWordData[] bookWords { get; private set; }
+
+    [JsonIgnore]
+    public Dictionary<eBookType, BookConversationData[]> ConverSationData => GetMultipleDictionary(conversations);
+
+    [JsonIgnore]
+    public Dictionary<eBookType, BookSentanceData[]> SentanceData => GetMultipleDictionary(sentances);
 
     private Dictionary<eBookType, TValue[]> GetMultipleDictionary<TValue>(TValue[] values) where TValue:BookDataElement
     {
@@ -46,12 +57,14 @@ public class BookData : Singleton<BookData>
 public abstract class BookDataElement
 {
     public string key;
+    [JsonIgnore]
     public eBookType type => (eBookType)Enum.Parse(typeof(eBookType), key);
     public string name;
     public string number;
     public int page;
     public int priority;
     public string clip;
+    [JsonIgnore]
     public AudioClip Clip => Addressables.LoadAssetAsync<AudioClip>(clip).WaitForCompletion();
 }
 public class BookConversationData : BookDataElement
@@ -63,5 +76,13 @@ public class BookSentanceData : BookDataElement
 {
     public string value_kr;
     public string value_en;
+}
+public class BookWordData
+{
+    public eBookType type;
+    public int bookNumber;
+    public string value;
+    [JsonIgnore]
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(value).WaitForCompletion();
 }
 

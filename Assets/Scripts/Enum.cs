@@ -79,6 +79,14 @@
     JT_PL5_109,
     JT_PL5_110,
     JT_PL5_111,
+    Book_Animation,
+    Book_Listening,
+    Book_Words_Speak,
+    Book_Words_Quiz,
+    Book_Speaking,
+    Book_Writing_Word,
+    Book_Writing_Sentance,
+    Book_Conversation,
 }
 
 public enum eContents
@@ -148,6 +156,14 @@ public enum eContents
     JT_PL5_109 = 508,
     JT_PL5_110 = 509,
     JT_PL5_111 = 510,
+    Book_Animation = 600,
+    Book_Listening = 601,
+    Book_Words_Speak = 602,
+    Book_Words_Quiz = 603,
+    Book_Speaking = 604,
+    Book_Writing_Word = 605,
+    Book_Writing_Sentance = 606,
+    Book_Conversation = 607,
 }
 
 public enum eAlphabet

@@ -31,7 +31,7 @@ namespace GJGameLibrary.DesignPattern
 
     public class Singleton<T> where T : Singleton<T>, new()
     {
-        private static T instance = null;
+        protected static T instance = null;
         public static T Instance
         {
             get

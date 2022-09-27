@@ -1,13 +1,16 @@
-﻿using System;
+﻿using GJGameLibrary;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 #region Contents
 public abstract class BaseContents : MonoBehaviour
 {
+    public virtual eSceneName HomeScene => eSceneName.AD_003;
     public eAlphabet targetAlphabet;
     [SerializeField]
     private GameObject popupResult;
@@ -23,6 +26,24 @@ public abstract class BaseContents : MonoBehaviour
         GC.Collect();
         endTime = DateTime.Now;
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
+        result.Init(() =>
+        {
+            GJSceneLoader.Instance.LoadScene(HomeScene);
+        }, () =>
+        {
+            if (GameManager.Instance.currentAlphabet + 1 < eAlphabet.Z)
+                GJSceneLoader.Instance.LoadScene(HomeScene);
+            else
+            {
+                GameManager.Instance.currentAlphabet += 2;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }, () =>
+        {
+            GJSceneLoader.Instance.LoadScene(GJSceneLoader.Instance.currentScene + 1);
+            GJSceneLoader.Instance.LoadScene(HomeScene);
+        });
+
         result.SetResult(GetResult());
         RequestManager.Instance.RequestAct(param, response =>
         {
