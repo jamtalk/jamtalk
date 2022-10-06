@@ -14,13 +14,75 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     protected override int QuestionCount => 4;
 
     public DoubleClickButton[] buttonQuestions;
+    private List<AlphabetWordsData> buttonDatas = new List<AlphabetWordsData>();
     public ImageButton buttonPhanics;
     public Sprite spritePop;
     public AudioClip clipPop;
+
+    public GuideFingerAnimation finger;
+
+    private IEnumerator ShowGuidnceRoutine()
+    {
+        ShowGuidnce();
+
+        finger = Instantiate(finger, transform);
+        finger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+
+        var correctIndex = 0;
+        for (int i = 0; i < buttonDatas.Count; i++)
+        {
+            if (buttonDatas[i] == currentQuestion.correct)
+            {
+                correctIndex = i;
+                break;
+            }
+        }
+
+        yield return new WaitForEndOfFrame();
+        GuideSeq(correctIndex, () =>
+        {
+            finger.DoClick(() =>
+            {
+                buttonQuestions[correctIndex].isOn = true;
+                audioPlayer.Play(buttonDatas[correctIndex].clip);
+
+                finger.DoClick(() =>
+                {
+                    buttonQuestions[correctIndex].button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
+                    buttonQuestions[correctIndex].image.gameObject.SetActive(false);
+                    audioPlayer.Play(1f, clipPop);
+                    var tween = buttonQuestions[correctIndex].GetComponent<RectTransform>().DOScale(1.5f, .25f);
+                    tween.SetLoops(2, LoopType.Yoyo);
+                    tween.SetEase(Ease.Linear);
+                    tween.onComplete += () =>
+                    {
+                        AddAnswer(buttonDatas[correctIndex]);
+                        if (!CheckOver())
+                            buttonQuestions[correctIndex].image.gameObject.SetActive(true);
+                    };
+                    tween.Play();
+
+                    currentQuestionIndex = 0;
+                    finger.gameObject.SetActive(false);
+                });
+            });
+        });
+    }
+
+    private void GuideSeq(int correctIndex, TweenCallback callback)
+    {
+        Sequence guideSeq = DOTween.Sequence();
+        guideSeq.Append(finger.transform.DOMove(buttonQuestions[correctIndex].transform.position, 2f));
+
+        guideSeq.onComplete += callback;
+        guideSeq.Play();
+    }
+
     protected override void Awake()
     {
         GameManager.Instance.currentAlphabet = eAlphabet.E;
-        base.Awake();
+        StartCoroutine(ShowGuidnceRoutine());
+        //base.Awake();
     }
     protected override List<Question106> MakeQuestion()
     {
@@ -55,6 +117,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
             var data = question.totalQuestion[i];
             buttonQuestions[i].isOn = false;
             buttonQuestions[i].sprite = data.sprite;
+            buttonDatas.Add(data);
             AddDoubleClickListener(buttonQuestions[i],data);
         }
         var phanics = currentQuestion.correct.audio.phanics;

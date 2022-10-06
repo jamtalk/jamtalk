@@ -21,6 +21,8 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime startTime;
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
+
+    protected bool isGuide = false;
     protected virtual void ShowResult()
     {
         GC.Collect();
@@ -85,6 +87,15 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected TQuestion currentQuestion => questions[currentQuestionIndex];
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
+    protected virtual void ShowGuidnce()
+    {
+        GameManager.Instance.currentAlphabet = targetAlphabet;
+
+        Debug.Log(GameManager.Instance.currentAlphabet);
+        questions = MakeQuestion();
+        currentQuestionIndex = 0;
+        ShowQuestion(questions[currentQuestionIndex]);
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -103,7 +114,11 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         {
             if (question.isCorrect)
                 audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
-            currentQuestionIndex += 1;
+            if (isGuide)
+                currentQuestionIndex += 1;
+            else
+                isGuide = true;
+
             ShowQuestion(questions[currentQuestionIndex]);
         }
     }

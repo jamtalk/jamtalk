@@ -19,7 +19,7 @@ public class JT_PL1_102 : BaseContents
     private eAlphabet[] targets;
 
     public Guide_102 guide;
-    private bool isGuide = true;
+    bool isGuidnce = false;
 
     private void Guide()
     {
@@ -65,10 +65,10 @@ public class JT_PL1_102 : BaseContents
     {
         audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
         {
-            if (!isGuide)
+            if (isGuidnce)
                 currentIndex += 1;
             else
-                isGuide = false;
+                isGuidnce = true;
 
             if (currentIndex < targets.Length)
                 Init(targets[currentIndex]);
