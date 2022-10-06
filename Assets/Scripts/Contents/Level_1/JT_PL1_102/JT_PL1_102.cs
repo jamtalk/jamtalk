@@ -15,15 +15,42 @@ public class JT_PL1_102 : BaseContents
     public Image imageAlphabet;
     public Button buttonEgg;
     public Egg egg;
+
     private eAlphabet[] targets;
+
+    public Guide_102 guide;
+    private bool isGuide = true;
+
+    private void Guide()
+    {
+        guide.Init();
+        var eggGuide = egg;
+        eggGuide.Init();
+
+        guide.finger.DoClick(() =>
+        {
+            OnClickEgg();
+            guide.finger.DoClick(() =>
+            {
+                OnClickEgg();
+                guide.finger.DoClick(() =>
+                {
+                    OnClickEgg();
+                    guide.finger.gameObject.SetActive(false);
+                });
+            });
+        });
+
+    }
     protected override void Awake()
     {
         base.Awake();
+        Guide();
         currentIndex = 0;
-        targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet+1 };
-        Init(targets[currentIndex]);
         egg.onBroken += OnBorken;
         buttonEgg.onClick.AddListener(OnClickEgg);
+        targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+        Init(targets[currentIndex]);
     }
     protected void Init(eAlphabet value)
     {
@@ -38,7 +65,11 @@ public class JT_PL1_102 : BaseContents
     {
         audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
         {
-            currentIndex += 1;
+            if (!isGuide)
+                currentIndex += 1;
+            else
+                isGuide = false;
+
             if (currentIndex < targets.Length)
                 Init(targets[currentIndex]);
             else
