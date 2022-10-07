@@ -15,11 +15,55 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     protected int questionElementCount = 5;
     protected int correctElementCount = 4;
     public Button buttonAudio;
-    private bool isStart=false;
+    private bool isStart = false;
     protected override eContents contents => eContents.JT_PL1_108;
+
+    protected IEnumerator ShowGuidnceRoutine()
+    {
+        ShowGuidnce();
+        guideFinger.gameObject.SetActive(false);
+
+        yield return new WaitForSecondsRealtime(2f);
+
+        guideFinger.gameObject.SetActive(true);
+
+
+        for (int i = 0; i < currentQuestion.correct.Count(); i++)
+        {
+            var correctCard = cards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
+            var isNext = false;
+            guideFinger.DoMoveCorrect(correctCard.transform.position, () =>
+            {
+                isStart = true;
+                guideFinger.DoClick(() =>
+                {
+                    audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
+                    correctCard.turnner.Turnning(1f, () =>
+                    {
+                        AddAnswer(currentQuestion.correct[currentQuestion.currentIndex]);
+                        if (i + 1 < currentQuestion.correct.Count())
+                            audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isNext = true);
+                    });
+                });
+            });
+
+            while (!isNext)
+            {
+                yield return null;
+            }
+        }
+    }
+
+    protected override void AddAnswer(AlphabetWordsData answer)
+    {
+        isStart = false;
+        base.AddAnswer(answer);
+    }
+
     protected override void Awake()
     {
-        base.Awake();
+        //base.Awake();
+        StartCoroutine(ShowGuidnceRoutine());
         buttonAudio.onClick.AddListener(() =>
         {
             finger.SetActive(false);
@@ -76,10 +120,13 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         };
         card.onClick += (value) =>
         {
+            if (currentQuestion.currentIndex >= 4)
+                return;
+
             if (currentQuestion.correct[currentQuestion.currentIndex] == value)
             {
-                isStart = true;
                 AddAnswer(currentQuestion.correct[currentQuestion.currentIndex]);
+                isStart = true;
             }
         };
         card.checkVaild += (value) =>
@@ -89,6 +136,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
             return vaild;
         };
     }
+
     //protected override void AddAnswer(string answer)
     //{
     //    base.AddAnswer(answer);

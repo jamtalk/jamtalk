@@ -19,14 +19,13 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
-    public GuideFingerAnimation finger;
-
-    private IEnumerator ShowGuidnceRoutine()
+    protected IEnumerator ShowGuidnceRoutine()
     {
         ShowGuidnce();
 
-        finger = Instantiate(finger, transform);
-        finger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        yield return new WaitForEndOfFrame();
+
+        guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
         var correctIndex = 0;
         for (int i = 0; i < buttonDatas.Count; i++)
@@ -39,43 +38,22 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         }
 
         yield return new WaitForEndOfFrame();
-        GuideSeq(correctIndex, () =>
+        guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
         {
-            finger.DoClick(() =>
+            guideFinger.DoClick(() =>
             {
                 buttonQuestions[correctIndex].isOn = true;
                 audioPlayer.Play(buttonDatas[correctIndex].clip);
 
-                finger.DoClick(() =>
+                guideFinger.DoClick(() =>
                 {
-                    buttonQuestions[correctIndex].button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
-                    buttonQuestions[correctIndex].image.gameObject.SetActive(false);
-                    audioPlayer.Play(1f, clipPop);
-                    var tween = buttonQuestions[correctIndex].GetComponent<RectTransform>().DOScale(1.5f, .25f);
-                    tween.SetLoops(2, LoopType.Yoyo);
-                    tween.SetEase(Ease.Linear);
-                    tween.onComplete += () =>
-                    {
-                        AddAnswer(buttonDatas[correctIndex]);
-                        if (!CheckOver())
-                            buttonQuestions[correctIndex].image.gameObject.SetActive(true);
-                    };
-                    tween.Play();
+                    CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
 
                     currentQuestionIndex = 0;
-                    finger.gameObject.SetActive(false);
+                    guideFinger.gameObject.SetActive(false);
                 });
             });
         });
-    }
-
-    private void GuideSeq(int correctIndex, TweenCallback callback)
-    {
-        Sequence guideSeq = DOTween.Sequence();
-        guideSeq.Append(finger.transform.DOMove(buttonQuestions[correctIndex].transform.position, 2f));
-
-        guideSeq.onComplete += callback;
-        guideSeq.Play();
     }
 
     protected override void Awake()
@@ -156,26 +134,29 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         {
             if(currentQuestion.correct == data)
             {
-                button.button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
-                //button.transform.GetChild(0).GetComponent<Image>().sprite = spritePop;
-                button.image.gameObject.SetActive(false);
-                audioPlayer.Play(1f, clipPop);
-                var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
-                tween.SetLoops(2, LoopType.Yoyo);
-                tween.SetEase(Ease.Linear);
-                tween.onComplete += () =>
-                {
-                    AddAnswer(data);
-                    if(!CheckOver())
-                        button.image.gameObject.SetActive(true);
-                };
-                tween.Play();
+                CorrectClickMotion(button, data);
             }
             else
             {
                 ResetQuestion();
             }
         });
+    }
+    private void CorrectClickMotion(DoubleClickButton button, AlphabetWordsData data)
+    {
+        button.button.targetGraphic.gameObject.GetComponent<Image>().sprite = spritePop;
+        button.image.gameObject.SetActive(false);
+        audioPlayer.Play(1f, clipPop);
+        var tween = button.GetComponent<RectTransform>().DOScale(1.5f, .25f);
+        tween.SetLoops(2, LoopType.Yoyo);
+        tween.SetEase(Ease.Linear);
+        tween.onComplete += () =>
+        {
+            AddAnswer(data);
+            if (!CheckOver())
+                button.image.gameObject.SetActive(true);
+        };
+        tween.Play();
     }
     protected override void ShowResult()
     {

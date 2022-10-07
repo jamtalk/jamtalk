@@ -21,8 +21,8 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime startTime;
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
-
-    protected bool isGuide = false;
+    public GuideFingerAnimation guideFinger;
+    protected bool isGuide = true;
     protected virtual void ShowResult()
     {
         GC.Collect();
@@ -72,6 +72,13 @@ public abstract class BaseContents : MonoBehaviour
 #endif
         startTime = DateTime.Now;
     }
+    protected virtual void ShowGuidnce()
+    {
+        guideFinger = Instantiate(guideFinger, transform);
+        //StartCoroutine(ShowGuidnceRoutine());
+    }
+    //protected abstract IEnumerator ShowGuidnceRoutine();
+
     protected abstract bool CheckOver();
     protected virtual int GetLevel() => 1;
     protected abstract int GetTotalScore();
@@ -87,8 +94,11 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected TQuestion currentQuestion => questions[currentQuestionIndex];
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
-    protected virtual void ShowGuidnce()
+
+    protected override void ShowGuidnce()
     {
+        base.ShowGuidnce();
+
         GameManager.Instance.currentAlphabet = targetAlphabet;
 
         Debug.Log(GameManager.Instance.currentAlphabet);
@@ -114,10 +124,11 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         {
             if (question.isCorrect)
                 audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
-            if (isGuide)
+
+            if (!isGuide)
                 currentQuestionIndex += 1;
             else
-                isGuide = true;
+                isGuide = false;
 
             ShowQuestion(questions[currentQuestionIndex]);
         }
@@ -147,7 +158,17 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         currentQuestion.SetAnswer(answer);
         if (CheckOver())
         {
-            ShowResult();
+            if (!isGuide)
+                ShowResult();
+            else
+            {
+                Debug.Log("base.CheckOver isGuide : true");
+                isGuide = false;
+                guideFinger.gameObject.SetActive(false);
+                questions = MakeQuestion();
+                currentQuestionIndex = 0;
+                ShowQuestion(questions[currentQuestionIndex]);
+            }
         }
         else if(currentQuestion.isCompleted)
         {

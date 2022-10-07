@@ -1502,6 +1502,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1976610220}
+  guideFinger: {fileID: 3478594477290588655, guid: f629a29d82f654ea4b2e01317b2bf5e5, type: 3}
   questions: []
   buttonQuestions:
   - {fileID: 1186361558}
@@ -1512,7 +1513,6 @@ MonoBehaviour:
   buttonPhanics: {fileID: 1310763492}
   spritePop: {fileID: 21300000, guid: 43bb6cb59aa491541aa592d45d6bf6de, type: 3}
   clipPop: {fileID: 8300000, guid: 81aab9bc3721b4a4bb695e6739cd9bc1, type: 3}
-  finger: {fileID: 3478594477290588655, guid: f629a29d82f654ea4b2e01317b2bf5e5, type: 3}
 --- !u!1 &1727396420
 GameObject:
   m_ObjectHideFlags: 0
