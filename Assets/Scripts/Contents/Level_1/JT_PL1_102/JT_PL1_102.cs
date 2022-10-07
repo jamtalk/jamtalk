@@ -18,25 +18,25 @@ public class JT_PL1_102 : BaseContents
 
     private eAlphabet[] targets;
 
-    public Guide_102 guide;
+    public GuideFingerAnimation finger;
     bool isGuidnce = false;
 
     private void Guide()
     {
-        guide.Init();
+        finger = Instantiate(finger, transform);
         var eggGuide = egg;
         eggGuide.Init();
 
-        guide.finger.DoClick(() =>
+        finger.DoClick(() =>
         {
             OnClickEgg();
-            guide.finger.DoClick(() =>
+            finger.DoClick(() =>
             {
                 OnClickEgg();
-                guide.finger.DoClick(() =>
+                finger.DoClick(() =>
                 {
                     OnClickEgg();
-                    guide.finger.gameObject.SetActive(false);
+                    finger.gameObject.SetActive(false);
                 });
             });
         });
