@@ -35,6 +35,16 @@ public class GuideFingerAnimation : MonoBehaviour
 
         seq.Play();
     }
+    public void DoMoveCorrect(RectTransform position, Vector3 target, TweenCallback callback)
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOMove(target, 2f));
+        seq.Insert(0f, position.DOMove(target, 2f));
+
+        seq.onComplete += callback;
+
+        seq.Play();
+    }
 
     public void DoClick(TweenCallback callback)
     {

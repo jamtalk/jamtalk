@@ -1887,7 +1887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -500, y: 499.99994}
+  m_AnchoredPosition: {x: -500, y: 500}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &990717812
@@ -2568,6 +2568,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 122620620}
+  guideFinger: {fileID: 3478594477290588655, guid: f629a29d82f654ea4b2e01317b2bf5e5, type: 3}
   caster: {fileID: 1580109400}
   creator: {fileID: 866636544}
   thrower: {fileID: 866636543}
@@ -3186,7 +3187,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 500, y: -499.99994}
+  m_AnchoredPosition: {x: 500, y: -500}
   m_SizeDelta: {x: 151.21643, y: 163.03558}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2113020030

@@ -13,12 +13,55 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     public UIThrower110 thrower;
     public UIMover[] mover;
     public AudioClip startClip;
-
     protected override int QuestionCount => 2;
     protected override eGameResult GetResult() => eGameResult.Perfect;
-   
+
     //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
 
+    private bool isNext = false;
+    private bool isMove = false;
+    protected IEnumerator ShowGuidnceRoutine()
+    {
+        ShowGuidnce();
+        guideFinger.gameObject.SetActive(false);
+        guideFinger.transform.localScale = new Vector3(.7f, .7f, .7f);
+
+        while (!isMove) { yield return null; }
+
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            isNext = false;
+
+            guideFinger.transform.position = toggles[i].throwElement.position;
+            guideFinger.gameObject.SetActive(true);
+
+            audioPlayer.Play(GameManager.Instance.GetResources(toggles[i].value).AudioData.phanics);
+            guideFinger.DoMoveCorrect(toggles[i].throwElement, toggles[i].audioPlayer.transform.position, () =>
+            {
+                toggles[i].drop.Drop();
+                toggles[i].throwElement.gameObject.SetActive(false);
+                toggles[i].drag.ResetPosition();
+                guideFinger.gameObject.SetActive(false);
+
+                isNext = true;
+            });
+
+            while (!isNext)
+            {
+                yield return null;
+            }
+            yield return new WaitForSecondsRealtime(1.5f);
+        }
+
+        isGuide = false;
+        ShowGuidnce();
+    }
+
+    protected override void Awake()
+    {
+        StartCoroutine(ShowGuidnceRoutine());
+        base.Awake();
+    }
     protected override void ShowQuestion(Question_ThrowerAlphabet<T> question)
     {
         creator.Clear();
@@ -41,7 +84,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
             AddDragListener(dragables[i]);
 
         for (int i = 0; i < mover.Length; i++)
-            mover[i].Move(4f, 3f);
+            mover[i].Move(4f, 3f, () => isMove = true);
     }
 
     private void AddToggleListner(AlphabetToggle110 toggle)

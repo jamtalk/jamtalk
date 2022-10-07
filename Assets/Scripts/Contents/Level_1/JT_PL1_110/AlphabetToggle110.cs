@@ -15,7 +15,7 @@ public class AlphabetToggle110 : MonoBehaviour
     [SerializeField]
     private Image[] images;
     [SerializeField]
-    private Dropable110 drop;
+    public Dropable110 drop;
     public Dragable110 drag => throwElement.GetComponent<Dragable110>();
 
     public RectTransform throwElement;
