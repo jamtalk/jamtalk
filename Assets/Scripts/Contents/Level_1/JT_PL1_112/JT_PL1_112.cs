@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class JT_PL1_112 : BaseContents
 {
@@ -12,12 +13,56 @@ public class JT_PL1_112 : BaseContents
 
     protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     protected override int GetTotalScore() => toggles.Length;
+    eAlphabet[] corrects;
+
+    bool isStop = false;
+    protected IEnumerator ShowGuidnceRoutine()
+    {
+        ShowGuidnce();
+        MakeQuestion();
+
+        yield return new WaitForEndOfFrame();
+
+
+        for (int i = 0; i < corrects.Length; i++)
+        {
+            isStop = false;
+            var guideCorrect = toggles.Where(x => x.alphabet == corrects[i]).First();
+            var drag = drags.Where(x => x.alphabet == guideCorrect.alphabet).First();
+            guideFinger.gameObject.SetActive(true);
+
+            guideFinger.DoMoveCorrect(drag.transform.position, () =>
+            {
+                guideFinger.transform.DOScale(.7f, 1f);
+
+                guideFinger.DoMoveCorrect(drag.gameObject ,guideCorrect.transform.position, () =>
+                {
+                    guideCorrect.isOn = true;
+
+                    guideFinger.gameObject.SetActive(false);
+                    drag.gameObject.SetActive(false);
+
+                    CorrectMotion(guideCorrect);
+                });
+            });
+
+
+            while (!isStop) yield return null;
+        }
+    }
+
     protected override void Awake()
     {
-        base.Awake();
-        var corrects = GameManager.Instance.alphabets
+        StartCoroutine(ShowGuidnceRoutine());
+        //base.Awake();
+        //MakeQuestion();
+    }
+
+    private void MakeQuestion()
+    {
+        corrects = GameManager.Instance.alphabets
             .Where(x => x >= GameManager.Instance.currentAlphabet)
-            .OrderBy(x=>x)
+            .OrderBy(x => x)
             .Take(toggles.Length)
             .ToArray();
         var incorrects = GameManager.Instance.alphabets
@@ -25,32 +70,58 @@ public class JT_PL1_112 : BaseContents
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .Take(drags.Length - toggles.Length)
             .Union(corrects)
-            .OrderBy(x => UnityEngine.Random.Range(0f,100f))
+            .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
             .ToArray();
-        for(int i = 0;i < toggles.Length; i++)
+        for (int i = 0; i < toggles.Length; i++)
         {
             AddToggleDropListener(toggles[i]);
             toggles[i].Init(corrects[i], false);
         }
-        for(int i = 0;i < drags.Length; i++)
+        for (int i = 0; i < drags.Length; i++)
             drags[i].Init(incorrects[i]);
     }
+
     private void AddToggleDropListener(DropToggle toggle)
     {
         toggle.onDroped += () =>
         {
-            for (int i = 0; i < drags.Length; i++)
-                drags[i].intracable = false;
-            audioPlayer.Play(GameManager.Instance.GetResources(toggle.alphabet).AudioData.act2,()=>
-            {
-                if (CheckOver())
+            CorrectMotion(toggle);
+        };
+    }
+
+    private void CorrectMotion(DropToggle toggle, Action action = null)
+    {
+        for (int i = 0; i < drags.Length; i++)
+            drags[i].intracable = false;
+        audioPlayer.Play(GameManager.Instance.GetResources(toggle.alphabet).AudioData.act2, () =>
+        {
+            if (CheckOver())
+                if (!isGuide)
                     ShowResult();
                 else
                 {
-                    for (int i = 0; i < drags.Length; i++)
-                        drags[i].intracable = true;
+                    foreach (var item in toggles)
+                        item.isOn = false;
+                    ResetLayout();
+                    MakeQuestion();
+                    isGuide = false;
                 }
-            });
-        };
+
+            else
+            {
+                for (int i = 0; i < drags.Length; i++)
+                    drags[i].intracable = true;
+                isStop = true;
+            }
+        });
+    }
+
+    private void ResetLayout()
+    {
+        foreach (var item in drags)
+        {
+            item.image.transform.position = item.GetComponentInParent<RectTransform>().position;
+            item.gameObject.SetActive(true);
+        }
     }
 }
