@@ -20,9 +20,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
 
     private bool isNext = false;
     private bool isMove = false;
-    protected IEnumerator ShowGuidnceRoutine()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        ShowGuidnce();
         guideFinger.gameObject.SetActive(false);
         guideFinger.transform.localScale = new Vector3(.7f, .7f, .7f);
 
@@ -52,14 +51,10 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
             }
             yield return new WaitForSecondsRealtime(1.5f);
         }
-
-        isGuide = false;
-        ShowGuidnce();
     }
 
     protected override void Awake()
     {
-        StartCoroutine(ShowGuidnceRoutine());
         base.Awake();
     }
     protected override void ShowQuestion(Question_ThrowerAlphabet<T> question)

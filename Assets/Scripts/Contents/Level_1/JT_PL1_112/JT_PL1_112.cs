@@ -16,9 +16,8 @@ public class JT_PL1_112 : BaseContents
     eAlphabet[] corrects;
 
     bool isStop = false;
-    protected IEnumerator ShowGuidnceRoutine()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        ShowGuidnce();
         MakeQuestion();
 
         yield return new WaitForEndOfFrame();
@@ -53,8 +52,7 @@ public class JT_PL1_112 : BaseContents
 
     protected override void Awake()
     {
-        StartCoroutine(ShowGuidnceRoutine());
-        //base.Awake();
+        base.Awake();
         //MakeQuestion();
     }
 

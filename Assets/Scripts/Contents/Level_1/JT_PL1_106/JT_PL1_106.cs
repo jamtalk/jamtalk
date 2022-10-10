@@ -19,25 +19,26 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
-    protected IEnumerator ShowGuidnceRoutine()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        ShowGuidnce();
-
         yield return new WaitForEndOfFrame();
+
 
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
         var correctIndex = 0;
-        for (int i = 0; i < buttonDatas.Count; i++)
+
+        for(int i = 0; i < buttonDatas.Count(); i++)
         {
-            if (buttonDatas[i] == currentQuestion.correct)
+            Debug.Log(i);
+            if(buttonDatas[i].key == currentQuestion.correct.key)
             {
                 correctIndex = i;
                 break;
             }
         }
 
-        yield return new WaitForEndOfFrame();
+
         guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
         {
             guideFinger.DoClick(() =>
@@ -59,8 +60,8 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     protected override void Awake()
     {
         GameManager.Instance.currentAlphabet = eAlphabet.E;
-        StartCoroutine(ShowGuidnceRoutine());
-        //base.Awake();
+
+        base.Awake();
     }
     protected override List<Question106> MakeQuestion()
     {

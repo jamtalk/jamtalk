@@ -20,9 +20,9 @@ public class JT_PL1_102 : BaseContents
 
     bool isGuidnce = false;
 
-    private void Guide()
+    protected override void ShowGuidnce()
     {
-        guideFinger = Instantiate(guideFinger, transform);
+        base.ShowGuidnce();
         var eggGuide = egg;
         eggGuide.Init();
 
@@ -39,12 +39,11 @@ public class JT_PL1_102 : BaseContents
                 });
             });
         });
-
     }
     protected override void Awake()
     {
         base.Awake();
-        Guide();
+        //ShowGuidnce();
         currentIndex = 0;
         egg.onBroken += OnBorken;
         buttonEgg.onClick.AddListener(OnClickEgg);

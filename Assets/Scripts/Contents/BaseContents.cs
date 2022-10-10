@@ -71,19 +71,21 @@ public abstract class BaseContents : MonoBehaviour
         GameManager.Instance.currentAlphabet = targetAlphabet;
 #endif
         startTime = DateTime.Now;
+
+        ShowGuidnce();
     }
     protected virtual void ShowGuidnce()
     {
-#if UNITY_EDITOR
-        GameManager.Instance.currentAlphabet = targetAlphabet;
-#endif
-        if(guideFinger != null)
+        if (guideFinger != null)
             guideFinger = Instantiate(guideFinger, transform);
 
-        startTime = DateTime.Now;
-        //StartCoroutine(ShowGuidnceRoutine());
+        guideFinger.gameObject.SetActive(true);
+        StartCoroutine(ShowGuidnceRoutine());
     }
-    //protected abstract IEnumerator ShowGuidnceRoutine();
+    protected virtual IEnumerator ShowGuidnceRoutine()
+    {
+        yield return new WaitForEndOfFrame();
+    }
 
     protected abstract bool CheckOver();
     protected virtual int GetLevel() => 1;
@@ -105,10 +107,10 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     {
         base.ShowGuidnce();
 
-        Debug.Log(GameManager.Instance.currentAlphabet);
-        questions = MakeQuestion();
-        currentQuestionIndex = 0;
-        ShowQuestion(questions[currentQuestionIndex]);
+        //Debug.Log(GameManager.Instance.currentAlphabet);
+        //questions = MakeQuestion();
+        //currentQuestionIndex = 0;
+        //ShowQuestion(questions[currentQuestionIndex]);
     }
     protected override void Awake()
     {

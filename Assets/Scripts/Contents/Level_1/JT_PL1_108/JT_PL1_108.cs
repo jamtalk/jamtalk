@@ -18,12 +18,12 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     private bool isStart = false;
     protected override eContents contents => eContents.JT_PL1_108;
 
-    protected IEnumerator ShowGuidnceRoutine()
+    bool isTurn = false;
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        ShowGuidnce();
         guideFinger.gameObject.SetActive(false);
 
-        yield return new WaitForSecondsRealtime(2f);
+        while (!isTurn) yield return null;
 
         guideFinger.gameObject.SetActive(true);
 
@@ -62,8 +62,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
 
     protected override void Awake()
     {
-        //base.Awake();
-        StartCoroutine(ShowGuidnceRoutine());
+        base.Awake();
         buttonAudio.onClick.AddListener(() =>
         {
             finger.SetActive(false);
@@ -159,7 +158,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         {
             cards[i].turnner.buttonFront.interactable = true;
         }
-        audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
+        audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isTurn = true);
     }
 }
 public class Question108 : MultiQuestion<AlphabetWordsData>

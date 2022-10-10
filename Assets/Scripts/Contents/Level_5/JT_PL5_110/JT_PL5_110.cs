@@ -21,9 +21,8 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     bool isStop = false;
     bool isRoutine = false;
     List<DigraphsWordsData[]> guideData = new List<DigraphsWordsData[]>();
-    protected IEnumerator ShowGuidnceRoutine()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        ShowGuidnce();
         guideFinger.gameObject.SetActive(false);
 
         while (!isStop) yield return null;
@@ -56,8 +55,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
 
     protected override void Awake()
     {
-        //base.Awake();
-        StartCoroutine(ShowGuidnceRoutine());
+        base.Awake();
 
         //buttonRocket.onClick.AddListener(PlayCurrentWord);
         buttonRocket.onClick.AddListener(() =>
