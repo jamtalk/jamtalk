@@ -17,12 +17,52 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     public TextButton111[] buttons;
     public Button buttonRocket;
 
+    int correctCount = 2;
+    bool isStop = false;
+    bool isRoutine = false;
+    List<AlphabetWordsData[]> guideData = new List<AlphabetWordsData[]>();
+    protected IEnumerator ShowGuidnceRoutine()
+    {
+        ShowGuidnce();
+        guideFinger.gameObject.SetActive(false);
+
+        while (!isStop) yield return null;
+
+        for (int j = 0; j < QuestionCount * correctCount; j++)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                while (!isStop) yield return null;
+
+                isRoutine = false;
+                if (buttons[i].data == currentQuestion.currentCorrect)
+                {
+                    guideFinger.gameObject.SetActive(true);
+                    guideFinger.DoMoveCorrect(buttons[i].transform.position, () =>
+                    {
+                        guideFinger.DoClick(() =>
+                        {
+                            guideFinger.gameObject.SetActive(false);
+                            CorrectButtonMotion(buttons[i]);
+                        });
+                    });
+
+                    while (!isRoutine) yield return null;
+                    break;
+                }
+            }
+        }
+    }
+
+
     protected override void Awake()
     {
-        base.Awake();
-        buttonRocket.onClick.AddListener(PlayCurrentWord);
+        //base.Awake();
+        StartCoroutine(ShowGuidnceRoutine());
+
         buttonRocket.onClick.AddListener(() =>
         {
+            PlayCurrentWord();
             if (finger != null)
             {
                 Destroy(finger);
@@ -36,12 +76,10 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     }
     protected override List<Question111> MakeQuestion()
     {
-        int correctCount = 2;
         int incorrectCount = buttons.Length - correctCount;
         var list = new List<Question111>();
         for(int i = 0;i < QuestionCount; i++)
         {
-
             var corrects = new eAlphabet[] {GameManager.Instance.currentAlphabet,GameManager.Instance.currentAlphabet+1}
                 .Select(x=>GameManager.Instance.GetResources(x).Words.OrderBy(x=>Random.Range(0f,100f)).First())
                 .Take(correctCount)
@@ -54,6 +92,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
                 .Take(incorrectCount)
                 .ToArray();
             list.Add(new Question111(corrects, incorrects));
+            guideData.Add(corrects);
         }
         return list;    
     }
@@ -82,55 +121,63 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     }
     private void AddOnClickTextButtonListener(TextButton111 button)
     {
-        var window = rocket.mask.GetComponent<RectTransform>();
-        var rt = button.GetComponent<RectTransform>();
         button.onClickData += (value) =>
         {
-            PlayWord(value);
-            if (currentQuestion.currentCorrect == value)
-            {
-                if (finger != null)
-                    finger.gameObject.SetActive(false);
-
-                for (int i = 0; i < buttons.Length; i++)
-                    buttons[i].button.interactable = false;
-
-                var seq = DOTween.Sequence();
-
-                var moveTween = rt.DOMove(window.position, 1f);
-                moveTween.SetEase(Ease.Linear);
-                var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
-                scaleTweenStart.SetEase(Ease.Linear);
-                var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
-                scaleTweenEnd.SetEase(Ease.Linear);
-
-                seq.Append(scaleTweenStart);
-                seq.Append(scaleTweenEnd);
-                seq.Insert(0, moveTween);
-
-                seq.onComplete += () =>
-                {
-                    button.gameObject.SetActive(false);
-                    rocket.Away(value.key, () =>
-                    {
-                        AddAnswer(value);
-                        Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}", 
-                            currentQuestionIndex+1, QuestionCount,
-                            currentQuestion.currentIndex+1, currentQuestion.correctCount
-                            );
-                        if (!CheckOver())
-                            CallRokect();
-                    });
-                };
-                seq.Play();
-            }
+            CorrectButtonMotion(button);
         };
     }
-    private void PlayCurrentWord()
+    private void CorrectButtonMotion(TextButton111 button)
     {
-        PlayWord(currentQuestion.currentCorrect);
+        var value = button.data;
+        var window = rocket.mask.GetComponent<RectTransform>();
+        var rt = button.GetComponent<RectTransform>();
+        PlayWord(value);
+        if (currentQuestion.currentCorrect == value)
+        {
+            if (finger != null)
+                finger.gameObject.SetActive(false);
+
+            foreach (var item in buttons)
+                item.button.interactable = false;
+
+            var seq = DOTween.Sequence();
+
+            var moveTween = rt.DOMove(window.position, 1f);
+            moveTween.SetEase(Ease.Linear);
+            var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
+            scaleTweenStart.SetEase(Ease.Linear);
+            var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
+            scaleTweenEnd.SetEase(Ease.Linear);
+
+            seq.Append(scaleTweenStart);
+            seq.Append(scaleTweenEnd);
+            seq.Insert(0, moveTween);
+
+            seq.onComplete += () =>
+            {
+                button.gameObject.SetActive(false);
+                rocket.Away(value.key, () =>
+                {
+                    isStop = false;
+                    AddAnswer(value);
+                    Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}",
+                        currentQuestionIndex + 1, QuestionCount,
+                        currentQuestion.currentIndex + 1, currentQuestion.correctCount
+                        );
+                    if (!CheckOver())
+                        CallRokect();
+                    isRoutine = true;
+                });
+            };
+            seq.Play();
+        }
     }
-    private void PlayWord(AlphabetWordsData word)=> audioPlayer.Play(word.clip);
+
+    private void PlayCurrentWord(Action action = null)
+    {
+        PlayWord(currentQuestion.currentCorrect, action);
+    }
+    private void PlayWord(AlphabetWordsData word, Action action = null) => audioPlayer.Play(word.clip, action);
     private void CallRokect()
     {
         if(finger != null)
@@ -139,7 +186,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
-            PlayCurrentWord();
+            PlayCurrentWord(() => isStop = true);
             if (finger != null)
                 finger.gameObject.SetActive(true);
         });

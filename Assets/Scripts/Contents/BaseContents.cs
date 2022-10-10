@@ -79,6 +79,8 @@ public abstract class BaseContents : MonoBehaviour
 #endif
         if(guideFinger != null)
             guideFinger = Instantiate(guideFinger, transform);
+
+        startTime = DateTime.Now;
         //StartCoroutine(ShowGuidnceRoutine());
     }
     //protected abstract IEnumerator ShowGuidnceRoutine();
@@ -166,6 +168,7 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
                 ShowResult();
             else
             {
+                Debug.Log("isGuide End");
                 isGuide = false;
                 guideFinger.gameObject.SetActive(false);
                 questions = MakeQuestion();
