@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
 {
@@ -15,10 +17,51 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     public DoubleClick504[] buttons;
     public Button buttonRocket;
 
+    int correctCount = 1;
+    bool isStop = false;
+    bool isRoutine = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        while (!isStop) yield return null;
+
+        for (int j = 0; j < QuestionCount * correctCount; j++)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                while (!isStop) yield return null;
+
+                isRoutine = false;
+                if (buttons[i].data == currentQuestion.currentCorrect)
+                {
+                    guideFinger.gameObject.SetActive(true);
+                    guideFinger.DoMoveCorrect(buttons[i].transform.position, () =>
+                    {
+                        guideFinger.DoClick(() =>
+                        {
+                            buttons[i].isOn = true;
+                            audioPlayer.Play(buttons[i].data.audio.phanics, () =>
+                            {
+
+                                guideFinger.DoClick(() =>
+                                {
+                                    guideFinger.gameObject.SetActive(false);
+                                    CorrectButtonMotion(buttons[i]);
+                                });
+                            });
+                        });
+                    });
+
+                    while (!isRoutine) yield return null;
+                    break;
+                }
+            }
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
-        buttonRocket.onClick.AddListener(PlayCurrentWord);
+        buttonRocket.onClick.AddListener(() => PlayCurrentWord());
         buttonRocket.onClick.AddListener(() =>
         {
             if (finger != null)
@@ -34,7 +77,6 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     }
     protected override List<Question5_104> MakeQuestion()
     {
-        int correctCount = 1;
         int incorrectCount = buttons.Length - correctCount;
         var list = new List<Question5_104>();
         for (int i = 0; i < QuestionCount; i++)
@@ -84,40 +126,47 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     }
     private void AddOnClickTextButtonListener(DoubleClick504 button)
     {
-        var window = rocket.mask.GetComponent<RectTransform>();
-        var rt = button.GetComponent<RectTransform>();
-
         button.onClickFirst.AddListener(() =>
         {
             audioPlayer.Play(button.data.audio.phanics);
         });
         button.onClickData += (value) =>
         {
-            if (value.Digraphs == currentQuestion.currentCorrect.Digraphs)
-            {
-                PlayWord(value);
-                if (finger != null)
-                    finger.gameObject.SetActive(false);
-
-                for (int i = 0; i < buttons.Length; i++)
-                    buttons[i].button.interactable = false;
-
-                DoMove(window, rt, () =>
-                {
-                    button.gameObject.SetActive(false);
-                    rocket.Away(value.sprite, () =>
-                    {
-                        AddAnswer(value);
-
-                        if (!CheckOver()) 
-                            CallRokect();
-                    });
-                });
-            }
+            CorrectButtonMotion(button);
         };
     }
-    private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
+    private void CorrectButtonMotion(DoubleClick504 button)
     {
+        var value = button.data;
+        var window = rocket.mask.GetComponent<RectTransform>();
+        var rt = button.GetComponent<RectTransform>();
+
+        if (value.Digraphs == currentQuestion.currentCorrect.Digraphs)
+        {
+            PlayWord(value);
+            if (finger != null)
+                finger.gameObject.SetActive(false);
+
+            for (int i = 0; i < buttons.Length; i++)
+                buttons[i].button.interactable = false;
+
+            DoMove(window, rt, () =>
+            {
+                button.gameObject.SetActive(false);
+                rocket.Away(value.sprite, () =>
+                {
+                    AddAnswer(value);
+
+                    if (!CheckOver())
+                        CallRokect();
+                    isRoutine = true;
+                    isStop = false;
+                });
+            });
+        }
+    }
+    private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
+    { 
         var seq = DOTween.Sequence();
 
         var moveTween = rt.DOMove(window.position, 1f);
@@ -135,11 +184,11 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
         seq.Play();
     }
 
-    private void PlayCurrentWord()
+    private void PlayCurrentWord(Action action = null)
     {
-        PlayWord(currentQuestion.currentCorrect);
+        PlayWord(currentQuestion.currentCorrect, action);
     }
-    private void PlayWord(DigraphsWordsData word) => audioPlayer.Play(word.clip);
+    private void PlayWord(DigraphsWordsData word, Action action = null) => audioPlayer.Play(word.clip, action);
     private void CallRokect()
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -151,7 +200,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
-            PlayCurrentWord();
+            PlayCurrentWord(() => isStop = true);
             if (finger != null)
                 finger.gameObject.SetActive(true);
         });
