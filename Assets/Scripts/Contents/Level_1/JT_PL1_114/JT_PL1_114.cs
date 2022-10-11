@@ -14,12 +14,35 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
 
     protected override eContents contents => eContents.JT_PL1_114;
 
+
+    bool isNext = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
         for(int i = 0; i < QuestionCount; i++)
         {
+            while (!isNext) yield return null;
+
+            isNext = false;
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+            guideFinger.gameObject.SetActive(true);
+            var target = drags.Where(x => x.data == currentQuestion.correct).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    guideFinger.DoMoveCorrect(target.gameObject, ship.transform.position, () =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        target.gameObject.SetActive(false);
+                        SetIntractable(false);
+                        ship.InObject(target.data);
+                        target.rt.anchoredPosition = Vector2.zero;
+                    });
+                });
+            });
         }
     }
     protected override void Awake()
@@ -93,6 +116,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
             if (finger != null)
                 finger.gameObject.SetActive(true);
             SetIntractable(true);
+            isNext = true;
         });
         var questions = question.questions.Union(new AlphabetWordsData[] { question.correct })
             .OrderBy(x => UnityEngine.Random.Range(0f, 100f))

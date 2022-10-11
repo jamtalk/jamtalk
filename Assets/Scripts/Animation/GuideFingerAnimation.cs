@@ -61,6 +61,16 @@ public class GuideFingerAnimation : MonoBehaviour
         seq.Play();
     }
 
+    public void DoPress(TweenCallback callback)
+    {
+        Sequence seq = DOTween.Sequence();
+        Tween tween = transform.DOScale(.7f, 1f);
+
+        seq.Append(tween);
+        seq.onComplete += callback;
+        seq.Play();
+    }
+
     public void DoClick(TweenCallback callback)
     {
         Sequence seq = DOTween.Sequence();
