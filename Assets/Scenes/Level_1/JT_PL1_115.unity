@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 24399155}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -1040,6 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 287183232}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -1338,6 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 531171136}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -2138,6 +2141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 950702869}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -2298,6 +2302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 982447087}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -2829,6 +2834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1255948155}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -3156,6 +3162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1314388173}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 
@@ -3428,6 +3435,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 913108643}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   eventSystem: {fileID: 53175558}
   cards:
   - {fileID: 1486967366}
@@ -3705,6 +3713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1755689371}
+  backImage: {fileID: 0}
   text: {fileID: 0}
   DigraphsWordsData:
     key: 

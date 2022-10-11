@@ -21,6 +21,55 @@ public class JT_PL1_115 : BaseContents
         eventSystem.enabled = true;
         base.ShowResult();
     }
+
+    bool isTurn = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        while (!isTurn) yield return null;
+        isTurn = false;
+
+        for (int i = 0; i < (cards.Length / 2); i++)
+        {
+
+            var upper = cards.Where(x => !x.card.IsFornt).ToArray()
+                .Where(x => x.alhpabetData.type == eAlphabetType.Upper)
+                .OrderBy(x => Random.Range(0, 100))
+                .First();
+            var lower = cards.Where(x => !x.card.IsFornt).ToArray()
+                .Where(x => x.alhpabetData.alhpabet == upper.alhpabetData.alhpabet)
+                .Where(x => x.alhpabetData.type == eAlphabetType.Lower).ToArray()
+                .OrderBy(x => Random.Range(0, 100))
+                .First();
+
+            guideFinger.gameObject.SetActive(true);
+
+            Card114[] guideCards = { upper, lower };
+            guideCards = guideCards.OrderBy(x => Random.Range(0, 100)).ToArray();
+
+            foreach (var item in guideCards)
+            {
+                guideFinger.gameObject.SetActive(true);
+                guideFinger.DoMoveCorrect(item.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        item.card.Turnning(1f, () =>
+                        {
+                            CardClickMotion(item, item.alhpabetData);
+                        });
+                        guideFinger.gameObject.SetActive(false);
+                    });
+                });
+
+                while (!isTurn) yield return null;
+                isTurn = false;
+            }
+        }
+    }
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,7 +94,7 @@ public class JT_PL1_115 : BaseContents
             .SelectMany(x => new Card114Data[] { new Card114Data(x,eAlphabetType.Upper), new Card114Data(x, eAlphabetType.Lower) })
             .OrderBy(x=>Random.Range(0f,100f))
             .ToArray();
-        Debug.Log(questions.Length + "°³\n" + string.Join("\n", questions.Select(x => string.Format("{0} {1}", x.alhpabet, x.type))));
+        Debug.Log(questions.Length + "??\n" + string.Join("\n", questions.Select(x => string.Format("{0} {1}", x.alhpabet, x.type))));
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         for (int i = 0; i < cards.Length; i++)
         {
@@ -62,42 +111,63 @@ public class JT_PL1_115 : BaseContents
         card.card.onClick += () => eventSystem.enabled = false;
         card.onSelected += (value) =>
         {
-            selected.Add(card);
-            if (selected.Count == 2)
+            CardClickMotion(card, value);
+        };
+    }
+
+    private void CardClickMotion(Card114 card, Card114Data value)
+    {
+        selected.Add(card);
+        if (selected.Count == 2)
+        {
+            if (selected[0].alhpabetData.alhpabet == selected[1].alhpabetData.alhpabet
+            && selected[0].alhpabetData.type != selected[1].alhpabetData.type)
             {
-                if (selected[0].alhpabetData.alhpabet == selected[1].alhpabetData.alhpabet
-                && selected[0].alhpabetData.type != selected[1].alhpabetData.type)
+                if (CheckOver())
                 {
-                    if (CheckOver())
+                    audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.act2, () =>
                     {
-                        audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.act2,ShowResult);
-                    }
-                    else
-                    {
-                        audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.act2, ()=>
+                        if (!isGuide)
+                            ShowResult();
+                        else
                         {
-                            selected[0].ShowStar();
-                            selected[1].ShowStar();
-                            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                            isGuide = false;
+                            guideFinger.gameObject.SetActive(false);
+
+                            foreach (var item in cards)
+                                item.star.gameObject.SetActive(false);
+
                             selected.Clear();
-                            eventSystem.enabled = true;
-                        });
-                    }
+                            StartCoroutine(StartContent());
+                        }
+                    });
                 }
                 else
                 {
-                    audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.phanics);
-                    selected[0].card.Turnning(onCompleted: () => eventSystem.enabled = true);
-                    selected[1].card.Turnning(onCompleted: () => eventSystem.enabled = true);
-                    selected.Clear();
+                    audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.act2, () =>
+                    {
+                        isTurn = true;
+                        selected[0].ShowStar();
+                        selected[1].ShowStar();
+                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                        selected.Clear();
+                        eventSystem.enabled = true;
+                    });
                 }
             }
             else
             {
                 audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.phanics);
-                eventSystem.enabled = true;
+                selected[0].card.Turnning(onCompleted: () => eventSystem.enabled = true);
+                selected[1].card.Turnning(onCompleted: () => eventSystem.enabled = true);
+                selected.Clear();
             }
-        };
+        }
+        else
+        {
+            audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.phanics, () => isTurn = true);
+            eventSystem.enabled = true;
+        }
     }
     IEnumerator StartContent()
     {
@@ -108,6 +178,7 @@ public class JT_PL1_115 : BaseContents
             yield return new WaitForSeconds(.1f);
         }
         eventSystem.enabled = true;
+        isTurn = true;
     }
 }
 //public class AlphabetQuestion
