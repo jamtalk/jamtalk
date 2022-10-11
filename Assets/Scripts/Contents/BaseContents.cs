@@ -81,7 +81,7 @@ public abstract class BaseContents : MonoBehaviour
             guide = Instantiate(guide, transform);
 
         guideFinger = guide.guideFinger;
-        guideFinger.gameObject.SetActive(true);
+        guideFinger.gameObject.SetActive(false);
         StartCoroutine(ShowGuidnceRoutine());
     }
     protected virtual IEnumerator ShowGuidnceRoutine()

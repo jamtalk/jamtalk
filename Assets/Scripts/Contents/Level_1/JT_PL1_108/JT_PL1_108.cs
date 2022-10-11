@@ -21,8 +21,6 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     bool isTurn = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.gameObject.SetActive(false);
-
         while (!isTurn) yield return null;
 
         guideFinger.gameObject.SetActive(true);

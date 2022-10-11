@@ -22,7 +22,6 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.gameObject.SetActive(false);
         guideFinger.transform.localScale = new Vector3(.7f, .7f, .7f);
 
         while (!isMove) { yield return null; }

@@ -18,9 +18,6 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
     bool isGuideStart = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.gameObject.SetActive(false);
-
-
         for (int i = 0; i < QuestionCount; i++)
         {
             while (!isGuideStart) yield return null;

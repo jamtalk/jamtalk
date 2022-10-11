@@ -23,8 +23,6 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     List<AlphabetWordsData[]> guideData = new List<AlphabetWordsData[]>();
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.gameObject.SetActive(false);
-
         while (!isStop) yield return null;
 
         for (int j = 0; j < QuestionCount * correctCount; j++)

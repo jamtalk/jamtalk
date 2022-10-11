@@ -23,6 +23,7 @@ public class JT_PL1_102 : BaseContents
     protected override void ShowGuidnce()
     {
         base.ShowGuidnce();
+        guideFinger.gameObject.SetActive(true);
         var eggGuide = egg;
         eggGuide.Init();
 

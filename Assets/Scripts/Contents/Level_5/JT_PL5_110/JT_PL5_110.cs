@@ -23,8 +23,6 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     List<DigraphsWordsData[]> guideData = new List<DigraphsWordsData[]>();
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.gameObject.SetActive(false);
-
         while (!isStop) yield return null;
 
         for (int j = 0; j < QuestionCount * correctCount; j++)

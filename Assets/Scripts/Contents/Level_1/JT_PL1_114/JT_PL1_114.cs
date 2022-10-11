@@ -13,6 +13,15 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     protected override int QuestionCount => 4;
 
     protected override eContents contents => eContents.JT_PL1_114;
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
