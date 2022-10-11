@@ -125,10 +125,11 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     }
     protected virtual void AddAnswer(TAnswer answer)
     {
+        Debug.Log("AddAnswer");
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
         if (CheckOver())
-            if(!isGuide)
+            if (!isGuide)
                 ShowResult();
             else
             {
@@ -141,10 +142,10 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         else
         {
             if (question.isCorrect)
-                audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
 
             currentQuestionIndex += 1;
-
+            Debug.Log(currentQuestionIndex);
             ShowQuestion(questions[currentQuestionIndex]);
         }
     }

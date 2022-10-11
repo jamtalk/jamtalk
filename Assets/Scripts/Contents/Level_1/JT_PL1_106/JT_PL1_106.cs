@@ -19,6 +19,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
+    bool isNext = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForEndOfFrame();
@@ -26,35 +27,40 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
 
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-        var correctIndex = 0;
 
-        for(int i = 0; i < buttonDatas.Count(); i++)
+        for (int j = 0; j < QuestionCount; j++)
         {
-            Debug.Log(i);
-            if(buttonDatas[i].key == currentQuestion.correct.key)
+            var correctIndex = 0;
+            isNext = false;
+            for (int i = 0; i < buttonDatas.Count(); i++)
             {
-                correctIndex = i;
-                break;
+                Debug.Log(buttonDatas[i].key);
+                if (buttonDatas[i].key == currentQuestion.correct.key)
+                {
+                    correctIndex = i;
+                    break;
+                }
             }
-        }
+            guideFinger.gameObject.SetActive(true);
 
-
-        guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
-        {
-            guideFinger.DoClick(() =>
+            guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
             {
-                buttonQuestions[correctIndex].isOn = true;
-                audioPlayer.Play(buttonDatas[correctIndex].clip);
-
                 guideFinger.DoClick(() =>
                 {
-                    CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
+                    buttonQuestions[correctIndex].isOn = true;
+                    audioPlayer.Play(buttonDatas[correctIndex].clip);
 
-                    currentQuestionIndex = 0;
-                    guideFinger.gameObject.SetActive(false);
+                    guideFinger.DoClick(() =>
+                    {
+                        CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
+
+                        guideFinger.gameObject.SetActive(false);;
+                    });
                 });
             });
-        });
+
+            while (!isNext) yield return null;
+        }
     }
 
     protected override void Awake()
@@ -91,6 +97,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
 
     protected override void ShowQuestion(Question106 question)
     {
+        buttonDatas.Clear();
         for (int i = 0; i < buttonQuestions.Length; i++)
         {
             var data = question.totalQuestion[i];
@@ -153,6 +160,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         tween.SetEase(Ease.Linear);
         tween.onComplete += () =>
         {
+            isNext = true;
             AddAnswer(data);
             if (!CheckOver())
                 button.image.gameObject.SetActive(true);
