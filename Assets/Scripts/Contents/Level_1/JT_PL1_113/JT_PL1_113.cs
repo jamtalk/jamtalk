@@ -13,6 +13,39 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
     public Charactor113[] charactors;
     public Item113[] items;
     public Sprite[] spritesProduct;
+
+    private Charactor113 ch;
+    bool isGuideStart = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        guideFinger.gameObject.SetActive(false);
+
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            while (!isGuideStart) yield return null;
+            yield return new WaitForSecondsRealtime(2f);
+
+            guideFinger.gameObject.SetActive(true);
+            var correctItem = items.Where(x => x.value == currentQuestion.correct).First();
+            var target = correctItem.transform.position;
+            target.y += .5f;
+
+            var isNext = false;
+            guideFinger.DoMoveCorrect(target, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    ItemClickMotion(correctItem);
+                    isNext = true;
+                });
+            });
+
+            while (!isNext) yield return null;
+            isGuideStart = false;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -25,6 +58,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
     {
         item.onAway += () =>
         {
+            Debug.Log("AddAnswer");
             AddAnswer(currentQuestion.correct);
         };
     }
@@ -68,7 +102,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         var randomQuestion = question.totalQuestion;
-        var ch = charactors[Random.Range(0, charactors.Length)];
+        ch = charactors[Random.Range(0, charactors.Length)];
         ch.Init(question.correct);
 
         for (int i = 0;i < items.Length; i++)
@@ -79,17 +113,22 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             items[i].Init(value, spritesProduct.OrderBy(x => Random.Range(0f, 100f)).First());
             items[i].onClick += (item) =>
             {
-                audioPlayer.Play(GameManager.Instance.GetResources(item.value).AudioData.phanics);
-                if(item.value == currentQuestion.correct)
-                {
-                    ch.finger.gameObject.SetActive(false);
-                    eventSystem.enabled = false;
-                    thrower.Throw(item, ch.product.GetComponent<RectTransform>(), () => ch.SetProduct(item.product.sprite, item.value.ToString()));
-                }
+                ItemClickMotion(item);
             };
         }
 
-        ch.Call();
+        ch.Call(() => isGuideStart = true);
+    }
+
+    private void ItemClickMotion(Item113 item)
+    {
+        audioPlayer.Play(GameManager.Instance.GetResources(item.value).AudioData.phanics);
+        if (item.value == currentQuestion.correct)
+        {
+            ch.finger.gameObject.SetActive(false);
+            eventSystem.enabled = false;
+            thrower.Throw(item, ch.product.GetComponent<RectTransform>(), () => ch.SetProduct(item.product.sprite, item.value.ToString()));
+        }
     }
 }
 public class Question113 : SingleQuestion<eAlphabet>

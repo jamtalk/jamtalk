@@ -47,7 +47,7 @@ public class Charactor113 : MonoBehaviour
         pos.x = startPosition;
         rt.anchoredPosition = pos;
     }
-    public void Call()
+    public void Call(TweenCallback callback = null)
     {
         finger.SetActive(false);
         product.gameObject.SetActive(false);
@@ -64,6 +64,7 @@ public class Charactor113 : MonoBehaviour
 
             finger.SetActive(true);
         };
+        tween.onComplete += callback;
         movePlayer.Play();
         tween.Play();
     }
@@ -74,6 +75,7 @@ public class Charactor113 : MonoBehaviour
         var tween = rt.DOAnchorPosX(endPosition, 4f);
         tween.onComplete += () =>
         {
+            Debug.Log("away");
             anim.Stop();
             movePlayer.Stop();
             eventSystem.enabled = true;

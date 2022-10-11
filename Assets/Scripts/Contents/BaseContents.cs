@@ -125,20 +125,25 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     }
     protected virtual void AddAnswer(TAnswer answer)
     {
-        Debug.Log("addAnswer");
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
         if (CheckOver())
-            ShowResult();
+            if(!isGuide)
+                ShowResult();
+            else
+            {
+                isGuide = false;
+                guideFinger.gameObject.SetActive(false);
+                questions = MakeQuestion();
+                currentQuestionIndex = 0;
+                ShowQuestion(questions[currentQuestionIndex]);
+            }
         else
         {
             if (question.isCorrect)
                 audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
 
-            if (!isGuide)
-                currentQuestionIndex += 1;
-            else
-                isGuide = false;
+            currentQuestionIndex += 1;
 
             ShowQuestion(questions[currentQuestionIndex]);
         }
@@ -172,7 +177,6 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
                 ShowResult();
             else
             {
-                Debug.Log("isGuide End");
                 isGuide = false;
                 guideFinger.gameObject.SetActive(false);
                 questions = MakeQuestion();
