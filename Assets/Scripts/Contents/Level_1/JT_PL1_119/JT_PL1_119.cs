@@ -26,6 +26,32 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         }
     }
 
+    bool isNext = false;
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            var target = buttons.Where(x => x.name == questions[i].correct.key).First();
+
+            guideFinger.gameObject.SetActive(true);
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    ButtonClickMotion(target, questions[i].correct);
+                    guideFinger.gameObject.SetActive(false);
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
+
     protected override eContents contents => eContents.JT_PL1_119;
     protected override void Awake()
     {
@@ -40,38 +66,45 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
                     finger = null;
                 }
             });
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.phanics, () =>
+        audioPlayer.Play(currentQuestion.correct.audio.phanics, () =>
         {
             if (finger != null)
                 finger.SetActive(true);
         });
     }
+
+    private void ButtonClickMotion(ButtonExitnction button, AlphabetWordsData data)
+    {
+        eventSystem.enabled = false;
+        if (finger != null)
+            finger.gameObject.SetActive(false);
+        if (currentQuestion.correct == data)
+            button.Exitnction();
+        else
+            button.Incorrect();
+        audioPlayer.Play(data.clip, () =>
+        {
+            eventSystem.enabled = true;
+            if (currentQuestion.correct == data)
+            {
+                button.Exitnction();
+                AddAnswer(data);
+                isNext = true;
+            }
+            else
+            {
+                if (finger != null)
+                    finger.gameObject.SetActive(true);
+            }
+        });
+    }
+
     private void AddButtonListener(ButtonExitnction button, AlphabetWordsData data)
     {
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
         {
-            eventSystem.enabled = false;
-            if (finger != null)
-                finger.gameObject.SetActive(false);
-            if (currentQuestion.correct == data)
-                button.Exitnction();
-            else
-                button.Incorrect();
-            audioPlayer.Play(data.clip, () =>
-            {
-                eventSystem.enabled = true;
-                if (currentQuestion.correct == data)
-                {
-                    button.Exitnction();
-                    AddAnswer(data);
-                }
-                else
-                {
-                    if (finger != null)
-                        finger.gameObject.SetActive(true);
-                }
-            });
+            ButtonClickMotion(button, data);
         });
     }
 
@@ -108,6 +141,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         for(int i = 0;i < buttons.Length; i++)
         {
             buttons[i].Init(questions[i].sprite);
+            buttons[i].name = questions[i].key;
             AddButtonListener(buttons[i], questions[i]);
         }
     }
