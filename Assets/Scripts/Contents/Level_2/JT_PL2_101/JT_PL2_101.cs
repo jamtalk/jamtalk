@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class JT_PL2_101 : BaseContents
 {
@@ -24,6 +25,42 @@ public class JT_PL2_101 : BaseContents
     public AudioClip tabClip;
     public AudioClip dropClip;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < puzzleCount; i++)
+        {
+            var puzzle = puzzles.Where(x => x.gameObject.activeSelf)
+                .OrderBy(x => Random.Range(0, 100))
+                .First();
+            var target = parentLayout.Where(x => x.name == puzzle.name).First();
+
+            guideFinger.gameObject.SetActive(true);
+            Debug.LogFormat("{0}, {1}", puzzle.name, target.name);
+            guideFinger.DoMoveCorrect(puzzle.rt.position, () =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    OnDrag(puzzle);
+
+                    guideFinger.DoMoveCorrect(puzzle.gameObject, target.rt.position, () =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                        puzzle.gameObject.SetActive(false);
+                        target.GetComponent<Image>().sprite = puzzle.GetComponent<Image>().sprite;
+
+                        DropMotion(target);
+                    });
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -46,27 +83,36 @@ public class JT_PL2_101 : BaseContents
         {
             if(puzzles[i].name.Contains(target.name))
             {
-                index += 1;
-                var value = target.name.ToUpper();
-                if (index < 5)
-                    ShortSpeak(value);
-                else if (index > 5)
-                    LongSpeak(value);
-
-                audioPlayer.Play(1f, dropClip);
-
-                if (index == 5)
-                {
-                    Reset();
-                }
-
-                if (CheckOver())
-                {
-                    Speak();
-                    ShowResult();
-                }
+                DropMotion(target);
             }
         }
+    }
+
+    private void DropMotion(WordElement201 target)
+    {
+        index += 1;
+        var value = target.name.ToUpper();
+        if (index < 5)
+            ShortSpeak(value, () => isNext = true);
+        else if (index > 5)
+            LongSpeak(value, () => isNext = true);
+
+        audioPlayer.Play(1f, dropClip);
+
+        Debug.Log(index);
+        if (index == 5)
+        {
+            Reset();
+
+            isNext = true;
+        }
+
+        if (CheckOver())
+        {
+            Speak();
+            ShowResult();
+        }
+
     }
 
     private void Reset()
@@ -93,17 +139,17 @@ public class JT_PL2_101 : BaseContents
         audioPlayer.Play(1f, tabClip);
     }
 
-    private void ShortSpeak(string value)
+    private void ShortSpeak(string value, Action action = null)
     {
         ani.SetBool("Speak", true);
         eAlphabet alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_short);
+        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_short, action);
     }
 
-    private void LongSpeak(string value)
+    private void LongSpeak(string value, Action action = null)
     {
         var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
-        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long);
+        speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long, action);
     }
 
     private void Speak()

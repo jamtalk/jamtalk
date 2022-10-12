@@ -11,6 +11,7 @@ public class DragElement201 : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private bool intractable = false;
     public event Action<DragElement201> onDrag;
     public event Action<WordElement201> onDrop;
+    public RectTransform rt;
 
     private Vector3 defaultPosition;
     private GraphicRaycaster caster => FindObjectOfType<GraphicRaycaster>();
