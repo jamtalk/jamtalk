@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System;
+using Random = UnityEngine.Random;
 
 public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 {
@@ -42,6 +44,60 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     public AudioClip tabClip;
     public AudioClip putClip;
     public AudioClip errorClip;
+
+    bool isSmall = false;
+    private string digraphs = string.Empty;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            var target = elements.Where(x => x.digraphs == currentQuestion.correct).First();
+
+            guideFinger.gameObject.SetActive(true);
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    FirstClickMotion(target);
+
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        SecondsClickMotion(target, target.digraphs);
+                    });
+                });
+
+            });
+
+            while (!isSmall) yield return null;
+            isSmall = false;
+
+            var isNext = false;
+
+            var smallTarget = bubbles.Where(x => x.textValue.text == digraphs).First();
+
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMoveCorrect(smallTarget.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    SmallBubbleClickMotion(target, smallTarget, smallTarget.digraphs, () =>
+                    {
+                        isNext = true;
+                        AddAnswer(smallTarget.digraphs);
+                        effectImage.gameObject.SetActive(false);
+                        textCurrent.text = string.Empty;
+                    });
+                });
+            });
+
+            while (!isNext) yield return null;
+        }
+    }
 
     protected override void Awake()
     {
@@ -100,13 +156,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
         {
             if (currentQuestion.correct == data)
             {
-                audioPlayer.Play(1f, tabClip);
-                for (int i = 0; i < elements.Count; i++)
-                    elements[i].gameObject.SetActive(false);
-                bubble.gameObject.SetActive(true);
-
-                point.gameObject.SetActive(true);
-                point.gameObject.transform.position = bubble.transform.position;
+                FirstClickMotion(bubble);
             }
             else
             {
@@ -118,83 +168,102 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
         bubble.onClick.AddListener(() =>
         {
-            point.gameObject.SetActive(false);
-
-            audioPlayer.Play(1f, tabClip);
-            bubble.gameObject.SetActive(false);
-            Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
-
-            var current = currents[currentQuestionIndex];
-            var digraphs = string.Empty;
-            if (current.key.IndexOf(current.digraphs.ToLower()) < 0)
-                digraphs = current.PairDigrpahs.ToString().ToLower();
-            else
-                digraphs = current.Digraphs.ToString().ToLower();
-
-            var temp = bubble.textValue.text.Replace(digraphs, string.Empty);
-
-            var tempList = new List<string>();
-            foreach (var item in temp)
-                tempList.Add(item.ToString());
-            tempList.Add(digraphs);
-
-            var digraphsIndex = currentQuestion.correct.key.IndexOf(digraphs);
-            var values = new List<string>();
-            foreach (var item in temp)
-                values.Add(item.ToString());
-            values.Insert(digraphsIndex, digraphs);
-
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                var smallBubbles = Instantiate(bubbleElement, bubble.transform.parent).GetComponent<BubbleElement>();
-                smallBubbles.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                smallBubbles.Init(values[i]);
-                smallBubbles.transform.localScale = vector3;
-                bubbles.Add(smallBubbles);
-
-                var bubbleUI = Instantiate(bubbleParent, bubbleParent.transform.parent).GetComponent<RectTransform>();
-                bubbleUI.name = smallBubbles.name;
-                bubbleParents.Add(bubbleUI);
-
-                smallBubbles.onClickFirst.AddListener(() =>
-                {
-                    audioPlayer.Play(1f, putClip);
-                    smallBubbles.isOn = false;
-                    if (digraphs == smallBubbles.textValue.text)
-                    {
-                        ThrowElement(smallBubbles, data);
-
-                        var targets = new List<GameObject>();
-                        for (int i = 1; i < bubbles.Count + 1; i++)
-                            targets.Add(bubbleParent.parent.GetChild(i).gameObject);
-
-                        for (int i = 0; i < targets.Count; i++)
-                        {
-                            var destory = targets[i];
-                            Destroy(destory);
-                        }
-                        bubbles.Clear();
-                        bubbleParents.Clear();
-
-                        bubble.image.gameObject.SetActive(true);
-                        bubble.textValue.gameObject.SetActive(true);
-                        bubbleParent.gameObject.SetActive(true);
-                    }
-                    else
-                        BubblesPlay(bubbles, smallBubbleSize);
-                });
-            }
-            StartCoroutine(Init());
+            SecondsClickMotion(bubble, data);
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data)
+
+
+    private void FirstClickMotion(BubbleElement bubble)
+    {
+        audioPlayer.Play(1f, tabClip);
+        for (int i = 0; i < elements.Count; i++)
+            elements[i].gameObject.SetActive(false);
+        bubble.gameObject.SetActive(true);
+
+        point.gameObject.SetActive(true);
+        point.gameObject.transform.position = bubble.transform.position;
+    }
+    private void SecondsClickMotion(BubbleElement bubble, DigraphsWordsData data)
+    {
+        point.gameObject.SetActive(false);
+
+        audioPlayer.Play(1f, tabClip);
+        bubble.gameObject.SetActive(false);
+        Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
+
+        var current = currents[currentQuestionIndex];
+        digraphs = string.Empty;
+        if (current.key.IndexOf(current.digraphs.ToLower()) < 0)
+            digraphs = current.PairDigrpahs.ToString().ToLower();
+        else
+            digraphs = current.Digraphs.ToString().ToLower();
+
+        var temp = bubble.textValue.text.Replace(digraphs, string.Empty);
+
+        var tempList = new List<string>();
+        foreach (var item in temp)
+            tempList.Add(item.ToString());
+        tempList.Add(digraphs);
+
+        var digraphsIndex = currentQuestion.correct.key.IndexOf(digraphs);
+        var values = new List<string>();
+        foreach (var item in temp)
+            values.Add(item.ToString());
+        values.Insert(digraphsIndex, digraphs);
+
+        for (int i = 0; i < tempList.Count; i++)
+        {
+            var smallBubbles = Instantiate(bubbleElement, bubble.transform.parent).GetComponent<BubbleElement>();
+            smallBubbles.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            smallBubbles.Init(values[i]);
+            smallBubbles.transform.localScale = vector3;
+            bubbles.Add(smallBubbles);
+
+            var bubbleUI = Instantiate(bubbleParent, bubbleParent.transform.parent).GetComponent<RectTransform>();
+            bubbleUI.name = smallBubbles.name;
+            bubbleParents.Add(bubbleUI);
+
+            smallBubbles.onClickFirst.AddListener(() =>
+            {
+                if (digraphs == smallBubbles.textValue.text)
+                    SmallBubbleClickMotion(bubble, smallBubbles, data);
+                else
+                    BubblesPlay(bubbles, smallBubbleSize);
+            });
+        }
+        StartCoroutine(Init(() => isSmall = true));
+    }
+
+    private void SmallBubbleClickMotion(BubbleElement bubble, BubbleElement smallBubbles, DigraphsWordsData data, Action action = null)
+    {
+        audioPlayer.Play(1f, putClip, action);
+        smallBubbles.isOn = false;
+        ThrowElement(smallBubbles, data, action);
+
+        var targets = new List<GameObject>();
+        for (int i = 1; i < bubbles.Count + 1; i++)
+            targets.Add(bubbleParent.parent.GetChild(i).gameObject);
+
+        for (int i = 0; i < targets.Count; i++)
+        {
+            var destory = targets[i];
+            Destroy(destory);
+        }
+        bubbles.Clear();
+        bubbleParents.Clear();
+
+        bubble.image.gameObject.SetActive(true);
+        bubble.textValue.gameObject.SetActive(true);
+        bubbleParent.gameObject.SetActive(true);
+    }
+    protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data, Action action)
     {
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {
             textCurrent.text = data.key;
             effectImage.sprite = data.sprite;
             effectImage.gameObject.SetActive(true);
-            audioPlayer.Play(1f, effectClip , () =>
+            audioPlayer.Play(1f, effectClip, () =>
             {
                 effectImage.gameObject.SetActive(false);
                 AddAnswer(data);
@@ -203,15 +272,18 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
         });
     }
 
-    private IEnumerator Init()
+    private IEnumerator Init(TweenCallback callback = null)
     {
         bubbleParent.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
+        Sequence seq = DOTween.Sequence();
         for (int i = 0; i < bubbles.Count; i++)
         {
             bubbles[i].gameObject.transform.SetParent(bubbleParents[i].transform);
-            bubbles[i].transform.DOLocalMove(Vector2.zero, 1f);
+            seq.Insert(0f,bubbles[i].transform.DOLocalMove(Vector2.zero, 1f));
         }
+        seq.onComplete += callback;
+        seq.Play();
     }
 
     private void BubblesPlay(List<BubbleElement> bubbles, float max)
