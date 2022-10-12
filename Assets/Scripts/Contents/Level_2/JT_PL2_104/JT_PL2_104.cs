@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System;
+using Random = UnityEngine.Random;
 
 public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 {
@@ -38,6 +40,58 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     public AudioClip tabClip;
     public AudioClip putClip;
     public AudioClip errorClip;
+
+    bool isSmall = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            var target = elements.Where(x => x.data == currentQuestion.correct).First();
+
+            guideFinger.gameObject.SetActive(true);
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    FirstClickMotion(target);
+
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        SecondsClickMotion(target, target.data);
+                    });
+                });
+
+            });
+
+            while (!isSmall) yield return null;
+            isSmall = false;
+
+            var isNext = false;
+            
+            var smallTarget = bubbles.Where(x => x.textValue.text == GameManager.Instance.currentAlphabet.ToString().ToLower()).First();
+
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMoveCorrect(smallTarget.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    SmallBubbleClickMotion(target, smallTarget, smallTarget.data, () =>
+                    {
+                        isNext = true;
+                        AddAnswer(smallTarget.data);
+                    });
+                });
+            });
+
+            while (!isNext) yield return null;
+        }
+    }
+
 
     protected override void Awake()
     {
@@ -112,13 +166,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
         {
             if (currentQuestion.correct == data)
             {
-                audioPlayer.Play(1f, tabClip);
-                for (int i = 0; i < elements.Count; i++)
-                    elements[i].gameObject.SetActive(false);
-                bubble.gameObject.SetActive(true);
-
-                point.gameObject.SetActive(true);
-                point.gameObject.transform.position = bubble.transform.position;
+                FirstClickMotion(bubble);
             }
             else
             {
@@ -130,73 +178,100 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
         bubble.onClick.AddListener(() =>
         {
-            point.gameObject.SetActive(false);
-
-            audioPlayer.Play(1f, tabClip);
-            bubble.gameObject.SetActive(false);
-            Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
-
-            var values = new List<string>();
-            foreach (var item in bubble.textValue.text)
-                values.Add(item.ToString());
-
-            for (int i = 0; i < values.Count; i++)
-            {
-                var smallBubbles = Instantiate(bubbleElement, bubble.transform.parent).GetComponent<BubbleElement>();
-                smallBubbles.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                smallBubbles.Init(values[i]);
-                smallBubbles.transform.localScale = vector3;
-                bubbles.Add(smallBubbles);
-
-                var bubbleUI = Instantiate(bubbleParent, bubbleParent.transform.parent).GetComponent<RectTransform>();
-                bubbleUI.name = smallBubbles.name;
-                bubbleParents.Add(bubbleUI);
-
-                smallBubbles.onClickFirst.AddListener(() =>
-                {
-                    audioPlayer.Play(1f, putClip);
-                    smallBubbles.isOn = false;
-                    if (GameManager.Instance.currentAlphabet.ToString().ToLower() == smallBubbles.textValue.text)
-                    {
-                        ThrowElement(smallBubbles, data);
-
-                        var targets = new List<GameObject>();
-                        for (int i = 1; i < bubbles.Count + 1; i++)
-                            targets.Add(bubbleParent.parent.GetChild(i).gameObject);
-
-                        for (int i = 0; i < targets.Count; i++)
-                        {
-                            var destory = targets[i];
-                            Destroy(destory);
-                        }
-                        bubbles.Clear();
-                        bubbleParents.Clear();
-
-                        bubble.image.gameObject.SetActive(true);
-                        bubble.textValue.gameObject.SetActive(true);
-                        bubbleParent.gameObject.SetActive(true);
-                    }
-                    else
-                        BubblesPlay(bubbles, smallBubbleSize);
-                });
-            }
-            StartCoroutine(Init());
+            SecondsClickMotion(bubble, data);
         });
     }
-    protected virtual void ThrowElement(BubbleElement bubble, VowelWordsData data)
+
+    private void FirstClickMotion(BubbleElement bubble)
     {
-        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
+        audioPlayer.Play(1f, tabClip);
+        for (int i = 0; i < elements.Count; i++)
+            elements[i].gameObject.SetActive(false);
+        bubble.gameObject.SetActive(true);
+
+        point.gameObject.SetActive(true);
+        point.gameObject.transform.position = bubble.transform.position;
     }
 
-    private IEnumerator Init()
+    private void SecondsClickMotion(BubbleElement bubble, VowelWordsData data)
+    {
+        point.gameObject.SetActive(false);
+
+        audioPlayer.Play(1f, tabClip);
+        bubble.gameObject.SetActive(false);
+        Vector3 vector3 = new Vector3(smallBubbleSize, smallBubbleSize, smallBubbleSize);
+
+        var values = new List<string>();
+        foreach (var item in bubble.textValue.text)
+            values.Add(item.ToString());
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            var smallBubbles = Instantiate(bubbleElement, bubble.transform.parent).GetComponent<BubbleElement>();
+            smallBubbles.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            smallBubbles.Init(values[i]);
+            smallBubbles.transform.localScale = vector3;
+            bubbles.Add(smallBubbles);
+
+            var bubbleUI = Instantiate(bubbleParent, bubbleParent.transform.parent).GetComponent<RectTransform>();
+            bubbleUI.name = smallBubbles.name;
+            bubbleParents.Add(bubbleUI);
+
+            smallBubbles.onClickFirst.AddListener(() =>
+            {
+                if (GameManager.Instance.currentAlphabet.ToString().ToLower() == smallBubbles.textValue.text)
+                    SmallBubbleClickMotion(bubble, smallBubbles, data);
+                else
+                    BubblesPlay(bubbles, smallBubbleSize);
+            });
+        }
+        StartCoroutine(Init(() => isSmall = true));
+    }
+
+    private void SmallBubbleClickMotion(BubbleElement bubble, BubbleElement smallBubbles, VowelWordsData data, Action action = null)
+    {
+        ThrowElement(smallBubbles, data, action);
+        audioPlayer.Play(1f, putClip);
+        smallBubbles.isOn = false;
+
+        var targets = new List<GameObject>();
+        for (int i = 1; i < bubbles.Count + 1; i++)
+            targets.Add(bubbleParent.parent.GetChild(i).gameObject);
+
+        for (int i = 0; i < targets.Count; i++)
+        {
+            var destory = targets[i];
+            Destroy(destory);
+        }
+        bubbles.Clear();
+        bubbleParents.Clear();
+
+        bubble.image.gameObject.SetActive(true);
+        bubble.textValue.gameObject.SetActive(true);
+        bubbleParent.gameObject.SetActive(true);
+    }
+
+    protected virtual void ThrowElement(BubbleElement bubble, VowelWordsData data, Action action)
+    {
+        if(!isGuide)
+            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
+        else
+            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), action);
+    }
+
+    private IEnumerator Init(TweenCallback callback = null)
     {
         bubbleParent.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
+        Sequence seq = DOTween.Sequence();
         for (int i = 0; i < bubbles.Count; i++)
         {
             bubbles[i].gameObject.transform.SetParent(bubbleParents[i].transform);
-            bubbles[i].transform.DOLocalMove(Vector2.zero, 1f);
+            seq.Insert(0f, bubbles[i].transform.DOLocalMove(Vector2.zero, 1f));
         }
+
+        seq.onComplete += callback;
+        seq.Play();
     }
 
     private void BubblesPlay(List<BubbleElement> bubbles, float max)

@@ -506,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c917158f47e6340fc99577c3dccfbb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.1
   imageProduct: {fileID: 659113521}
   textValue: {fileID: 1149786817}
 --- !u!222 &159137181
@@ -639,6 +640,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590615601}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   eventSystem: {fileID: 538056963}
   bubbleParent: {fileID: 1413729179}
   thrower: {fileID: 159137180}
