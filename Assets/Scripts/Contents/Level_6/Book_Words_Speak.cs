@@ -24,6 +24,14 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
             PlayCorrect(currentQuestion);
         });
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            eventSystem.enabled = true;
+            AddAnswer(currentQuestion.correct);
+        }
+    }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
         return BookData.Instance.bookWords
