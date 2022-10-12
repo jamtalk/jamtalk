@@ -31,6 +31,47 @@ public abstract class BaseMatchSentances<T> : BaseContents
     protected T currentSentance => words[index];
     protected virtual int QuestionCount => 6;
 
+    bool isThrow = false;
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        //for(int i = 0; i < QuestionCount; i++)
+        //{
+        while (!isThrow) yield return null;
+        isThrow = false;
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        for (int j = 0; j < throwingElements.Count; j++)
+        {
+            var throing = throwingElements
+                .Where(x => x.gameObject.activeSelf)
+                .OrderBy(x => Random.Range(0, 100)).First();
+            var target = elements.Where(x => x.value == throing.value).First();
+
+            guideFinger.DoMoveCorrect(throing.transform.position, (() =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    guideFinger.DoMoveCorrect(throing.gameObject, target.transform.position, () =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        throing.gameObject.SetActive(false);
+                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                        OnDrop(target);
+                    });
+                });
+            }));
+
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+        //}
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -83,13 +124,15 @@ public abstract class BaseMatchSentances<T> : BaseContents
             eventSystem.enabled = true;
             for (int i = 0; i < throwingElements.Count; i++)
                 throwingElements[i].SetDefaultPosition();
+
+            isThrow = true;
         });
     }
 
     private void OnDrop(WordElement121 target)
     {
         target.visible = true;
-        audioPlayer.Play(1f, stampClip);
+        audioPlayer.Play(1f, stampClip, () => isNext = true);
         if (!elements.Select(x => x.visible).Contains(false))
         {
             PlayCurrentSentance(() =>
@@ -98,7 +141,14 @@ public abstract class BaseMatchSentances<T> : BaseContents
                 {
                     index += 1;
                     if (CheckOver())
-                        ShowResult();
+                        if(!isGuide)
+                            ShowResult();
+                        else
+                        {
+                            isGuide = false;
+                            index = 0;
+                            ShowQuestion();
+                        }
                     else
                         ShowQuestion();
                 });
