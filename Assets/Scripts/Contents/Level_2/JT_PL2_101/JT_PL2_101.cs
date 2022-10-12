@@ -110,7 +110,14 @@ public class JT_PL2_101 : BaseContents
         if (CheckOver())
         {
             Speak();
-            ShowResult();
+            if(!isGuide)
+                ShowResult();
+            else
+            {
+                Reset();
+                index = 0;
+                guideFinger.gameObject.SetActive(false);
+            }
         }
 
     }
@@ -148,6 +155,7 @@ public class JT_PL2_101 : BaseContents
 
     private void LongSpeak(string value, Action action = null)
     {
+        ani.SetBool("Speak", true);
         var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), value);
         speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long, action);
     }
