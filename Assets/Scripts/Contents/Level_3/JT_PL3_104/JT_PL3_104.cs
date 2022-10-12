@@ -40,11 +40,13 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     private Animator[] ani;
 
     [Header("Audio")]
+    public AudioSinglePlayer putSource;
     public AudioClip effectClip;
     public AudioClip tabClip;
     public AudioClip putClip;
     public AudioClip errorClip;
 
+    bool isNext = false;
     bool isSmall = false;
     private string digraphs = string.Empty;
     protected override IEnumerator ShowGuidnceRoutine()
@@ -75,7 +77,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
             while (!isSmall) yield return null;
             isSmall = false;
 
-            var isNext = false;
+            isNext = false;
 
             var smallTarget = bubbles.Where(x => x.textValue.text == digraphs).First();
 
@@ -87,10 +89,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
                     guideFinger.gameObject.SetActive(false);
                     SmallBubbleClickMotion(target, smallTarget, smallTarget.digraphs, () =>
                     {
-                        isNext = true;
-                        AddAnswer(smallTarget.digraphs);
-                        effectImage.gameObject.SetActive(false);
-                        textCurrent.text = string.Empty;
+                        PotInMotion(target.digraphs);
                     });
                 });
             });
@@ -236,9 +235,9 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
     private void SmallBubbleClickMotion(BubbleElement bubble, BubbleElement smallBubbles, DigraphsWordsData data, Action action = null)
     {
-        audioPlayer.Play(1f, putClip, action);
-        smallBubbles.isOn = false;
         ThrowElement(smallBubbles, data, action);
+        smallBubbles.isOn = false;
+        audioPlayer.Play(1f, putClip);
 
         var targets = new List<GameObject>();
         for (int i = 1; i < bubbles.Count + 1; i++)
@@ -256,19 +255,33 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
         bubble.textValue.gameObject.SetActive(true);
         bubbleParent.gameObject.SetActive(true);
     }
-    protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data, Action action)
+    protected virtual void ThrowElement(BubbleElement bubble, DigraphsWordsData data, Action action = null)
     {
-        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
+        if (isGuide)
         {
-            textCurrent.text = data.key;
-            effectImage.sprite = data.sprite;
-            effectImage.gameObject.SetActive(true);
-            audioPlayer.Play(1f, effectClip, () =>
+            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), action);
+        }
+        else
+        {
+            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
             {
-                effectImage.gameObject.SetActive(false);
-                AddAnswer(data);
-                textCurrent.text = string.Empty;
+                PotInMotion(data);
             });
+        }
+    }
+
+    public void PotInMotion(DigraphsWordsData data)
+    {
+        textCurrent.text = data.key;
+        effectImage.sprite = data.sprite;
+        effectImage.gameObject.SetActive(true);
+        effectImage.preserveAspect = true;
+        putSource.Play(1f, effectClip, () =>
+        {
+            effectImage.gameObject.SetActive(false);
+            AddAnswer(data);
+            textCurrent.text = string.Empty;
+            isNext = true;
         });
     }
 
