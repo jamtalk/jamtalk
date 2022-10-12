@@ -36,6 +36,7 @@ public class AudioSinglePlayer : MonoBehaviour
     private void Play()
     {
         player.Play();
+        //AndroidPluginManager.Instance.PlayTTS("sta");
     }
     public void Play(AudioClip clip, float delay)
     {

@@ -38,6 +38,50 @@ public class JT_PL2_106 : BaseContents
     private List<VowelWordsData> datas = new List<VowelWordsData>();
     public GameObject pointer;
 
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            var isNext = false;
+            var isSpin = false;
+            guideFinger.gameObject.SetActive(true);
+            var spinButtonRt = spinButton.GetComponentInChildren<Text>();
+            guideFinger.DoMoveCorrect(spinButtonRt.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    Spin(() =>
+                    {
+                        isSpin = true;
+                    });
+                });
+            });
+
+            while (!isSpin) yield return null;
+            yield return new WaitForSecondsRealtime(2f);
+
+            var target = textList[currentIndex].data.VowelType == eVowelType.Short ? shortButton : longButton;
+
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    ButtonListener(target);
+                    isNext = true;
+                });
+            });
+
+            while (!isNext) yield return null;
+
+            yield return new WaitForSecondsRealtime(1f);
+        }
+    }
     protected override void Awake()
     {          
         base.Awake();
@@ -134,7 +178,7 @@ public class JT_PL2_106 : BaseContents
         }
     }
 
-    private void Spin()
+    private void Spin(TweenCallback callback = null)
     {
         if (pointer.activeSelf)
             pointer.SetActive(false);
@@ -167,6 +211,7 @@ public class JT_PL2_106 : BaseContents
         seq.Append(secondTween);
         seq.Append(lastTween);
 
+        seq.onComplete += callback;
         seq.onComplete += () =>
         {
             rouletteEffect.gameObject.SetActive(false);
