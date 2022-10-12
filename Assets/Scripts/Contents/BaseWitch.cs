@@ -29,6 +29,35 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     [SerializeField]
     private Animator ani;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+            Debug.Log("I : " + i);
+            var target = elements.Where(x => x.data == currentQuestion.correct).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    guideFinger.DoMoveCorrect(target.gameObject, prefabPot.transform.position, () =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        target.gameObject.SetActive(false);
+                        OnDrop(target);
+                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                    });
+                });
+            });
+
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -51,22 +80,30 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         Speak();
         for (int i = 0; i < question.totalQuestion.Length; i++)
         {
+            elements[i].gameObject.SetActive(true);
             elements[i].Init(question.totalQuestion[i]);
             elements[i].image.gameObject.SetActive(true);
             elements[i].textValue.gameObject.SetActive(true);
         }
+
+        isNext = true;
+    }
+
+    private void DropMotion(PotionElement<T> target)
+    {
+        magicWand.gameObject.SetActive(false);
+        result.ShowResult(target.data.sprite, .5f);
+        audioPlayer.Play(1.5f, effectSound, () =>
+        {
+            AddAnswer(target.data);
+        });
     }
 
     protected virtual void OnDrop(PotionElement<T> target)
     {
         if (currentQuestion.correct == target.data)
         {
-            magicWand.gameObject.SetActive(false);
-            result.ShowResult(target.data.sprite, .5f);
-            audioPlayer.Play(1.5f, effectSound, () =>
-            {
-                AddAnswer(target.data);
-            });
+            DropMotion(target);
         }
         else
             target.ResetPosition();

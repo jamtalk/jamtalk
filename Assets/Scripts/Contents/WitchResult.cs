@@ -11,6 +11,7 @@ public class WitchResult : MonoBehaviour
         var rt = GetComponent<RectTransform>();
         rt.localScale = Vector3.zero;
         image.sprite = sprite;
+        image.preserveAspect = true;
         gameObject.SetActive(true);
         var turm = 5f;
         var upDuration = duration / turm * (turm - 1);

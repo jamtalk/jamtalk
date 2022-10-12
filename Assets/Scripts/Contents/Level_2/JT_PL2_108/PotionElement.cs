@@ -82,7 +82,7 @@ public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, I
     public void ResetPosition()
     {
         transform.position = defaultPosition;
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
         image.gameObject.SetActive(true);
         textValue.gameObject.SetActive(true);
     }

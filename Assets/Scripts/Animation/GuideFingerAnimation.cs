@@ -21,6 +21,7 @@ public class GuideFingerAnimation : MonoBehaviour
     }
     public void Play()
     {
+        gameObject.SetActive(true);
         Stop();
         tween = finger.DOScale(1.2f, 1f);
         tween.SetEase(Ease.Linear);
@@ -29,6 +30,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
     public void DoMoveCorrect(Vector3 target ,TweenCallback callback)
     {
+        gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOMove(target, 2f));
         seq.onComplete += callback;
@@ -37,6 +39,7 @@ public class GuideFingerAnimation : MonoBehaviour
     }
     public void DoMoveCorrect(GameObject move, Vector3 target, TweenCallback callback)
     {
+        gameObject.SetActive(true);
         var moveTarget = move.GetComponent<RectTransform>();
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOMove(target, 2f));
@@ -48,6 +51,7 @@ public class GuideFingerAnimation : MonoBehaviour
     }
     public void DoMoveCorrect(RectTransform[] move, Vector3 target, TweenCallback callback)
     {
+        gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
 
         seq.Insert(0f, transform.DOMove(target, 2f));
@@ -63,6 +67,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
     public void DoPress(TweenCallback callback)
     {
+        gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
         Tween tween = transform.DOScale(.7f, 1f);
 
@@ -73,6 +78,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
     public void DoClick(TweenCallback callback)
     {
+        gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
         Tween firstTween = transform.DOScale(1.2f, 1f);
         Tween secondsTween = transform.DOScale(1f, 1f);
@@ -85,6 +91,7 @@ public class GuideFingerAnimation : MonoBehaviour
     }
     public void DoFade(int loopCnt, TweenCallback callback)
     {
+        gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
 
         foreach (var item in images)
