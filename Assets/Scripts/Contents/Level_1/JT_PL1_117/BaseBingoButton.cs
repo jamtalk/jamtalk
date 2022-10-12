@@ -49,7 +49,12 @@ public abstract class BaseBingoButton<TValue, TViewer> : MonoBehaviour
         else
             onClick?.Invoke(value);
     }
-    private void Stamping(TweenCallback onStamped)
+    public void GuideClick()
+    {
+        button.interactable = false;
+        Stamping(() => onClick?.Invoke(value));
+    }
+    private void Stamping(TweenCallback onStamped = null)
     {
         audioPlayer.Play(1.5f, stampingClip);
         eventSystem.enabled = false;

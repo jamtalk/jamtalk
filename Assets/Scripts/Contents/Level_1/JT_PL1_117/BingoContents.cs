@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Collections;
 
 public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseContents
     where TBoard : BaseBingoBoard<TValue, TViewer, TButton>
@@ -158,7 +159,14 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     public void PlaySound()
     {
         if (CheckOver())
-            ShowResult();
+        {
+            if(!isGuide)
+                ShowResult();
+            else
+            {
+
+            }
+        }
         else
             PlayClip();
     }

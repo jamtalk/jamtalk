@@ -7,6 +7,31 @@ using UnityEngine.UI;
 public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoBoard>
 {
     protected override eContents contents => eContents.JT_PL1_117;
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        //for (int i = 0; i < board.size; i++)
+        //{
+        //    var isNext = false;
+        //    var target = board.buttons.Where(x => x.value.Alphabet == currentQuestion.Alphabet).First();
+
+        //    guideFinger.gameObject.SetActive(true);
+        //    guideFinger.DoMoveCorrect(target.transform.position, () =>
+        //    {
+        //        guideFinger.DoClick(() =>
+        //        {
+        //            isNext = true;
+        //            currentIndex += 1;
+        //            scoreBoard.AddScore(100);
+        //            target.GuideClick();
+        //        });
+        //    });
+        //    while (!isNext) yield return null;
+        //    yield return new WaitForSecondsRealtime(1.5f);
+        //}
+    }
     protected override AlphabetData[] correctsTarget
     {
         get
