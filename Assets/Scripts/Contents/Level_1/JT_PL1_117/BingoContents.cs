@@ -164,7 +164,11 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
                 ShowResult();
             else
             {
+                questions = GetQuestion();
 
+                currentIndex = 0;
+                PlaySound();
+                board.Init(questions, corrects, IsCurrentAnswer, OnClick);
             }
         }
         else
