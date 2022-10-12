@@ -141,12 +141,14 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
             }
         else
         {
-            if (question.isCorrect)
-                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-
             currentQuestionIndex += 1;
-            Debug.Log(currentQuestionIndex);
-            ShowQuestion(questions[currentQuestionIndex]);
+            if (question.isCorrect)
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                {
+                    ShowQuestion(questions[currentQuestionIndex]);
+                });
+            else
+                ShowQuestion(questions[currentQuestionIndex]);
         }
     }
     protected override eGameResult GetResult()

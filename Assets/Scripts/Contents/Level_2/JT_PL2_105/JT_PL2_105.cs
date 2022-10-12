@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System;
+using Random = UnityEngine.Random;
 
 public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
 {
@@ -32,6 +34,30 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            isNext = false;
+            var target = elements.Where(x => x.data == currentQuestion.correct).First();
+            guideFinger.gameObject.SetActive(true);
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    ClickMotion(target, target.data);
+                });
+            });
+
+            while(!isNext) yield return null;
+            yield return new WaitForSecondsRealtime(1.5f);
+        }
+    }
 
     protected override void Awake()
     {   
@@ -108,6 +134,13 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
             AddClickListener(elements[i], data);
         }
     }
+
+    private void ClickMotion(BubbleElement planet, VowelWordsData data)
+    {
+        currentElement = planet;
+        planet.transform.DOShakePosition(1f, 5f);
+        StartCoroutine(InitPlanet(data));
+    }
     private void AddClickListener(BubbleElement planet, VowelWordsData data)
     {
         planet.onClickFirst.RemoveAllListeners();
@@ -117,9 +150,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
             audioPlayer.Play(tabClip);
             if (currentQuestion.correct == data)
             {
-                currentElement = planet;
-                planet.transform.DOShakePosition(1f, 5f);
-                StartCoroutine(InitPlanet(data));
+                ClickMotion(planet, data);
             }
             else
             {
@@ -133,7 +164,10 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
 
     private IEnumerator InitPlanet(VowelWordsData data)
     {
+        if(isGuide)
+            audioPlayer.Play(tabClip);
         yield return new WaitForSecondsRealtime(1f);
+
         audioPlayer.Play(boomClip);
         currentElement.textValue.gameObject.SetActive(false);
         currentElement.sprite = imageBigbang;
@@ -142,7 +176,11 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
         yield return new WaitForSecondsRealtime(1.5f);
         thrower.textValue.gameObject.SetActive(false);
         thrower.imageProduct.sprite = imageShootingStars[int.Parse(currentElement.name)];
-        thrower.Throw(currentElement, thorwerTarget, () => AddAnswer(data));
+        thrower.Throw(currentElement, thorwerTarget, () =>
+        {
+            isNext = true;
+            AddAnswer(data);
+        });
 
         audioPlayer.Play(dropClip);
     }
