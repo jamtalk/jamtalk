@@ -35,8 +35,11 @@ public class Book_Speaking : BaseContents
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Escape))
+        {
             OnSTT(currentSentance.value);
+            eventSystem.enabled = true;
+        }
     }
     public Dictionary<int, Dictionary<int, BookSentanceData>> MakeQuestion()
     {
