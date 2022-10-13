@@ -16,6 +16,39 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     public Button charactorButton;
     public DoubleClickButton4_104[] buttons;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+
+            var target = buttons.Where(x => x.data.key == currentQuestion.correct.key).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    ButtonClickMotion(target);
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+            guideFinger.DoClick(() =>
+            {
+                guideFinger.gameObject.SetActive(false);
+                ButtonDoubleClickMotion(target);
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -52,58 +85,63 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     {
         for (int i = 0; i < buttons.Length; i++)
         {
-            ButtonAddListener(buttons[i], question.totalQuestion[i]);
-            buttons[i].isOn = false;
-            buttons[i].incorrectMark.SetActive(false);
-            buttons[i].inCorrectCnt = 0;
-            buttons[i].button.interactable = true;
+            buttons[i].Init(question.totalQuestion[i]);
+            ButtonAddListener(buttons[i]);
         }
-        audioPlayer.Play(question.correct.clip);
+        audioPlayer.Play(question.correct.clip, () => isNext = true);
         currentText.text = question.correct.key.Replace(question.correct.IncludedDigraphs
                 , "<color=\"red\">" + question.correct.IncludedDigraphs + "</color>");
     }
-    private void ButtonAddListener(DoubleClickButton4_104 button, DigraphsWordsData data)
+    private void ButtonAddListener(DoubleClickButton4_104 button)
     {
         button.onClickFirst.RemoveAllListeners();
         button.onClick.RemoveAllListeners();
 
         button.onClickFirst.AddListener(() =>
         {
-            for (int i = 0; i < buttons.Length; i++)
-                buttons[i].isOn = buttons[i] == button;
-
-            eventSystem.enabled = false;
-
-            button.inCorrectCnt++;
-            if (button.inCorrectCnt > 1)
-            {
-                var isCorrect = currentQuestion.correct.IncludedDigraphs == data.IncludedDigraphs;
-                button.incorrectMark.SetActive(!isCorrect);
-                button.button.interactable = isCorrect;
-            }
-            audioPlayer.Play(data.audio.phanics, () =>
-            {
-                button.isOn = currentQuestion.correct.Digraphs == data.Digraphs;
-                button.SetFirstImages();
-                eventSystem.enabled = true;
-            });
+            ButtonClickMotion(button);
         });
 
         button.onClick.AddListener(() =>
         {
-            eventSystem.enabled = false;
-            button.SetLastImages();
-            audioPlayer.Play(data.act, () =>
-            {
-                audioPlayer.Play(.8f,GameManager.Instance.GetClipCorrectEffect(), () =>
-                {
-                    eventSystem.enabled = true;
-                    if (CheckOver())
-                        ShowResult();
-                    else
-                        AddAnswer(currentQuestion.correct);
-                });
-            });
+            ButtonDoubleClickMotion(button);
+        });
+    }
+
+    private void ButtonClickMotion(DoubleClickButton4_104 button)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].isOn = buttons[i] == button;
+
+        eventSystem.enabled = false;
+
+        button.inCorrectCnt++;
+        if (button.inCorrectCnt > 1)
+        {
+            var isCorrect = currentQuestion.correct.IncludedDigraphs == button.data.IncludedDigraphs;
+            button.incorrectMark.SetActive(!isCorrect);
+            button.button.interactable = isCorrect;
+        }
+        audioPlayer.Play(button.data.audio.phanics, () =>
+        {
+            isNext = true;
+            button.isOn = currentQuestion.correct.Digraphs == button.data.Digraphs;
+            button.SetFirstImages();
+            eventSystem.enabled = true;
+        });
+    }
+    private void ButtonDoubleClickMotion(DoubleClickButton4_104 button)
+    {
+        eventSystem.enabled = false;
+        button.SetLastImages();
+        audioPlayer.Play(button.data.act, () =>
+        {
+            isNext = true;
+            eventSystem.enabled = true;
+            if (CheckOver())
+                ShowResult();
+            else
+                AddAnswer(currentQuestion.correct);
         });
     }
 }
