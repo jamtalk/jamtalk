@@ -26,6 +26,35 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     [SerializeField]
     private List<DoubleClick306> elements = new List<DoubleClick306>();
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+
+            var target = elements.Where(x => x.value.key == currentQuestion.correct.key).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    audioPlayer.Play(target.value.audio.phanics, () =>
+                        guideFinger.DoClick(() =>
+                        {
+                            guideFinger.gameObject.SetActive(false);
+                            DoubleClickMotion(target.value);
+                        }));
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -73,6 +102,8 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
             elements[i].gameObject.SetActive(true);
             AddDoubleClickListener(elements[i], question.totalQuestion[i]);
         }
+
+        audioPlayer.Play(currentQuestion.correct.clip, () => isNext = true);
     }
     private void SetBagImage()
     {
@@ -95,35 +126,47 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
         {
             if (currentQuestion.correct.key.Contains(element.name))
             {
-                for (int i = 0; i < elements.Count; i++)
-                    elements[i].gameObject.SetActive(false);
-                currentImage.gameObject.SetActive(false);
-
-                var trowerImage = thrower.GetComponent<Image>();
-                trowerImage.sprite = currentImage.sprite;
-                trowerImage.preserveAspect = true;
-
-                thrower.gameObject.SetActive(true);
-                thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
-                {
-                    currentText.text = data.key;
-                    SetBagImage();
-
-                    audioPlayer.Play(currentQuestion.correct.act, () =>
-                    {
-                        AddAnswer(currentQuestion.correct);
-
-                        if (CheckOver())
-                            ShowResult();
-                        else
-                            MakeQuestion();
-                    });
-                });
+                DoubleClickMotion(data);
             }
             else
             {
                 audioPlayer.Play(data.audio.phanics);
             }
+        });
+    }
+
+    private void DoubleClickMotion(DigraphsWordsData data)
+    {
+        for (int i = 0; i < elements.Count; i++)
+            elements[i].gameObject.SetActive(false);
+        currentImage.gameObject.SetActive(false);
+
+        var trowerImage = thrower.GetComponent<Image>();
+        trowerImage.sprite = currentImage.sprite;
+        trowerImage.preserveAspect = true;
+
+        thrower.gameObject.SetActive(true);
+        thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
+        {
+            currentText.text = data.key;
+            SetBagImage();
+
+            audioPlayer.Play(currentQuestion.correct.act, () =>
+            {
+                AddAnswer(currentQuestion.correct);
+                
+                if (CheckOver())
+                    if(!isGuide)
+                        ShowResult();
+                    else
+                    {
+                        isGuide = false;
+                        MakeQuestion();
+                    }
+                else
+                    MakeQuestion();
+                isNext = true;
+            });
         });
     }
 }
