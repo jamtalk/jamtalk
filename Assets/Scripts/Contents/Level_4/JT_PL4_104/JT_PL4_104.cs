@@ -16,8 +16,44 @@ public class JT_PL4_104 : BaseContents
     private WordElement404 selectElement;
     public WordElement404[] elements;
 
-    private List<eDigraphs> digraphsList = new List<eDigraphs>();
-    private List<ePairDigraphs> pairList = new List<ePairDigraphs>();
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        for (int i = 0; i < elements.Length / 2; i++)
+        {
+
+            var digraphs = elements.Where(x => !x.data.isPair)
+                .Where(x => !x.isOpen)
+                .OrderBy(x => Random.Range(0, 100)).First();
+            var pairDrigraphs = elements.Where(x => x.data.isPair)
+                .Where(x => !x.isOpen)
+                .OrderBy(x => Random.Range(0, 100)).First();
+
+            WordElement404[] targets = { digraphs, pairDrigraphs };
+            targets = targets.OrderBy(x => Random.Range(0, 100)).ToArray();
+
+            foreach (var item in targets)
+            {
+                guideFinger.DoMoveCorrect(item.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        ClickMotion(item);
+                    });
+                });
+
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -50,50 +86,74 @@ public class JT_PL4_104 : BaseContents
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            if (element.isOpen)
-                return;
-
-            buttonCount += 1;
-            element.Open();
-
-            eventSystem.enabled = false;
-
-            audioPlayer.Play(element.data.data.audio.phanics, () =>
-            {
-                if (buttonCount == 1)
-                    selectElement = element;
-                else
-                {
-                    if (selectElement.data.value == element.data.value && selectElement.data.isPair != element.data.isPair)
-                    {
-                        index += 1;
-                        selectElement.charactor.gameObject.SetActive(false);
-                        element.charactor.gameObject.SetActive(false);
-
-                        if (CheckOver())
-                            ShowResult();
-                    }
-                    else
-                    {
-                        selectElement.Close();
-                        element.Close();
-                    }
-
-                    buttonCount = 0;
-                }
-
-                eventSystem.enabled = true;
-            });
+            ClickMotion(element);
         });
     }
 
-    private IEnumerator Close(WordElement404[] elements)
+    private void ClickMotion(WordElement404 element)
+    {
+        if (element.isOpen)
+            return;
+
+        buttonCount += 1;
+        element.Open();
+
+        eventSystem.enabled = false;
+
+        audioPlayer.Play(element.data.data.audio.phanics, () =>
+        {
+            if (buttonCount == 1)
+                selectElement = element;
+            else
+            {
+                if (selectElement.data.value == element.data.value && selectElement.data.isPair != element.data.isPair)
+                {
+                    index += 1;
+                    selectElement.charactor.gameObject.SetActive(false);
+                    element.charactor.gameObject.SetActive(false);
+
+                    if (CheckOver())
+                        if(!isGuide)
+                            ShowResult();
+                        else
+                        {
+                            index = 0;
+                            isGuide = false;
+                            
+                            StartCoroutine(Close(elements, true));;
+                        }
+                }
+                else
+                {
+                    selectElement.Close();
+                    element.Close();
+                }
+
+                buttonCount = 0;
+            }
+            isNext = true;
+            eventSystem.enabled = true;
+        });
+    }
+
+    private IEnumerator Close(WordElement404[] elements, bool isMakeQuestion = false)
     {
         yield return new WaitForSecondsRealtime(2f);
 
         for (int i = 0; i < elements.Length; i++)
         {
             elements[i].Close();
+        }
+
+        isNext = true;
+
+        if (isMakeQuestion)
+        {
+            yield return new WaitForSecondsRealtime(1f);
+
+            foreach (var item in elements)
+                item.charactor.gameObject.SetActive(true);
+            MakeQuestion();
         }
     }
 }
