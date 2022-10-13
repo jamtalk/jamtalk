@@ -14,16 +14,46 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     public Image spatulaImage;
     public DoubleClick302[] pancakes;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            for (int j = 0; j < pancakes.Length; j++)
+            {
+                var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
+
+                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        target.isOn = true;
+
+                        audioPlayer.Play(target.data.audio.phanics, () =>
+                        guideFinger.DoClick(() =>
+                        {
+                            guideFinger.gameObject.SetActive(false);
+                            ClickMotion(target);
+                        }));
+                    });
+                });
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+        }
+    }
     protected override List<Question3_102> MakeQuestion()
     {
         var questions = new List<Question3_102>();
-        for ( int i = 0; i < QuestionCount; i++)
+        for (int i = 0; i < QuestionCount; i++)
         {
             var corrects = GameManager.Instance.GetDigraphs().Take(pancakes.Length).ToList();
-            if(corrects.Count< pancakes.Length)
+            if (corrects.Count < pancakes.Length)
             {
                 var tmp = new List<DigraphsWordsData>();
-                for(int j = 0; j < pancakes.Length; j++)
+                for (int j = 0; j < pancakes.Length; j++)
                 {
                     tmp.Add(corrects[j % corrects.Count]);
                 }
@@ -36,7 +66,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
     protected override void ShowQuestion(Question3_102 question)
     {
-        for(int i = 0; i < pancakes.Length; i++)
+        for (int i = 0; i < pancakes.Length; i++)
         {
             pancakes[i].isCheck = false;
             pancakes[i].isOn = false;
@@ -62,23 +92,31 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         {
             if (!button.isCheck)
             {
-                button.isCheck = true;
-
-                button.image.sprite = backImage;
-                button.textPhanix.gameObject.SetActive(false);
-                button.images.gameObject.SetActive(true);
-                audioPlayer.Play(button.data.act, () =>
-                {
-                    button.image.sprite = frontImage;
-                    button.textPhanix.text = button.data.key;
-                    button.images.gameObject.SetActive(false);
-                    button.textPhanix.gameObject.SetActive(true);
-                    AddAnswer(button.data);
-                });
+                ClickMotion(button);
             }
         });
     }
+
+    private void ClickMotion(DoubleClick302 button)
+    {
+        button.isCheck = true;
+
+        button.image.sprite = backImage;
+        button.textPhanix.gameObject.SetActive(false);
+        button.images.gameObject.SetActive(true);
+        button.images.preserveAspect = true;
+        audioPlayer.Play(button.data.act, () =>
+        {
+            button.image.sprite = frontImage;
+            button.textPhanix.text = button.data.key;
+            button.images.gameObject.SetActive(false);
+            button.textPhanix.gameObject.SetActive(true);
+            AddAnswer(button.data);
+            isNext = true;
+        });
+    }
 }
+
 
 public class Question3_102 : MultiQuestion<DigraphsWordsData>
 {
