@@ -29,6 +29,34 @@ public class JT_PL3_105 : BaseContents
     public AudioClip moleClip;
     public AudioClip effectClip;
 
+
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i++)
+        {
+            var target = elements
+                .Where(x => x.text.text == currentDigraphs.digraphs.ToLower()
+                || x.text.text == currentDigraphs.PairDigrpahs.ToString().ToLower()).First();
+
+            while (!isNext) yield return null;
+            isNext = false;
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    ClickMotion(target);
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -44,7 +72,7 @@ public class JT_PL3_105 : BaseContents
             .Distinct()
             .OrderBy(x => Random.Range(0f, 100f))
             .First();
-        audioPlayer.Play(currentDigraphs.clip);
+        audioPlayer.Play(currentDigraphs.clip, () => isNext = true);
         if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
             digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
         else
@@ -85,50 +113,64 @@ public class JT_PL3_105 : BaseContents
 
     private void AddListener(MoleElement305 element)
     {
-        var button = element.GetComponent<Button>();
+        var button = element.button;
         button.onClick.RemoveAllListeners();
 
         button.onClick.AddListener(() =>
         {
-            eventSystem.enabled = false;
-            hammer.transform.position = element.transform.position;
-            var hammerRt = hammer.GetComponent<RectTransform>();
-            var hammerWidth = hammerRt.rect.width;
-            var posion = hammerRt.anchoredPosition;
-            posion.x += hammerWidth;
+            ClickMotion(element);
+        });
+    }
 
-            hammerRt.anchoredPosition = posion;
+    private void ClickMotion(MoleElement305 element)
+    {
+        eventSystem.enabled = false;
+        hammer.transform.position = element.transform.position;
+        var hammerRt = hammer.GetComponent<RectTransform>();
+        var hammerWidth = hammerRt.rect.width;
+        var posion = hammerRt.anchoredPosition;
+        posion.x += hammerWidth;
 
-            HammerDoMove(() =>
+        hammerRt.anchoredPosition = posion;
+
+        HammerDoMove(() =>
+        {
+            hammer.gameObject.SetActive(false);
+            effectImage.transform.position = element.transform.position;
+            effectImage.gameObject.SetActive(true);
+
+            audioPlayer.Play(1f, effectClip, () =>
             {
-                hammer.gameObject.SetActive(false);
-                effectImage.transform.position = element.transform.position;
-                effectImage.gameObject.SetActive(true);
+                effectImage.gameObject.SetActive(false);
 
-                audioPlayer.Play(1f, effectClip, () =>
+                if (element.text.text.Contains(digraphs))
                 {
-                    effectImage.gameObject.SetActive(false);
-
-                    if (element.text.text.Contains(digraphs))
+                    index += 1;
+                    currentText.text = currentDigraphs.key;
+                    ProgressBarDoMove();
+                    audioPlayer.Play(currentDigraphs.clip, () =>
                     {
-                        index += 1;
-                        currentText.text = currentDigraphs.key;
-                        ProgressBarDoMove();
-                        audioPlayer.Play(currentDigraphs.clip, () =>
-                        {
-                            eventSystem.enabled = true;
-                            if (CheckOver())
+                        isNext = true;
+                        eventSystem.enabled = true;
+                        if (CheckOver())
+                            if(!isGuide)
                                 ShowResult();
                             else
+                            {
+                                index = 0;
+                                isGuide = false;
                                 MakeQuestion();
-                        });
-                    }
-                    else
-                    {
-                        SetMolesPosition();
-                        eventSystem.enabled = true;
-                    }
-                });
+                                progressBar.transform.localScale = new Vector3(0f, 1f, 1f);
+                            }
+                        else
+                            MakeQuestion();
+                    });
+                }
+                else
+                {
+                    SetMolesPosition();
+                    eventSystem.enabled = true;
+                }
             });
         });
     }

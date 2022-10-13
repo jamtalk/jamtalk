@@ -675,6 +675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1235053621}
   text: {fileID: 2111313233}
+  button: {fileID: 356971744}
 --- !u!114 &356971744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,6 +872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 277608593}
   text: {fileID: 1302128323}
+  button: {fileID: 457377680}
 --- !u!1 &528892557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1454,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1865559576}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   eventSystem: {fileID: 1678466063}
   buttonBox: {fileID: 1142016597}
   currentText: {fileID: 1468190976}
@@ -3354,6 +3357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1769793365}
   text: {fileID: 66244691}
+  button: {fileID: 2143182586}
 --- !u!114 &2143182586
 MonoBehaviour:
   m_ObjectHideFlags: 0

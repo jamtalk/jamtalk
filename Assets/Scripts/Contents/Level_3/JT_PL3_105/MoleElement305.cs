@@ -8,6 +8,7 @@ public class MoleElement305 : MonoBehaviour
 {
     public Image image;
     public Text text;
+    public Button button;
     
     public void Init(string value)
     {
