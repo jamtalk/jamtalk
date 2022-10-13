@@ -26,6 +26,30 @@ public class JT_PL4_105 : BaseContents
     public RectTransform firstRect;
     public RectTransform lastRect;
     public EventSystem eventSystem;
+
+    private wordElement405 correctButtons;
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+
+        for (int i = 0; i < questionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+            var target = correctButtons.values.Where(x => x.text == current.IncludedDigraphs).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    DigraphsButtonAddListener(target);
+                });
+            });
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -78,8 +102,10 @@ public class JT_PL4_105 : BaseContents
             {
                 var textElemet = Instantiate(digraphsElement, wordLayout).GetComponent<wordElement405>();
                 textElemet.Init(digraphs, pairDigraphs);
-                DigraphsButtonAddListener(textElemet.digraphsButton, textElemet.text);
-                DigraphsButtonAddListener(textElemet.pairButton, textElemet.pairText);
+                textElemet.digraphsButton.onClick.AddListener(() => DigraphsButtonAddListener(textElemet.text));
+                textElemet.pairButton.onClick.AddListener(() => DigraphsButtonAddListener(textElemet.pairText));
+                correctButtons = textElemet;
+                Debug.Log("if");
             }
             else
             {
@@ -88,27 +114,30 @@ public class JT_PL4_105 : BaseContents
             }
         }
 
-        audioPlayer.Play(current.clip);
+        audioPlayer.Play(current.clip, () => isNext = true);
     }
 
-    private void DigraphsButtonAddListener(Button button, Text text)
+    private void DigraphsButtonAddListener(Text text)
     {
-        button.onClick.AddListener(() =>
+        if (digraphsValue.Contains(text.text))
         {
-            if(digraphsValue.Contains(text.text))
+            index += 1;
+            audioPlayer.Play(current.clip);
+
+            DoMove(() =>
             {
-                index += 1;
-                audioPlayer.Play(current.clip);
-                
-                DoMove(() =>
-                {
-                    if (CheckOver())
+                if (CheckOver())
+                    if(!isGuide)
                         ShowResult();
                     else
+                    {
+                        index = 0;
                         MakeQuestion();
-                });
-            }
-        });
+                    }
+                else
+                    MakeQuestion();
+            });
+        }
     }
 
     private void DoMove(TweenCallback callback)
