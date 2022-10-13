@@ -254,10 +254,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 173586342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 798224321}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &242179352
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,10 +535,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 357961193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1180461105}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &378430813
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +664,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 715684116}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   successEffect: {fileID: 1821529634}
   successText: {fileID: 1939041267}
   successImage: {fileID: 627002890}
@@ -876,10 +889,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 528325869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 475755254}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &568916705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,10 +1437,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1069222665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1591929947}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &1080594089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,10 +1578,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1080594089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1570199627}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &1180461103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,10 +1794,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1294394360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99664031b3240554bb43358a11948f1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0680a4e696cda4fd0905a689e404662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1946965691}
+  data:
+    key: 
+    act: 
+    clip: 
+    level: 0
+    digraphs: 
 --- !u!1 &1384400945
 GameObject:
   m_ObjectHideFlags: 0

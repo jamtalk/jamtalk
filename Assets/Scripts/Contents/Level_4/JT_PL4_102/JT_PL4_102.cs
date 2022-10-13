@@ -15,8 +15,37 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     public Text successText;
     public Image successImage;
     public Sprite successedImage;
-    public ImageButton[] buttons;
+    //public ImageButton[] buttons;
+    public BubbileButtons[] buttons;
     public Image[] childrenImages;
+
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            for (int j = 0; j < buttons.Length; j++)
+            {
+                var target = buttons.Where(x => x.button.interactable).OrderBy(x => Random.Range(0, 100)).First();
+
+                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.DoClick(() =>
+                        {
+                            guideFinger.gameObject.SetActive(false);
+                            ClickMotion(target);
+                        });
+                    });
+                });
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+        }
+    }
 
     protected override List<Question4_102> MakeQuestion()
     {
@@ -45,40 +74,50 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         {
             var data = question.totalQuestion[i];
             buttons[i].sprite = data.sprite;
-            AddListener(buttons[i], data);
+            buttons[i].data = data;
+            AddListener(buttons[i]);
         }
     }
 
-    private void AddListener(ImageButton imageButton, DigraphsWordsData data)
-    {
+    private void AddListener(BubbileButtons imageButton)
+    { 
         var button = imageButton.button;
         button.onClick.AddListener(() =>
         {
-            button.interactable = false;
-            audioPlayer.Play(data.clip);
-            for (int i = 0; i < buttons.Length; i++)
-                buttons[i].gameObject.SetActive(false);
-
-            successImage.sprite = data.sprite;
-            successImage.preserveAspect = true;
-            successText.text = data.key.Replace(data.IncludedDigraphs,
-                    "<color=\"red\">" + data.IncludedDigraphs + "</color>");
-
-            successEffect.gameObject.SetActive(true);
-            audioPlayer.Play(data.act, () =>
-            {
-                successEffect.gameObject.SetActive(false);
-                for (int i = 0; i < buttons.Length; i++)
-                    buttons[i].gameObject.SetActive(true);
-                AddAnswer(currentQuestion.currentCorrect);
-            });
-
-            button.image.sprite = successedImage;
+            ClickMotion(imageButton);
         });
     }
 
     private void SetCurrentColor(DigraphsWordsData data)
     {
+    }
+
+    private void ClickMotion(BubbileButtons imageButton)
+    {
+        var button = imageButton.button;
+        var data = imageButton.data;
+
+        button.interactable = false;
+        audioPlayer.Play(data.clip);
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].gameObject.SetActive(false);
+
+        successImage.sprite = data.sprite;
+        successImage.preserveAspect = true;
+        successText.text = data.key.Replace(data.IncludedDigraphs,
+                "<color=\"red\">" + data.IncludedDigraphs + "</color>");
+
+        successEffect.gameObject.SetActive(true);
+        audioPlayer.Play(data.act, () =>
+        {
+            successEffect.gameObject.SetActive(false);
+            for (int i = 0; i < buttons.Length; i++)
+                buttons[i].gameObject.SetActive(true);
+            AddAnswer(currentQuestion.currentCorrect);
+            isNext = true;
+        });
+
+        button.image.sprite = successedImage;
     }
 }
 
