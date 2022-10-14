@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class JT_PL4_109 : BaseContents
 {
@@ -17,6 +19,58 @@ public class JT_PL4_109 : BaseContents
     public Card114[] cards;
     public Sprite[] cardImages;
 
+    bool isNext = false;
+    bool isTurn = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        while (!isNext) yield return null;
+        isNext = false;
+        for(int i = 0; i < cards.Length / 2; i++)
+        {
+            var target = cards.Where(x => !x.card.IsFornt)
+                .OrderBy(x => Random.Range(0, 100)).First();
+            var targets = cards.Where(x => x.DigraphsWordsData == target.DigraphsWordsData)
+                .OrderBy(x => Random.Range(0, 100))
+                .ToList();
+
+            for (int j = 0; j < targets.Count; j++)
+            {
+                guideFinger.DoMoveCorrect(targets[j].transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        targets[j].card.Turnning(onCompleted: () =>
+                        {
+                            if (j == targets.Count - 1)
+                            {
+                                audioPlayer.Play(targets[j].DigraphsWordsData.act, () =>
+                                {
+                                    MatchMotion(targets, () => isNext = true);
+                                });
+                            }
+                            else
+                            {
+                                audioPlayer.Play(targets[j].DigraphsWordsData.clip, () => isNext = true);
+                                SetCardIntracable(true);
+                            }
+                        });
+                    });
+                });
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+        }
+
+        isGuide = false;
+        selected.Clear();
+        foreach(var item in cards)
+            item.star.gameObject.SetActive(false);
+        MakeQuestion();
+        Debug.Log(selected.Count);
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -41,12 +95,15 @@ public class JT_PL4_109 : BaseContents
             cards[i].backImage.sprite = cardImages.OrderBy(x => Random.Range(0f, 100f)).First();
             if (i > 0 && i % 2 != 0)
                 continue;
-            
+
             var upper = i;
             var lower = i + 1;
 
-            SetCard(randomCards[upper], question[upper], randomColor[i]);
-            SetCard(randomCards[lower], question[lower], randomColor[i]);
+            if (isGuide)
+            {
+                SetCard(randomCards[upper], question[upper], randomColor[i]);
+                SetCard(randomCards[lower], question[lower], randomColor[i]);
+            }
         }
 
         StartCoroutine(StartContent());
@@ -58,23 +115,28 @@ public class JT_PL4_109 : BaseContents
         card.onSelecte += (value) =>
         {
             selected.Add(card);
+            Debug.Log(selected.Count);
             if (selected.Count == 2)
             {
-                if (selected[0].DigraphsWordsData.Digraphs == selected[1].DigraphsWordsData.Digraphs)
+                if (selected[0].DigraphsWordsData.key == selected[1].DigraphsWordsData.key)
                 {
                     if (CheckOver())
                     {
-                        audioPlayer.Play(data.clip, ShowResult);
+                        if(!isGuide)
+                            audioPlayer.Play(data.clip, ShowResult);
+                        else
+                        {
+                            Debug.Log("ischecOver");
+                            isGuide = false;
+                            selected.Clear();
+                            MakeQuestion();
+                        }
                     }
                     else
                     {
                         audioPlayer.Play(data.act, () =>
                         {
-                            selected[0].ShowStar();
-                            selected[1].ShowStar();
-                            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-                            selected.Clear();
-                            SetCardIntracable(true);
+                            MatchMotion(selected);
                         });
                     }
                 }
@@ -93,6 +155,16 @@ public class JT_PL4_109 : BaseContents
             }
         };
     }
+
+    private void MatchMotion(List<Card114> cards, Action action = null)
+    {
+        cards[0].ShowStar();
+        cards[1].ShowStar();
+        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), action);
+        cards.Clear();
+        SetCardIntracable(true);
+    }
+
     private void SetCardIntracable(bool value)
     {
         for (int i = 0; i < cards.Length; i++)
@@ -107,5 +179,6 @@ public class JT_PL4_109 : BaseContents
             yield return new WaitForSeconds(.1f);
         }
         SetCardIntracable(true);
+        isNext = true;
     }
 }

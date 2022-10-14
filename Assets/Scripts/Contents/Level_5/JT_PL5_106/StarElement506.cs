@@ -24,12 +24,13 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
     public void Init(string value,Vector2 pos, float duration, Action<string>onDrop)
     {
         Show(duration);
+        this.value = value;
         this.onDrop = onDrop;
         gameObject.SetActive(true);
         transform.position = pos;
         intractable = true;
         text.text = value;
-        orizinalValue = this.value = value;
+        orizinalValue = value;
         ResetLine();
     }
 
@@ -53,6 +54,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
 
         SetLine(eventData.position);
     }
+
 
     public void OnEndDrag(PointerEventData eventData)
     {

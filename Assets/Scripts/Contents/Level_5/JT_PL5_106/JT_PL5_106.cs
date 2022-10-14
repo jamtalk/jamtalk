@@ -16,6 +16,38 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     public RectTransform[] paths;
     public ResultStart506 resultStar;
     public CanvasScaler scaler;
+
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            for(int j = 0; j < elements.Count; j++)
+            {
+                guideFinger.DoMoveCorrect(elements[j].transform.position, () =>
+                {
+                    guideFinger.DoPress(() =>
+                    {
+                        isNext = true;
+                    });
+                });
+
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+
+            guideFinger.gameObject.SetActive(false);
+            OnDrop(currentQuestion.correct.key.ToLower());
+            while (true) yield return null;
+        }
+
+    }
+
     protected override void Awake()
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
@@ -41,18 +73,23 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
         var correct = currentQuestion.correct.key.ToLower();
         if (correct == value)
         {
-            resultStar.gameObject.SetActive(true);
-            var seq = resultStar.Show(value, 1f);
-            seq.onComplete += () =>
-            {
-                audioPlayer.Play(currentQuestion.correct.act, () => AddAnswer(currentQuestion.correct));
-            };
+            CorrectMotion(value);
         }
         else
         {
             for (int i = 0; i < stars.Length; i++)
                 stars[i].ResetLine();
         }
+    }
+
+    private void CorrectMotion(string value)
+    {
+        resultStar.gameObject.SetActive(true);
+        var seq = resultStar.Show(value, 1f);
+        seq.onComplete += () =>
+        {
+            audioPlayer.Play(currentQuestion.correct.act, () => AddAnswer(currentQuestion.correct));
+        };
     }
 
     private IEnumerator ShowQuestionRoutine(Question_PL5_106 question)
@@ -77,6 +114,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
             else
                 elements[i].gameObject.SetActive(false);
         }
+        isNext = true;
     }
 }
 public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>
@@ -91,6 +129,6 @@ public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>
             .Where(x=>!string.IsNullOrWhiteSpace(x))
             .OrderBy(x=>Random.Range(0f,100f))
             .ToArray();
-        Debug.LogFormat("{0}°³\n{1}", words.Length, string.Join("\n",words));
+        Debug.LogFormat("{0}??\n{1}", words.Length, string.Join("\n",words));
     }
 }
