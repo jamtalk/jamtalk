@@ -28,6 +28,37 @@ public class JT_PL4_108 : BaseContents
     private string[] questionTexts;
     private List<string> answerTexts = new List<string>();
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
+    private List<SplitElement_408> optionElements = new List<SplitElement_408>();
+
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int j = 0; j < questionCount; j++)
+        {
+            for (int i = 0; i < optionElements.Count; i++)
+            {
+                var target = optionElements.Where(x => x.value == answerElements[i].value).First();
+                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        CountMotion();
+                        isNext = true;
+                    });
+                });
+
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+
+            guideFinger.gameObject.SetActive(false);
+            CorrctMotion();
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
     protected override void Awake()
     {
         StartCoroutine(WaitFrame(() =>
@@ -104,11 +135,11 @@ public class JT_PL4_108 : BaseContents
             var text = Instantiate(textElement, textsParent.transform).GetComponent<SplitElement_408>();
             if( digraphs == answerTexts[i])
             {
-                var colorText = ("<color=\"red\">" + answerTexts[i] + "</color>");
-                text.Init(colorText, textSprite);
+                text.Init(answerTexts[i], textSprite, true);
             }
             else
                 text.Init(answerTexts[i], textSprite);
+            optionElements.Add(potion);
             answerElements.Add(text);
         }
     }
@@ -121,28 +152,47 @@ public class JT_PL4_108 : BaseContents
         {
             if (element.text.text.Contains(answerTexts[answerIndex]))
             {
-                answerElements[answerIndex].text.gameObject.SetActive(true);
-                answerIndex += 1;
+                CountMotion();
             }
 
             if(answerIndex == answerElements.Count)
             {
-                audioPlayer.Play(current.clip, () =>
-                {
-                    index += 1;
-                    if (CheckOver())
-                        ShowResult();
-                    else
-                        ShowQuestion();
-                });
+                CorrctMotion();   
             }
+        });
+    }
+
+    private void CountMotion()
+    {
+        answerElements[answerIndex].text.gameObject.SetActive(true);
+        answerIndex += 1;
+    }
+
+    private void CorrctMotion()
+    {
+        audioPlayer.Play(current.clip, () =>
+        {
+            index += 1;
+            if (CheckOver())
+                if(!isGuide)
+                    ShowResult();
+                else
+                {
+                    isGuide = false;
+                    index = 0;
+                    ShowQuestion();
+                }
+            else
+                ShowQuestion();
+
+            isNext = true;
         });
     }
 
     private void Clear()
     {
         answerIndex = 0;
-
+        optionElements.Clear();
         var targets = new List<GameObject>();
         for(int i = 0; i < potionParent.childCount; i++)
         {
