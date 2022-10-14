@@ -25,11 +25,46 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     private EventSystem eventSystem;
     private float colorFillamount = 0f;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < QuestionCount; i ++)
+        {
+            guideFinger.DoMoveCorrect(buttonCharactor.transform.position, () => isNext = true);
+            for (float j = colorFillamount; j < .9f; j += .3f)
+            {
+                while (!isNext) yield return null;
+                isNext = false;
+                guideFinger.DoClick(() => OnClickCharactor());
+            }
+
+            while (!isNext) yield return null;
+            isNext = false;
+
+            var target = buttonQuestions.Where(x => x.name == questions[currentQuestionIndex].correct.key).First();
+
+            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    CorrectClickMotion(questions[currentQuestionIndex].correct);
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+
+    }
+
     protected override void Awake()
     {
         base.Awake();
 
-        buttonCharactor.onClick.AddListener(OnClickCharactor);
+        buttonCharactor.onClick.AddListener(() => OnClickCharactor());
     }
     protected override List<Question4_107> MakeQuestion()
     {
@@ -78,17 +113,8 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
         button.onClick.AddListener(() =>
         {
             if (currentQuestion.correct == data)
-            {   // 우측 캐릭터 기뻐하는 애니매이팅
-                Debug.Log(button.name);
-                audioPlayer.Play(data.clip, () =>
-                {
-                    colorFillamount = 0f;
-                    var color = Color.black;
-                    color.a = colorFillamount;
-                    currentText.color = color;
-
-                    AddAnswer(data);
-                });
+            {   
+                CorrectClickMotion(data);
             }
             else
             {
@@ -97,7 +123,24 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
         });
     }
 
-    private void OnClickCharactor()
+    private void CorrectClickMotion(DigraphsWordsData data)
+    {
+        // 우측 캐릭터 기뻐하는 애니매이팅
+
+        audioPlayer.Play(data.clip, () =>
+        {
+            colorFillamount = 0f;
+            var color = Color.black;
+            color.a = colorFillamount;
+            currentText.color = color;
+
+            AddAnswer(data);
+
+            isNext = true;
+        });
+    }
+
+    private void OnClickCharactor(TweenCallback callback = null)
     {
         Point.gameObject.SetActive(false);
         eventSystem.enabled = false;
@@ -112,7 +155,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
             tween.SetLoops(2, LoopType.Yoyo);
             seq.Insert(0, tween);
         }
-
+        seq.onComplete += callback;
         seq.onComplete += () =>
         {
             colorFillamount += 0.33f;
@@ -125,6 +168,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
                 for (int i = 0; i < buttonQuestions.Length; i++)
                     buttonQuestions[i].interactable = true;
             }
+            isNext = true;
             eventSystem.enabled = true;
         };
 
