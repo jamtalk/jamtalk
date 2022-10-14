@@ -21,6 +21,23 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     [SerializeField]
     private SlotMachine502 targetSlot;
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        guideFinger.DoMoveCorrect(buttonSloting.transform.position, () => isNext = true);
+        while (!isNext) yield return null;
+        isNext = false;
+
+        for (int i = 0; i < QuestionCount; i++)
+        {
+            guideFinger.DoClick(() => OnClickSloting());
+            guideFinger.gameObject.SetActive(false);
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
 
     protected override void Awake()
     {
@@ -96,6 +113,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
                 eventSystem.enabled = true;
                 image.gameObject.SetActive(false);
                 AddAnswer(currentQuestion.correct);
+                isNext = true;
             });
         });
     }
