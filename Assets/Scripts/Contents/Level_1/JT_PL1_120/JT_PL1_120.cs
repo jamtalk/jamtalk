@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,6 +20,43 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
     protected override int QuestionCount => 4;
 
     protected override eContents contents => eContents.JT_PL1_120;
+
+
+    bool isNext = false;
+    bool isRocketed = false;
+    int guideIndex = 0;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        //for (int i = 0; i < QuestionCount; i++)
+        //{
+        var targets = cards.Where(x => x.data.alphabet == currentQuestion.correct[currentQuestionIndex].alphabet).ToArray();
+        foreach (var item in targets)
+        {
+            while (!isRocketed) yield return null;
+            isRocketed = false;
+
+            guideFinger.DoMoveCorrect(item.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    guideFinger.gameObject.SetActive(false);
+                    item.card.Turnning(1f, () =>
+                    {
+                        CardClickMotion(item);
+                        currentQuestionIndex++;
+                    });
+                });
+            });
+
+        }
+
+        
+
+        //}
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,23 +80,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
             eventSystem.enabled = false;
             if (currentQuestion.correct.Select(x=>x.key).Contains(data.key))
             {
-                if (finger != null)
-                    finger.gameObject.SetActive(false);
-                var sprite = card.imageButton.image.sprite;
-                roket.valueUI.sprite = sprite;
-
-                audioPlayer.Play(data.act, () =>
-                {
-                    roket.Away(sprite, () =>
-                    {
-                        AddAnswer(data);
-                        if (!CheckOver())
-                            CallRocket();
-                        else
-                            eventSystem.enabled = true;
-                        selectText.text = string.Empty;
-                    });
-                });
+                CardClickMotion(card);
             }
             else
             {
@@ -69,6 +91,41 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
                 });
             }
         };
+    }
+
+    private void CardClickMotion(Card120 card)
+    {
+        selectText.text = card.data.key;
+        eventSystem.enabled = false;
+
+        if (finger != null)
+            finger.gameObject.SetActive(false);
+        var sprite = card.imageButton.image.sprite;
+        roket.valueUI.sprite = sprite;
+        if(isGuide)
+            guideIndex++;
+        audioPlayer.Play(card.data.act, () =>
+        {
+            roket.Away(sprite, () =>
+            {
+                AddAnswer(card.data);
+                if (!CheckOver())
+                    if(guideIndex == correctCount)
+                    {
+                        guideIndex = 0;
+                        isGuide = false;
+                        guideFinger.gameObject.SetActive(false);
+                        questions = MakeQuestion();
+                        currentQuestionIndex = 0;
+                        ShowQuestion(questions[currentQuestionIndex]);
+                    }
+                    else
+                        CallRocket();
+                else
+                    eventSystem.enabled = true;
+                selectText.text = string.Empty;
+            });
+        });
     }
     private void CallRocket()
     {
@@ -81,6 +138,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
                 finger.gameObject.SetActive(true);
             PlayAudio();
             eventSystem.enabled = true;
+            isRocketed = true;
         });
         roket.mask.gameObject.SetActive(true);
         roket.valueUI.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.White, eAlphabetType.Lower, currentQuestion.correct[currentQuestion.currentIndex].Key);

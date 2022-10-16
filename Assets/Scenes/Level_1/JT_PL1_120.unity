@@ -516,6 +516,7 @@ MonoBehaviour:
   clipStop: {fileID: 8300000, guid: 52a54ecb70caffa4bbe3140fda33d49e, type: 3}
   clipArrival: {fileID: 8300000, guid: f68c72e3113749e4aa772385fc5400d2, type: 3}
   tempNum: 0
+  text: {fileID: 0}
 --- !u!114 &61980641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2812,6 +2813,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1378481636}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   eventSystem: {fileID: 53175558}
   buttonRocket: {fileID: 61980639}
   roket: {fileID: 61980640}
