@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JT_PL2_103 : BaseContents
 {
@@ -15,20 +16,6 @@ public class JT_PL2_103 : BaseContents
     private int questionCount => 1;
     private int wordsCount = 5;
 
-    private List<WordElement203> shortsElements = new List<WordElement203>();
-    private List<WordElement203> longElements = new List<WordElement203>();
-    private List<DragWordElement203> throwingElements = new List<DragWordElement203>();
-    private List<DragWordElement203> throwingLongElements = new List<DragWordElement203>();
-    private List<WordElement203> UnionElements => shortsElements.Union(
-        throwingElements.Select(x => x.GetComponent<WordElement203>()))
-        .ToList();
-    private List<WordElement203> UnionLongElements => longElements.Union(
-        throwingLongElements.Select(x => x.GetComponent<WordElement203>()))
-        .ToList();
-
-    private VowelWordsData[] shortVowels;
-    private VowelWordsData[] longVowels;
-    private VowelWordsData currentWord => shortVowels[index];
 
     public UIThrower110 thrower;
 
@@ -54,107 +41,103 @@ public class JT_PL2_103 : BaseContents
     public AudioClip tabClip;
     public EventSystem eventSystem;
 
+    private VowelWordsData[] questions;
+    private List<WordElement203> elements = new List<WordElement203>();
+    private List<DragWordElement203> throwingElements = new List<DragWordElement203>();
+
     protected override void Awake()
     {
         base.Awake();
-        GetWords();
-        StartCoroutine(Init(currentWord));
-
+        
         buttonCurrent.onClick.AddListener(OnClickCurrent);
-        audioPlayer.Play(startClip);
-
-        for(int i = 0; i < throwingElements.Count; i++)
+        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_short));
+        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_long));
+        for (int i = 0; i < throwingElements.Count; i++)
         {
             throwingElements[i].onDrag += OnDrag;
-            throwingLongElements[i].onDrag += OnDrag;
         }
 
-        var alphabet = currentWord.Vowel;
-        shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_short));
-        longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long));
+        StartContents();
     }
 
-    private void GetWords()
+    private void StartContents()
     {
-        shortVowels = GameManager.Instance.GetResources().Vowels
-            .Where( x => x.VowelType == eVowelType.Short)
+        audioPlayer.Play(startClip);
+
+        questions = MakeQuestion();
+        StartCoroutine(ShowQuestion());
+    }
+
+    private VowelWordsData[] MakeQuestion()
+    {
+        var shorts = GameManager.Instance.GetResources().Vowels
+            .Where(x => x.VowelType == eVowelType.Short)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(wordsCount)
             .ToArray();
 
-        longVowels = GameManager.Instance.GetResources().Vowels
+        var longs = GameManager.Instance.GetResources().Vowels
             .Where(x => x.VowelType == eVowelType.Long)
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(wordsCount)
             .ToArray();
+
+        var vowels = shorts.Union(longs).ToArray();
+        return vowels;
     }
 
-    private IEnumerator Init(VowelWordsData data)
+    private IEnumerator ShowQuestion()
     {
-        shortsElements.Clear();
         var list = new List<RectTransform>();
-        for (int i = 0; i < shortVowels.Length; i++)
-        {
-            var shortElement = Instantiate(prefabWordElement, wordShortParent).GetComponent<WordElement203>();
-            shortElement.Init(shortVowels[i]);
-            shortElement.visible = false;
-            shortsElements.Add(shortElement);
 
-            var longElement = Instantiate(prefabWordElement, wordLongParent).GetComponent<WordElement203>();
-            longElement.Init(longVowels[i]);
-            longElement.GetComponent<Image>().sprite = longImage;
-            longElement.visible = false;
-            longElements.Add(longElement);
-        }
-        for (int i = 0; i < shortsElements.Count; i++)
+        for (int i = 0; i < questions.Length; i++)
         {
-            var shortElement = Instantiate(prefabDragWordElement, shotThrowParent).GetComponent<DragWordElement203>();
-            shortElement.Init(shortsElements[i].value);
-            shortElement.visible = true;
-            throwingElements.Add(shortElement);
-            list.Add(shortElement.GetComponent<RectTransform>());
-            shortElement.onDrop += OnDrop;
+            var type = questions[i].VowelType;
+            var parent = type == eVowelType.Short ? wordShortParent : wordLongParent;
+            var dragParent = type == eVowelType.Short ? shotThrowParent : longThrowParent;
+            // element 생성 
+            WordElement203 element;
+            element = Instantiate(prefabWordElement, parent).GetComponent<WordElement203>();
+            if (type == eVowelType.Long)
+                element.GetComponent<Image>().sprite = longImage;
+            
+            element.Init(questions[i]);
+            element.visible = false;
+            elements.Add(element);
 
-            var longElement = Instantiate(prefabDragWordElement, longThrowParent).GetComponent<DragWordElement203>();
-            longElement.Init(longElements[i].value);
-            longElement.visible = true;
-            longElement.GetComponent<Image>().sprite = longImage;
-            throwingLongElements.Add(longElement);
-            list.Add(longElement.GetComponent<RectTransform>());
-            longElement.onDrop += OnDrop;
-        }
-        yield return new WaitForEndOfFrame();
+            // drag elemet 생성 
+            var dragElement = Instantiate(prefabDragWordElement, dragParent).GetComponent<DragWordElement203>();
+            dragElement.Init(elements[i].value);
+            if(type == eVowelType.Long)
+                dragElement.GetComponent<Image>().sprite = longImage;
 
-        for (int i = 0; i < UnionElements.Count; i++)
-        {
-            UnionElements[i].SetSize();
-            UnionLongElements[i].SetSize();
-        }
-        for (int i = 0; i < shortsElements.Count; i++)
-        {
+            dragElement.visible = true;
+            throwingElements.Add(dragElement);
+            list.Add(dragElement.GetComponent<RectTransform>());
+            dragElement.onDrop += OnDrop;
+
             var size = throwingElements[i].GetComponent<RectTransform>().sizeDelta;
-            size.y = shortsElements[i].GetComponent<RectTransform>().sizeDelta.y;
+            size.y = elements[i].GetComponent<RectTransform>().sizeDelta.y;
             throwingElements[i].GetComponent<RectTransform>().sizeDelta = size;
-            throwingElements[i].transform.position = shortsElements[i].transform.position;
-
-            var longSize = throwingLongElements[i].GetComponent<RectTransform>().sizeDelta;
-            size.y = longElements[i].GetComponent<RectTransform>().sizeDelta.y;
-            throwingLongElements[i].GetComponent<RectTransform>().sizeDelta = size;
-            throwingLongElements[i].transform.position = longElements[i].transform.position;
+            throwingElements[i].transform.position = elements[i].transform.position;
         }
         yield return new WaitForEndOfFrame();
+        var unionElements = elements.Union(throwingElements).ToArray();
+        foreach (var item in unionElements)
+            item.SetSize();
 
+        yield return new WaitForEndOfFrame();
         shotThrowParent.GetComponent<HorizontalLayoutGroup>().enabled = false;
         longThrowParent.GetComponent<HorizontalLayoutGroup>().enabled = false;
-        thrower.Init(list.ToArray());
         eventSystem.enabled = false;
+
+        thrower.Init(list.ToArray());
         thrower.Throwing(delay: 3f, rotating: false, onTrowed: () =>
         {
             eventSystem.enabled = true;
             for (int i = 0; i < throwingElements.Count; i++)
             {
                 throwingElements[i].SetDefaultPosition();
-                throwingLongElements[i].SetDefaultPosition();
             }
         });
     }
@@ -166,14 +149,12 @@ public class JT_PL2_103 : BaseContents
 
     private void OnDrop(WordElement203 target)
     {
-        for(int i = 0; i < shortVowels.Length; i ++)
+        index++;
+        for (int i = 0; i < questions.Length; i++)
         {
-            if (shortVowels[i].key.Contains(target.textValue.text))
-                popupImage.sprite = shortVowels[i].sprite;
-            if(longVowels[i].key.Contains(target.textValue.text))
-                popupImage.sprite = longVowels[i].sprite;
+            if (questions[i].key.Contains(target.textValue.text))
+                popupImage.sprite = questions[i].sprite;
         }
-
         popupImage.preserveAspect = true;
         popupCureent.GetComponentInChildren<Text>().text = target.textValue.text;
         popupCureent.gameObject.SetActive(true);
@@ -181,7 +162,6 @@ public class JT_PL2_103 : BaseContents
         audioPlayer.Play(target.data.clip);
         StartCoroutine(WaitSeconds());
 
-        
         target.visible = true;
     }
     private IEnumerator WaitSeconds()
@@ -191,13 +171,24 @@ public class JT_PL2_103 : BaseContents
         audioPlayer.Play(1f, currentClip, () =>
         {
             eventSystem.enabled = true;
+            popupCureent.gameObject.SetActive(false);
+            if (CheckOver())
+                if(!isGuide)
+                    ShowResult();
+                else
+                {
+                    index = 0;
+                    elements.Clear();
+                    throwingElements.Clear();
+
+                    StartContents();
+                }
         });
     }
     private void OnClickCurrent()
     {
         popupCureent.gameObject.SetActive(false);
-        if (!shortsElements.Select(x => x.visible).Contains(false)
-        && !longElements.Select(x => x.visible).Contains(false))
+        if (!elements.Select(x => x.visible).Contains(false))
         {
             ShowResult();
         }
