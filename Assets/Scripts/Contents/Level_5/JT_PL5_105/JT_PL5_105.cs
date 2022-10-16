@@ -30,7 +30,35 @@ public class JT_PL5_105 : BaseContents
 
     public List<DoubleClick505> elements = new List<DoubleClick505>();
     private List<RectTransform> layoutList = new List<RectTransform>();
+    List<string> questions = new List<string>();
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
 
+        for (int i = 0; i < questionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+            for (int j = 0; j < questions.Count - 1; j++)
+            {
+                var target = elements.Where(x => x.isCheck && x.gameObject.activeSelf)
+                    .OrderBy(x => Random.Range(0, 100)).First();
+
+                guideFinger.DoMove(target.transform.position, () =>
+                {
+                    guideFinger.DoClick(() =>
+                    {
+                        ClickMotion(target);
+                        guideFinger.gameObject.SetActive(false);
+                    });
+                });
+
+                while (!isNext) yield return null;
+                isNext = false;
+            }
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -54,10 +82,7 @@ public class JT_PL5_105 : BaseContents
         var digraphs = current[index].IncludedDigraphs;
         digraphsIndex = current[index].key.IndexOf(digraphs);
         var temp = current[index].key.Replace(digraphs, string.Empty).ToArray();
-        foreach (var item in temp)
-            Debug.Log(item);
-        List<string> questions = new List<string>();
-        Debug.Log(digraphsIndex);
+        questions = new List<string>();
         foreach (var item in temp)
             questions.Add(item.ToString());
 
@@ -67,14 +92,15 @@ public class JT_PL5_105 : BaseContents
             .ToString()
             .Take(iccorectIndex)
             .ToArray();
-        Debug.Log(inCorrct.Length);
 
+        // bttuon layout 생성 
         for (int i = 0; i < iccorectIndex + questions.Count; i++)
         {
             var layouts = Instantiate(layoutElement, exampleLayout).GetComponent<RectTransform>();
             layoutList.Add(layouts);
         }
 
+        // buttons 생성
         for(int i = 0; i < questions.Count; i++)
         {
             var questionsElement = Instantiate(exampleElement, layoutList[i]).GetComponent<DoubleClick505>();
@@ -90,6 +116,7 @@ public class JT_PL5_105 : BaseContents
             elements.Add(questionsElement);
         }
 
+        // toggles 생성 
         questions.Insert(digraphsIndex, digraphs);
         for (int i = 0; i < questions.Count; i++)
         {
@@ -102,7 +129,7 @@ public class JT_PL5_105 : BaseContents
             toggles.Add(toggleElement);
         }
 
-        audioPlayer.Play(current[index].clip);
+        audioPlayer.Play(current[index].clip, () => isNext = true);
     }
 
     private void AddListener(DoubleClick505 button)
@@ -114,26 +141,34 @@ public class JT_PL5_105 : BaseContents
             if (!button.isCheck)
                 return;
 
-            if (button.number >= digraphsIndex)
-                button.number += 1;
-            ThrowElement(button);
+            ClickMotion(button);
         });
     }
 
-    protected virtual void ThrowElement(DoubleClick505 item)
+    private void ClickMotion(DoubleClick505 button)
+    {
+        var target = toggles
+                .Where(x => x.toggle.isOn)
+                .Where(x => x.value == button.value).First();
+
+        if (button.number >= digraphsIndex)
+            button.number += 1;
+        ThrowElement(button, target);
+    }
+
+    protected virtual void ThrowElement(DoubleClick505 item, ToggleText505 target)
     {
         eventSystem.enabled = false;
         item.gameObject.SetActive(false);
-        var target = toggles
-            .Where(x => x.toggle.isOn)
-            .Where(x => x.value == item.value).First().GetComponent<RectTransform>();
-        thrower.Throw(item, target, () =>
+
+        var targetRt = target.GetComponent<RectTransform>();
+        thrower.Throw(item, targetRt, () =>
         {
-            toggles[item.number].toggle.isOn = false;
+            target.toggle.isOn = false;
             item.gameObject.SetActive(false);
             string.Join(",", toggles.Select(x => x.toggle.isOn));
             eventSystem.enabled = true;
-
+            isNext = true;
             if (!toggles.Select(x => x.toggle.isOn).Contains(true))
             {
                 audioPlayer.Play(current[index].clip, () =>
@@ -142,7 +177,16 @@ public class JT_PL5_105 : BaseContents
                     DoMove(() =>
                     {
                         if (CheckOver())
-                            ShowResult();
+                        {
+                            if (!isGuide)
+                                ShowResult();
+                            else
+                            {
+                                isGuide = false;
+                                index = 0;
+                                StartCoroutine(ResetElement());
+                            }
+                        }
                         else
                         {
                             StartCoroutine(ResetElement());
