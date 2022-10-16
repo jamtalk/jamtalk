@@ -27,8 +27,8 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             var correctItem = items.Where(x => x.value == currentQuestion.correct).First();
             var target = correctItem.transform.position;
             target.y += .5f;
-
-            var isNext = false;
+            isNext = false;
+            
             guideFinger.DoMove(target, () =>
             {
                 guideFinger.DoClick(() =>

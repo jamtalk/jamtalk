@@ -69,8 +69,8 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
             while (!isSmall) yield return null;
             isSmall = false;
-
-            var isNext = false;
+            isNext = false;
+            
             
             var smallTarget = bubbles.Where(x => x.textValue.text == GameManager.Instance.currentAlphabet.ToString().ToLower()).First();
 

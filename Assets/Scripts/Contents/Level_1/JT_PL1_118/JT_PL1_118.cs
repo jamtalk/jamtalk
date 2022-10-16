@@ -24,8 +24,8 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
         {
             while (!isPlayed) yield return null;
             isPlayed = false;
-
-            var isNext = false;
+            isNext = false;
+            
             var target = buttonsAnswer.Where(x => x.name == questions[i].correct.key).First();
             guideFinger.gameObject.SetActive(true);
             Debug.Log(questions[i].correct.key);

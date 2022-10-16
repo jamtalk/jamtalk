@@ -45,7 +45,7 @@ public class JT_PL2_106 : BaseContents
 
         for(int i = 0; i < QuestionCount; i++)
         {
-            var isNext = false;
+            isNext = false;
             var isSpin = false;
             guideFinger.gameObject.SetActive(true);
             var spinButtonRt = spinButton.GetComponentInChildren<Text>();
