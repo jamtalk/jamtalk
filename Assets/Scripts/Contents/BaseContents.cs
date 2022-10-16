@@ -22,6 +22,7 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
+    protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
     protected virtual void ShowResult()
@@ -77,10 +78,10 @@ public abstract class BaseContents : MonoBehaviour
     }
     protected virtual void ShowGuidnce()
     {
-        if (guide != null)
-            guide = Instantiate(guide, transform);
+        if (guidePopup == null)
+            guidePopup = Instantiate(guide, transform);
 
-        guideFinger = guide.guideFinger;
+        guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
         StartCoroutine(ShowGuidnceRoutine());
     }
