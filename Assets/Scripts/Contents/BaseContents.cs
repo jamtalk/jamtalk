@@ -175,12 +175,17 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
     protected override void AddAnswer(TAnswer answer)
     {
         currentQuestion.SetAnswer(answer);
+        Debug.Log("AddAnswer");
         if (CheckOver())
         {
             if (!isGuide)
                 ShowResult();
             else
             {
+                Debug.Log("guide end");
+                //foreach (var item in questions)
+                //    item.ResetAnswer();
+
                 isGuide = false;
                 guideFinger.gameObject.SetActive(false);
                 questions = MakeQuestion();
@@ -188,13 +193,16 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
                 ShowQuestion(questions[currentQuestionIndex]);
             }
         }
-        else if(currentQuestion.isCompleted)
+        else if (currentQuestion.isCompleted)
         {
             if (currentQuestion.isCorrect)
-                audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
             currentQuestionIndex += 1;
             ShowQuestion(questions[currentQuestionIndex]);
+            Debug.Log("else if");
         }
+        else
+            Debug.Log("else");
     }
 }
 #endregion
@@ -214,6 +222,10 @@ public abstract class Question<TAnswer>
     {
         isCorrect = CheckCorrect(answer);
         isCompleted = true;
+    }
+    public void ResetAnswer()
+    {
+        isCompleted = false;
     }
     protected abstract bool CheckCorrect(TAnswer answer);
 }

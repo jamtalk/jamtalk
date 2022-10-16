@@ -9,12 +9,15 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override eContents contents => eContents.JT_PL4_102;
     protected override int QuestionCount => 1;
     private int answerCount = 6;
+    protected override bool CheckOver() => answerCount == currentCnt;
     private DigraphsWordsData[] current;
+    private int currentCnt;
 
     public Image successEffect;
     public Text successText;
     public Image successImage;
     public Sprite successedImage;
+    public Sprite defaultImage;
     //public ImageButton[] buttons;
     public BubbileButtons[] buttons;
     public Image[] childrenImages;
@@ -23,7 +26,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
-
         for (int i = 0; i < QuestionCount; i++)
         {
             for (int j = 0; j < buttons.Length; j++)
@@ -34,11 +36,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
                 {
                     guideFinger.DoClick(() =>
                     {
-                        guideFinger.DoClick(() =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            ClickMotion(target);
-                        });
+                        guideFinger.gameObject.SetActive(false);
+                        ClickMotion(target);
                     });
                 });
                 while (!isNext) yield return null;
@@ -70,11 +69,14 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override void ShowQuestion(Question4_102 question)
     {
         Debug.Log(question.totalQuestion.Length);
+        currentCnt = 0;
         for(int i = 0; i < buttons.Length; i ++)
         {
             var data = question.totalQuestion[i];
+            buttons[i].GetComponent<Image>().sprite = defaultImage;
             buttons[i].sprite = data.sprite;
             buttons[i].data = data;
+            buttons[i].button.interactable = true;
             AddListener(buttons[i]);
         }
     }
@@ -82,6 +84,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     private void AddListener(BubbileButtons imageButton)
     { 
         var button = imageButton.button;
+        button.onClick.RemoveAllListeners();
+
         button.onClick.AddListener(() =>
         {
             ClickMotion(imageButton);
@@ -94,6 +98,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
     private void ClickMotion(BubbileButtons imageButton)
     {
+        currentCnt++;
+        Debug.Log(currentCnt);
         var button = imageButton.button;
         var data = imageButton.data;
 
@@ -110,6 +116,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         successEffect.gameObject.SetActive(true);
         audioPlayer.Play(data.act, () =>
         {
+            if (CheckOver() && isGuide)
+                currentQuestion.ResetCurrentIndex();
             successEffect.gameObject.SetActive(false);
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].gameObject.SetActive(true);
@@ -130,6 +138,7 @@ public class Question4_102 : MultiQuestion<DigraphsWordsData>
     {
     }
 
+    public void ResetCurrentIndex() { currentIndex = 0; }
     protected override bool CheckCorrect(DigraphsWordsData answer) => true;
     public override void SetAnswer(DigraphsWordsData answer)
     {
