@@ -21,7 +21,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     [SerializeField]
     private SlotMachine502 targetSlot;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

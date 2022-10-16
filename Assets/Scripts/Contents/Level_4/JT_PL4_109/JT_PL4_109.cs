@@ -19,7 +19,7 @@ public class JT_PL4_109 : BaseContents
     public Card114[] cards;
     public Sprite[] cardImages;
 
-    bool isNext = false;
+    
     bool isTurn = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {

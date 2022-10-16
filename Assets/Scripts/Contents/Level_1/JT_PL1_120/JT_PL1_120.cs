@@ -22,7 +22,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
     protected override eContents contents => eContents.JT_PL1_120;
 
 
-    bool isNext = false;
+    
     bool isRocketed = false;
     int guideIndex = 0;
     protected override IEnumerator ShowGuidnceRoutine()

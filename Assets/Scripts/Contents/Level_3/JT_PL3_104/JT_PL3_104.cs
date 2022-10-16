@@ -46,7 +46,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     public AudioClip putClip;
     public AudioClip errorClip;
 
-    bool isNext = false;
+    
     bool isSmall = false;
     private string digraphs = string.Empty;
     protected override IEnumerator ShowGuidnceRoutine()

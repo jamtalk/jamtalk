@@ -14,7 +14,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     public Image spatulaImage;
     public DoubleClick302[] pancakes;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

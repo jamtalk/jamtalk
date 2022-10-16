@@ -26,7 +26,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         }
     }
 
-    bool isNext = false;
+    
 
     protected override IEnumerator ShowGuidnceRoutine()
     {

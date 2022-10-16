@@ -22,7 +22,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     public BubbileButtons[] buttons;
     public Image[] childrenImages;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

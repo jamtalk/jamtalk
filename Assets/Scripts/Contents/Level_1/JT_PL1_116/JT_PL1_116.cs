@@ -27,7 +27,7 @@ public class JT_PL1_116 : BaseContents
 
     private List<AlphabetButton> selected = new List<AlphabetButton>();
     protected override int GetTotalScore() => upper.Length;
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

@@ -31,7 +31,7 @@ public class JT_PL5_105 : BaseContents
     public List<DoubleClick505> elements = new List<DoubleClick505>();
     private List<RectTransform> layoutList = new List<RectTransform>();
     List<string> questions = new List<string>();
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

@@ -15,7 +15,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     protected override eContents contents => eContents.JT_PL1_114;
 
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

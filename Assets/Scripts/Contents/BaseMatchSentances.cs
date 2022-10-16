@@ -32,7 +32,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
     protected virtual int QuestionCount => 6;
 
     bool isThrow = false;
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

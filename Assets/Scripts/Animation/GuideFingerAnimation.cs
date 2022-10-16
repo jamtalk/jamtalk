@@ -49,7 +49,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
         seq.Play();
     }
-    public void DoMoveCorrect(RectTransform[] move, Vector3 target, TweenCallback callback)
+    public void DoMove(RectTransform[] move, Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();

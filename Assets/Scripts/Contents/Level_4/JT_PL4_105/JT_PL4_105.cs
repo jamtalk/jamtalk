@@ -28,7 +28,7 @@ public class JT_PL4_105 : BaseContents
     public EventSystem eventSystem;
 
     private wordElement405 correctButtons;
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

@@ -22,7 +22,7 @@ public class JT_PL1_109 : BaseContents
 
     private List<eAlphabet> corretsAlphbet = new List<eAlphabet>();
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

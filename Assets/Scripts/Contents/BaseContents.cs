@@ -25,6 +25,7 @@ public abstract class BaseContents : MonoBehaviour
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
+    protected bool isNext = false;
     protected virtual void ShowResult()
     {
         GC.Collect();

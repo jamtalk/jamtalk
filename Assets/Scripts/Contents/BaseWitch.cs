@@ -29,7 +29,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     [SerializeField]
     private Animator ani;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

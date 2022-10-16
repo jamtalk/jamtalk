@@ -19,7 +19,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForEndOfFrame();

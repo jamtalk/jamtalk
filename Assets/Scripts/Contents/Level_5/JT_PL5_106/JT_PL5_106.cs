@@ -17,7 +17,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     public ResultStart506 resultStar;
     public CanvasScaler scaler;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

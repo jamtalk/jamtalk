@@ -16,7 +16,7 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     public Button charactorButton;
     public DoubleClickButton4_104[] buttons;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

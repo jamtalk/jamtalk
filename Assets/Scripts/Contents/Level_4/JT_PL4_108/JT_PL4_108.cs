@@ -30,7 +30,7 @@ public class JT_PL4_108 : BaseContents
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
     private List<SplitElement_408> optionElements = new List<SplitElement_408>();
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

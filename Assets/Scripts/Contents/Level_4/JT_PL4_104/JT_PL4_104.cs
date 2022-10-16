@@ -16,7 +16,7 @@ public class JT_PL4_104 : BaseContents
     private WordElement404 selectElement;
     public WordElement404[] elements;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

@@ -20,7 +20,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
     public AudioClip clipPop;
 
     private DigraphsWordsData current;
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForEndOfFrame();

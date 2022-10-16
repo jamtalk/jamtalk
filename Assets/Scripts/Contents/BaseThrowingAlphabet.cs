@@ -17,8 +17,6 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     protected override eGameResult GetResult() => eGameResult.Perfect;
 
     //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
-
-    private bool isNext = false;
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {

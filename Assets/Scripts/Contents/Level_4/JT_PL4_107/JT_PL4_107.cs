@@ -25,7 +25,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     private EventSystem eventSystem;
     private float colorFillamount = 0f;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

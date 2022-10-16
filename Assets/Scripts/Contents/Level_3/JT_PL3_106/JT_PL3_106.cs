@@ -26,7 +26,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     [SerializeField]
     private List<DoubleClick306> elements = new List<DoubleClick306>();
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

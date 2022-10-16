@@ -30,7 +30,7 @@ public class JT_PL3_105 : BaseContents
     public AudioClip effectClip;
 
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

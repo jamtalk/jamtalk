@@ -45,7 +45,7 @@ public class JT_PL2_103 : BaseContents
     private List<WordElement203> elements = new List<WordElement203>();
     private List<DragWordElement203> throwingElements = new List<DragWordElement203>();
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

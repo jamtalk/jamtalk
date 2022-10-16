@@ -25,7 +25,7 @@ public class JT_PL2_101 : BaseContents
     public AudioClip tabClip;
     public AudioClip dropClip;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

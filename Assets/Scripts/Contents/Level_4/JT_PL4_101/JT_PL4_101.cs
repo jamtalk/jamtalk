@@ -26,7 +26,7 @@ public class JT_PL4_101 : BaseContents
 
     private DigraphsWordsData data;
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

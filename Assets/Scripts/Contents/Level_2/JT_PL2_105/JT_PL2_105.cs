@@ -34,7 +34,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
 
-    bool isNext = false;
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
