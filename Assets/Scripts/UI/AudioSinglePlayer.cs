@@ -23,7 +23,7 @@ public class AudioSinglePlayer : MonoBehaviour
             StopCoroutine(stopRoutine);
             stopRoutine = null;
         }
-        if(overRoutine != null)
+        if (overRoutine != null)
         {
             StopCoroutine(overRoutine);
             overRoutine = null;
@@ -46,7 +46,16 @@ public class AudioSinglePlayer : MonoBehaviour
             player.clip = clip;
         Invoke("Play", delay);
     }
-    public void Play(string clip, float delay) => AudioClipManager.Instance.GetClip(clip, value => Play(value, delay));
+    public void Play(string clip, float delay)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(value, delay);
+        });
+    }
 
     public void Play(AudioClip clip = null)
     {
@@ -56,36 +65,82 @@ public class AudioSinglePlayer : MonoBehaviour
             player.clip = clip;
         player.Play();
     }
-    public void Play(string clip) => AudioClipManager.Instance.GetClip(clip, Play);
+    public void Play(string clip)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(value);
+        });
+    }
 
     public void Play(AudioClip clip, Action onOver)
     {
         Play(clip);
         StartCoroutine(OnOverRoutine(onOver));
     }
-    public void Play(string clip, Action onOver)=>AudioClipManager.Instance.GetClip(clip, value => Play(value, onOver));
+    public void Play(string clip, Action onOver)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(value, onOver);
+        });
+    }
+
 
     public void Play(float duration, AudioClip clip = null)
     {
         Play(clip);
         stopRoutine = StartCoroutine(StopRoutine(duration));
     }
-    public void Play(float duration, string clip) => AudioClipManager.Instance.GetClip(clip, value => Play(duration, value));
+    public void Play(float duration, string clip)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(duration, value);
+        });
+    }
 
     public void Play(float duration, float delay, AudioClip clip = null)
     {
         Play(clip, delay);
         stopRoutine = StartCoroutine(StopRoutine(duration));
     }
-    public void Play(float duration, float delay, string clip = null) => AudioClipManager.Instance.GetClip(clip, value => Play(duration, delay, value));
+    public void Play(float duration, float delay, string clip = null)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(delay, value);
+        });
+    }
 
     public void Play(float duration, AudioClip clip, Action onOver)
     {
         Play(clip);
         stopRoutine = StartCoroutine(OnOverRoutine(duration, onOver));
     }
-    public void Play(float duration, string clip, Action onOver) => AudioClipManager.Instance.GetClip(clip, value => Play(duration, value, onOver));
-    
+    public void Play(float duration, string clip, Action onOver)
+    {
+        AudioClipManager.Instance.GetClip(clip, value =>
+        {
+            if (value == null)
+                AndroidPluginManager.Instance.PlayTTS(clip);
+            else
+                Play(duration ,value, onOver);
+        });
+    }
+
     IEnumerator StopRoutine(float duration)
     {
         yield return new WaitForSeconds(duration);
