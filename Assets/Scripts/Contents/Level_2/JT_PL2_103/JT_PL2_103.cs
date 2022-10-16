@@ -13,7 +13,7 @@ public class JT_PL2_103 : BaseContents
     protected override int GetTotalScore() => questionCount;
 
     private int index = 0;
-    private int questionCount => 1;
+    private int questionCount => 10;
     private int wordsCount = 5;
 
 
@@ -25,8 +25,8 @@ public class JT_PL2_103 : BaseContents
     public RectTransform shotThrowParent;
     public RectTransform longThrowParent;
 
-    public GameObject prefabWordElement;
-    public GameObject prefabDragWordElement;
+    public WordElement203 prefabWordElement;
+    public WordElement203 prefabDragWordElement;
 
     [Header("UI")]
     public GameObject popupCureent;
@@ -50,25 +50,35 @@ public class JT_PL2_103 : BaseContents
     {
         yield return base.ShowGuidnceRoutine();
 
-        foreach(var item in questions)
+        foreach (var item in questions)
         {
             var dragTarget = throwingElements.Where(x => x.gameObject.activeSelf)
                 .OrderBy(x => Random.Range(0, 100)).First();
+            Debug.Log(dragTarget.gameObject.activeSelf);
             var dropTarget = elements.Where(x => x.value == dragTarget.value).First();
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
 
             while (!isNext) yield return null;
-            isNext = true;
+            isNext = false;
 
             guideFinger.DoMove(dragTarget.transform.position, () =>
             {
                 guideFinger.DoPress(() =>
                 {
-                    guideFinger.DoMove(dropTarget.transform.position, () =>
+                    guideFinger.DoMove(dragTarget.gameObject, dropTarget.transform.position, () =>
                     {
-
+                        guideFinger.gameObject.SetActive(false);
+                        dragTarget.gameObject.SetActive(false);
+                        dropTarget.visible = true;
+                        isNext = true;
                     });
                 });
             });
+
+            while (!isNext) yield return null;
+            isNext = false;
+            Debug.Log(dragTarget.data.clip);
+            OnDrop(dragTarget);
 
             while (true) yield return null;
         }
@@ -128,17 +138,16 @@ public class JT_PL2_103 : BaseContents
             WordElement203 element;
             element = Instantiate(prefabWordElement, parent).GetComponent<WordElement203>();
             if (type == eVowelType.Long)
-                element.GetComponent<Image>().sprite = longImage;
-            
+                element.image.sprite = longImage;
+
             element.Init(questions[i]);
             element.visible = false;
             elements.Add(element);
-
             // drag elemet 생성 
             var dragElement = Instantiate(prefabDragWordElement, dragParent).GetComponent<DragWordElement203>();
-            dragElement.Init(elements[i].value);
+            dragElement.Init(elements[i].data);
             if(type == eVowelType.Long)
-                dragElement.GetComponent<Image>().sprite = longImage;
+                dragElement.image.sprite = longImage;
 
             dragElement.visible = true;
             throwingElements.Add(dragElement);
@@ -151,14 +160,18 @@ public class JT_PL2_103 : BaseContents
             throwingElements[i].transform.position = elements[i].transform.position;
         }
         yield return new WaitForEndOfFrame();
+
         var unionElements = elements.Union(throwingElements).ToArray();
         foreach (var item in unionElements)
             item.SetSize();
 
         yield return new WaitForEndOfFrame();
+
         shotThrowParent.GetComponent<HorizontalLayoutGroup>().enabled = false;
         longThrowParent.GetComponent<HorizontalLayoutGroup>().enabled = false;
         eventSystem.enabled = false;
+
+        yield return new WaitForEndOfFrame();
 
         thrower.Init(list.ToArray());
         thrower.Throwing(delay: 3f, rotating: false, onTrowed: () =>
@@ -180,40 +193,44 @@ public class JT_PL2_103 : BaseContents
     private void OnDrop(WordElement203 target)
     {
         index++;
-        for (int i = 0; i < questions.Length; i++)
-        {
-            if (questions[i].key.Contains(target.textValue.text))
-                popupImage.sprite = questions[i].sprite;
-        }
+        popupImage.sprite = questions.Where(x => x.key == target.value).First().sprite;
         popupImage.preserveAspect = true;
         popupCureent.GetComponentInChildren<Text>().text = target.textValue.text;
         popupCureent.gameObject.SetActive(true);
 
-        audioPlayer.Play(target.data.clip);
-        StartCoroutine(WaitSeconds());
+        audioPlayer.Play(target.data.clip, () =>
+        {
+            eventSystem.enabled = false;
+            audioPlayer.Play(1f, currentClip, () =>
+            {
+                isNext = true;
+                eventSystem.enabled = true;
+                popupCureent.gameObject.SetActive(false);
+                if (CheckOver())
+                {
+                    if (!isGuide)
+                        ShowResult();
+                    else
+                    {
+                        isGuide = false;
+                        index = 0;
+
+
+                        foreach (var item in elements)
+                            Destroy(item.gameObject);
+                        foreach (var item in throwingElements)
+                            Destroy(item.gameObject);
+
+                        elements.Clear();
+                        throwingElements.Clear();
+
+                        StartContents();
+                    }
+                }
+            });
+        });
 
         target.visible = true;
-    }
-    private IEnumerator WaitSeconds()
-    {
-        eventSystem.enabled = false;
-        yield return new WaitForSecondsRealtime(1);
-        audioPlayer.Play(1f, currentClip, () =>
-        {
-            eventSystem.enabled = true;
-            popupCureent.gameObject.SetActive(false);
-            if (CheckOver())
-                if(!isGuide)
-                    ShowResult();
-                else
-                {
-                    index = 0;
-                    elements.Clear();
-                    throwingElements.Clear();
-
-                    StartContents();
-                }
-        });
     }
     private void OnClickCurrent()
     {

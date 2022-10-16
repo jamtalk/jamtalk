@@ -19,7 +19,8 @@ public class WordElement203 : MonoBehaviour
             textValue.color = value ? Color.black : color;
         }
     }
-    public RectTransform textRT => textValue.GetComponent<RectTransform>();
+    public RectTransform textRT;
+    public Image image;
     public string value { get; private set; }
     public VowelWordsData data { get; private set; }
     public void Init(VowelWordsData data)
@@ -40,8 +41,11 @@ public class WordElement203 : MonoBehaviour
     public void SetSize()
     {
         var width = textRT.rect.width;
+        var height = textRT.rect.height;
         var size = GetComponent<RectTransform>().sizeDelta;
         size.x = width + 20f;
+        if(size.y < 0)
+            size.y = height * -1;
         GetComponent<RectTransform>().sizeDelta = size;
     }
 }
