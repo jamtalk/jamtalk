@@ -41,11 +41,11 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
             Debug.Log("I : " + i);
             var target = elements.Where(x => x.data == currentQuestion.correct).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoPress(() =>
                 {
-                    guideFinger.DoMoveCorrect(target.gameObject, prefabPot.transform.position, () =>
+                    guideFinger.DoMove(target.gameObject, prefabPot.transform.position, () =>
                     {
                         guideFinger.gameObject.SetActive(false);
                         target.gameObject.SetActive(false);

@@ -45,7 +45,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
             var target = elements.Where(x => x.data == currentQuestion.correct).First();
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

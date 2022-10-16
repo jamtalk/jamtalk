@@ -37,7 +37,7 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
             while (!isRocketed) yield return null;
             isRocketed = false;
 
-            guideFinger.DoMoveCorrect(item.transform.position, () =>
+            guideFinger.DoMove(item.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

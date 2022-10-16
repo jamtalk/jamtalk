@@ -28,7 +28,7 @@ public class GuideFingerAnimation : MonoBehaviour
         tween.SetLoops(-1, LoopType.Yoyo);
     }
 
-    public void DoMoveCorrect(Vector3 target ,TweenCallback callback)
+    public void DoMove(Vector3 target ,TweenCallback callback)
     {
         gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
@@ -37,7 +37,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
         seq.Play();
     }
-    public void DoMoveCorrect(GameObject move, Vector3 target, TweenCallback callback)
+    public void DoMove(GameObject move, Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);
         var moveTarget = move.GetComponent<RectTransform>();

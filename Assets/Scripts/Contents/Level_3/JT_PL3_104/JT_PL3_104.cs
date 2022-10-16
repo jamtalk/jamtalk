@@ -59,7 +59,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {
@@ -82,7 +82,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
             var smallTarget = bubbles.Where(x => x.textValue.text == digraphs).First();
 
             guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMoveCorrect(smallTarget.transform.position, () =>
+            guideFinger.DoMove(smallTarget.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

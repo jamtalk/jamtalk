@@ -45,6 +45,35 @@ public class JT_PL2_103 : BaseContents
     private List<WordElement203> elements = new List<WordElement203>();
     private List<DragWordElement203> throwingElements = new List<DragWordElement203>();
 
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        foreach(var item in questions)
+        {
+            var dragTarget = throwingElements.Where(x => x.gameObject.activeSelf)
+                .OrderBy(x => Random.Range(0, 100)).First();
+            var dropTarget = elements.Where(x => x.value == dragTarget.value).First();
+
+            while (!isNext) yield return null;
+            isNext = true;
+
+            guideFinger.DoMove(dragTarget.transform.position, () =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    guideFinger.DoMove(dropTarget.transform.position, () =>
+                    {
+
+                    });
+                });
+            });
+
+            while (true) yield return null;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -139,6 +168,7 @@ public class JT_PL2_103 : BaseContents
             {
                 throwingElements[i].SetDefaultPosition();
             }
+            isNext = true;
         });
     }
 

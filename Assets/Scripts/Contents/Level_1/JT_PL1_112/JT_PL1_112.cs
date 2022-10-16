@@ -30,11 +30,11 @@ public class JT_PL1_112 : BaseContents
             var drag = drags.Where(x => x.alphabet == guideCorrect.alphabet).First();
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(drag.transform.position, () =>
+            guideFinger.DoMove(drag.transform.position, () =>
             {
                 guideFinger.transform.DOScale(.7f, 1f);
 
-                guideFinger.DoMoveCorrect(drag.gameObject ,guideCorrect.transform.position, () =>
+                guideFinger.DoMove(drag.gameObject ,guideCorrect.transform.position, () =>
                 {
                     guideCorrect.isOn = true;
 

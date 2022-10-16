@@ -25,7 +25,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
             {
                 var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
 
-                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                guideFinger.DoMove(target.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

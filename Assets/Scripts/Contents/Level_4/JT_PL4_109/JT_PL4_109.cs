@@ -37,7 +37,7 @@ public class JT_PL4_109 : BaseContents
 
             for (int j = 0; j < targets.Count; j++)
             {
-                guideFinger.DoMoveCorrect(targets[j].transform.position, () =>
+                guideFinger.DoMove(targets[j].transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

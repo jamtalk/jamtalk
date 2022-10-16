@@ -39,7 +39,7 @@ public class JT_PL4_104 : BaseContents
 
             foreach (var item in targets)
             {
-                guideFinger.DoMoveCorrect(item.transform.position, () =>
+                guideFinger.DoMove(item.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

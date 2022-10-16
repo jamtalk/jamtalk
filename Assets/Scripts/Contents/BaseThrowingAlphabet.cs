@@ -34,7 +34,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
             guideFinger.gameObject.SetActive(true);
 
             audioPlayer.Play(GameManager.Instance.GetResources(toggles[i].value).AudioData.phanics);
-            guideFinger.DoMoveCorrect(toggles[i].throwElement.gameObject, toggles[i].audioPlayer.transform.position, () =>
+            guideFinger.DoMove(toggles[i].throwElement.gameObject, toggles[i].audioPlayer.transform.position, () =>
             {
                 toggles[i].drop.Drop();
                 toggles[i].throwElement.gameObject.SetActive(false);

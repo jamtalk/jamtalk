@@ -29,7 +29,7 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
         {
             for(int j = 0; j < elements.Count; j++)
             {
-                guideFinger.DoMoveCorrect(elements[j].transform.position, () =>
+                guideFinger.DoMove(elements[j].transform.position, () =>
                 {
                     guideFinger.DoPress(() =>
                     {

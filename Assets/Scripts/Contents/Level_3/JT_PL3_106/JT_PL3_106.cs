@@ -38,7 +38,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
             var target = elements.Where(x => x.value.key == currentQuestion.correct.key).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

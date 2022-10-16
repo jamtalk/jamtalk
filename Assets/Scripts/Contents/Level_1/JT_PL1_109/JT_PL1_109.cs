@@ -36,7 +36,7 @@ public class JT_PL1_109 : BaseContents
             var first = toggles.Where(x => x.value == corretsAlphbet[0]).First();
             var isPress = false;
 
-            guideFinger.DoMoveCorrect(first.transform.position, () =>
+            guideFinger.DoMove(first.transform.position, () =>
             {
                 first.isOn = true;
                 guideFinger.DoPress(() => isPress = true);
@@ -50,7 +50,7 @@ public class JT_PL1_109 : BaseContents
                 var target = toggles
                     .Where(x => !x.isOn)
                     .Where(x => x.value == corretsAlphbet[j]).First();
-                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                guideFinger.DoMove(target.transform.position, () =>
                 {
                     index++;
                     target.isOn = true;

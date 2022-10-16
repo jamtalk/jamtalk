@@ -35,7 +35,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
                 if (buttons[i].data == currentQuestion.currentCorrect)
                 {
                     guideFinger.gameObject.SetActive(true);
-                    guideFinger.DoMoveCorrect(buttons[i].transform.position, () =>
+                    guideFinger.DoMove(buttons[i].transform.position, () =>
                     {
                         guideFinger.DoClick(() =>
                         {

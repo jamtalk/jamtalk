@@ -51,7 +51,7 @@ public class JT_PL1_115 : BaseContents
             foreach (var item in guideCards)
             {
                 guideFinger.gameObject.SetActive(true);
-                guideFinger.DoMoveCorrect(item.transform.position, () =>
+                guideFinger.DoMove(item.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

@@ -52,7 +52,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {
@@ -75,7 +75,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
             var smallTarget = bubbles.Where(x => x.textValue.text == GameManager.Instance.currentAlphabet.ToString().ToLower()).First();
 
             guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMoveCorrect(smallTarget.transform.position, () =>
+            guideFinger.DoMove(smallTarget.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

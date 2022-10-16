@@ -28,7 +28,7 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
 
             var target = buttons.Where(x => x.data.key == currentQuestion.correct.key).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

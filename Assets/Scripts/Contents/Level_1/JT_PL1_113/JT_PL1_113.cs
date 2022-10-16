@@ -29,7 +29,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             target.y += .5f;
 
             var isNext = false;
-            guideFinger.DoMoveCorrect(target, () =>
+            guideFinger.DoMove(target, () =>
             {
                 guideFinger.DoClick(() =>
                 {

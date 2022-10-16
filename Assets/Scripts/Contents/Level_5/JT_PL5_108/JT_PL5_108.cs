@@ -44,7 +44,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
             }
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
+            guideFinger.DoMove(buttonQuestions[correctIndex].transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

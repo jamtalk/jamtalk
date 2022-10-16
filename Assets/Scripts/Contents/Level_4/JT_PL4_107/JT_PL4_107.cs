@@ -32,7 +32,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
 
         for(int i = 0; i < QuestionCount; i ++)
         {
-            guideFinger.DoMoveCorrect(buttonCharactor.transform.position, () => isNext = true);
+            guideFinger.DoMove(buttonCharactor.transform.position, () => isNext = true);
             for (float j = colorFillamount; j < .9f; j += .3f)
             {
                 while (!isNext) yield return null;
@@ -45,7 +45,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
 
             var target = buttonQuestions.Where(x => x.name == questions[currentQuestionIndex].correct.key).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

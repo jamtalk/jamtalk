@@ -44,7 +44,7 @@ public class JT_PL3_105 : BaseContents
             while (!isNext) yield return null;
             isNext = false;
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

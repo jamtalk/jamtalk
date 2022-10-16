@@ -43,7 +43,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
             }
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(buttonQuestions[correctIndex].transform.position, () =>
+            guideFinger.DoMove(buttonQuestions[correctIndex].transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

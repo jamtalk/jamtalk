@@ -40,7 +40,7 @@ public class JT_PL4_108 : BaseContents
             for (int i = 0; i < optionElements.Count; i++)
             {
                 var target = optionElements.Where(x => x.value == answerElements[i].value).First();
-                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                guideFinger.DoMove(target.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

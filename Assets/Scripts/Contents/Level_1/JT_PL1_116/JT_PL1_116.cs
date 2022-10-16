@@ -54,7 +54,7 @@ public class JT_PL1_116 : BaseContents
             {
                 guideFinger.gameObject.SetActive(true);
 
-                guideFinger.DoMoveCorrect(item.transform.position, () =>
+                guideFinger.DoMove(item.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

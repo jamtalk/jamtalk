@@ -38,7 +38,7 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
 
             guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

@@ -30,7 +30,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         {
             var correctCard = cards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
             var isNext = false;
-            guideFinger.DoMoveCorrect(correctCard.transform.position, () =>
+            guideFinger.DoMove(correctCard.transform.position, () =>
             {
                 isStart = true;
                 guideFinger.DoClick(() =>

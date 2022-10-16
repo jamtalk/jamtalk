@@ -30,7 +30,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
             {
                 var target = buttons.Where(x => x.button.interactable).OrderBy(x => Random.Range(0, 100)).First();
 
-                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                guideFinger.DoMove(target.transform.position, () =>
                 {
                     guideFinger.DoClick(() =>
                     {

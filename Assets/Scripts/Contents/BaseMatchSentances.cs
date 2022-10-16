@@ -51,11 +51,11 @@ public abstract class BaseMatchSentances<T> : BaseContents
                 .OrderBy(x => Random.Range(0, 100)).First();
             var target = elements.Where(x => x.value == throing.value).First();
 
-            guideFinger.DoMoveCorrect(throing.transform.position, (() =>
+            guideFinger.DoMove(throing.transform.position, (() =>
             {
                 guideFinger.DoPress(() =>
                 {
-                    guideFinger.DoMoveCorrect(throing.gameObject, target.transform.position, () =>
+                    guideFinger.DoMove(throing.gameObject, target.transform.position, () =>
                     {
                         guideFinger.gameObject.SetActive(false);
                         throing.gameObject.SetActive(false);

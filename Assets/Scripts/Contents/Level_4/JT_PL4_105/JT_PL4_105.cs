@@ -40,7 +40,7 @@ public class JT_PL4_105 : BaseContents
             isNext = false;
             var target = correctButtons.values.Where(x => x.text == current.IncludedDigraphs).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

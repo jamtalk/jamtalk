@@ -26,7 +26,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     {
         yield return base.ShowGuidnceRoutine();
 
-        guideFinger.DoMoveCorrect(buttonSloting.transform.position, () => isNext = true);
+        guideFinger.DoMove(buttonSloting.transform.position, () => isNext = true);
         while (!isNext) yield return null;
         isNext = false;
 

@@ -39,13 +39,13 @@ public class JT_PL2_101 : BaseContents
 
             guideFinger.gameObject.SetActive(true);
             Debug.LogFormat("{0}, {1}", puzzle.name, target.name);
-            guideFinger.DoMoveCorrect(puzzle.rt.position, () =>
+            guideFinger.DoMove(puzzle.rt.position, () =>
             {
                 guideFinger.DoPress(() =>
                 {
                     OnDrag(puzzle);
 
-                    guideFinger.DoMoveCorrect(puzzle.gameObject, target.rt.position, () =>
+                    guideFinger.DoMove(puzzle.gameObject, target.rt.position, () =>
                     {
                         guideFinger.gameObject.SetActive(false);
                         guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);

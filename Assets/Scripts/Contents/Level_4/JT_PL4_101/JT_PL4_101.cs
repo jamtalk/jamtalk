@@ -33,7 +33,7 @@ public class JT_PL4_101 : BaseContents
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            guideFinger.DoMoveCorrect(headTexts[i == 0 ? 0 : 2].transform.position, () =>
+            guideFinger.DoMove(headTexts[i == 0 ? 0 : 2].transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

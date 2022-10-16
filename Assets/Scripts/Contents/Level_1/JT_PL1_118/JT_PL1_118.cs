@@ -29,7 +29,7 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
             var target = buttonsAnswer.Where(x => x.name == questions[i].correct.key).First();
             guideFinger.gameObject.SetActive(true);
             Debug.Log(questions[i].correct.key);
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {

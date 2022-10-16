@@ -29,11 +29,11 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
             guideFinger.gameObject.SetActive(true);
             var target = drags.Where(x => x.data == currentQuestion.correct).First();
 
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoPress(() =>
                 {
-                    guideFinger.DoMoveCorrect(target.gameObject, ship.transform.position, () =>
+                    guideFinger.DoMove(target.gameObject, ship.transform.position, () =>
                     {
                         guideFinger.gameObject.SetActive(false);
                         target.gameObject.SetActive(false);

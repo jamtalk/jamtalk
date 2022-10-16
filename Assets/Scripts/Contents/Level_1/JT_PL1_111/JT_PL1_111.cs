@@ -35,7 +35,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
                 if (buttons[i].data == currentQuestion.currentCorrect)
                 {
                     guideFinger.gameObject.SetActive(true);
-                    guideFinger.DoMoveCorrect(buttons[i].transform.position, () =>
+                    guideFinger.DoMove(buttons[i].transform.position, () =>
                     {
                         guideFinger.DoClick(() =>
                         {

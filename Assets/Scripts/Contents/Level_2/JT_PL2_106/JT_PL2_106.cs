@@ -49,7 +49,7 @@ public class JT_PL2_106 : BaseContents
             var isSpin = false;
             guideFinger.gameObject.SetActive(true);
             var spinButtonRt = spinButton.GetComponentInChildren<Text>();
-            guideFinger.DoMoveCorrect(spinButtonRt.transform.position, () =>
+            guideFinger.DoMove(spinButtonRt.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {
@@ -67,7 +67,7 @@ public class JT_PL2_106 : BaseContents
             var target = textList[currentIndex].data.VowelType == eVowelType.Short ? shortButton : longButton;
 
             guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMoveCorrect(target.transform.position, () =>
+            guideFinger.DoMove(target.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {
