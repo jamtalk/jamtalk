@@ -8,5 +8,6 @@ public class DigraphsBingoButton : BaseBingoButton<DigraphsWordsData, Text>
     protected override void SetViewer()
     {
         viewer.text = value.key;
+        strValue = value.key;
     }
 }

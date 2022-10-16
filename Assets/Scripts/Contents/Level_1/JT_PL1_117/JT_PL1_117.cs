@@ -8,33 +8,9 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
 {
     protected override eContents contents => eContents.JT_PL1_117;
 
-    protected override IEnumerator ShowGuidnceRoutine()
+    protected override string GetValue()
     {
-        yield return base.ShowGuidnceRoutine();
-
-        for (int i = 0; i < board.size; i++)
-        {
-            while (!isNext) yield return null;
-            isNext = false;
-            var target = board.buttons.Where(x => x.value.Alphabet == currentQuestion.Alphabet).First();
-
-            guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMove(target.transform.position, () =>
-            {
-                guideFinger.DoClick(() =>
-                {
-                    isNext = true;
-                    currentIndex += 1;
-                    target.GuideClick();
-                });
-            });
-            while (!isNext) yield return null;
-            isNext = false;
-            yield return new WaitForSecondsRealtime(1.5f);
-
-            if (i < board.size)
-                PlaySound();
-        }
+        return currentQuestion.Alphabet.ToString();
     }
     protected override AlphabetData[] correctsTarget
     {

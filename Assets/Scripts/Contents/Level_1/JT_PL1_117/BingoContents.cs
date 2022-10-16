@@ -26,6 +26,37 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
 
     protected TValue[] _correctsTarget = null;
     protected abstract TValue[] correctsTarget { get; }
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for (int i = 0; i < board.size; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+            Debug.LogFormat("{0}, {1}", board.buttons[0].strValue, GetValue());
+            var target = board.buttons.Where(x=>!x.isOn).Where(x => x.strValue == GetValue()).First();
+
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMove(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    isNext = true;
+                    currentIndex += 1;
+                    target.GuideClick();
+                });
+            });
+            while (!isNext) yield return null;
+            isNext = false;
+            yield return new WaitForSecondsRealtime(1.5f);
+
+            if (i < board.size)
+                PlaySound();
+        }
+    }
+    protected abstract string GetValue();
     protected override void Awake()
     {
         board.ResizeBoard(()=>
@@ -48,6 +79,7 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         {
             questions = GetQuestion();
 
+            scoreBoard.GuideScore(0);
             currentIndex = 0;
             PlayClip();
             board.Init(questions, corrects, IsCurrentAnswer, OnClick);
@@ -183,12 +215,12 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
                 ShowResult();
             else
             {
+                guideFinger.gameObject.SetActive(false);
                 ShowBingo(() =>
                 {
                     isGuide = false;
                     scoreBoard.GuideScore(board.size * 100);
                     bingo.gameObject.SetActive(false);
-                    guideFinger.gameObject.SetActive(false);
                     ResizeBoard();
                 });
             }

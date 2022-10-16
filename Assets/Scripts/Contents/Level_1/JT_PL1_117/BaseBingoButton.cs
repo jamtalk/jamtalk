@@ -18,6 +18,7 @@ public abstract class BaseBingoButton<TValue, TViewer> : MonoBehaviour
     public AudioClip stampingClip;
     public bool isOn { get; private set; }
     protected Func<TValue, bool> isCorrect;
+    public string strValue;
     protected virtual void Awake()
     {
         button.onClick.AddListener(OnClick);

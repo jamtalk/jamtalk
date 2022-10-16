@@ -40,7 +40,12 @@ public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text
             .ToArray(); 
     }
 
-    protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip);
+    protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip, () => isNext = true);
 
     protected override bool IsCurrentAnswer(AlphabetWordsData value) => value.key == currentQuestion.key;
+
+    protected override string GetValue()
+    {
+        return currentQuestion.key;
+    }
 }

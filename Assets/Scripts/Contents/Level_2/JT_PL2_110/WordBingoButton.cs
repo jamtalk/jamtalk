@@ -8,5 +8,6 @@ public class WordBingoButton : BaseBingoButton<AlphabetWordsData, Text>
     protected override void SetViewer()
     {
         viewer.text = value.key;
+        strValue = value.key;
     }
 }
