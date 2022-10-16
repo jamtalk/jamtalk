@@ -12,25 +12,29 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
     {
         yield return base.ShowGuidnceRoutine();
 
-        //for (int i = 0; i < board.size; i++)
-        //{
-        //    var isNext = false;
-        //    var target = board.buttons.Where(x => x.value.Alphabet == currentQuestion.Alphabet).First();
+        for (int i = 0; i < board.size; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+            var target = board.buttons.Where(x => x.value.Alphabet == currentQuestion.Alphabet).First();
 
-        //    guideFinger.gameObject.SetActive(true);
-        //    guideFinger.DoMoveCorrect(target.transform.position, () =>
-        //    {
-        //        guideFinger.DoClick(() =>
-        //        {
-        //            isNext = true;
-        //            currentIndex += 1;
-        //            scoreBoard.AddScore(100);
-        //            target.GuideClick();
-        //        });
-        //    });
-        //    while (!isNext) yield return null;
-        //    yield return new WaitForSecondsRealtime(1.5f);
-        //}
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMove(target.transform.position, () =>
+            {
+                guideFinger.DoClick(() =>
+                {
+                    isNext = true;
+                    currentIndex += 1;
+                    target.GuideClick();
+                });
+            });
+            while (!isNext) yield return null;
+            isNext = false;
+            yield return new WaitForSecondsRealtime(1.5f);
+
+            if (i < board.size)
+                PlaySound();
+        }
     }
     protected override AlphabetData[] correctsTarget
     {
@@ -67,7 +71,7 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
             .ToArray();
     }
 
-    protected override void PlayClip() => audioPlayer.Play(currentQuestion.AudioData.clip);
+    protected override void PlayClip() => audioPlayer.Play(currentQuestion.AudioData.clip, () => isNext = true);
 
     protected override bool IsCurrentAnswer(AlphabetData value) => value.Alphabet == currentQuestion.Alphabet;
 }

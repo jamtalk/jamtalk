@@ -52,7 +52,7 @@ public abstract class BaseBingoButton<TValue, TViewer> : MonoBehaviour
     public void GuideClick()
     {
         button.interactable = false;
-        Stamping(() => onClick?.Invoke(value));
+        Stamping();
     }
     private void Stamping(TweenCallback onStamped = null)
     {

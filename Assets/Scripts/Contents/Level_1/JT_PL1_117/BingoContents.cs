@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
+using System;
+using Random = UnityEngine.Random;
 
 public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseContents
     where TBoard : BaseBingoBoard<TValue, TViewer, TButton>
@@ -36,6 +38,18 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
 
             currentIndex = 0;
             PlaySound();
+            board.Init(questions, corrects, IsCurrentAnswer, OnClick);
+        });
+    }
+
+    protected void ResizeBoard(Action action =null)
+    {
+        board.ResizeBoard(() =>
+        {
+            questions = GetQuestion();
+
+            currentIndex = 0;
+            PlayClip();
             board.Init(questions, corrects, IsCurrentAnswer, OnClick);
         });
     }
@@ -133,12 +147,17 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     }
     protected override void ShowResult()
     {
+        Debug.Log("showResult");
+        ShowBingo(() => base.ShowResult());
+    }
+    protected void ShowBingo(TweenCallback callback = null)
+    {
         bingo.gameObject.SetActive(true);
 
         var tween = bingo.DOScale(1.5f, .5f);
         tween.SetEase(Ease.Linear);
         tween.SetLoops(2, LoopType.Yoyo);
-        tween.onComplete += () => base.ShowResult();
+        tween.onComplete += callback;
         tween.Play();
     }
     protected abstract bool IsCurrentAnswer(TValue value);
@@ -164,11 +183,14 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
                 ShowResult();
             else
             {
-                questions = GetQuestion();
-
-                currentIndex = 0;
-                PlaySound();
-                board.Init(questions, corrects, IsCurrentAnswer, OnClick);
+                ShowBingo(() =>
+                {
+                    isGuide = false;
+                    scoreBoard.GuideScore(board.size * 100);
+                    bingo.gameObject.SetActive(false);
+                    guideFinger.gameObject.SetActive(false);
+                    ResizeBoard();
+                });
             }
         }
         else

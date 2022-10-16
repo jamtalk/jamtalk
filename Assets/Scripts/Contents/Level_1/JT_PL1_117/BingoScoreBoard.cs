@@ -33,4 +33,9 @@ public class BingoScoreBoard : MonoBehaviour
         if (incorrectCount == toggles.Length)
             onFailed?.Invoke();
     }
+
+    public void GuideScore(int score)
+    {
+        this.score = score;
+    }
 }
