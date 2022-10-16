@@ -19,10 +19,65 @@ public class JT_PL1_109 : BaseContents
 
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
     protected override int GetTotalScore() => questions.Length;
+
+    private List<eAlphabet> corretsAlphbet = new List<eAlphabet>();
+
+    bool isNext = false;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < questionCount; i++)
+        {
+            while (!isNext) yield return null;
+            isNext = false;
+
+            var targets = currentQuestion.word.key;
+            var first = toggles.Where(x => x.value == corretsAlphbet[0]).First();
+            var isPress = false;
+
+            guideFinger.DoMoveCorrect(first.transform.position, () =>
+            {
+                first.isOn = true;
+                guideFinger.DoPress(() => isPress = true);
+            });
+
+            while (!isPress) yield return null;
+
+            var index = 1;
+            for (int j = 1; j < targets.Length; j++)
+            {
+                var target = toggles
+                    .Where(x => !x.isOn)
+                    .Where(x => x.value == corretsAlphbet[j]).First();
+                guideFinger.DoMoveCorrect(target.transform.position, () =>
+                {
+                    index++;
+                    target.isOn = true;
+                });
+
+                while (!target.isOn) yield return null;
+            }
+
+            while (index != targets.Length) yield return null;
+
+            guideFinger.gameObject.SetActive(false);
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+            OnEndDrag();
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
 
+        MakeQuestion();
+
+        
+        questionButton.button.onClick.AddListener(() => audioPlayer.Play(currentQuestion.word.clip));
+    }
+    private Question109[] MakeQuestion()
+    {
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         questions = targets
             .SelectMany(x =>
@@ -37,14 +92,16 @@ public class JT_PL1_109 : BaseContents
             toggles[i].onEndDrag += OnEndDrag;
 
         ShowQuestion();
-        questionButton.button.onClick.AddListener(() => audioPlayer.Play(currentQuestion.word.clip));
+
+        return questions;
     }
     private void ShowQuestion()
     {
         var word = currentQuestion.word;
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].Init(currentQuestion.alphabets[i], i);
-        alphabetPlayer.Play(currentQuestion.word.clip);
+        alphabetPlayer.Play(currentQuestion.word.clip, () => isNext = true);
+        corretsAlphbet.Clear();
         for(int i = 0;i < correct.Length; i++)
         {
             if (word.key.Length > i)
@@ -54,6 +111,7 @@ public class JT_PL1_109 : BaseContents
                 correct[i].gameObject.SetActive(true);
                 correct[i].sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, type, eAlphabet);
                 correct[i].preserveAspect = true;
+                corretsAlphbet.Add(eAlphabet);
             }
             else
             {
@@ -90,17 +148,32 @@ public class JT_PL1_109 : BaseContents
                 currentQuestion.isCompleted = true;
                 if (CheckOver())
                 {
-                    ShowResult();
+                    if(!isGuide)
+                        ShowResult();
+                    else
+                    {
+                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                        {
+                            currentIndex = 0;
+                            isGuide = false;
+                            guideFinger.gameObject.SetActive(false);
+                            questions = MakeQuestion();
+                            ShowQuestion();
+                        });
+                    }
                 }
                 else
                 {
+                    Debug.Log("!checkOver");
                     currentIndex = questions
                         .Where(x => !x.isCompleted)
                         .Select(x => questions.ToList().IndexOf(x))
                         .OrderBy(x => x)
                         .First();
-                    audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect());
-                    ShowQuestion();
+                    audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect(), () =>
+                    {
+                        ShowQuestion();
+                    });
                 }
                 return;
             }
@@ -147,7 +220,7 @@ public class Question109
             .OrderBy(x => Random.Range(0f, 100f))
             .ToArray();
         var vaildPos = new List<int[]>();
-        //세로 정답지 추가
+        //???? ?????? ????
         if (word.key.Length < height)
         {
             for(int i = 0;i < width; i++)
@@ -163,7 +236,7 @@ public class Question109
                 }
             }
         }
-        //가로 정답지 추가
+        //???? ?????? ????
         for (int i = 0; i < height; i++)
         {
             for (int j = 0; j < width - word.key.Length; j++)
