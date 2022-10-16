@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 1200480712}
   - component: {fileID: 1200480711}
   - component: {fileID: 1200480710}
-  - component: {fileID: 1200480713}
+  - component: {fileID: 1200480714}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -913,7 +913,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1200480713
+--- !u!114 &1200480714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -922,13 +922,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200480708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dcbe63d70a3b45eb84efd4e08e24ba3, type: 3}
+  m_Script: {fileID: 11500000, guid: 501bfa1d158f5458cb1418024b1ab080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1381267995}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+  eventSystem: {fileID: 287884382}
   effectImage: {fileID: 81965336}
   thrower: {fileID: 333408958}
   textElement: {fileID: 5068443204845654342, guid: 6a1b5ad803d234dc5ba135b22d377b4a, type: 3}
@@ -936,6 +937,7 @@ MonoBehaviour:
   exampleElement: {fileID: 2253996078893859832, guid: 4046f445ab6cf4dc48c1efcb7b7f341d, type: 3}
   exampleLayout: {fileID: 1380224556}
   layoutElement: {fileID: 8578669066366813520, guid: 0ac0dccf726e342dabe76bee393b266f, type: 3}
+  elements: []
 --- !u!1 &1380224555
 GameObject:
   m_ObjectHideFlags: 0

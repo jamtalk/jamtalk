@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class JT_PL5_105 : BaseContents
 {
@@ -16,7 +17,9 @@ public class JT_PL5_105 : BaseContents
     private List<ToggleText505> toggles = new List<ToggleText505>();
     private int digraphsIndex = 0;
     private int layoutCount;
+    int iccorectIndex = 3;
 
+    public EventSystem eventSystem;
     public Image effectImage;
     public Thrower505 thrower;
     public GameObject textElement;
@@ -24,6 +27,9 @@ public class JT_PL5_105 : BaseContents
     public GameObject exampleElement;
     public RectTransform exampleLayout;
     public RectTransform layoutElement;
+
+    public List<DoubleClick505> elements = new List<DoubleClick505>();
+    private List<RectTransform> layoutList = new List<RectTransform>();
 
     protected override void Awake()
     {
@@ -40,59 +46,58 @@ public class JT_PL5_105 : BaseContents
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(questionCount)
             .ToArray();
-        
+
         ShowQuestion();
     }
-
     private void ShowQuestion()
     {
-        var digraphs = current[index].Digraphs.ToString().ToLower();
+        var digraphs = current[index].IncludedDigraphs;
         digraphsIndex = current[index].key.IndexOf(digraphs);
-        var temp = current[index].key.Replace(digraphs, string.Empty);
-        var tempList = new List<string>();
+        var temp = current[index].key.Replace(digraphs, string.Empty).ToArray();
         foreach (var item in temp)
-            tempList.Add(item.ToString());
+            Debug.Log(item);
+        List<string> questions = new List<string>();
+        Debug.Log(digraphsIndex);
+        foreach (var item in temp)
+            questions.Add(item.ToString());
 
-        int iccorectIndex = 3;
-        layoutCount = questionCount + iccorectIndex;
-
-        var iccorect = GameManager.Instance.alphabets
-            .Where(x => !tempList.Contains(x.ToString().ToLower()))
+        var inCorrct = GameManager.Instance.alphabets
+            .Where(x => !questions.Contains(x.ToString().ToLower()))
             .OrderBy(x => Random.Range(0f, 100f))
-            .Take(iccorectIndex)
             .ToString()
+            .Take(iccorectIndex)
             .ToArray();
+        Debug.Log(inCorrct.Length);
 
-        var questions = tempList;
-        var layoutList = new List<RectTransform>();
-
-        for( int i = 0; i < iccorectIndex + questions.Count; i++)
+        for (int i = 0; i < iccorectIndex + questions.Count; i++)
         {
             var layouts = Instantiate(layoutElement, exampleLayout).GetComponent<RectTransform>();
             layoutList.Add(layouts);
         }
-        layoutList = layoutList.OrderBy(x => Random.Range(0f, 100f)).ToList();
 
-        for (int i = 0; i < layoutList.Count; i++)
+        for(int i = 0; i < questions.Count; i++)
         {
             var questionsElement = Instantiate(exampleElement, layoutList[i]).GetComponent<DoubleClick505>();
-
-            if (questions.Count > i)
-                questionsElement.Init(questions[i],i ,true);
-            else
-                questionsElement.Init(iccorect[i].ToString(),i, false);
-
+            questionsElement.Init(questions[i], i, true);
             AddListener(questionsElement);
+            elements.Add(questionsElement);
         }
-        
-        tempList.Insert(digraphsIndex, digraphs);
-        for (int i = 0; i < tempList.Count; i++)
+        for (int i = 0; i < inCorrct.Length; i++)
+        {
+            var questionsElement = Instantiate(exampleElement, layoutList[i + questions.Count]).GetComponent<DoubleClick505>();
+            questionsElement.Init(inCorrct[i].ToString(), i, false);
+            AddListener(questionsElement);
+            elements.Add(questionsElement);
+        }
+
+        questions.Insert(digraphsIndex, digraphs);
+        for (int i = 0; i < questions.Count; i++)
         {
             var toggleElement = Instantiate(textElement, textLayout).GetComponent<ToggleText505>();
             var isOn = true;
             if (i == digraphsIndex)
                 isOn = false;
-            toggleElement.Init(tempList[i], isOn);
+            toggleElement.Init(questions[i], isOn);
 
             toggles.Add(toggleElement);
         }
@@ -112,17 +117,22 @@ public class JT_PL5_105 : BaseContents
             if (button.number >= digraphsIndex)
                 button.number += 1;
             ThrowElement(button);
-        });;
+        });
     }
 
     protected virtual void ThrowElement(DoubleClick505 item)
     {
+        eventSystem.enabled = false;
         item.gameObject.SetActive(false);
-        thrower.Throw(item, textLayout, () =>
+        var target = toggles
+            .Where(x => x.toggle.isOn)
+            .Where(x => x.value == item.value).First().GetComponent<RectTransform>();
+        thrower.Throw(item, target, () =>
         {
             toggles[item.number].toggle.isOn = false;
             item.gameObject.SetActive(false);
             string.Join(",", toggles.Select(x => x.toggle.isOn));
+            eventSystem.enabled = true;
 
             if (!toggles.Select(x => x.toggle.isOn).Contains(true))
             {
@@ -131,13 +141,11 @@ public class JT_PL5_105 : BaseContents
                     index += 1;
                     DoMove(() =>
                     {
-
                         if (CheckOver())
                             ShowResult();
                         else
                         {
-                            ResetElement();
-                            ShowQuestion();
+                            StartCoroutine(ResetElement());
                         }
                     });
                 });
@@ -157,29 +165,26 @@ public class JT_PL5_105 : BaseContents
         var lastTween = effectImage.transform.DOScale(1f, 1f);
 
         seq.Append(firstTween);
-        seq.Insert(1.5f , lastTween);
+        seq.Insert(1.5f, lastTween);
 
         seq.onComplete += callback;
 
         seq.Play();
     }
-    private void ResetElement()
+    private IEnumerator ResetElement()
     {
-        Debug.Log("Reset");
-        var targets = new List<GameObject>();
-        for (int i = 0; i < layoutCount; i++)
-        {
-            if( i < toggles.Count)
-                targets.Add(toggles[i].gameObject);
-            targets.Add(exampleLayout.GetChild(i).gameObject);
-        }
+        elements.Clear();
+        foreach (var item in toggles)
+            Destroy(item.gameObject);
 
-        for (int i = 0; i < targets.Count; i ++)
-        {
-            Destroy(targets[i]);
-        }
-        targets.Clear();
+        foreach (var item in layoutList)
+            Destroy(item.gameObject);
+
         toggles.Clear();
+        layoutList.Clear();
 
+        yield return new WaitForEndOfFrame();
+
+        ShowQuestion();
     }
 }
