@@ -39,6 +39,7 @@ public class DragElement301 : MonoBehaviour, IDragHandler, IBeginDragHandler
         prePos = eventData.position;
     }
 
+
     public void OnDrag(PointerEventData eventData)
     {
         if (isColors)
@@ -65,7 +66,9 @@ public class DragElement301 : MonoBehaviour, IDragHandler, IBeginDragHandler
         resultColor.a = progress;
         resultColorImage.color = resultColor;
 
-        brush.transform.position = eventData.position;
+        var temp = Camera.main.ScreenToWorldPoint(eventData.position);
+        temp.z = 0f;
+        brush.transform.position = temp;
 
         if (progress > 1f)
         {

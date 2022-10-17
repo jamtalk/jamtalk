@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
+using Random = UnityEngine.Random;
 
 public class JT_PL3_101 : BaseContents
 {
@@ -26,6 +28,38 @@ public class JT_PL3_101 : BaseContents
     public EventSystem eventSystem;
 
     private string clip;
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        var targets = colorImages.OrderBy(x => Random.Range(0, 100)).ToArray();
+
+        dragElement.brush.transform.position = guideFinger.transform.position;
+
+        guideFinger.DoMove(dragElement.brush.gameObject, resultColorImage.transform.position, () =>
+        {
+            guideFinger.DoPress(() => isNext = true);
+        });
+
+        while (!isNext) yield return null;
+        isNext = false;
+        dragElement.resultColorImage.DOFade(1, 4f);
+
+        for (int i = 0; i < targets.Length; i++)
+        {
+            guideFinger.DoMove(dragElement.brush.gameObject,targets[i].transform.position, () =>
+            {
+                isNext = true;
+            });
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+
+
+        dragElement.isColors = true;
+        guideFinger.gameObject.SetActive(false);
+        OnDrop(dragElement);
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -56,7 +90,21 @@ public class JT_PL3_101 : BaseContents
         audioPlayer.Play(clip, () =>
         {
             if (CheckOver())
-                ShowResult();
+            {
+                if(!isGuide)
+                    ShowResult();
+                else
+                {
+                    isGuide = false;
+                    dragElement.isColors = false;
+                    index = 0;
+
+                    resultText.gameObject.SetActive(false);
+                    Color color = resultColorImage.color;
+                    color.a = 0;
+                    resultColorImage.color = color;
+                }
+            }
             else
             {
                 //SetColors();
