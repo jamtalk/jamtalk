@@ -18,6 +18,7 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Text text;
     public RectTransform point;
     public RectTransform line_rt;
+    public Image lineImage => line_rt.GetComponent<Image>();
     public Action<ResourceWordsElement> onClick;
     public event Action onDrop;
     public ResourceWordsElement data { get; private set; }
@@ -25,12 +26,38 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     {
         pointKnob.onDrag += OnDrag;
         pointKnob.onEndDrag += OnEndDrag;
+
+        lineImage.type = Image.Type.Filled;
+        lineImage.fillMethod = Image.FillMethod.Vertical;
+        lineImage.fillAmount = 0;
     }
     public void Init(ResourceWordsElement data)
     {
         this.data = data;
         isConnected = false;
         text.text = data.key;
+    }
+
+    public void SetGuideLine(float delay, DragKnob_107 target)
+    {
+        var targets = target.point;
+        target.isConnected = true;
+        target.intractable = false;
+        var pos = Camera.main.WorldToScreenPoint(targets.position);
+        pos.y += 15f;
+        SetLine(pos);
+
+        lineImage.DOFillAmount(1, 2f).SetDelay(delay);
+    }
+
+    public void SetGuideCover(DragKnob_107 target)
+    {
+        var targets = target.point;
+        target.isConnected = true;
+        target.intractable = false;
+        var pos = Camera.main.WorldToScreenPoint(targets.position);
+        pos.y += 15f;
+        SetCover(pos);
     }
 
     public void OnPointerDown(PointerEventData eventData)

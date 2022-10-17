@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class JT_PL1_107 : BaseMatchImage<AlphabetWordsData>
 {

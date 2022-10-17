@@ -13,7 +13,7 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     public Image image;
     public RectTransform point;
     public Image line;
-    private RectTransform line_rt => line.GetComponent<RectTransform>();
+    public RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
     public event Action onDrop;
     public event Action<ResourceWordsElement> onClick;

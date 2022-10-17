@@ -37,6 +37,15 @@ public class GuideFingerAnimation : MonoBehaviour
 
         seq.Play();
     }
+    public void DoMove(float delay,Vector3 target, TweenCallback callback)
+    {
+        gameObject.SetActive(true);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform.DOMove(target, 2f).SetDelay(delay));
+        seq.onComplete += callback;
+
+        seq.Play();
+    }
     public void DoMove(GameObject move, Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);
@@ -70,6 +79,16 @@ public class GuideFingerAnimation : MonoBehaviour
         gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();
         Tween tween = transform.DOScale(.7f, 1f);
+
+        seq.Append(tween);
+        seq.onComplete += callback;
+        seq.Play();
+    }
+    public void DoPress(float delay, TweenCallback callback)
+    {
+        gameObject.SetActive(true);
+        Sequence seq = DOTween.Sequence();
+        Tween tween = transform.DOScale(.7f, 1f).SetDelay(delay);
 
         seq.Append(tween);
         seq.onComplete += callback;

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public abstract class BaseMatchImage<T> : BaseContents
     where T : ResourceWordsElement
@@ -12,6 +14,36 @@ public abstract class BaseMatchImage<T> : BaseContents
     public DragKnob_107[] drags;
     protected T[] words;
 
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        for(int i = 0; i < drops.Length; i++)
+        {
+            var dropTarget = drops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
+            var dragTarget = drags.Where(x => x.data.key == dropTarget.data.key).First();
+
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+            guideFinger.DoMove(dropTarget.pointKnob.transform.position, () =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    PlayAudio(dropTarget.data);
+                    dropTarget.SetGuideLine(1f ,dragTarget);
+
+                    guideFinger.DoMove(1f, dragTarget.pointKnob.transform.position, () =>
+                    {
+                        dropTarget.SetGuideCover(dragTarget);
+                        guideFinger.gameObject.SetActive(false);
+                        isNext = true;
+                    });
+                });
+            });
+
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -58,7 +90,44 @@ public abstract class BaseMatchImage<T> : BaseContents
     protected virtual void onDrop()
     {
         if (CheckOver())
-            ShowResult();
+        {
+            if(!isGuide)
+                ShowResult();
+            else
+            {
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+
+                isGuide = false;
+
+                foreach (var item in drags)
+                {
+                    var height = item.line_rt.rect.height;
+                    height = 0f;
+                    var size = item.line_rt.sizeDelta;
+                    size.y = height;
+                    item.line_rt.sizeDelta = size;
+                    item.cover.sizeDelta = size;
+
+                    item.isConnected = false;
+                    item.intractable = true;
+                }
+
+                foreach (var item in drops)
+                {
+                    var height = item.line_rt.rect.height;
+                    height = 0f;
+                    var size = item.line_rt.sizeDelta;
+                    size.y = height;
+                    item.line_rt.sizeDelta = size;
+                    item.cover.sizeDelta = size;
+
+                    item.isConnected = false;
+                    item.intractable = true;
+                }
+
+                GetWords();
+            }
+        }
         else
             audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
     }
