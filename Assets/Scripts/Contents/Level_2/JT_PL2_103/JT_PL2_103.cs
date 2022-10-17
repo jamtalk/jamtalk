@@ -77,10 +77,7 @@ public class JT_PL2_103 : BaseContents
 
             while (!isNext) yield return null;
             isNext = false;
-            Debug.Log(dragTarget.data.clip);
             OnDrop(dragTarget);
-
-            while (true) yield return null;
         }
     }
 
