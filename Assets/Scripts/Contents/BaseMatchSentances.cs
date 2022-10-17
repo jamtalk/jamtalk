@@ -39,36 +39,36 @@ public abstract class BaseMatchSentances<T> : BaseContents
 
         //for(int i = 0; i < QuestionCount; i++)
         //{
-        while (!isThrow) yield return null;
-        isThrow = false;
+        //while (!isThrow) yield return null;
+        //isThrow = false;
 
-        yield return new WaitForSecondsRealtime(1f);
+        //yield return new WaitForSecondsRealtime(1f);
 
-        for (int j = 0; j < throwingElements.Count; j++)
-        {
-            var throing = throwingElements
-                .Where(x => x.gameObject.activeSelf)
-                .OrderBy(x => Random.Range(0, 100)).First();
-            var target = elements.Where(x => x.value == throing.value).First();
+        //for (int j = 0; j < throwingElements.Count; j++)
+        //{
+        //    var throing = throwingElements
+        //        .Where(x => x.gameObject.activeSelf)
+        //        .OrderBy(x => Random.Range(0, 100)).First();
+        //    var target = elements.Where(x => x.value == throing.value).First();
 
-            guideFinger.DoMove(throing.transform.position, (() =>
-            {
-                guideFinger.DoPress(() =>
-                {
-                    guideFinger.DoMove(throing.gameObject, target.transform.position, () =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        throing.gameObject.SetActive(false);
-                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-                        OnDrop(target);
-                    });
-                });
-            }));
+        //    guideFinger.DoMove(throing.transform.position, (() =>
+        //    {
+        //        guideFinger.DoPress(() =>
+        //        {
+        //            guideFinger.DoMove(throing.gameObject, target.transform.position, () =>
+        //            {
+        //                guideFinger.gameObject.SetActive(false);
+        //                throing.gameObject.SetActive(false);
+        //                guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+        //                OnDrop(target);
+        //            });
+        //        });
+        //    }));
 
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        //    while (!isNext) yield return null;
+        //    isNext = false;
+        //}
         //}
     }
 

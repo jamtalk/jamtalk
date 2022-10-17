@@ -30,6 +30,13 @@ public class AudioSinglePlayer : MonoBehaviour
         }
     }
 
+    void GetClip(string clip)
+    {
+        //clip = "asd";
+        //var temp = GameManager.Instance.GetResources(clip).Alphabet
+
+
+    }
     /// <summary>
     /// invoke로만 delay 호출
     /// </summary>

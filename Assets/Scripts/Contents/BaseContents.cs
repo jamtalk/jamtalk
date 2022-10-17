@@ -118,12 +118,12 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     }
     protected override void Awake()
     {
-        base.Awake();
 
         Debug.Log(GameManager.Instance.currentAlphabet);
         questions = MakeQuestion();
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
+        base.Awake();
     }
     protected virtual void AddAnswer(TAnswer answer)
     {

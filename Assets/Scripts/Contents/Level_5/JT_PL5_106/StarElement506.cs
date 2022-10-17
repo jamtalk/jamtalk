@@ -17,9 +17,16 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
     public string orizinalValue { get; private set; }
     private string value;
     public event Action<string> onDrop;
-    private RectTransform line_rt => dragLine.GetComponent<RectTransform>();
+    public RectTransform line_rt => dragLine.GetComponent<RectTransform>();
 
     public Text text;
+
+    private void Awake()
+    {
+        dragLine.type = Image.Type.Filled;
+        dragLine.fillMethod = Image.FillMethod.Horizontal;
+        dragLine.fillAmount = 0;
+    }
 
     public void Init(string value,Vector2 pos, float duration, Action<string>onDrop)
     {
@@ -32,12 +39,14 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         text.text = value;
         orizinalValue = value;
         ResetLine();
+        Debug.Log(value);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (!intractable)
             return;
+        dragLine.fillAmount = 1;
         List<RaycastResult> result= new List<RaycastResult>();
         caster.Raycast(eventData, result);
         var targets = result
@@ -61,6 +70,15 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         onDrop?.Invoke(value);
 
         line_rt.sizeDelta = new Vector2(0, line_rt.sizeDelta.y);
+    }
+    public void SetGuideLine(float delay ,StarElement506 target)
+    {
+        target.intractable = false;
+        var pos = Camera.main.WorldToScreenPoint(target.transform.position);
+        pos.y += 15f;
+        SetLine(pos);
+
+        dragLine.DOFillAmount(1, 2f).SetDelay(delay);
     }
 
     private void SetLine(Vector2 position)
