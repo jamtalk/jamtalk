@@ -84,7 +84,6 @@ public class JT_PL2_103 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        
         buttonCurrent.onClick.AddListener(OnClickCurrent);
         shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_short));
         longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_long));
@@ -180,6 +179,8 @@ public class JT_PL2_103 : BaseContents
             }
             isNext = true;
         });
+        var clips = GameManager.Instance.GetClips();
+        Debug.Log(string.Join("\n", clips.Select(x => string.Format("{0} : {1}", x.Key, x.Value))));
     }
 
     private void OnDrag(DragWordElement203 target)

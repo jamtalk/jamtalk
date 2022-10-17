@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -60,6 +61,13 @@ public class GameManager : MonoSingleton<GameManager>
     public AudioClip GetClipCorrectEffect() => schema.correctSound;
     public AlphabetData GetResources(eAlphabet alphabet) => new AlphabetData(alphabet);
     public AlphabetData GetResources() => GetResources(currentAlphabet);
+    public Dictionary<string,string> GetClips()
+    {
+        return schema.data.digraphsWords.Select(x => new KeyValuePair<string, string>(x.clip, x.key))
+            .Union(schema.data.alphabetWords.Select(x => new KeyValuePair<string, string>(x.clip, x.key)))
+            .Union(schema.data.vowelWords.Select(x => new KeyValuePair<string, string>(x.clip, x.key)))
+            .ToDictionary(x => x.Key, x => x.Value);
+    }
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     /// <summary>

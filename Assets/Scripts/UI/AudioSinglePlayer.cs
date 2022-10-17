@@ -58,7 +58,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip);
+            }
             else
                 Play(value, delay);
         });
@@ -77,7 +83,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip);
+            }
             else
                 Play(value);
         });
@@ -93,7 +105,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip], onOver);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip,onOver);
+            }
             else
                 Play(value, onOver);
         });
@@ -110,7 +128,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip);
+            }
             else
                 Play(duration, value);
         });
@@ -126,7 +150,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip);
+            }
             else
                 Play(delay, value);
         });
@@ -142,7 +172,13 @@ public class AudioSinglePlayer : MonoBehaviour
         AudioClipManager.Instance.GetClip(clip, value =>
         {
             if (value == null)
-                AndroidPluginManager.Instance.PlayTTS(clip);
+            {
+                var clips = GameManager.Instance.GetClips();
+                if (clips.ContainsKey(clip))
+                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                else
+                    AndroidPluginManager.Instance.PlayTTS(clip);
+            }
             else
                 Play(duration ,value, onOver);
         });
