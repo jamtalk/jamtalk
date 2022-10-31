@@ -20,9 +20,10 @@ public class JT_PL1_102 : BaseContents
 
     bool isGuidnce = false;
 
-    protected override void ShowGuidnce()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        base.ShowGuidnce();
+        yield return base.ShowGuidnceRoutine();
+
         guideFinger.gameObject.SetActive(true);
         var eggGuide = egg;
         eggGuide.Init();
@@ -36,11 +37,13 @@ public class JT_PL1_102 : BaseContents
                 guideFinger.DoClick(() =>
                 {
                     OnClickEgg();
-                    guideFinger.gameObject.SetActive(false);
+                    guidePopup.gameObject.SetActive(false);
                 });
             });
         });
+
     }
+
     protected override void Awake()
     {
         base.Awake();
