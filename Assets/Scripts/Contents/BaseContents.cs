@@ -23,7 +23,6 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
-    public Image BG;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
@@ -86,7 +85,6 @@ public abstract class BaseContents : MonoBehaviour
 
         guidePopup = guide;
         guidePopup.gameObject.SetActive(true);
-        guidePopup.BG.sprite = BG.sprite;
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
         StartCoroutine(ShowGuidnceRoutine());
@@ -112,15 +110,6 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
 
-    protected override void ShowGuidnce()
-    {
-        base.ShowGuidnce();
-
-        //Debug.Log(GameManager.Instance.currentAlphabet);
-        //questions = MakeQuestion();
-        //currentQuestionIndex = 0;
-        //ShowQuestion(questions[currentQuestionIndex]);
-    }
     protected override void Awake()
     {
 

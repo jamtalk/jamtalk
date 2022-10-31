@@ -6,5 +6,4 @@ using UnityEngine.UI;
 public class GuidePopup : MonoBehaviour
 {
     public GuideFingerAnimation guideFinger;
-    public Image BG;
 }

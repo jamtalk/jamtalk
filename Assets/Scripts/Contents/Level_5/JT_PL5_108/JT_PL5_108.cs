@@ -15,53 +15,59 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
 
     public DoubleClickButton[] buttonQuestions;
     public ImageButton buttonPhanics;
+    public Text phanicsText;
     private List<DigraphsWordsData> buttonDatas = new List<DigraphsWordsData>();
     public Sprite spritePop;
     public AudioClip clipPop;
 
     private DigraphsWordsData current;
-    
+
+    [Header("Guide")]
+    public ImageButton guidePhanicsButton;
+    public Text guidePhanicsText;
+    public DoubleClickButton[] guideButtons;
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        yield return new WaitForEndOfFrame();
+        yield return base.ShowGuidnceRoutine();
 
+        for (int i = 0; i < buttonQuestions.Length; i++)
+            guideButtons[i].sprite = buttonQuestions[i].sprite;
+        guidePhanicsText.text = phanicsText.text;
 
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-
-        for (int j = 0; j < QuestionCount; j++)
+        var correctIndex = 0;
+        isNext = false;
+        for (int i = 0; i < buttonDatas.Count(); i++)
         {
-            var correctIndex = 0;
-            isNext = false;
-            for (int i = 0; i < buttonDatas.Count(); i++)
+            Debug.Log(buttonDatas[i].key);
+            if (buttonDatas[i].key == currentQuestion.correct.key)
             {
-                Debug.Log(buttonDatas[i].key);
-                if (buttonDatas[i].key == currentQuestion.correct.key)
-                {
-                    correctIndex = i;
-                    break;
-                }
+                correctIndex = i;
+                break;
             }
-            guideFinger.gameObject.SetActive(true);
+        }
+        guideFinger.gameObject.SetActive(true);
 
-            guideFinger.DoMove(buttonQuestions[correctIndex].transform.position, () =>
+        guideFinger.DoMove(guideButtons[correctIndex].transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
             {
+                guideButtons[correctIndex].isOn = true;
+                audioPlayer.Play(buttonDatas[correctIndex].clip);
+
                 guideFinger.DoClick(() =>
                 {
-                    buttonQuestions[correctIndex].isOn = true;
-                    audioPlayer.Play(buttonDatas[correctIndex].clip);
+                    CorrectClickMotion(guideButtons[correctIndex], buttonDatas[correctIndex]);
 
-                    guideFinger.DoClick(() =>
-                    {
-                        CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
-
-                        guideFinger.gameObject.SetActive(false); ;
-                    });
+                    guideFinger.gameObject.SetActive(false); ;
                 });
             });
+        });
 
-            while (!isNext) yield return null;
-        }
+        while (!isNext) yield return null;
+
     }
 
     protected override List<Question5_108> MakeQuestion()
@@ -101,8 +107,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
         audioPlayer.Play(question.correct.clip);
         current = question.correct;
         
-        var temp = buttonPhanics.GetComponentInChildren<Text>();
-        temp.text = question.correct.digraphs;
+        phanicsText.text = question.correct.digraphs;
 
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(question.correct.act));
@@ -115,8 +120,7 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
         }
         audioPlayer.Play(current.clip);
 
-        var temp = buttonPhanics.GetComponentInChildren<Text>();
-        temp.text = GameManager.Instance.currentDigrpahs.ToString().ToLower();
+        phanicsText.text = GameManager.Instance.currentDigrpahs.ToString().ToLower();
         
         buttonPhanics.button.onClick.RemoveAllListeners();
         buttonPhanics.button.onClick.AddListener(() => audioPlayer.Play(current.clip));
