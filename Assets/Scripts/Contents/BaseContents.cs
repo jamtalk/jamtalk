@@ -130,27 +130,31 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         Debug.Log("AddAnswer");
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
+
+        
         if (CheckOver())
-            if (!isGuide)
-                ShowResult();
-            else
+            ShowResult();
+        else
+        {
+            if (isGuide)
             {
                 isGuide = false;
-                guideFinger.gameObject.SetActive(false);
+                guidePopup.gameObject.SetActive(false);
                 questions = MakeQuestion();
                 currentQuestionIndex = 0;
                 ShowQuestion(questions[currentQuestionIndex]);
             }
-        else
-        {
-            currentQuestionIndex += 1;
-            if (question.isCorrect)
-                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                {
-                    ShowQuestion(questions[currentQuestionIndex]);
-                });
             else
-                ShowQuestion(questions[currentQuestionIndex]);
+            {
+                currentQuestionIndex += 1;
+                if (question.isCorrect)
+                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                    {
+                        ShowQuestion(questions[currentQuestionIndex]);
+                    });
+                else
+                    ShowQuestion(questions[currentQuestionIndex]);
+            }
         }
     }
     protected override eGameResult GetResult()
