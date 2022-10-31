@@ -22,8 +22,6 @@ public class JT_PL1_102 : BaseContents
 
     private eAlphabet[] targets;
 
-    bool isGuidnce = false;
-
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

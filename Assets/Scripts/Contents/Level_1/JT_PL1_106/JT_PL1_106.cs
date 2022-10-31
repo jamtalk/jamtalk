@@ -19,11 +19,17 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
+    [Header("Guide")]
+    public ImageButton guidePhanicsButton;
+    public DoubleClickButton[] guideButtons;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        yield return new WaitForEndOfFrame();
+        yield return base.ShowGuidnceRoutine();
 
+        for (int i = 0; i < buttonQuestions.Length; i++)
+            guideButtons[i].sprite = buttonQuestions[i].sprite;
+        guidePhanicsButton.sprite = buttonPhanics.sprite;
 
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
@@ -40,16 +46,16 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         }
         guideFinger.gameObject.SetActive(true);
 
-        guideFinger.DoMove(buttonQuestions[correctIndex].transform.position, () =>
+        guideFinger.DoMove(guideButtons[correctIndex].transform.position, () =>
         {
             guideFinger.DoClick(() =>
             {
-                buttonQuestions[correctIndex].isOn = true;
+                guideButtons[correctIndex].isOn = true;
                 audioPlayer.Play(buttonDatas[correctIndex].clip);
 
                 guideFinger.DoClick(() =>
                 {
-                    CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
+                    CorrectClickMotion(guideButtons[correctIndex], buttonDatas[correctIndex]);
 
                     guidePopup.gameObject.SetActive(false);
                 });

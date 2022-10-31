@@ -85,6 +85,7 @@ public abstract class BaseContents : MonoBehaviour
             //guidePopup = Instantiate(guide, transform);
 
         guidePopup = guide;
+        guidePopup.gameObject.SetActive(true);
         guidePopup.BG.sprite = BG.sprite;
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
