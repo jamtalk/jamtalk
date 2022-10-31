@@ -1429,6 +1429,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2610127735654352154, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9b50bc7e057974207805cbbb3bf9da68, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
 --- !u!224 &790249111 stripped
@@ -3193,7 +3197,7 @@ MonoBehaviour:
   targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1976610220}
-  guide: {fileID: 2059374652}
+  guidePopup: {fileID: 2059374652}
   questions: []
   buttonQuestions:
   - {fileID: 1186361558}
