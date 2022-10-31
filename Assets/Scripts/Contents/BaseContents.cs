@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 #region Contents
@@ -22,6 +23,7 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
+    public Image BG;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
@@ -79,9 +81,11 @@ public abstract class BaseContents : MonoBehaviour
     }
     protected virtual void ShowGuidnce()
     {
-        if (guidePopup == null)
-            guidePopup = Instantiate(guide, transform);
+        //if (guidePopup == null)
+            //guidePopup = Instantiate(guide, transform);
 
+        guidePopup = guide;
+        guidePopup.BG.sprite = BG.sprite;
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
         StartCoroutine(ShowGuidnceRoutine());

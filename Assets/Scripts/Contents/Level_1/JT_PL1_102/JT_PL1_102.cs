@@ -16,6 +16,10 @@ public class JT_PL1_102 : BaseContents
     public Button buttonEgg;
     public Egg egg;
 
+    [Header("Guide")]
+    public Egg guideEgg;
+    public Image guideAlphaImage;
+
     private eAlphabet[] targets;
 
     bool isGuidnce = false;
@@ -25,19 +29,22 @@ public class JT_PL1_102 : BaseContents
         yield return base.ShowGuidnceRoutine();
 
         guideFinger.gameObject.SetActive(true);
-        var eggGuide = egg;
-        eggGuide.Init();
+        guideAlphaImage.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphabetType.Upper, GameManager.Instance.currentAlphabet);
+        guideAlphaImage.SetNativeSize();
+        guideAlphaImage.preserveAspect = true;
+        guideEgg.onBroken += OnBorken;
+        guideEgg.Init();
 
         guideFinger.DoClick(() =>
         {
-            OnClickEgg();
+            OnClickEgg(guideEgg);
             guideFinger.DoClick(() =>
             {
-                OnClickEgg();
+                OnClickEgg(guideEgg);
                 guideFinger.DoClick(() =>
                 {
-                    OnClickEgg();
-                    guidePopup.gameObject.SetActive(false);
+                    guideFinger.gameObject.SetActive(false);
+                    OnClickEgg(guideEgg);
                 });
             });
         });
@@ -47,10 +54,9 @@ public class JT_PL1_102 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        //ShowGuidnce();
         currentIndex = 0;
         egg.onBroken += OnBorken;
-        buttonEgg.onClick.AddListener(OnClickEgg);
+        buttonEgg.onClick.AddListener(() => OnClickEgg(egg));
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         Init(targets[currentIndex]);
     }
@@ -67,10 +73,7 @@ public class JT_PL1_102 : BaseContents
     {
         audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
         {
-            if (isGuidnce)
-                currentIndex += 1;
-            else
-                isGuidnce = true;
+            guidePopup.gameObject.SetActive(false);
 
             if (currentIndex < targets.Length)
                 Init(targets[currentIndex]);
@@ -78,16 +81,17 @@ public class JT_PL1_102 : BaseContents
                 ShowResult();
         });
     }
-    private void OnClickEgg()
+    private void OnClickEgg(Egg egg)
     {
-        if (!CheckOver())
-            audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
-        else
-            audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
+
+        audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
 
         currentClickCount += 1;
         if (CheckOver())
+        {
             egg.Break();
+            currentClickCount = 0;
+        }
         else if ((float)currentClickCount / (float)ClickCount >= .5f && !egg.isCrakced)
             egg.SetCrack();
         else
