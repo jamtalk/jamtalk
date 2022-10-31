@@ -175,32 +175,14 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         currentQuestion.SetAnswer(answer);
         Debug.Log("AddAnswer");
         if (CheckOver())
-        {
-            if (!isGuide)
-                ShowResult();
-            else
-            {
-                Debug.Log("guide end");
-                //foreach (var item in questions)
-                //    item.ResetAnswer();
-
-                isGuide = false;
-                guideFinger.gameObject.SetActive(false);
-                questions = MakeQuestion();
-                currentQuestionIndex = 0;
-                ShowQuestion(questions[currentQuestionIndex]);
-            }
-        }
+            ShowResult();
         else if (currentQuestion.isCompleted)
         {
             if (currentQuestion.isCorrect)
                 audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
             currentQuestionIndex += 1;
             ShowQuestion(questions[currentQuestionIndex]);
-            Debug.Log("else if");
         }
-        else
-            Debug.Log("else");
     }
 }
 #endregion
