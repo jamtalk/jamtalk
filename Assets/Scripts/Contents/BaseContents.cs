@@ -22,8 +22,8 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime startTime;
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
-    public GuidePopup guide;
-    protected GuidePopup guidePopup;
+    public GuidePopup guidePopup;
+    //protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
     protected bool isNext = false;
@@ -83,7 +83,6 @@ public abstract class BaseContents : MonoBehaviour
         //if (guidePopup == null)
             //guidePopup = Instantiate(guide, transform);
 
-        guidePopup = guide;
         guidePopup.gameObject.SetActive(true);
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);

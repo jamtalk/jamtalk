@@ -14,13 +14,24 @@ public abstract class BaseMatchImage<T> : BaseContents
     public DragKnob_107[] drags;
     protected T[] words;
 
+    [Header("Guide")]
+    public DropSpaceShip_107[] guideDrops;
+    public DragKnob_107[] guideDrags;
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
+        for(int i = 0; i < drops.Length; i++)
+        {
+            guideDrops[i].Init(drops[i].data);
+            guideDrags[i].Init(drags[i].data);
+        }
 
-        var dropTarget = drops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
-        var dragTarget = drags.Where(x => x.data.key == dropTarget.data.key).First();
+        var dropTarget = guideDrops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
+        var dragTarget = guideDrags.Where(x => x.data.key == dropTarget.data.key).First();
+
+        yield return new WaitForEndOfFrame();
 
         guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
         guideFinger.DoMove(dropTarget.pointKnob.transform.position, () =>
@@ -33,8 +44,9 @@ public abstract class BaseMatchImage<T> : BaseContents
                 guideFinger.DoMove(1f, dragTarget.pointKnob.transform.position, () =>
                 {
                     dropTarget.SetGuideCover(dragTarget);
-                    guidePopup.gameObject.SetActive(false);
+                    guideFinger.gameObject.SetActive(false);
                     isNext = true;
+                    onDrop();
                 });
             });
         });
@@ -97,6 +109,7 @@ public abstract class BaseMatchImage<T> : BaseContents
             {
                 if (isGuide)
                 {
+                    guidePopup.gameObject.SetActive(false);
                     isGuide = false;
 
                     foreach (var item in drags)
