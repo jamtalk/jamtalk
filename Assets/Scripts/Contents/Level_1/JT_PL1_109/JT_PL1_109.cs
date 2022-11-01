@@ -80,7 +80,7 @@ public class JT_PL1_109 : BaseContents
         guideFinger.gameObject.SetActive(false);
         guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
         OnEndDrag();
-
+        isGuide = false;
         guidePopup.gameObject.SetActive(false);
         MakeQuestion();
     }
@@ -97,9 +97,21 @@ public class JT_PL1_109 : BaseContents
     private Question109[] MakeQuestion()
     {
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
+
         questions = targets
             .SelectMany(x =>
                 GameManager.Instance.GetResources(x).Words
+                .OrderBy(y => Random.Range(0f, 100f))
+                .Take(questionCount / 2))
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Select(x => new Question109(x))
+            .ToArray();
+
+        if(isGuide)
+            questions = targets
+            .SelectMany(x =>
+                GameManager.Instance.GetResources(x).Words
+                .Where(x => x.key.Length < 4)
                 .OrderBy(y => Random.Range(0f, 100f))
                 .Take(questionCount / 2))
             .OrderBy(x => Random.Range(0f, 100f))
