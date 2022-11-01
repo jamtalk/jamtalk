@@ -61,11 +61,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         //audioPlayer.Play(currentQuestion.correct.clip, () =>
         //{
             guidePopup.gameObject.SetActive(false);
-            isGuide = false;
 
             AddAnswer(currentQuestion.correct);
-
-            ThrowingElement(currentQuestion, toggles, thrower, mover, creator);
         //});
 
     }
@@ -78,6 +75,9 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     {
         creator.Clear();
         guideCreator.Clear();
+
+        if(!isGuide)
+            ThrowingElement(currentQuestion, toggles, thrower, mover, creator);
     }
 
     private void ThrowingElement(Question_ThrowerAlphabet<T> question, AlphabetToggle110[] toggles
