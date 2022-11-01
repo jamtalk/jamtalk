@@ -26,13 +26,13 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
-        audioPlayer.Play(currentQuestion.correct.clip);
         ThrowingElement(currentQuestion, guideToggles, guideThrower, guideMover, guideCreator);
 
         while (!isMove) { yield return null; }
 
-        for (int i = 0; i < guideToggles.Length; i++)
-        {
+        //for (int i = 0; i < guideToggles.Length; i++)
+        //{
+        var i = 0;
             isNext = false;
             guideFinger.transform.localScale = new Vector3(1f,1f,1f);
 
@@ -57,16 +57,16 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
             while (!isNext) { yield return null; }
 
             yield return new WaitForSecondsRealtime(1.5f);
-        }
-        audioPlayer.Play(currentQuestion.correct.clip, () =>
-        {
+        //}
+        //audioPlayer.Play(currentQuestion.correct.clip, () =>
+        //{
             guidePopup.gameObject.SetActive(false);
             isGuide = false;
 
             AddAnswer(currentQuestion.correct);
 
             ThrowingElement(currentQuestion, toggles, thrower, mover, creator);
-        });
+        //});
 
     }
 
