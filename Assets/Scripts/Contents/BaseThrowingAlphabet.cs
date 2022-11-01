@@ -16,38 +16,58 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     protected override int QuestionCount => 2;
     protected override eGameResult GetResult() => eGameResult.Perfect;
 
-    //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
+    [Header("Guide")]
+    private AlphabetToggle110[] guideToggles;
+    public WordCreator110 guideCreator;
+    public UIThrower110 guideThrower;
+    public UIMover[] guideMover;
+
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.transform.localScale = new Vector3(.7f, .7f, .7f);
+        yield return base.ShowGuidnceRoutine();
+        audioPlayer.Play(currentQuestion.correct.clip);
+        ThrowingElement(currentQuestion, guideToggles, guideThrower, guideMover, guideCreator);
 
         while (!isMove) { yield return null; }
 
-        for (int i = 0; i < toggles.Length; i++)
+        for (int i = 0; i < guideToggles.Length; i++)
         {
             isNext = false;
+            guideFinger.transform.localScale = new Vector3(1f,1f,1f);
 
-            guideFinger.transform.position = toggles[i].throwElement.position;
-            guideFinger.gameObject.SetActive(true);
+            guideFinger.transform.position = guideToggles[i].throwElement.position;
 
-            audioPlayer.Play(GameManager.Instance.GetResources(toggles[i].value).AudioData.phanics);
-            guideFinger.DoMove(toggles[i].throwElement.gameObject, toggles[i].audioPlayer.transform.position, () =>
+            guideFinger.DoPress(() =>
             {
-                toggles[i].drop.Drop();
-                toggles[i].throwElement.gameObject.SetActive(false);
-                toggles[i].drag.ResetPosition();
-                guideFinger.gameObject.SetActive(false);
+                audioPlayer.Play(GameManager.Instance.GetResources(guideToggles[i].value).AudioData.phanics);
+                guideFinger.DoMove(guideToggles[i].throwElement.gameObject, guideToggles[i].audioPlayer.transform.position, () =>
+                {
+                    guideToggles[i].throwElement.gameObject.SetActive(false);
+                    guideToggles[i].isOn = true;
+                    audioPlayer.Play(GameManager.Instance.GetResources(guideToggles[i].value).AudioData.clip);
+                    guideToggles[i].drag.ResetPosition();
+                    guideFinger.gameObject.SetActive(false);
 
-                isNext = true;
+                    isNext = true;
+                });
             });
 
-            while (!isNext)
-            {
-                yield return null;
-            }
+
+            while (!isNext) { yield return null; }
+
             yield return new WaitForSecondsRealtime(1.5f);
         }
+        audioPlayer.Play(currentQuestion.correct.clip, () =>
+        {
+            guidePopup.gameObject.SetActive(false);
+            isGuide = false;
+
+            AddAnswer(currentQuestion.correct);
+
+            ThrowingElement(currentQuestion, toggles, thrower, mover, creator);
+        });
+
     }
 
     protected override void Awake()
@@ -57,14 +77,22 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     protected override void ShowQuestion(Question_ThrowerAlphabet<T> question)
     {
         creator.Clear();
+        guideCreator.Clear();
+    }
+
+    private void ThrowingElement(Question_ThrowerAlphabet<T> question, AlphabetToggle110[] toggles
+        , UIThrower110 thrower, UIMover[] mover,WordCreator110 creator)
+    {
         toggles = creator.Create(question.correct);
-        for (int i = 0; i < toggles.Length; i++)
-            AddToggleListner(toggles[i]);
+
+
+        if(!isGuide)
+            for (int i = 0; i < toggles.Length; i++)    
+                AddToggleListner(toggles[i]);
+
         var dragables = toggles.Select(x => x.drag).ToArray();
-
-        var throwElements = toggles.Select(x => x.throwElement).ToArray();
-        thrower.Init(throwElements);
-
+        var throwElement = toggles.Select(x => x.throwElement).ToArray();
+        thrower.Init(throwElement);
         thrower.Throwing(2f, 3f, onTrowed: () =>
         {
             for (int i = 0; i < dragables.Length; i++)
@@ -77,6 +105,11 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
 
         for (int i = 0; i < mover.Length; i++)
             mover[i].Move(4f, 3f, () => isMove = true);
+
+        if (isGuide)
+            guideToggles = toggles;
+        else
+            this.toggles = toggles;
     }
 
     private void AddToggleListner(AlphabetToggle110 toggle)
