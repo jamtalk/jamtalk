@@ -23,18 +23,20 @@ public class JT_PL1_112 : BaseContents
         yield return new WaitForEndOfFrame();
 
 
-        for (int i = 0; i < corrects.Length; i++)
+        //for (int i = 0; i < corrects.Length; i++)
+        //{
+        var i = 0;
+        isStop = false;
+        var guideCorrect = toggles.Where(x => x.alphabet == corrects[i]).First();
+        var drag = drags.Where(x => x.alphabet == guideCorrect.alphabet).First();
+        guideFinger.gameObject.SetActive(true);
+
+        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+        guideFinger.DoMove(drag.transform.position, () =>
         {
-            isStop = false;
-            var guideCorrect = toggles.Where(x => x.alphabet == corrects[i]).First();
-            var drag = drags.Where(x => x.alphabet == guideCorrect.alphabet).First();
-            guideFinger.gameObject.SetActive(true);
-
-            guideFinger.DoMove(drag.transform.position, () =>
+            guideFinger.DoPress(() =>
             {
-                guideFinger.transform.DOScale(.7f, 1f);
-
-                guideFinger.DoMove(drag.gameObject ,guideCorrect.transform.position, () =>
+                guideFinger.DoMove(drag.gameObject, guideCorrect.transform.position, () =>
                 {
                     guideCorrect.isOn = true;
 
@@ -44,10 +46,23 @@ public class JT_PL1_112 : BaseContents
                     CorrectMotion(guideCorrect);
                 });
             });
+        });
 
 
-            while (!isStop) yield return null;
-        }
+        while (!isStop) yield return null;
+        //}
+
+        EndGuidnce();
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        foreach (var item in toggles)
+            item.isOn = false;
+        ResetLayout();
+        MakeQuestion();
     }
 
     protected override void Awake()
@@ -94,17 +109,7 @@ public class JT_PL1_112 : BaseContents
         audioPlayer.Play(GameManager.Instance.GetResources(toggle.alphabet).AudioData.act2, () =>
         {
             if (CheckOver())
-                if (!isGuide)
-                    ShowResult();
-                else
-                {
-                    foreach (var item in toggles)
-                        item.isOn = false;
-                    ResetLayout();
-                    MakeQuestion();
-                    isGuide = false;
-                }
-
+                ShowResult();
             else
             {
                 for (int i = 0; i < drags.Length; i++)
