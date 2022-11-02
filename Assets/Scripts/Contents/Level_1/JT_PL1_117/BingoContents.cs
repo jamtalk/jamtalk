@@ -180,7 +180,18 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     protected override void ShowResult()
     {
         Debug.Log("showResult");
-        ShowBingo(() => base.ShowResult());
+        ShowBingo(() =>
+        {
+            if (isGuide)
+            {
+                EndGuidnce();
+                scoreBoard.GuideScore(board.size * 100);
+                bingo.gameObject.SetActive(false);
+                ResizeBoard();
+            }
+            else
+                base.ShowResult();
+        });
     }
     protected void ShowBingo(TweenCallback callback = null)
     {
@@ -210,21 +221,7 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     public void PlaySound()
     {
         if (CheckOver())
-        {
-            if(!isGuide)
-                ShowResult();
-            else
-            {
-                guideFinger.gameObject.SetActive(false);
-                ShowBingo(() =>
-                {
-                    isGuide = false;
-                    scoreBoard.GuideScore(board.size * 100);
-                    bingo.gameObject.SetActive(false);
-                    ResizeBoard();
-                });
-            }
-        }
+            ShowResult();
         else
             PlayClip();
     }
