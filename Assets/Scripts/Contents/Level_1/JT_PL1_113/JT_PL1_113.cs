@@ -18,8 +18,8 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
     bool isGuideStart = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        for (int i = 0; i < QuestionCount; i++)
-        {
+        //for (int i = 0; i < QuestionCount; i++)
+        //{
             while (!isGuideStart) yield return null;
             yield return new WaitForSecondsRealtime(2f);
 
@@ -41,7 +41,7 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
 
             while (!isNext) yield return null;
             isGuideStart = false;
-        }
+        //}
     }
     protected override void Awake()
     {
