@@ -22,49 +22,47 @@ public class JT_PL1_109 : BaseContents
 
     private List<eAlphabet> corretsAlphbet = new List<eAlphabet>();
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < questionCount; i++)
+        while (!isNext) yield return null;
+        isNext = false;
+
+        var targets = currentQuestion.word.key;
+        var first = toggles.Where(x => x.value == corretsAlphbet[0]).First();
+        var isPress = false;
+
+        guideFinger.DoMove(first.transform.position, () =>
         {
-            while (!isNext) yield return null;
-            isNext = false;
+            first.isOn = true;
+            guideFinger.DoPress(() => isPress = true);
+        });
 
-            var targets = currentQuestion.word.key;
-            var first = toggles.Where(x => x.value == corretsAlphbet[0]).First();
-            var isPress = false;
+        while (!isPress) yield return null;
 
-            guideFinger.DoMove(first.transform.position, () =>
+        var index = 1;
+        for (int j = 1; j < targets.Length; j++)
+        {
+            var target = toggles
+                .Where(x => !x.isOn)
+                .Where(x => x.value == corretsAlphbet[j]).First();
+            guideFinger.DoMove(target.transform.position, () =>
             {
-                first.isOn = true;
-                guideFinger.DoPress(() => isPress = true);
+                index++;
+                target.isOn = true;
             });
 
-            while (!isPress) yield return null;
-
-            var index = 1;
-            for (int j = 1; j < targets.Length; j++)
-            {
-                var target = toggles
-                    .Where(x => !x.isOn)
-                    .Where(x => x.value == corretsAlphbet[j]).First();
-                guideFinger.DoMove(target.transform.position, () =>
-                {
-                    index++;
-                    target.isOn = true;
-                });
-
-                while (!target.isOn) yield return null;
-            }
-
-            while (index != targets.Length) yield return null;
-
-            guideFinger.gameObject.SetActive(false);
-            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-            OnEndDrag();
+            while (!target.isOn) yield return null;
         }
+
+        while (index != targets.Length) yield return null;
+
+        guideFinger.gameObject.SetActive(false);
+        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+        OnEndDrag();
+
     }
 
     protected override void Awake()
@@ -79,14 +77,30 @@ public class JT_PL1_109 : BaseContents
     private Question109[] MakeQuestion()
     {
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
-        questions = targets
-            .SelectMany(x =>
-                GameManager.Instance.GetResources(x).Words
-                .OrderBy(y => Random.Range(0f, 100f))
-                .Take(questionCount / 2))
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Select(x => new Question109(x))
-            .ToArray();
+
+        if (isGuide)
+        {
+            questions = targets
+                .SelectMany(x =>
+                    GameManager.Instance.GetResources(x).Words
+                    .Where(x => x.key.Length < 4)
+                    .OrderBy(y => Random.Range(0f, 100f))
+                    .Take(questionCount / 2))
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Select(x => new Question109(x))
+                .ToArray();
+        }
+        else
+        {
+            questions = targets
+                .SelectMany(x =>
+                    GameManager.Instance.GetResources(x).Words
+                    .OrderBy(y => Random.Range(0f, 100f))
+                    .Take(questionCount / 2))
+                .OrderBy(x => Random.Range(0f, 100f))
+                .Select(x => new Question109(x))
+                .ToArray();
+        }
 
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].onEndDrag += OnEndDrag;
@@ -148,32 +162,27 @@ public class JT_PL1_109 : BaseContents
                 currentQuestion.isCompleted = true;
                 if (CheckOver())
                 {
-                    if(!isGuide)
-                        ShowResult();
-                    else
-                    {
-                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                        {
-                            currentIndex = 0;
-                            isGuide = false;
-                            guideFinger.gameObject.SetActive(false);
-                            questions = MakeQuestion();
-                            ShowQuestion();
-                        });
-                    }
+                    ShowResult();
                 }
                 else
                 {
-                    Debug.Log("!checkOver");
-                    currentIndex = questions
-                        .Where(x => !x.isCompleted)
-                        .Select(x => questions.ToList().IndexOf(x))
-                        .OrderBy(x => x)
-                        .First();
-                    audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect(), () =>
+                    if (isGuide)
+                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                        {
+                            EndGuidnce();
+                        });
+                    else
                     {
-                        ShowQuestion();
-                    });
+                        currentIndex = questions
+                            .Where(x => !x.isCompleted)
+                            .Select(x => questions.ToList().IndexOf(x))
+                            .OrderBy(x => x)
+                            .First();
+                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                         {
+                             ShowQuestion();
+                         });
+                    }
                 }
                 return;
             }
@@ -184,6 +193,15 @@ public class JT_PL1_109 : BaseContents
     {
         for (int i = 0; i < toggles.Length; i++)
             toggles[i].isOn = false;
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        currentIndex = 0;
+        guideFinger.gameObject.SetActive(false);
+        questions = MakeQuestion();
+        ShowQuestion();
     }
 }
 public class Question109
