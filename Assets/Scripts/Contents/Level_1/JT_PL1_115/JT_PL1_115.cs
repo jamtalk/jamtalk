@@ -30,45 +30,61 @@ public class JT_PL1_115 : BaseContents
         while (!isTurn) yield return null;
         isTurn = false;
 
-        for (int i = 0; i < (cards.Length / 2); i++)
+        //for (int i = 0; i < (cards.Length / 2); i++)
+        //{
+
+        var upper = cards.Where(x => !x.card.IsFornt).ToArray()
+            .Where(x => x.alhpabetData.type == eAlphabetType.Upper)
+            .OrderBy(x => Random.Range(0, 100))
+            .First();
+        var lower = cards.Where(x => !x.card.IsFornt).ToArray()
+            .Where(x => x.alhpabetData.alhpabet == upper.alhpabetData.alhpabet)
+            .Where(x => x.alhpabetData.type == eAlphabetType.Lower).ToArray()
+            .OrderBy(x => Random.Range(0, 100))
+            .First();
+
+        guideFinger.gameObject.SetActive(true);
+
+        Card114[] guideCards = { upper, lower };
+        guideCards = guideCards.OrderBy(x => Random.Range(0, 100)).ToArray();
+        var value = upper.alhpabetData;
+        foreach (var item in guideCards)
         {
-
-            var upper = cards.Where(x => !x.card.IsFornt).ToArray()
-                .Where(x => x.alhpabetData.type == eAlphabetType.Upper)
-                .OrderBy(x => Random.Range(0, 100))
-                .First();
-            var lower = cards.Where(x => !x.card.IsFornt).ToArray()
-                .Where(x => x.alhpabetData.alhpabet == upper.alhpabetData.alhpabet)
-                .Where(x => x.alhpabetData.type == eAlphabetType.Lower).ToArray()
-                .OrderBy(x => Random.Range(0, 100))
-                .First();
-
             guideFinger.gameObject.SetActive(true);
-
-            Card114[] guideCards = { upper, lower };
-            guideCards = guideCards.OrderBy(x => Random.Range(0, 100)).ToArray();
-
-            foreach (var item in guideCards)
+            guideFinger.DoMove(item.transform.position, () =>
             {
-                guideFinger.gameObject.SetActive(true);
-                guideFinger.DoMove(item.transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
+                    item.card.Turnning(1f, () =>
                     {
-                        item.card.Turnning(1f, () =>
-                        {
-                            CardClickMotion(item, item.alhpabetData);
-                        });
-                        guideFinger.gameObject.SetActive(false);
+                        CardClickMotion(item, item.alhpabetData);
                     });
+                    guideFinger.gameObject.SetActive(false);
                 });
+            });
 
-                while (!isTurn) yield return null;
-                isTurn = false;
-            }
+            while (!isTurn) yield return null;
+            isTurn = false;
+            //}
         }
+
+        yield return new WaitForSecondsRealtime(1.5f);
+        EndGuidnce();
     }
 
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        foreach (var item in cards)
+        {
+            item.card.SetFront();
+            item.star.gameObject.SetActive(false);
+        }
+
+        selected.Clear();
+        StartCoroutine(StartContent());
+    }
 
     protected override void Awake()
     {
@@ -127,19 +143,7 @@ public class JT_PL1_115 : BaseContents
                 {
                     audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.act2, () =>
                     {
-                        if (!isGuide)
-                            ShowResult();
-                        else
-                        {
-                            isGuide = false;
-                            guideFinger.gameObject.SetActive(false);
-
-                            foreach (var item in cards)
-                                item.star.gameObject.SetActive(false);
-
-                            selected.Clear();
-                            StartCoroutine(StartContent());
-                        }
+                        ShowResult();
                     });
                 }
                 else
