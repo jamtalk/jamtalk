@@ -91,6 +91,12 @@ public abstract class BaseContents : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
 
+    protected virtual void EndGuidnce()
+    {
+        isGuide = false;
+        guidePopup.gameObject.SetActive(false);
+    }
+
     protected abstract bool CheckOver();
     protected virtual int GetLevel() => 1;
     protected abstract int GetTotalScore();

@@ -18,8 +18,8 @@ public abstract class BaseMatchImage<T> : BaseContents
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < drops.Length; i++)
-        {
+        //for(int i = 0; i < drops.Length; i++)
+        //{
             var dropTarget = drops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
             var dragTarget = drags.Where(x => x.data.key == dropTarget.data.key).First();
 
@@ -42,7 +42,7 @@ public abstract class BaseMatchImage<T> : BaseContents
 
             while (!isNext) yield return null;
             isNext = false;
-        }
+        //}
     }
     protected override void Awake()
     {
@@ -90,46 +90,27 @@ public abstract class BaseMatchImage<T> : BaseContents
     protected virtual void onDrop()
     {
         if (CheckOver())
-        {
-            if(!isGuide)
-                ShowResult();
-            else
-            {
-                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-
-                isGuide = false;
-
-                foreach (var item in drags)
-                {
-                    var height = item.line_rt.rect.height;
-                    height = 0f;
-                    var size = item.line_rt.sizeDelta;
-                    size.y = height;
-                    item.line_rt.sizeDelta = size;
-                    item.cover.sizeDelta = size;
-
-                    item.isConnected = false;
-                    item.intractable = true;
-                }
-
-                foreach (var item in drops)
-                {
-                    var height = item.line_rt.rect.height;
-                    height = 0f;
-                    var size = item.line_rt.sizeDelta;
-                    size.y = height;
-                    item.line_rt.sizeDelta = size;
-                    item.cover.sizeDelta = size;
-
-                    item.isConnected = false;
-                    item.intractable = true;
-                }
-
-                GetWords();
-            }
-        }
+            ShowResult();
         else
-            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+            {
+                if (isGuide) EndGuidnce();
+            });
     }
 
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        foreach (var item in drags)
+            item.Reset();
+
+        foreach (var item in drops)
+        {
+            item.lineImage.fillAmount = 1f;
+            item.Reset();
+        }
+
+        GetWords();
+    }
 }
