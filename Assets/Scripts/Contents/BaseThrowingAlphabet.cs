@@ -20,34 +20,45 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        guideFinger.transform.localScale = new Vector3(.7f, .7f, .7f);
-
         while (!isMove) { yield return null; }
 
-        for (int i = 0; i < toggles.Length; i++)
+        var i = 0;
+        isNext = false;
+
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoMove(toggles[i].throwElement.position, () =>
         {
-            isNext = false;
-
-            guideFinger.transform.position = toggles[i].throwElement.position;
-            guideFinger.gameObject.SetActive(true);
-
-            audioPlayer.Play(GameManager.Instance.GetResources(toggles[i].value).AudioData.phanics);
-            guideFinger.DoMove(toggles[i].throwElement.gameObject, toggles[i].audioPlayer.transform.position, () =>
+            guideFinger.DoPress(() =>
             {
-                toggles[i].drop.Drop();
-                toggles[i].throwElement.gameObject.SetActive(false);
-                toggles[i].drag.ResetPosition();
-                guideFinger.gameObject.SetActive(false);
+                audioPlayer.Play(GameManager.Instance.GetResources(toggles[i].value).AudioData.phanics);
+                guideFinger.DoMove(toggles[i].throwElement.gameObject, toggles[i].audioPlayer.transform.position, () =>
+                {
+                    toggles[i].drop.Drop();
+                    toggles[i].throwElement.gameObject.SetActive(false);
+                    toggles[i].drag.ResetPosition();
+                    guideFinger.gameObject.SetActive(false);
 
-                isNext = true;
+                    isNext = true;
+                });
             });
+        });
 
-            while (!isNext)
-            {
-                yield return null;
-            }
-            yield return new WaitForSecondsRealtime(1.5f);
+        while (!isNext)
+        {
+            yield return null;
         }
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        EndGuidnce();
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        questions = MakeQuestion();
+        currentQuestionIndex = 0;
+        ShowQuestion(questions[currentQuestionIndex]);
     }
 
     protected override void Awake()
