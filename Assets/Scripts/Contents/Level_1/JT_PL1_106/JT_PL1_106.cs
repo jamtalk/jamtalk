@@ -28,8 +28,8 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
 
-        for (int j = 0; j < QuestionCount; j++)
-        {
+        //for (int j = 0; j < QuestionCount; j++)
+        //{
             var correctIndex = 0;
             isNext = false;
             for (int i = 0; i < buttonDatas.Count(); i++)
@@ -60,7 +60,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
             });
 
             while (!isNext) yield return null;
-        }
+        //}
     }
 
     protected override void Awake()

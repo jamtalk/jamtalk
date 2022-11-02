@@ -29,8 +29,8 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
 
-        for (int j = 0; j < QuestionCount; j++)
-        {
+        //for (int j = 0; j < QuestionCount; j++)
+        //{
             var correctIndex = 0;
             isNext = false;
             for (int i = 0; i < buttonDatas.Count(); i++)
@@ -55,13 +55,13 @@ public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
                     {
                         CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
 
-                        guideFinger.gameObject.SetActive(false); ;
+                        guideFinger.gameObject.SetActive(false);
                     });
                 });
             });
 
             while (!isNext) yield return null;
-        }
+        //}
     }
 
     protected override List<Question5_108> MakeQuestion()
