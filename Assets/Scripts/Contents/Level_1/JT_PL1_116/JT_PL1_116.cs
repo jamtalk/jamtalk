@@ -27,45 +27,60 @@ public class JT_PL1_116 : BaseContents
 
     private List<AlphabetButton> selected = new List<AlphabetButton>();
     protected override int GetTotalScore() => upper.Length;
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
 
-        for(int i = 0; i < length; i++)
+        //for(int i = 0; i < length; i++)
+        //{
+        isNext = false;
+
+        var guideUpper = upper.Where(x => x.button.interactable)
+            .Where(x => x.type == eAlphabetType.Upper)
+            .Where(x => x.value == words[currentIndex].Key)
+            .First();
+        var guideLower = lower.Where(x => x.button.interactable)
+            .Where(x => x.type == eAlphabetType.Lower)
+            .Where(x => x.value == guideUpper.value)
+            .First();
+
+
+        AlphabetButton[] guideButtons = { guideUpper, guideLower };
+        guideButtons = guideButtons.OrderBy(x => Random.Range(0, 100)).ToArray();
+
+        foreach (var item in guideButtons)
         {
-            isNext = false;
+            guideFinger.gameObject.SetActive(true);
 
-            var guideUpper = upper.Where(x => x.button.interactable)
-                .Where(x => x.type == eAlphabetType.Upper)
-                .Where(x => x.value == words[currentIndex].Key)
-                .First();
-            var guideLower = lower.Where(x => x.button.interactable)
-                .Where(x => x.type == eAlphabetType.Lower)
-                .Where(x => x.value == guideUpper.value)
-                .First();
-
-
-            AlphabetButton[] guideButtons = { guideUpper, guideLower };
-            guideButtons = guideButtons.OrderBy(x => Random.Range(0, 100)).ToArray();
-
-            foreach (var item in guideButtons)
+            guideFinger.DoMove(item.transform.position, () =>
             {
-                guideFinger.gameObject.SetActive(true);
-
-                guideFinger.DoMove(item.transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
-                    {
-                        ButtonClickMotion(item);
-                    });
+                    ButtonClickMotion(item);
                 });
+            });
 
-                while (!isNext) yield return null;
-                isNext = false;
-            }
+            while (!isNext) yield return null;
+            isNext = false;
         }
+        //}
+
+        //EndGuidnce();
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        var target = upper.Union(lower).ToArray();
+        foreach (var item in target)
+            item.button.interactable = true;
+
+        currentIndex = 0;
+        selected.Clear();
+        PlayWord();
     }
     protected override void Awake()
     {
@@ -140,25 +155,14 @@ public class JT_PL1_116 : BaseContents
                     currentIndex += 1;
                     if (CheckOver())
                     {
-                        if(!isGuide)
-                            ShowResult();
-                        else
-                        {
-                            isGuide = false;
-                            guideFinger.gameObject.SetActive(false);
-
-                            var target = upper.Union(lower).ToArray();
-                            foreach (var item in target)
-                                item.button.interactable = true;
-
-                            currentIndex = 0;
-                            selected.Clear();
-                            PlayWord();
-                        }
+                        ShowResult();
                     }
                     else
                     {
-                        PlayWord(() => isNext = true);
+                        if (isGuide)
+                            EndGuidnce();
+                        else
+                            PlayWord(() => isNext = true);
                     }
                 });
             }
