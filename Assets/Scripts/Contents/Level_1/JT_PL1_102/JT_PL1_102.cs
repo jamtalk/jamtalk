@@ -36,7 +36,7 @@ public class JT_PL1_102 : BaseContents
                 guideFinger.DoClick(() =>
                 {
                     OnClickEgg();
-                    guideFinger.gameObject.SetActive(false);
+                    guidePopup.gameObject.SetActive(false);
                 });
             });
         });
