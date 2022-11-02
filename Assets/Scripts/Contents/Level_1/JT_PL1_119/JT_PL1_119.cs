@@ -26,30 +26,29 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         }
     }
 
-    
+
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+        var i = 0;
+        var target = buttons.Where(x => x.name == questions[i].correct.key).First();
+
+        guideFinger.gameObject.SetActive(true);
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            var target = buttons.Where(x => x.name == questions[i].correct.key).First();
-
-            guideFinger.gameObject.SetActive(true);
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    ButtonClickMotion(target, questions[i].correct);
-                    guideFinger.gameObject.SetActive(false);
-                });
+                ButtonClickMotion(target, questions[i].correct);
+                guideFinger.gameObject.SetActive(false);
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
 
     protected override eContents contents => eContents.JT_PL1_119;
