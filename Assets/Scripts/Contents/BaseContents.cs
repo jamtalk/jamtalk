@@ -24,6 +24,7 @@ public abstract class BaseContents : MonoBehaviour
     public GuidePopup guide;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
+    protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
     protected virtual void ShowResult()
@@ -84,7 +85,7 @@ public abstract class BaseContents : MonoBehaviour
 
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
-        StartCoroutine(ShowGuidnceRoutine());
+        guideRoutine = StartCoroutine(ShowGuidnceRoutine());
     }
     protected virtual IEnumerator ShowGuidnceRoutine()
     {
@@ -95,6 +96,7 @@ public abstract class BaseContents : MonoBehaviour
     {
         isGuide = false;
         guidePopup.gameObject.SetActive(false);
+        StopCoroutine(guideRoutine);
     }
 
     protected abstract bool CheckOver();
@@ -142,8 +144,7 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         {
             if (isGuide)
             {
-                isGuide = false;
-                guidePopup.gameObject.SetActive(false);
+                EndGuidnce();
                 questions = MakeQuestion();
                 currentQuestionIndex = 0;
                 ShowQuestion(questions[currentQuestionIndex]);
@@ -199,8 +200,7 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         }
         else if (isGuide)
         {
-            isGuide = false;
-            guidePopup.gameObject.SetActive(false);
+            EndGuidnce();
             questions = MakeQuestion();
             currentQuestionIndex = 0;
             ShowQuestion(questions[currentQuestionIndex]);

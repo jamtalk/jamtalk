@@ -15,35 +15,33 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     protected override eContents contents => eContents.JT_PL1_114;
 
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+        while (!isNext) yield return null;
+
+        isNext = false;
+        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+        guideFinger.gameObject.SetActive(true);
+        var target = drags.Where(x => x.data == currentQuestion.correct).First();
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            while (!isNext) yield return null;
-
-            isNext = false;
-            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-            guideFinger.gameObject.SetActive(true);
-            var target = drags.Where(x => x.data == currentQuestion.correct).First();
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoPress(() =>
             {
-                guideFinger.DoPress(() =>
+                guideFinger.DoMove(target.gameObject, ship.transform.position, () =>
                 {
-                    guideFinger.DoMove(target.gameObject, ship.transform.position, () =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        target.gameObject.SetActive(false);
-                        SetIntractable(false);
-                        ship.InObject(target.data);
-                        target.rt.anchoredPosition = Vector2.zero;
-                    });
+                    guideFinger.gameObject.SetActive(false);
+                    target.gameObject.SetActive(false);
+                    SetIntractable(false);
+                    ship.InObject(target.data);
+                    target.rt.anchoredPosition = Vector2.zero;
                 });
             });
-        }
+        });
+
     }
     protected override void Awake()
     {
@@ -58,9 +56,10 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
         });
         ship.onInner += (value) =>
         {
+            
             AddAnswer(value);
             if (!CheckOver())
-                ship.OutObject(currentQuestion.alphabet, ()=>SetIntractable(true));
+                ship.OutObject(currentQuestion.alphabet, () => SetIntractable(true));
         };
         for(int i = 0; i< drags.Length; i++)
         {
@@ -111,16 +110,14 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     protected override void ShowQuestion(Question114 question)
     {
         ship.SetInner();
-        ship.OutObject(question.alphabet, () =>
-        {
-            if (finger != null)
-                finger.gameObject.SetActive(true);
-            SetIntractable(true);
-            isNext = true;
-        });
+        if (isGuide)
+            ship.OutObject(question.alphabet, () =>
+            {
+                isNext = true;
+            });
         var questions = question.questions.Union(new AlphabetWordsData[] { question.correct })
-            .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
-            .ToArray();
+        .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
+        .ToArray();
         for (int i = 0; i < drags.Length; i++)
         {
             drags[i].Init(questions[i]);
