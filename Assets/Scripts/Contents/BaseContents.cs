@@ -187,20 +187,7 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         Debug.Log("AddAnswer");
         if (CheckOver())
         {
-            if (!isGuide)
-                ShowResult();
-            else
-            {
-                Debug.Log("guide end");
-                //foreach (var item in questions)
-                //    item.ResetAnswer();
-
-                isGuide = false;
-                guideFinger.gameObject.SetActive(false);
-                questions = MakeQuestion();
-                currentQuestionIndex = 0;
-                ShowQuestion(questions[currentQuestionIndex]);
-            }
+            ShowResult();
         }
         else if (currentQuestion.isCompleted)
         {
@@ -210,8 +197,14 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
             ShowQuestion(questions[currentQuestionIndex]);
             Debug.Log("else if");
         }
-        else
-            Debug.Log("else");
+        else if (isGuide)
+        {
+            isGuide = false;
+            guidePopup.gameObject.SetActive(false);
+            questions = MakeQuestion();
+            currentQuestionIndex = 0;
+            ShowQuestion(questions[currentQuestionIndex]);
+        }
     }
 }
 #endregion

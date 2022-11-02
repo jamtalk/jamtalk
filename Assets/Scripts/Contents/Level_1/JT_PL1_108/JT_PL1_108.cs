@@ -25,31 +25,22 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
 
         guideFinger.gameObject.SetActive(true);
 
-
-        for (int i = 0; i < currentQuestion.correct.Count(); i++)
+        var correctCard = cards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
+        isNext = false;
+        guideFinger.DoMove(correctCard.transform.position, () =>
         {
-            var correctCard = cards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
-            isNext = false;
-            guideFinger.DoMove(correctCard.transform.position, () =>
+            isStart = true;
+            guideFinger.DoClick(() =>
             {
-                isStart = true;
-                guideFinger.DoClick(() =>
+                audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
+                correctCard.turnner.Turnning(1f, () =>
                 {
-                    audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
-                    correctCard.turnner.Turnning(1f, () =>
-                    {
-                        AddAnswer(currentQuestion.correct[currentQuestion.currentIndex]);
-                        if (i + 1 < currentQuestion.correct.Count())
-                            audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isNext = true);
-                    });
+                    AddAnswer(currentQuestion.correct[currentQuestion.currentIndex]);
                 });
             });
+        });
 
-            while (!isNext)
-            {
-                yield return null;
-            }
-        }
+        while (!isNext) { yield return null; }
     }
 
     protected override void AddAnswer(AlphabetWordsData answer)
