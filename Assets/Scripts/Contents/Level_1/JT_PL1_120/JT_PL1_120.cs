@@ -110,17 +110,17 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
             {
                 AddAnswer(card.data);
                 if (!CheckOver())
-                    if(guideIndex == correctCount)
-                    {
-                        guideIndex = 0;
-                        isGuide = false;
-                        guideFinger.gameObject.SetActive(false);
-                        questions = MakeQuestion();
-                        currentQuestionIndex = 0;
-                        ShowQuestion(questions[currentQuestionIndex]);
-                    }
-                    else
-                        CallRocket();
+                    CallRocket();
+                    //if(guideIndex == correctCount)
+                    //{
+                    //    guideIndex = 0;
+                    //    isGuide = false;
+                    //    guideFinger.gameObject.SetActive(false);
+                    //    questions = MakeQuestion();
+                    //    currentQuestionIndex = 0;
+                    //    ShowQuestion(questions[currentQuestionIndex]);
+                    //}
+                    //else
                 else
                     eventSystem.enabled = true;
                 selectText.text = string.Empty;
