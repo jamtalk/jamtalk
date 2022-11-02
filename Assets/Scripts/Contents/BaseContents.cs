@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 #region Contents
@@ -22,8 +21,8 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime startTime;
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
-    public GuidePopup guidePopup;
-    //protected GuidePopup guidePopup;
+    public GuidePopup guide;
+    protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected bool isGuide = true;
     protected bool isNext = false;
@@ -80,10 +79,9 @@ public abstract class BaseContents : MonoBehaviour
     }
     protected virtual void ShowGuidnce()
     {
-        //if (guidePopup == null)
-            //guidePopup = Instantiate(guide, transform);
+        if (guidePopup == null)
+            guidePopup = Instantiate(guide, transform);
 
-        guidePopup.gameObject.SetActive(true);
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
         StartCoroutine(ShowGuidnceRoutine());
@@ -109,6 +107,15 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
 
+    protected override void ShowGuidnce()
+    {
+        base.ShowGuidnce();
+
+        //Debug.Log(GameManager.Instance.currentAlphabet);
+        //questions = MakeQuestion();
+        //currentQuestionIndex = 0;
+        //ShowQuestion(questions[currentQuestionIndex]);
+    }
     protected override void Awake()
     {
 
@@ -123,31 +130,27 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         Debug.Log("AddAnswer");
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
-
-        
         if (CheckOver())
-            ShowResult();
-        else
-        {
-            if (isGuide)
+            if (!isGuide)
+                ShowResult();
+            else
             {
                 isGuide = false;
-                guidePopup.gameObject.SetActive(false);
+                guideFinger.gameObject.SetActive(false);
                 questions = MakeQuestion();
                 currentQuestionIndex = 0;
                 ShowQuestion(questions[currentQuestionIndex]);
             }
-            else
-            {
-                currentQuestionIndex += 1;
-                if (question.isCorrect)
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                    {
-                        ShowQuestion(questions[currentQuestionIndex]);
-                    });
-                else
+        else
+        {
+            currentQuestionIndex += 1;
+            if (question.isCorrect)
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                {
                     ShowQuestion(questions[currentQuestionIndex]);
-            }
+                });
+            else
+                ShowQuestion(questions[currentQuestionIndex]);
         }
     }
     protected override eGameResult GetResult()
@@ -175,14 +178,32 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         currentQuestion.SetAnswer(answer);
         Debug.Log("AddAnswer");
         if (CheckOver())
-            ShowResult();
+        {
+            if (!isGuide)
+                ShowResult();
+            else
+            {
+                Debug.Log("guide end");
+                //foreach (var item in questions)
+                //    item.ResetAnswer();
+
+                isGuide = false;
+                guideFinger.gameObject.SetActive(false);
+                questions = MakeQuestion();
+                currentQuestionIndex = 0;
+                ShowQuestion(questions[currentQuestionIndex]);
+            }
+        }
         else if (currentQuestion.isCompleted)
         {
             if (currentQuestion.isCorrect)
                 audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
             currentQuestionIndex += 1;
             ShowQuestion(questions[currentQuestionIndex]);
+            Debug.Log("else if");
         }
+        else
+            Debug.Log("else");
     }
 }
 #endregion

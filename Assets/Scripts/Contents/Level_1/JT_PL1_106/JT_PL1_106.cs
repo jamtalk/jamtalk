@@ -19,50 +19,48 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
     public Sprite spritePop;
     public AudioClip clipPop;
 
-    [Header("Guide")]
-    public ImageButton guidePhanicsButton;
-    public DoubleClickButton[] guideButtons;
-
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        yield return base.ShowGuidnceRoutine();
+        yield return new WaitForEndOfFrame();
 
-        for (int i = 0; i < buttonQuestions.Length; i++)
-            guideButtons[i].sprite = buttonQuestions[i].sprite;
-        guidePhanicsButton.sprite = buttonPhanics.sprite;
 
         guideFinger.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-        var correctIndex = 0;
-        isNext = false;
-        for (int i = 0; i < buttonDatas.Count(); i++)
+
+        for (int j = 0; j < QuestionCount; j++)
         {
-            Debug.Log(buttonDatas[i].key);
-            if (buttonDatas[i].key == currentQuestion.correct.key)
+            var correctIndex = 0;
+            isNext = false;
+            for (int i = 0; i < buttonDatas.Count(); i++)
             {
-                correctIndex = i;
-                break;
+                Debug.Log(buttonDatas[i].key);
+                if (buttonDatas[i].key == currentQuestion.correct.key)
+                {
+                    correctIndex = i;
+                    break;
+                }
             }
-        }
-        guideFinger.gameObject.SetActive(true);
+            guideFinger.gameObject.SetActive(true);
 
-        guideFinger.DoMove(guideButtons[correctIndex].transform.position, () =>
-        {
-            guideFinger.DoClick(() =>
+            guideFinger.DoMove(buttonQuestions[correctIndex].transform.position, () =>
             {
-                guideButtons[correctIndex].isOn = true;
-                audioPlayer.Play(buttonDatas[correctIndex].clip);
-
                 guideFinger.DoClick(() =>
                 {
-                    CorrectClickMotion(guideButtons[correctIndex], buttonDatas[correctIndex]);
+                    buttonQuestions[correctIndex].isOn = true;
+                    audioPlayer.Play(buttonDatas[correctIndex].clip);
 
-                    guidePopup.gameObject.SetActive(false);
+                    guideFinger.DoClick(() =>
+                    {
+                        CorrectClickMotion(buttonQuestions[correctIndex], buttonDatas[correctIndex]);
+
+                        guideFinger.gameObject.SetActive(false);;
+                    });
                 });
             });
-        });
 
-        while (!isNext) yield return null;
+            while (!isNext) yield return null;
+        }
     }
 
     protected override void Awake()

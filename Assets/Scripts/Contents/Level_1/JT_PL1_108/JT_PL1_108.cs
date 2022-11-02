@@ -18,51 +18,38 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     private bool isStart = false;
     protected override eContents contents => eContents.JT_PL1_108;
 
-    private bool isTurn = false;
-
-    [Header("Guide")]
-    public Card_108[] guideCards;
-
-
+    bool isTurn = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        yield return base.ShowGuidnceRoutine();
+        while (!isTurn) yield return null;
 
         guideFinger.gameObject.SetActive(true);
 
-        for (int i = 0; i < cards.Length; i++)
+
+        for (int i = 0; i < currentQuestion.correct.Count(); i++)
         {
-            guideCards[i].Init(cards[i].data);
-            guideCards[i].turnner.SetBack();
-        }
-
-        var correctCard = guideCards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
-        isNext = false;
-
-        StartCoroutine(TurrningCards(guideCards));
-
-        while (!isTurn) yield return null;
-        isTurn = false;
-
-        guideFinger.DoMove(correctCard.transform.position, () =>
-        {
-            guideFinger.DoClick(() =>
+            var correctCard = cards.Where(x => x.data == currentQuestion.correct[currentQuestion.currentIndex]).First();
+            isNext = false;
+            guideFinger.DoMove(correctCard.transform.position, () =>
             {
-                audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
-                correctCard.turnner.Turnning(1f, () =>
+                isStart = true;
+                guideFinger.DoClick(() =>
                 {
-                    isStart = false;
-                    guidePopup.gameObject.SetActive(false);
-                    StartCoroutine(TurrningCards(cards));
+                    audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
+                    correctCard.turnner.Turnning(1f, () =>
+                    {
+                        AddAnswer(currentQuestion.correct[currentQuestion.currentIndex]);
+                        if (i + 1 < currentQuestion.correct.Count())
+                            audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isNext = true);
+                    });
                 });
             });
-        });
 
-        while (!isNext)
-        {
-            yield return null;
+            while (!isNext)
+            {
+                yield return null;
+            }
         }
-
     }
 
     protected override void AddAnswer(AlphabetWordsData answer)
@@ -117,7 +104,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
                 cards[i].gameObject.SetActive(false);
             }
         }
-        //StartCoroutine(TurrningCards(cards));
+        StartCoroutine(TurrningCards());
     }
     private void AddOnClickCardListener(Card_108 card)
     {
@@ -154,10 +141,10 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     //        audioPlayer.Play(GameManager.Instance.GetClipWord(currentQuestion.correct[currentQuestion.currentIndex]));
     //}
 
-    IEnumerator TurrningCards(Card_108[] turningCards)
+    IEnumerator TurrningCards()
     {
         yield return new WaitForSeconds(.1f);
-        var cards = turningCards.Where(x => x.gameObject.activeSelf).ToArray();
+        var cards = this.cards.Where(x => x.gameObject.activeSelf).ToArray();
         var count = 0;
         for(int i = 0;i < cards.Length; i++)
         {
@@ -169,7 +156,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         {
             cards[i].turnner.buttonFront.interactable = true;
         }
-        audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isTurn = true); ;
+        audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip, () => isTurn = true);
     }
 }
 public class Question108 : MultiQuestion<AlphabetWordsData>

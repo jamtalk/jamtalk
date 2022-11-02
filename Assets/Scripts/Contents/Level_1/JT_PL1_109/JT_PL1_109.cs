@@ -15,11 +15,6 @@ public class JT_PL1_109 : BaseContents
     public ImageButton questionButton;
     private Question109 currentQuestion => questions[currentIndex];
 
-    [Header("Guide")]
-    public ImageButton guideCorrectImage;
-    public AlphabetDragToggle109[] guideToggles;
-    public Image[] guideCorrects;
-
     protected override eContents contents => eContents.JT_PL1_109;
 
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
@@ -27,62 +22,49 @@ public class JT_PL1_109 : BaseContents
 
     private List<eAlphabet> corretsAlphbet = new List<eAlphabet>();
 
-
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-
-        while (!isNext) yield return null;
-        isNext = false;
-
-        guideCorrectImage.sprite = questionButton.sprite;
-        for (int i = 0; i < toggles.Length; i++)
+        for(int i = 0; i < questionCount; i++)
         {
-            guideToggles[i].Init(toggles[i].value, i);
-        }
+            while (!isNext) yield return null;
+            isNext = false;
 
-        for(int i = 0; i < correct.Length; i++)
-        {
-            guideCorrects[i].sprite = correct[i].sprite;
-            guideCorrects[i].preserveAspect = correct[i].preserveAspect;
-            guideCorrects[i].gameObject.SetActive(correct[i].preserveAspect);
-        }
+            var targets = currentQuestion.word.key;
+            var first = toggles.Where(x => x.value == corretsAlphbet[0]).First();
+            var isPress = false;
 
-        var targets = currentQuestion.word.key;
-        var first = guideToggles.Where(x => x.value == corretsAlphbet[0]).First();
-        var isPress = false;
-
-        guideFinger.DoMove(first.transform.position, () =>
-        {
-            first.isOn = true;
-            guideFinger.DoPress(() => isPress = true);
-        });
-
-        while (!isPress) yield return null;
-
-        var index = 1;
-        for (int j = 1; j < targets.Length; j++)
-        {
-            var target = guideToggles
-                .Where(x => !x.isOn)
-                .Where(x => x.value == corretsAlphbet[j]).First();
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoMove(first.transform.position, () =>
             {
-                index++;
-                target.isOn = true;
+                first.isOn = true;
+                guideFinger.DoPress(() => isPress = true);
             });
-            while (!target.isOn) yield return null;
+
+            while (!isPress) yield return null;
+
+            var index = 1;
+            for (int j = 1; j < targets.Length; j++)
+            {
+                var target = toggles
+                    .Where(x => !x.isOn)
+                    .Where(x => x.value == corretsAlphbet[j]).First();
+                guideFinger.DoMove(target.transform.position, () =>
+                {
+                    index++;
+                    target.isOn = true;
+                });
+
+                while (!target.isOn) yield return null;
+            }
+
+            while (index != targets.Length) yield return null;
+
+            guideFinger.gameObject.SetActive(false);
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+            OnEndDrag();
         }
-
-        while (index != targets.Length) yield return null;
-
-        guideFinger.gameObject.SetActive(false);
-        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-        OnEndDrag();
-        isGuide = false;
-        guidePopup.gameObject.SetActive(false);
-        MakeQuestion();
     }
 
     protected override void Awake()
@@ -97,21 +79,9 @@ public class JT_PL1_109 : BaseContents
     private Question109[] MakeQuestion()
     {
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
-
         questions = targets
             .SelectMany(x =>
                 GameManager.Instance.GetResources(x).Words
-                .OrderBy(y => Random.Range(0f, 100f))
-                .Take(questionCount / 2))
-            .OrderBy(x => Random.Range(0f, 100f))
-            .Select(x => new Question109(x))
-            .ToArray();
-
-        if(isGuide)
-            questions = targets
-            .SelectMany(x =>
-                GameManager.Instance.GetResources(x).Words
-                .Where(x => x.key.Length < 4)
                 .OrderBy(y => Random.Range(0f, 100f))
                 .Take(questionCount / 2))
             .OrderBy(x => Random.Range(0f, 100f))
@@ -178,22 +148,23 @@ public class JT_PL1_109 : BaseContents
                 currentQuestion.isCompleted = true;
                 if (CheckOver())
                 {
-                    
-                    ShowResult();
-                    //else
-                    //{
-                    //    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                    //    {
-                    //        currentIndex = 0;
-                    //        isGuide = false;
-                    //        guideFinger.gameObject.SetActive(false);
-                    //        questions = MakeQuestion();
-                    //        ShowQuestion();
-                    //    });
-                    //}
+                    if(!isGuide)
+                        ShowResult();
+                    else
+                    {
+                        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+                        {
+                            currentIndex = 0;
+                            isGuide = false;
+                            guideFinger.gameObject.SetActive(false);
+                            questions = MakeQuestion();
+                            ShowQuestion();
+                        });
+                    }
                 }
                 else
                 {
+                    Debug.Log("!checkOver");
                     currentIndex = questions
                         .Where(x => !x.isCompleted)
                         .Select(x => questions.ToList().IndexOf(x))

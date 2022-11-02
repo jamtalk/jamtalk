@@ -6,6 +6,10 @@ using UnityEngine;
 public class JT_PL2_107 : BaseMatchImage<VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_107;
+    protected override bool CheckOver() => digraphsIndex == QuestionCnt;
+    private int QuestionCnt => 4;
+    protected int digraphsIndex = 0;
+    private int dropCount = 0;
 
     protected override void GetWords()
     {
@@ -14,6 +18,30 @@ public class JT_PL2_107 : BaseMatchImage<VowelWordsData>
             .Take(drops.Length)
             .ToArray();
         SetElement(words);
+    }
+
+    protected override void onDrop()
+    {
+        dropCount += 1;
+
+        if (dropCount == words.Length)
+        {
+            digraphsIndex += 1;
+            if (QuestionCnt == digraphsIndex)
+                base.onDrop();
+            else
+            {
+                GetWords();
+                for (int i = 0; i < words.Length; i++)
+                {
+                    drags[i].Reset();
+                    drops[i].Reset();
+                }
+
+                dropCount = 0;
+            }
+        }
+        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
     }
 
     protected override void PlayAudio(ResourceWordsElement word)

@@ -14,45 +14,35 @@ public abstract class BaseMatchImage<T> : BaseContents
     public DragKnob_107[] drags;
     protected T[] words;
 
-    [Header("Guide")]
-    public DropSpaceShip_107[] guideDrops;
-    public DragKnob_107[] guideDrags;
-
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
         for(int i = 0; i < drops.Length; i++)
         {
-            guideDrops[i].Init(drops[i].data);
-            guideDrags[i].Init(drags[i].data);
-        }
+            var dropTarget = drops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
+            var dragTarget = drags.Where(x => x.data.key == dropTarget.data.key).First();
 
-        var dropTarget = guideDrops.Where(x => !x.isConnected).OrderBy(x => Random.Range(0, 100)).First();
-        var dragTarget = guideDrags.Where(x => x.data.key == dropTarget.data.key).First();
-
-        yield return new WaitForEndOfFrame();
-
-        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-        guideFinger.DoMove(dropTarget.pointKnob.transform.position, () =>
-        {
-            guideFinger.DoPress(() =>
+            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+            guideFinger.DoMove(dropTarget.pointKnob.transform.position, () =>
             {
-                PlayAudio(dropTarget.data);
-                dropTarget.SetGuideLine(1f, dragTarget);
-
-                guideFinger.DoMove(1f, dragTarget.pointKnob.transform.position, () =>
+                guideFinger.DoPress(() =>
                 {
-                    dropTarget.SetGuideCover(dragTarget);
-                    guideFinger.gameObject.SetActive(false);
-                    isNext = true;
-                    onDrop();
+                    PlayAudio(dropTarget.data);
+                    dropTarget.SetGuideLine(1f ,dragTarget);
+
+                    guideFinger.DoMove(1f, dragTarget.pointKnob.transform.position, () =>
+                    {
+                        dropTarget.SetGuideCover(dragTarget);
+                        guideFinger.gameObject.SetActive(false);
+                        isNext = true;
+                    });
                 });
             });
-        });
 
-        while (!isNext) yield return null;
-        isNext = false;
+            while (!isNext) yield return null;
+            isNext = false;
+        }
     }
     protected override void Awake()
     {
@@ -101,33 +91,45 @@ public abstract class BaseMatchImage<T> : BaseContents
     {
         if (CheckOver())
         {
-           ShowResult();
-        }
-        else
-        {
-            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+            if(!isGuide)
+                ShowResult();
+            else
             {
-                if (isGuide)
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+
+                isGuide = false;
+
+                foreach (var item in drags)
                 {
-                    guidePopup.gameObject.SetActive(false);
-                    isGuide = false;
+                    var height = item.line_rt.rect.height;
+                    height = 0f;
+                    var size = item.line_rt.sizeDelta;
+                    size.y = height;
+                    item.line_rt.sizeDelta = size;
+                    item.cover.sizeDelta = size;
 
-                    foreach (var item in drags)
-                    {
-                        item.Reset();
-                    }
-
-                    foreach (var item in drops)
-                    {
-                        item.lineImage.fillAmount = 1;
-                        item.Reset();
-                    }
-
-                    GetWords();
+                    item.isConnected = false;
+                    item.intractable = true;
                 }
 
-            });
+                foreach (var item in drops)
+                {
+                    var height = item.line_rt.rect.height;
+                    height = 0f;
+                    var size = item.line_rt.sizeDelta;
+                    size.y = height;
+                    item.line_rt.sizeDelta = size;
+                    item.cover.sizeDelta = size;
+
+                    item.isConnected = false;
+                    item.intractable = true;
+                }
+
+                GetWords();
+            }
         }
+        else
+            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
     }
 
 }
