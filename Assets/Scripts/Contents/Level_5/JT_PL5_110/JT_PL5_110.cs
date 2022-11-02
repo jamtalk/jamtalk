@@ -25,28 +25,25 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     {
         while (!isStop) yield return null;
 
-        for (int j = 0; j < QuestionCount * correctCount; j++)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            for (int i = 0; i < buttons.Length; i++)
+            while (!isStop) yield return null;
+
+            isRoutine = false;
+            if (buttons[i].data == currentQuestion.currentCorrect)
             {
-                while (!isStop) yield return null;
-
-                isRoutine = false;
-                if (buttons[i].data == currentQuestion.currentCorrect)
+                guideFinger.gameObject.SetActive(true);
+                guideFinger.DoMove(buttons[i].transform.position, () =>
                 {
-                    guideFinger.gameObject.SetActive(true);
-                    guideFinger.DoMove(buttons[i].transform.position, () =>
+                    guideFinger.DoClick(() =>
                     {
-                        guideFinger.DoClick(() =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            CorrectButtonMotion(buttons[i]);
-                        });
+                        guideFinger.gameObject.SetActive(false);
+                        CorrectButtonMotion(buttons[i]);
                     });
+                });
 
-                    while (!isRoutine) yield return null;
-                    break;
-                }
+                while (!isRoutine) yield return null;
+                break;
             }
         }
     }

@@ -23,30 +23,27 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     List<AlphabetWordsData[]> guideData = new List<AlphabetWordsData[]>();
     protected override IEnumerator ShowGuidnceRoutine()
     {
+        yield return base.ShowGuidnceRoutine();
+
         while (!isStop) yield return null;
+        isRoutine = false;
 
-        for (int j = 0; j < QuestionCount * correctCount; j++)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            for (int i = 0; i < buttons.Length; i++)
+            if (buttons[i].data == currentQuestion.currentCorrect)
+        {
+            guideFinger.gameObject.SetActive(true);
+            guideFinger.DoMove(buttons[i].transform.position, () =>
             {
-                while (!isStop) yield return null;
-
-                isRoutine = false;
-                if (buttons[i].data == currentQuestion.currentCorrect)
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.gameObject.SetActive(true);
-                    guideFinger.DoMove(buttons[i].transform.position, () =>
-                    {
-                        guideFinger.DoClick(() =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            CorrectButtonMotion(buttons[i]);
-                        });
-                    });
+                    guideFinger.gameObject.SetActive(false);
+                    CorrectButtonMotion(buttons[i]);
+                });
+            });
 
-                    while (!isRoutine) yield return null;
-                    break;
-                }
+            while (!isRoutine) yield return null;
+            break;
             }
         }
     }
