@@ -18,11 +18,10 @@ public class JT_PL1_102 : BaseContents
 
     private eAlphabet[] targets;
 
-    bool isGuidnce = false;
-
-    protected override void ShowGuidnce()
+    protected override IEnumerator ShowGuidnceRoutine()
     {
-        base.ShowGuidnce();
+        yield return base.ShowGuidnceRoutine();
+
         guideFinger.gameObject.SetActive(true);
         var eggGuide = egg;
         eggGuide.Init();
@@ -35,8 +34,8 @@ public class JT_PL1_102 : BaseContents
                 OnClickEgg();
                 guideFinger.DoClick(() =>
                 {
+                    guideFinger.gameObject.SetActive(false);
                     OnClickEgg();
-                    guidePopup.gameObject.SetActive(false);
                 });
             });
         });
@@ -64,10 +63,12 @@ public class JT_PL1_102 : BaseContents
     {
         audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
         {
-            if (isGuidnce)
+            guidePopup.gameObject.SetActive(false);
+
+            if (!isGuide)
                 currentIndex += 1;
             else
-                isGuidnce = true;
+                isGuide = false;
 
             if (currentIndex < targets.Length)
                 Init(targets[currentIndex]);
@@ -77,10 +78,7 @@ public class JT_PL1_102 : BaseContents
     }
     private void OnClickEgg()
     {
-        if (!CheckOver())
-            audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
-        else
-            audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
+        audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
 
         currentClickCount += 1;
         if (CheckOver())
