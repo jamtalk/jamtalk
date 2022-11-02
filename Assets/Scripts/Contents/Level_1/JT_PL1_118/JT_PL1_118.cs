@@ -20,29 +20,27 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
     {
         yield return base.ShowGuidnceRoutine();
 
-        for( int i = 0; i < QuestionCount; i ++)
+        while (!isPlayed) yield return null;
+        isPlayed = false;
+        isNext = false;
+        var i = 0;
+        var target = buttonsAnswer.Where(x => x.name == questions[i].correct.key).First();
+        guideFinger.gameObject.SetActive(true);
+        Debug.Log(questions[i].correct.key);
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            while (!isPlayed) yield return null;
-            isPlayed = false;
-            isNext = false;
-            
-            var target = buttonsAnswer.Where(x => x.name == questions[i].correct.key).First();
-            guideFinger.gameObject.SetActive(true);
-            Debug.Log(questions[i].correct.key);
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    guideFinger.transform.position = Vector3.zero;
-                    ButtonClickMotion(target, questions[i].correct);
-                    isNext = true;
-                });
+                guideFinger.gameObject.SetActive(false);
+                guideFinger.transform.position = Vector3.zero;
+                ButtonClickMotion(target, questions[i].correct);
+                isNext = true;
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
 
     private void ButtonClickMotion(ImageButton button, AlphabetWordsData data)
