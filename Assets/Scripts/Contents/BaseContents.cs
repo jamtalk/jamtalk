@@ -114,7 +114,14 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected TQuestion currentQuestion => questions[currentQuestionIndex];
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
 
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
 
+        questions = MakeQuestion();
+        currentQuestionIndex = 0;
+        ShowQuestion(questions[currentQuestionIndex]);
+    }
     protected override void ShowGuidnce()
     {
         base.ShowGuidnce();
@@ -136,21 +143,19 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected virtual void AddAnswer(TAnswer answer)
     {
         Debug.Log("AddAnswer");
+        Debug.Log(CheckOver());
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
         if (CheckOver())
             ShowResult();
         else
         {
+            Debug.Log(isGuide);
             if (isGuide)
-            {
                 EndGuidnce();
-                questions = MakeQuestion();
-                currentQuestionIndex = 0;
-                ShowQuestion(questions[currentQuestionIndex]);
-            }
             else
             {
+                Debug.Log(question.isCorrect);
                 currentQuestionIndex += 1;
                 if (question.isCorrect)
                     audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
@@ -199,12 +204,7 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
             Debug.Log("else if");
         }
         else if (isGuide)
-        {
             EndGuidnce();
-            questions = MakeQuestion();
-            currentQuestionIndex = 0;
-            ShowQuestion(questions[currentQuestionIndex]);
-        }
     }
 }
 #endregion
