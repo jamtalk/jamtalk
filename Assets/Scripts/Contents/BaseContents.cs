@@ -94,6 +94,7 @@ public abstract class BaseContents : MonoBehaviour
 
     protected virtual void EndGuidnce()
     {
+        Debug.Log("endgudie");
         isGuide = false;
         guidePopup.gameObject.SetActive(false);
         StopCoroutine(guideRoutine);
@@ -197,14 +198,18 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
         }
         else if (currentQuestion.isCompleted)
         {
-            if (currentQuestion.isCorrect)
-                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
-            currentQuestionIndex += 1;
-            ShowQuestion(questions[currentQuestionIndex]);
+            if (isGuide) EndGuidnce();
+            else
+            {
+                if (currentQuestion.isCorrect)
+                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                currentQuestionIndex += 1;
+                ShowQuestion(questions[currentQuestionIndex]);
+            }
             Debug.Log("else if");
         }
-        else if (isGuide)
-            EndGuidnce();
+        else if (isGuide) EndGuidnce();
+            
     }
 }
 #endregion

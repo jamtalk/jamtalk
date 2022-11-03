@@ -24,39 +24,38 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     {
         while (!isStop) yield return null;
 
-        for (int j = 0; j < QuestionCount * correctCount; j++)
+
+        for (int i = 0; i < buttons.Length; i++)
         {
-            for (int i = 0; i < buttons.Length; i++)
+            while (!isStop) yield return null;
+
+            isRoutine = false;
+            if (buttons[i].data == currentQuestion.currentCorrect)
             {
-                while (!isStop) yield return null;
-
-                isRoutine = false;
-                if (buttons[i].data == currentQuestion.currentCorrect)
+                guideFinger.gameObject.SetActive(true);
+                guideFinger.DoMove(buttons[i].transform.position, () =>
                 {
-                    guideFinger.gameObject.SetActive(true);
-                    guideFinger.DoMove(buttons[i].transform.position, () =>
+                    guideFinger.DoClick(() =>
                     {
-                        guideFinger.DoClick(() =>
+                        buttons[i].isOn = true;
+                        audioPlayer.Play(buttons[i].data.audio.phanics, () =>
                         {
-                            buttons[i].isOn = true;
-                            audioPlayer.Play(buttons[i].data.audio.phanics, () =>
-                            {
 
-                                guideFinger.DoClick(() =>
-                                {
-                                    guideFinger.gameObject.SetActive(false);
-                                    CorrectButtonMotion(buttons[i]);
-                                });
+                            guideFinger.DoClick(() =>
+                            {
+                                guideFinger.gameObject.SetActive(false);
+                                CorrectButtonMotion(buttons[i]);
                             });
                         });
                     });
+                });
 
-                    while (!isRoutine) yield return null;
-                    break;
-                }
+                while (!isRoutine) yield return null;
+                break;
             }
         }
     }
+    
 
     protected override void Awake()
     {
