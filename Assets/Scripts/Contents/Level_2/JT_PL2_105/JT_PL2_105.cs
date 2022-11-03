@@ -34,29 +34,27 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int i = 0; i < QuestionCount; i++)
+        isNext = false;
+        var target = elements.Where(x => x.data == currentQuestion.correct).First();
+        guideFinger.gameObject.SetActive(true);
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            isNext = false;
-            var target = elements.Where(x => x.data == currentQuestion.correct).First();
-            guideFinger.gameObject.SetActive(true);
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    ClickMotion(target, target.data);
-                });
+                guideFinger.gameObject.SetActive(false);
+                ClickMotion(target, target.data);
             });
+        });
 
-            while(!isNext) yield return null;
-            yield return new WaitForSecondsRealtime(1.5f);
-        }
+        while (!isNext) yield return null;
+        yield return new WaitForSecondsRealtime(1.5f);
+
     }
 
     protected override void Awake()
