@@ -30,36 +30,48 @@ public class JT_PL4_108 : BaseContents
     private List<SplitElement_408> answerElements = new List<SplitElement_408>();
     private List<SplitElement_408> optionElements = new List<SplitElement_408>();
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int j = 0; j < questionCount; j++)
+        for (int i = 0; i < optionElements.Count; i++)
         {
-            for (int i = 0; i < optionElements.Count; i++)
+            var target = optionElements.Where(x => x.value == answerElements[i].value).First();
+            yield return new WaitForEndOfFrame();
+            guideFinger.DoMove(target.transform.position, () =>
             {
-                var target = optionElements.Where(x => x.value == answerElements[i].value).First();
-                guideFinger.DoMove(target.transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
-                    {
-                        CountMotion();
-                        isNext = true;
-                    });
+                    CountMotion();
+                    isNext = true;
                 });
+            });
 
-                while (!isNext) yield return null;
-                isNext = false;
-            }
-
-            guideFinger.gameObject.SetActive(false);
-            CorrctMotion();
             while (!isNext) yield return null;
             isNext = false;
         }
+
+        guideFinger.gameObject.SetActive(false);
+        CorrctMotion();
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+        MakeQuestions();
+    }
+
     protected override void Awake()
+    {
+        MakeQuestions();
+    }
+
+    private void MakeQuestions()
     {
         StartCoroutine(WaitFrame(() =>
         {
@@ -174,14 +186,9 @@ public class JT_PL4_108 : BaseContents
         {
             index += 1;
             if (CheckOver())
-                if(!isGuide)
-                    ShowResult();
-                else
-                {
-                    isGuide = false;
-                    index = 0;
-                    ShowQuestion();
-                }
+                ShowResult();
+            else if (isGuide)
+                EndGuidnce();
             else
                 ShowQuestion();
 
