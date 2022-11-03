@@ -55,7 +55,6 @@ public class JT_PL4_104 : BaseContents
     {
         base.EndGuidnce();
         index = 0;
-        StartCoroutine(Close(elements, true)); ;
     }
 
     protected override void Awake()
@@ -119,7 +118,7 @@ public class JT_PL4_104 : BaseContents
                     if (CheckOver())
                         ShowResult();
                     else if (isGuide)
-                        EndGuidnce();
+                        StartCoroutine(Close(elements, true));
                 }
                 else
                 {
@@ -135,9 +134,8 @@ public class JT_PL4_104 : BaseContents
     }
 
     private IEnumerator Close(WordElement404[] elements, bool isMakeQuestion = false)
-    {
-        if(!isMakeQuestion)
-            yield return new WaitForSecondsRealtime(2f);
+    {    
+        yield return new WaitForSecondsRealtime(2f);
 
         for (int i = 0; i < elements.Length; i++)
         {
@@ -152,6 +150,7 @@ public class JT_PL4_104 : BaseContents
 
             foreach (var item in elements)
                 item.charactor.gameObject.SetActive(true);
+            EndGuidnce();
             MakeQuestion();
         }
     }
