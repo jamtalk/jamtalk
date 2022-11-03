@@ -45,40 +45,54 @@ public class JT_PL2_103 : BaseContents
     private List<WordElement203> elements = new List<WordElement203>();
     private List<DragWordElement203> throwingElements = new List<DragWordElement203>();
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        foreach (var item in questions)
+
+        var dragTarget = throwingElements.Where(x => x.gameObject.activeSelf)
+            .OrderBy(x => Random.Range(0, 100)).First();
+        Debug.Log(dragTarget.gameObject.activeSelf);
+        var dropTarget = elements.Where(x => x.value == dragTarget.value).First();
+        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        guideFinger.DoMove(dragTarget.transform.position, () =>
         {
-            var dragTarget = throwingElements.Where(x => x.gameObject.activeSelf)
-                .OrderBy(x => Random.Range(0, 100)).First();
-            Debug.Log(dragTarget.gameObject.activeSelf);
-            var dropTarget = elements.Where(x => x.value == dragTarget.value).First();
-            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-
-            while (!isNext) yield return null;
-            isNext = false;
-
-            guideFinger.DoMove(dragTarget.transform.position, () =>
+            guideFinger.DoPress(() =>
             {
-                guideFinger.DoPress(() =>
+                guideFinger.DoMove(dragTarget.gameObject, dropTarget.transform.position, () =>
                 {
-                    guideFinger.DoMove(dragTarget.gameObject, dropTarget.transform.position, () =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        dragTarget.gameObject.SetActive(false);
-                        dropTarget.visible = true;
-                        isNext = true;
-                    });
+                    guideFinger.gameObject.SetActive(false);
+                    dragTarget.gameObject.SetActive(false);
+                    dropTarget.visible = true;
+                    isNext = true;
                 });
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-            OnDrop(dragTarget);
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+        OnDrop(dragTarget);
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+
+        foreach (var item in elements)
+            Destroy(item.gameObject);
+        foreach (var item in throwingElements)
+            Destroy(item.gameObject);
+
+        elements.Clear();
+        throwingElements.Clear();
+
+        StartContents();
     }
 
     protected override void Awake()
@@ -205,26 +219,9 @@ public class JT_PL2_103 : BaseContents
                 eventSystem.enabled = true;
                 popupCureent.gameObject.SetActive(false);
                 if (CheckOver())
-                {
-                    if (!isGuide)
-                        ShowResult();
-                    else
-                    {
-                        isGuide = false;
-                        index = 0;
-
-
-                        foreach (var item in elements)
-                            Destroy(item.gameObject);
-                        foreach (var item in throwingElements)
-                            Destroy(item.gameObject);
-
-                        elements.Clear();
-                        throwingElements.Clear();
-
-                        StartContents();
-                    }
-                }
+                    ShowResult();
+                else if ( isGuide )
+                    EndGuidnce();
             });
         });
 

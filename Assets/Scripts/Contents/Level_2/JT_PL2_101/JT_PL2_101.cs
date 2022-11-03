@@ -120,15 +120,8 @@ public class JT_PL2_101 : BaseContents
 
         if (CheckOver())
         {
-            Speak();
-            if(!isGuide)
-                ShowResult();
-            else
-            {
-                Reset(false);
-                index = 0;
-                guideFinger.gameObject.SetActive(false);
-            }
+            Speak();    
+            ShowResult();
         }
 
     }
