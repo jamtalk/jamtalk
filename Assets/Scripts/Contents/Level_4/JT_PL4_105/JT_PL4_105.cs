@@ -28,28 +28,32 @@ public class JT_PL4_105 : BaseContents
     public EventSystem eventSystem;
 
     private wordElement405 correctButtons;
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
+        while (!isNext) yield return null;
+        isNext = false;
+        var target = correctButtons.values.Where(x => x.text == current.IncludedDigraphs).First();
 
-        for (int i = 0; i < questionCount; i++)
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            while (!isNext) yield return null;
-            isNext = false;
-            var target = correctButtons.values.Where(x => x.text == current.IncludedDigraphs).First();
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    DigraphsButtonAddListener(target);
-                });
+                guideFinger.gameObject.SetActive(false);
+                DigraphsButtonAddListener(target);
             });
-        }
+        });
     }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+    }
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -127,15 +131,12 @@ public class JT_PL4_105 : BaseContents
             DoMove(() =>
             {
                 if (CheckOver())
-                    if(!isGuide)
-                        ShowResult();
-                    else
-                    {
-                        index = 0;
-                        MakeQuestion();
-                    }
+                    ShowResult();
                 else
+                {
+                    if (isGuide) EndGuidnce();
                     MakeQuestion();
+                }
             });
         }
     }
