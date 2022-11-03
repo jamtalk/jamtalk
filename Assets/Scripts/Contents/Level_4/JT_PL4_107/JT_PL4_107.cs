@@ -25,38 +25,37 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     private EventSystem eventSystem;
     private float colorFillamount = 0f;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i ++)
+
+        guideFinger.DoMove(buttonCharactor.transform.position, () => isNext = true);
+        for (float j = colorFillamount; j < .9f; j += .3f)
         {
-            guideFinger.DoMove(buttonCharactor.transform.position, () => isNext = true);
-            for (float j = colorFillamount; j < .9f; j += .3f)
-            {
-                while (!isNext) yield return null;
-                isNext = false;
-                guideFinger.DoClick(() => OnClickCharactor());
-            }
-
             while (!isNext) yield return null;
             isNext = false;
-
-            var target = buttonQuestions.Where(x => x.name == questions[currentQuestionIndex].correct.key).First();
-
-            guideFinger.DoMove(target.transform.position, () =>
-            {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    CorrectClickMotion(questions[currentQuestionIndex].correct);
-                });
-            });
-
-            while (!isNext) yield return null;
-            isNext = false;
+            guideFinger.DoClick(() => OnClickCharactor());
         }
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        var target = buttonQuestions.Where(x => x.name == questions[currentQuestionIndex].correct.key).First();
+
+        guideFinger.DoMove(target.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                guideFinger.gameObject.SetActive(false);
+                CorrectClickMotion(questions[currentQuestionIndex].correct);
+            });
+        });
+
+        while (!isNext) yield return null;
+        isNext = false;
+
 
     }
 
