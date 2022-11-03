@@ -27,49 +27,55 @@ public class JT_PL4_109 : BaseContents
 
         while (!isNext) yield return null;
         isNext = false;
-        for(int i = 0; i < cards.Length / 2; i++)
-        {
-            var target = cards.Where(x => !x.card.IsFornt)
-                .OrderBy(x => Random.Range(0, 100)).First();
-            var targets = cards.Where(x => x.DigraphsWordsData == target.DigraphsWordsData)
-                .OrderBy(x => Random.Range(0, 100))
-                .ToList();
 
-            for (int j = 0; j < targets.Count; j++)
+        var target = cards.Where(x => !x.card.IsFornt)
+            .OrderBy(x => Random.Range(0, 100)).First();
+        var targets = cards.Where(x => x.DigraphsWordsData == target.DigraphsWordsData)
+            .OrderBy(x => Random.Range(0, 100))
+            .ToList();
+
+        for (int j = 0; j < targets.Count; j++)
+        {
+            guideFinger.DoMove(targets[j].transform.position, () =>
             {
-                guideFinger.DoMove(targets[j].transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
+                    guideFinger.gameObject.SetActive(false);
+                    targets[j].card.Turnning(onCompleted: () =>
                     {
-                        guideFinger.gameObject.SetActive(false);
-                        targets[j].card.Turnning(onCompleted: () =>
+                        if (j == targets.Count - 1)
                         {
-                            if (j == targets.Count - 1)
+                            audioPlayer.Play(targets[j].DigraphsWordsData.act, () =>
                             {
-                                audioPlayer.Play(targets[j].DigraphsWordsData.act, () =>
-                                {
-                                    MatchMotion(targets, () => isNext = true);
-                                });
-                            }
-                            else
-                            {
-                                audioPlayer.Play(targets[j].DigraphsWordsData.clip, () => isNext = true);
-                                SetCardIntracable(true);
-                            }
-                        });
+                                MatchMotion(targets, () => isNext = true);
+                            });
+                        }
+                        else
+                        {
+                            audioPlayer.Play(targets[j].DigraphsWordsData.clip, () => isNext = true);
+                            SetCardIntracable(true);
+                        }
                     });
                 });
-                while (!isNext) yield return null;
-                isNext = false;
-            }
+            });
+            while (!isNext) yield return null;
+            isNext = false;
+
         }
 
-        isGuide = false;
+        EndGuidnce();
+    }
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        
         selected.Clear();
-        foreach(var item in cards)
+        foreach (var item in cards)
+        {
+            item.card.SetFront();
             item.star.gameObject.SetActive(false);
+        }
         MakeQuestion();
-        Debug.Log(selected.Count);
     }
     protected override void Awake()
     {
@@ -121,17 +127,7 @@ public class JT_PL4_109 : BaseContents
                 if (selected[0].DigraphsWordsData.key == selected[1].DigraphsWordsData.key)
                 {
                     if (CheckOver())
-                    {
-                        if(!isGuide)
-                            audioPlayer.Play(data.clip, ShowResult);
-                        else
-                        {
-                            Debug.Log("ischecOver");
-                            isGuide = false;
-                            selected.Clear();
-                            MakeQuestion();
-                        }
-                    }
+                        audioPlayer.Play(data.clip, ShowResult);
                     else
                     {
                         audioPlayer.Play(data.act, () =>
