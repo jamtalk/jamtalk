@@ -53,49 +53,47 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int i = 0; i < QuestionCount; i++)
+        
+        var target = elements.Where(x => x.digraphs == currentQuestion.correct).First();
+
+        guideFinger.gameObject.SetActive(true);
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            var target = elements.Where(x => x.digraphs == currentQuestion.correct).First();
-
-            guideFinger.gameObject.SetActive(true);
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    FirstClickMotion(target);
+                FirstClickMotion(target);
 
-                    guideFinger.DoClick(() =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        SecondsClickMotion(target, target.digraphs);
-                    });
-                });
-
-            });
-
-            while (!isSmall) yield return null;
-            isSmall = false;
-
-            isNext = false;
-
-            var smallTarget = bubbles.Where(x => x.textValue.text == digraphs).First();
-
-            guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMove(smallTarget.transform.position, () =>
-            {
                 guideFinger.DoClick(() =>
                 {
                     guideFinger.gameObject.SetActive(false);
-                    SmallBubbleClickMotion(target, smallTarget, smallTarget.digraphs, () =>
-                    {
-                        PotInMotion(target.digraphs);
-                    });
+                    SecondsClickMotion(target, target.digraphs);
                 });
             });
 
-            while (!isNext) yield return null;
-        }
+        });
+
+        while (!isSmall) yield return null;
+        isSmall = false;
+
+        isNext = false;
+
+        var smallTarget = bubbles.Where(x => x.textValue.text == digraphs).First();
+
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoMove(smallTarget.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                guideFinger.gameObject.SetActive(false);
+                SmallBubbleClickMotion(target, smallTarget, smallTarget.digraphs, () =>
+                {
+                    PotInMotion(target.digraphs);
+                });
+            });
+        });
+
+        while (!isNext) yield return null;
     }
 
     protected override void Awake()
