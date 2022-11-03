@@ -30,33 +30,42 @@ public class JT_PL3_105 : BaseContents
     public AudioClip effectClip;
 
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+
+        var target = elements
+            .Where(x => x.text.text == currentDigraphs.digraphs.ToLower()
+            || x.text.text == currentDigraphs.PairDigrpahs.ToString().ToLower()).First();
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            var target = elements
-                .Where(x => x.text.text == currentDigraphs.digraphs.ToLower()
-                || x.text.text == currentDigraphs.PairDigrpahs.ToString().ToLower()).First();
-
-            while (!isNext) yield return null;
-            isNext = false;
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    ClickMotion(target);
-                });
+                guideFinger.gameObject.SetActive(false);
+                ClickMotion(target);
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        index = 0;
+        MakeQuestion();
+        progressBar.transform.localScale = new Vector3(0f, 1f, 1f);
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -153,15 +162,9 @@ public class JT_PL3_105 : BaseContents
                         isNext = true;
                         eventSystem.enabled = true;
                         if (CheckOver())
-                            if(!isGuide)
-                                ShowResult();
-                            else
-                            {
-                                index = 0;
-                                isGuide = false;
-                                MakeQuestion();
-                                progressBar.transform.localScale = new Vector3(0f, 1f, 1f);
-                            }
+                            ShowResult();
+                        else if (isGuide)
+                            EndGuidnce();
                         else
                             MakeQuestion();
                     });
