@@ -22,28 +22,22 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     public BubbileButtons[] buttons;
     public Image[] childrenImages;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
-        for (int i = 0; i < QuestionCount; i++)
-        {
-            for (int j = 0; j < buttons.Length; j++)
-            {
-                var target = buttons.Where(x => x.button.interactable).OrderBy(x => Random.Range(0, 100)).First();
+        var target = buttons.Where(x => x.button.interactable).OrderBy(x => Random.Range(0, 100)).First();
 
-                guideFinger.DoMove(target.transform.position, () =>
-                {
-                    guideFinger.DoClick(() =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        ClickMotion(target);
-                    });
-                });
-                while (!isNext) yield return null;
-                isNext = false;
-            }
-        }
+        guideFinger.DoMove(target.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                guideFinger.gameObject.SetActive(false);
+                ClickMotion(target);
+            });
+        });
+        while (!isNext) yield return null;
+        isNext = false;
     }
 
     protected override List<Question4_102> MakeQuestion()
@@ -116,8 +110,8 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         successEffect.gameObject.SetActive(true);
         audioPlayer.Play(data.act, () =>
         {
-            if (CheckOver() && isGuide)
-                currentQuestion.ResetCurrentIndex();
+            //if (CheckOver() && isGuide)
+            //    currentQuestion.ResetCurrentIndex();
             successEffect.gameObject.SetActive(false);
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].gameObject.SetActive(true);
