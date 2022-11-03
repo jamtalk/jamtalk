@@ -26,40 +26,38 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     [SerializeField]
     private List<DoubleClick306> elements = new List<DoubleClick306>();
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        var target = elements.Where(x => x.value.key == currentQuestion.correct.key).First();
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            while (!isNext) yield return null;
-            isNext = false;
-
-            var target = elements.Where(x => x.value.key == currentQuestion.correct.key).First();
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    audioPlayer.Play(target.value.audio.phanics, () =>
-                        guideFinger.DoClick(() =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            DoubleClickMotion(target.value);
-                        }));
-                });
+                audioPlayer.Play(target.value.audio.phanics, () =>
+                    guideFinger.DoClick(() =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        DoubleClickMotion(target.value);
+                    }));
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
     protected override void Awake()
     {
         base.Awake();
         currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
-        MakeQuestion();
     }
 
 
@@ -154,17 +152,6 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
             audioPlayer.Play(currentQuestion.correct.act, () =>
             {
                 AddAnswer(currentQuestion.correct);
-                
-                if (CheckOver())
-                    if(!isGuide)
-                        ShowResult();
-                    else
-                    {
-                        isGuide = false;
-                        MakeQuestion();
-                    }
-                else
-                    MakeQuestion();
                 isNext = true;
             });
         });
