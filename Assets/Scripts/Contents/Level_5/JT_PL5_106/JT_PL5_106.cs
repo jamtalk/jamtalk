@@ -17,41 +17,34 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
     public ResultStart506 resultStar;
     public CanvasScaler scaler;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        //for (int i = 0; i < QuestionCount; i++)
-        //{
+        while (!isNext) yield return null;
+        isNext = false;
+
+        for (int j = 0; j < currentQuestion.orizinWords.Count; j++)
+        {
+            var target = elements.Where(x => x.orizinalValue == currentQuestion.orizinWords[j]).First();
+
+            guideFinger.DoMove(target.transform.position, () =>
+            {
+                guideFinger.DoPress(() => { isNext = true; });
+
+                if (j < elements.Count)
+                {
+                    var nextTarget = elements.Where(x => x.orizinalValue == currentQuestion.orizinWords[j + 1]).First();
+                    target.SetGuideLine(1f, nextTarget);
+                }
+            });
             while (!isNext) yield return null;
             isNext = false;
+        }
 
-            for (int j = 0; j < currentQuestion.orizinWords.Count; j++)
-            {
-                var target = elements.Where(x => x.orizinalValue == currentQuestion.orizinWords[j]).First();
-
-                guideFinger.DoMove(target.transform.position, () =>
-                {
-                    guideFinger.DoPress(() => { isNext = true; });
-
-                    if (j < elements.Count)
-                    {
-                        var nextTarget = elements.Where(x => x.orizinalValue == currentQuestion.orizinWords[j + 1]).First();
-                        target.SetGuideLine(1f, nextTarget);
-                    }
-                });
-                while (!isNext) yield return null;
-                isNext = false;
-            }
-
-            guideFinger.gameObject.SetActive(false);
-            OnDrop(currentQuestion.correct.key.ToLower());
-
-        //    while (!isNext) yield return null;
-        //    isNext = false;
-        //}
-
+        guideFinger.gameObject.SetActive(false);
+        OnDrop(currentQuestion.correct.key.ToLower());
     }
 
     protected override void Awake()
@@ -79,7 +72,6 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
         var correct = currentQuestion.correct.key.ToLower();
         if (correct == value)
         {
-            isGuide = false;
             CorrectMotion(value);
         }
         else
@@ -99,15 +91,14 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
             {
                 AddAnswer(currentQuestion.correct);
                 isNext = true;
-                
-                foreach(var item in elements)
+
+                foreach (var item in elements)
                 {
                     var width = item.line_rt.rect.width;
                     width = 0f;
                     var size = item.line_rt.sizeDelta;
                     size.x = width;
                     item.line_rt.sizeDelta = size;
-
                 }
             });
         };
