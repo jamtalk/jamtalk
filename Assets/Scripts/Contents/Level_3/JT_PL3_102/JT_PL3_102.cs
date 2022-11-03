@@ -14,35 +14,31 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     public Image spatulaImage;
     public DoubleClick302[] pancakes;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int i = 0; i < QuestionCount; i++)
+
+        var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            for (int j = 0; j < pancakes.Length; j++)
+            guideFinger.DoClick(() =>
             {
-                var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
+                target.isOn = true;
 
-                guideFinger.DoMove(target.transform.position, () =>
+                audioPlayer.Play(target.data.audio.phanics, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
-                    {
-                        target.isOn = true;
+                    guideFinger.gameObject.SetActive(false);
+                    ClickMotion(target);
+                }));
+            });
+        });
+        while (!isNext) yield return null;
+        isNext = false;
 
-                        audioPlayer.Play(target.data.audio.phanics, () =>
-                        guideFinger.DoClick(() =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            ClickMotion(target);
-                        }));
-                    });
-                });
-                while (!isNext) yield return null;
-                isNext = false;
-            }
-        }
     }
     protected override List<Question3_102> MakeQuestion()
     {
