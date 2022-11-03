@@ -25,41 +25,51 @@ public class JT_PL2_101 : BaseContents
     public AudioClip tabClip;
     public AudioClip dropClip;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < puzzleCount; i++)
+
+        var puzzle = puzzles.Where(x => x.gameObject.activeSelf)
+            .OrderBy(x => Random.Range(0, 100))
+            .First();
+        var target = parentLayout.Where(x => x.name == puzzle.name).First();
+
+        guideFinger.gameObject.SetActive(true);
+        Debug.LogFormat("{0}, {1}", puzzle.name, target.name);
+        guideFinger.DoMove(puzzle.rt.position, () =>
         {
-            var puzzle = puzzles.Where(x => x.gameObject.activeSelf)
-                .OrderBy(x => Random.Range(0, 100))
-                .First();
-            var target = parentLayout.Where(x => x.name == puzzle.name).First();
-
-            guideFinger.gameObject.SetActive(true);
-            Debug.LogFormat("{0}, {1}", puzzle.name, target.name);
-            guideFinger.DoMove(puzzle.rt.position, () =>
+            guideFinger.DoPress(() =>
             {
-                guideFinger.DoPress(() =>
+                OnDrag(puzzle);
+
+                guideFinger.DoMove(puzzle.gameObject, target.rt.position, () =>
                 {
-                    OnDrag(puzzle);
+                    guideFinger.gameObject.SetActive(false);
+                    guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                    puzzle.gameObject.SetActive(false);
+                    target.GetComponent<Image>().sprite = puzzle.GetComponent<Image>().sprite;
 
-                    guideFinger.DoMove(puzzle.gameObject, target.rt.position, () =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-                        puzzle.gameObject.SetActive(false);
-                        target.GetComponent<Image>().sprite = puzzle.GetComponent<Image>().sprite;
-
-                        DropMotion(target);
-                    });
+                    DropMotion(target);
                 });
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+
+        EndGuidnce();
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        Reset(false);
+        index = 0;
+        guideFinger.gameObject.SetActive(false);
+
     }
     protected override void Awake()
     {
@@ -102,7 +112,8 @@ public class JT_PL2_101 : BaseContents
         Debug.Log(index);
         if (index == 5)
         {
-            Reset();
+            Speak();
+            Reset(true);
 
             isNext = true;
         }
@@ -114,7 +125,7 @@ public class JT_PL2_101 : BaseContents
                 ShowResult();
             else
             {
-                Reset();
+                Reset(false);
                 index = 0;
                 guideFinger.gameObject.SetActive(false);
             }
@@ -122,11 +133,13 @@ public class JT_PL2_101 : BaseContents
 
     }
 
-    private void Reset()
+    private void Reset(bool isLong)
     {
-        Speak();
+        if (isLong)
+            text.text = "Long";
+        else
+            text.text = "Short";
 
-        text.text = "Long";
         for(int i = 0; i < puzzles.Length; i++)
         {
             puzzles[i].ResetPosition();
