@@ -21,7 +21,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     [SerializeField]
     private SlotMachine502 targetSlot;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
@@ -30,13 +30,11 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
         while (!isNext) yield return null;
         isNext = false;
 
-        for (int i = 0; i < QuestionCount; i++)
-        {
-            guideFinger.DoClick(() => OnClickSloting());
-            guideFinger.gameObject.SetActive(false);
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+
+        guideFinger.DoClick(() => OnClickSloting());
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
 
     protected override void Awake()
@@ -101,6 +99,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     }
     protected void OnClickSloting()
     {
+        guideFinger.gameObject.SetActive(false);
         eventSystem.enabled = false;
         image.gameObject.SetActive(false);
         targetSlot.Sloting(currentQuestion.values, () =>
