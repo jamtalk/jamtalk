@@ -45,7 +45,6 @@ public class JT_PL4_101 : BaseContents
             while (!isNext) yield return null;
             isNext = false;
         }
-
     }
     protected override void Awake()
     {
@@ -148,13 +147,9 @@ public class JT_PL4_101 : BaseContents
             ShowResult();
         else
         {
-            isGuide = false;
+            EndGuidnce();
             MakeQuestion();
         }
-        //if (CheckOver())
-        //    ShowResult();
-        //else
-        //    MakeQuestion();
     }
 
 }
