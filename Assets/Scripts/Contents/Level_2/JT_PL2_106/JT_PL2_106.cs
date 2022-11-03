@@ -43,45 +43,51 @@ public class JT_PL2_106 : BaseContents
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+        isNext = false;
+        var isSpin = false;
+        guideFinger.gameObject.SetActive(true);
+        var spinButtonRt = spinButton.GetComponentInChildren<Text>();
+        guideFinger.DoMove(spinButtonRt.transform.position, () =>
         {
-            isNext = false;
-            var isSpin = false;
-            guideFinger.gameObject.SetActive(true);
-            var spinButtonRt = spinButton.GetComponentInChildren<Text>();
-            guideFinger.DoMove(spinButtonRt.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
+                guideFinger.gameObject.SetActive(false);
+                Spin(() =>
                 {
-                    guideFinger.gameObject.SetActive(false);
-                    Spin(() =>
-                    {
-                        isSpin = true;
-                    });
+                    isSpin = true;
                 });
             });
+        });
 
-            while (!isSpin) yield return null;
-            yield return new WaitForSecondsRealtime(2f);
+        while (!isSpin) yield return null;
+        yield return new WaitForSecondsRealtime(2f);
 
-            var target = textList[currentIndex].data.VowelType == eVowelType.Short ? shortButton : longButton;
+        var target = textList[currentIndex].data.VowelType == eVowelType.Short ? shortButton : longButton;
 
-            guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMove(target.transform.position, () =>
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoMove(target.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    ButtonListener(target);
-                    isNext = true;
-                });
+                guideFinger.gameObject.SetActive(false);
+                ButtonListener(target);
+                isNext = true;
             });
+        });
 
-            while (!isNext) yield return null;
+        while (!isNext) yield return null;
 
-            yield return new WaitForSecondsRealtime(1f);
-        }
+        yield return new WaitForSecondsRealtime(1f);
     }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+        foreach (var item in currentCount)
+            item.isOn = false;
+    }
+
     protected override void Awake()
     {          
         base.Awake();
@@ -143,37 +149,21 @@ public class JT_PL2_106 : BaseContents
 
         for(int i = 0; i < WordsCount; i++)
         {
-            if (button.name == "ShortButton")
+            var value = button.name == "ShortButton" ? shortWords[i].key : longWords[i].key;
+            if (textList[currentIndex].text.Contains(value))
             {
-                if (textList[currentIndex].text.Contains(shortWords[i].key))
+                currentCount[index].isOn = true;
+                index += 1;
+                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
                 {
-                    currentCount[index].isOn = true;
-                    index += 1;
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                    {
-                        if (CheckOver())
-                            ShowResult();
-                    });
-                    shortButton.interactable = false;
-                    longButton.interactable = false;
-                    break;
-                }
-            }
-            else if (button.name == "LongButton")
-            {
-                if (textList[currentIndex].text.Contains(longWords[i].key))
-                {
-                    currentCount[index].isOn = true;
-                    index += 1;
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                    {
-                        if (CheckOver())
-                            ShowResult();
-                    });
-                    shortButton.interactable = false;
-                    longButton.interactable = false;
-                    break;
-                }
+                    if (CheckOver())
+                        ShowResult();
+                    else if (isGuide)
+                        EndGuidnce();
+                });
+                shortButton.interactable = false;
+                longButton.interactable = false;
+                break;
             }
         }
     }
