@@ -60,6 +60,19 @@ public class JT_PL3_101 : BaseContents
         guideFinger.gameObject.SetActive(false);
         OnDrop(dragElement);
     }
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        dragElement.isColors = false;
+        index = 0;
+
+        resultText.gameObject.SetActive(false);
+        Color color = resultColorImage.color;
+        color.a = 0;
+        resultColorImage.color = color;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -94,16 +107,7 @@ public class JT_PL3_101 : BaseContents
                 if(!isGuide)
                     ShowResult();
                 else
-                {
-                    isGuide = false;
-                    dragElement.isColors = false;
-                    index = 0;
-
-                    resultText.gameObject.SetActive(false);
-                    Color color = resultColorImage.color;
-                    color.a = 0;
-                    resultColorImage.color = color;
-                }
+                    EndGuidnce();
             }
             else
             {
