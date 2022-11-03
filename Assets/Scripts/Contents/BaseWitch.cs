@@ -34,11 +34,10 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
-        {
+        //for(int i = 0; i < QuestionCount; i++)
+        //{
             while (!isNext) yield return null;
             isNext = false;
-            Debug.Log("I : " + i);
             var target = elements.Where(x => x.data == currentQuestion.correct).First();
 
             guideFinger.DoMove(target.transform.position, () =>
@@ -55,7 +54,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
                 });
             });
 
-        }
+        //}
     }
 
     protected override void Awake()
