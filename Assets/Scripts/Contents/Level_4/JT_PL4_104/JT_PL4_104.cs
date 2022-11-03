@@ -16,7 +16,7 @@ public class JT_PL4_104 : BaseContents
     private WordElement404 selectElement;
     public WordElement404[] elements;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
@@ -24,34 +24,38 @@ public class JT_PL4_104 : BaseContents
         while (!isNext) yield return null;
         isNext = false;
 
-        for (int i = 0; i < elements.Length / 2; i++)
+        var digraphs = elements.Where(x => !x.data.isPair)
+            .Where(x => !x.isOpen)
+            .OrderBy(x => Random.Range(0, 100)).First();
+        var pairDrigraphs = elements.Where(x => x.data.isPair)
+            .Where(x => !x.isOpen)
+            .OrderBy(x => Random.Range(0, 100)).First();
+
+        WordElement404[] targets = { digraphs, pairDrigraphs };
+        targets = targets.OrderBy(x => Random.Range(0, 100)).ToArray();
+
+        foreach (var item in targets)
         {
-
-            var digraphs = elements.Where(x => !x.data.isPair)
-                .Where(x => !x.isOpen)
-                .OrderBy(x => Random.Range(0, 100)).First();
-            var pairDrigraphs = elements.Where(x => x.data.isPair)
-                .Where(x => !x.isOpen)
-                .OrderBy(x => Random.Range(0, 100)).First();
-
-            WordElement404[] targets = { digraphs, pairDrigraphs };
-            targets = targets.OrderBy(x => Random.Range(0, 100)).ToArray();
-
-            foreach (var item in targets)
+            guideFinger.DoMove(item.transform.position, () =>
             {
-                guideFinger.DoMove(item.transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        ClickMotion(item);
-                    });
+                    guideFinger.gameObject.SetActive(false);
+                    ClickMotion(item);
                 });
+            });
 
-                while (!isNext) yield return null;
-                isNext = false;
-            }
+            while (!isNext) yield return null;
+            isNext = false;
         }
+
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+        StartCoroutine(Close(elements, true)); ;
     }
 
     protected override void Awake()
@@ -113,15 +117,9 @@ public class JT_PL4_104 : BaseContents
                     element.charactor.gameObject.SetActive(false);
 
                     if (CheckOver())
-                        if(!isGuide)
-                            ShowResult();
-                        else
-                        {
-                            index = 0;
-                            isGuide = false;
-                            
-                            StartCoroutine(Close(elements, true));;
-                        }
+                        ShowResult();
+                    else if (isGuide)
+                        EndGuidnce();
                 }
                 else
                 {
@@ -138,7 +136,8 @@ public class JT_PL4_104 : BaseContents
 
     private IEnumerator Close(WordElement404[] elements, bool isMakeQuestion = false)
     {
-        yield return new WaitForSecondsRealtime(2f);
+        if(!isMakeQuestion)
+            yield return new WaitForSecondsRealtime(2f);
 
         for (int i = 0; i < elements.Length; i++)
         {
