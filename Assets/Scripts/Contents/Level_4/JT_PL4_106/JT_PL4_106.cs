@@ -16,37 +16,36 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     public Button charactorButton;
     public DoubleClickButton4_104[] buttons;
 
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+
+        while (!isNext) yield return null;
+        isNext = false;
+
+        var target = buttons.Where(x => x.data.key == currentQuestion.correct.key).First();
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            while (!isNext) yield return null;
-            isNext = false;
-
-            var target = buttons.Where(x => x.data.key == currentQuestion.correct.key).First();
-
-            guideFinger.DoMove(target.transform.position, () =>
-            {
-                guideFinger.DoClick(() =>
-                {
-                    ButtonClickMotion(target);
-                });
-            });
-
-            while (!isNext) yield return null;
-            isNext = false;
             guideFinger.DoClick(() =>
             {
-                guideFinger.gameObject.SetActive(false);
-                ButtonDoubleClickMotion(target);
+                ButtonClickMotion(target);
             });
+        });
 
-            while (!isNext) yield return null;
-            isNext = false;
-        }
+        while (!isNext) yield return null;
+        isNext = false;
+        guideFinger.DoClick(() =>
+        {
+            guideFinger.gameObject.SetActive(false);
+            ButtonDoubleClickMotion(target);
+        });
+
+        while (!isNext) yield return null;
+        isNext = false;
+
     }
 
     protected override void Awake()
