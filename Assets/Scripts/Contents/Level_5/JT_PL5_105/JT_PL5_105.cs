@@ -36,29 +36,36 @@ public class JT_PL5_105 : BaseContents
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int i = 0; i < questionCount; i++)
-        {
+        
             while (!isNext) yield return null;
             isNext = false;
-            for (int j = 0; j < questions.Count - 1; j++)
+        for (int j = 0; j < questions.Count - 1; j++)
+        {
+            var target = elements.Where(x => x.isCheck && x.gameObject.activeSelf)
+                .OrderBy(x => Random.Range(0, 100)).First();
+
+            guideFinger.DoMove(target.transform.position, () =>
             {
-                var target = elements.Where(x => x.isCheck && x.gameObject.activeSelf)
-                    .OrderBy(x => Random.Range(0, 100)).First();
-
-                guideFinger.DoMove(target.transform.position, () =>
+                guideFinger.DoClick(() =>
                 {
-                    guideFinger.DoClick(() =>
-                    {
-                        ClickMotion(target);
-                        guideFinger.gameObject.SetActive(false);
-                    });
+                    ClickMotion(target);
+                    guideFinger.gameObject.SetActive(false);
                 });
+            });
 
-                while (!isNext) yield return null;
-                isNext = false;
-            }
+            while (!isNext) yield return null;
+            isNext = false;
+
         }
     }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+        StartCoroutine(ResetElement());
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -177,20 +184,10 @@ public class JT_PL5_105 : BaseContents
                     DoMove(() =>
                     {
                         if (CheckOver())
-                        {
-                            if (!isGuide)
-                                ShowResult();
-                            else
-                            {
-                                isGuide = false;
-                                index = 0;
-                                StartCoroutine(ResetElement());
-                            }
-                        }
+                            ShowResult();
                         else
-                        {
-                            StartCoroutine(ResetElement());
-                        }
+                            if (isGuide) EndGuidnce();
+                            else StartCoroutine(ResetElement());
                     });
                 });
             }
