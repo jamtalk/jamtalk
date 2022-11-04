@@ -27,6 +27,8 @@ public abstract class BaseContents : MonoBehaviour
     protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
+
+
     protected virtual void ShowResult()
     {
         GC.Collect();
