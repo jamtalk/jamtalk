@@ -46,50 +46,46 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     {
         yield return base.ShowGuidnceRoutine();
 
-        for(int i = 0; i < QuestionCount; i++)
+        var target = elements.Where(x => x.data == currentQuestion.correct).First();
+
+        guideFinger.gameObject.SetActive(true);
+
+        guideFinger.DoMove(target.transform.position, () =>
         {
-            var target = elements.Where(x => x.data == currentQuestion.correct).First();
-
-            guideFinger.gameObject.SetActive(true);
-
-            guideFinger.DoMove(target.transform.position, () =>
+            guideFinger.DoClick(() =>
             {
-                guideFinger.DoClick(() =>
-                {
-                    FirstClickMotion(target);
+                FirstClickMotion(target);
 
-                    guideFinger.DoClick(() =>
-                    {
-                        guideFinger.gameObject.SetActive(false);
-                        SecondsClickMotion(target, target.data);
-                    });
-                });
-
-            });
-
-            while (!isSmall) yield return null;
-            isSmall = false;
-            isNext = false;
-            
-            
-            var smallTarget = bubbles.Where(x => x.textValue.text == GameManager.Instance.currentAlphabet.ToString().ToLower()).First();
-
-            guideFinger.gameObject.SetActive(true);
-            guideFinger.DoMove(smallTarget.transform.position, () =>
-            {
                 guideFinger.DoClick(() =>
                 {
                     guideFinger.gameObject.SetActive(false);
-                    SmallBubbleClickMotion(target, smallTarget, smallTarget.data, () =>
-                    {
-                        isNext = true;
-                        AddAnswer(smallTarget.data);
-                    });
+                    SecondsClickMotion(target, target.data);
                 });
             });
 
-            while (!isNext) yield return null;
-        }
+        });
+
+        while (!isSmall) yield return null;
+        isSmall = false;
+        isNext = false;
+
+
+        var smallTarget = bubbles.Where(x => x.textValue.text == GameManager.Instance.currentAlphabet.ToString().ToLower()).First();
+
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoMove(smallTarget.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                guideFinger.gameObject.SetActive(false);
+                SmallBubbleClickMotion(target, smallTarget, smallTarget.data, () =>
+                {
+                    isNext = true;
+                });
+            });
+        });
+
+        while (!isNext) yield return null;
     }
 
 
@@ -231,18 +227,15 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     private void SmallBubbleClickMotion(BubbleElement bubble, BubbleElement smallBubbles, VowelWordsData data, Action action = null)
     {
         ThrowElement(smallBubbles, data, action);
-        audioPlayer.Play(1f, putClip);
         smallBubbles.isOn = false;
 
         var targets = new List<GameObject>();
         for (int i = 1; i < bubbles.Count + 1; i++)
             targets.Add(bubbleParent.parent.GetChild(i).gameObject);
 
-        for (int i = 0; i < targets.Count; i++)
-        {
-            var destory = targets[i];
-            Destroy(destory);
-        }
+        foreach (var item in targets)
+            Destroy(item);
+
         bubbles.Clear();
         bubbleParents.Clear();
 
@@ -253,10 +246,13 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
     protected virtual void ThrowElement(BubbleElement bubble, VowelWordsData data, Action action)
     {
-        if(!isGuide)
-            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () => AddAnswer(data));
-        else
-            thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), action);
+        thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
+        {
+            audioPlayer.Play(1f, putClip, () =>
+            {
+                AddAnswer(data);
+            });
+        });
     }
 
     private IEnumerator Init(TweenCallback callback = null)
