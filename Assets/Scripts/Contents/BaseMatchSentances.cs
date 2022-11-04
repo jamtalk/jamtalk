@@ -29,47 +29,54 @@ public abstract class BaseMatchSentances<T> : BaseContents
     protected T[] words { get; private set; }
     public EventSystem eventSystem;
     protected T currentSentance => words[index];
-    protected virtual int QuestionCount => 6;
+    protected virtual int QuestionCount => 4;
 
     bool isThrow = false;
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        //for(int i = 0; i < QuestionCount; i++)
-        //{
-        //while (!isThrow) yield return null;
-        //isThrow = false;
+        while (!isThrow) yield return null;
+        isThrow = false;
 
-        //yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(1f);
 
-        //for (int j = 0; j < throwingElements.Count; j++)
-        //{
-        //    var throing = throwingElements
-        //        .Where(x => x.gameObject.activeSelf)
-        //        .OrderBy(x => Random.Range(0, 100)).First();
-        //    var target = elements.Where(x => x.value == throing.value).First();
+        for (int j = 0; j < 3; j++)
+        {
+            var throing = throwingElements
+                .Where(x => x.gameObject.activeSelf)
+                .OrderBy(x => Random.Range(0, 100)).First();
+            var target = elements.Where(x => x.value == throing.value).First();
 
-        //    guideFinger.DoMove(throing.transform.position, (() =>
-        //    {
-        //        guideFinger.DoPress(() =>
-        //        {
-        //            guideFinger.DoMove(throing.gameObject, target.transform.position, () =>
-        //            {
-        //                guideFinger.gameObject.SetActive(false);
-        //                throing.gameObject.SetActive(false);
-        //                guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-        //                OnDrop(target);
-        //            });
-        //        });
-        //    }));
+            guideFinger.DoMove(throing.transform.position, (() =>
+            {
+                guideFinger.DoPress(() =>
+                {
+                    guideFinger.DoMove(throing.gameObject, target.transform.position, () =>
+                    {
+                        guideFinger.gameObject.SetActive(false);
+                        throing.gameObject.SetActive(false);
+                        guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                        OnDrop(target);
+                    });
+                });
+            }));
 
 
-        //    while (!isNext) yield return null;
-        //    isNext = false;
-        //}
-        //}
+            while (!isNext) yield return null;
+            isNext = false;
+        }
+
+        EndGuidnce();
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        index = 0;
+        words = GetSentance();
+        ShowQuestion();
     }
 
     protected override void Awake()
@@ -141,14 +148,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
                 {
                     index += 1;
                     if (CheckOver())
-                        if(!isGuide)
-                            ShowResult();
-                        else
-                        {
-                            isGuide = false;
-                            index = 0;
-                            ShowQuestion();
-                        }
+                        ShowResult();
                     else
                         ShowQuestion();
                 });
@@ -166,9 +166,15 @@ public abstract class BaseMatchSentances<T> : BaseContents
         var targets = new List<GameObject>();
         for (int i = 0; i < sentanceParent.childCount; i++)
             targets.Add(sentanceParent.GetChild(i).gameObject);
-        for (int i = 0; i < targets.Count; i++)
-            Destroy(targets[i]);
+        for (int i = 0; i < throwingParent.childCount; i++)
+            targets.Add(throwingParent.GetChild(i).gameObject);
+
+        foreach (var item in targets)
+            Destroy(item);
+
         targets.Clear();
+        throwingElements.Clear();
+        UnionElements.Clear();
         throwingParent.GetComponent<HorizontalLayoutGroup>().enabled = true;
     }
 }
