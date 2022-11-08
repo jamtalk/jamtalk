@@ -46,6 +46,7 @@ public class JT_PL1_102 : BaseContents
         //ShowGuidnce();
         currentIndex = 0;
         egg.onBroken += OnBorken;
+        egg.onbreaking += () => imageAlphabet.gameObject.SetActive(true);
         buttonEgg.onClick.AddListener(OnClickEgg);
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         Init(targets[currentIndex]);
@@ -56,11 +57,14 @@ public class JT_PL1_102 : BaseContents
         currentClickCount = 0;
         var data = GameManager.Instance.GetResources(value);
         imageAlphabet.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Card, eAlphabetType.Upper, value);
-        imageAlphabet.SetNativeSize();
+
+        imageAlphabet.gameObject.SetActive(false);
+        //imageAlphabet.SetNativeSize();
         imageAlphabet.preserveAspect = true;
     }
     private void OnBorken()
     {
+        imageAlphabet.gameObject.SetActive(true);
         audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
         {
             guidePopup.gameObject.SetActive(false);

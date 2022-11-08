@@ -17,6 +17,7 @@ public class Egg : MonoBehaviour
     public AudioClip shakeClip;
     public AudioClip crackClip;
     public event Action onBroken;
+    public event Action onbreaking;
     public bool isCrakced => imageEgg.sprite == spriteCrack;
     Coroutine shaking;
     private void Awake()
@@ -42,6 +43,7 @@ public class Egg : MonoBehaviour
         }
         seq.onComplete += () => onBroken?.Invoke();
         seq.Play();
+        onbreaking?.Invoke();
     }
     public void Init()
     {

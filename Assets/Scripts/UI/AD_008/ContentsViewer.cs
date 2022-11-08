@@ -50,9 +50,16 @@ public class ContentsViewer : MonoBehaviour
                 var item = Instantiate(orizinal, content).GetComponent<ContentsButton>();
                 items.Add(item);
             }
-            items[i].Init(contents[i], Addressables.LoadAssetAsync<Sprite>(contents[i].ToString()).WaitForCompletion());
-            items[i].gameObject.SetActive(true);
+            Show(contents[i], items[i]);
         }
+    }
+    private void Show(eContents contents, ContentsButton button)
+    {
+        Addressables.LoadAssetAsync<Sprite>(contents.ToString()).Completed += (sprite) =>
+        {
+            button.Init(contents, sprite.Result);
+            button.gameObject.SetActive(true);
+        };
     }
     private void CloseAll()
     {
