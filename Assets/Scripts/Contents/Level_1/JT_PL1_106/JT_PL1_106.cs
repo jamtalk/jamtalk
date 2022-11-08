@@ -65,8 +65,6 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
 
     protected override void Awake()
     {
-        GameManager.Instance.currentAlphabet = eAlphabet.E;
-
         base.Awake();
     }
     protected override List<Question106> MakeQuestion()
