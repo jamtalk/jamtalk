@@ -185,8 +185,8 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
         
     private void Speak()
     {
-        //var ani = astronaut.GetComponent<Animator>();
-        //ani.SetBool("Speak", true);
+        var ani = astronaut.GetComponent<Animator>();
+        ani.SetBool("Speak", true);
         audioPlayer.Play(currentQuestion.correct.clip);
     }
 }

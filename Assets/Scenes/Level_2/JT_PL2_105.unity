@@ -560,16 +560,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC218"
       objectReference: {fileID: 0}
+    - target: {fileID: 2785879865315455502, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
 --- !u!224 &415222733 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2785879865315455497, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
-  m_PrefabInstance: {fileID: 415222732}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &415222734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2785879865315455502, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
   m_PrefabInstance: {fileID: 415222732}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &535968374
@@ -1683,7 +1682,7 @@ MonoBehaviour:
   - {fileID: 950719592}
   - {fileID: 1468923615}
   - {fileID: 1567914884}
-  astronaut: {fileID: 415222734}
+  astronaut: {fileID: 2124931459}
   imageBigbang: {fileID: 21300000, guid: 2a3d9e4ec6a906140b945e4c34dce239, type: 3}
   imageShootingStars:
   - {fileID: 21300000, guid: d4d028533b84d4846a3a3504ff2a95f0, type: 3}
@@ -2538,7 +2537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &2124931460
 Animator:
   serializedVersion: 3
