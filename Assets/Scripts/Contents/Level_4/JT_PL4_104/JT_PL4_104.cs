@@ -112,8 +112,8 @@ public class JT_PL4_104 : BaseContents
                 if (selectElement.data.value == element.data.value && selectElement.data.isPair != element.data.isPair)
                 {
                     index += 1;
-                    selectElement.charactor.gameObject.SetActive(false);
-                    element.charactor.gameObject.SetActive(false);
+                    selectElement.Correct();
+                    element.Correct();
 
                     if (CheckOver())
                         ShowResult();
@@ -148,8 +148,9 @@ public class JT_PL4_104 : BaseContents
         {
             yield return new WaitForSecondsRealtime(1f);
 
-            foreach (var item in elements)
-                item.charactor.gameObject.SetActive(true);
+            foreach (var items in elements)
+                items.Correct();
+
             EndGuidnce();
             MakeQuestion();
         }
