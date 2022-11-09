@@ -10,8 +10,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     public GraphicRaycaster caster;
     private AlphabetToggle110[] toggles;
     public WordCreator110 creator;
+    public UIMoverControler moverControler;
     public UIThrower110 thrower;
-    public UIMover[] mover;
     public AudioClip startClip;
     protected override int QuestionCount => 2;
     protected override eGameResult GetResult() => eGameResult.Perfect;
@@ -20,7 +20,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        while (!isMove) { yield return null; }
+        yield return new WaitForSecondsRealtime(7f);
 
         var i = 0;
         isNext = false;
@@ -86,8 +86,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         for (int i = 0; i < dragables.Length; i++)
             AddDragListener(dragables[i]);
 
-        for (int i = 0; i < mover.Length; i++)
-            mover[i].Move(4f, 3f, () => isMove = true);
+        moverControler.Init();
     }
 
     private void AddToggleListner(AlphabetToggle110 toggle)
