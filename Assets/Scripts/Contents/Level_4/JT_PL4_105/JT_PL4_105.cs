@@ -27,7 +27,11 @@ public class JT_PL4_105 : BaseContents
     public RectTransform lastRect;
     public EventSystem eventSystem;
 
+    public Animator ani;
+
     private wordElement405 correctButtons;
+
+
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -56,6 +60,8 @@ public class JT_PL4_105 : BaseContents
 
     protected override void Awake()
     {
+        ani.SetBool("Eat", true);
+
         base.Awake();
         currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
         defaultPosition = currentButton.transform.position;
@@ -127,7 +133,7 @@ public class JT_PL4_105 : BaseContents
         {
             index += 1;
             audioPlayer.Play(current.clip);
-
+            StartCoroutine(Eat());
             DoMove(() =>
             {
                 if (CheckOver())
@@ -139,6 +145,13 @@ public class JT_PL4_105 : BaseContents
                 }
             });
         }
+    }
+
+    private IEnumerator Eat()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        ani.SetBool("Eat", true);
     }
 
     private void DoMove(TweenCallback callback)
