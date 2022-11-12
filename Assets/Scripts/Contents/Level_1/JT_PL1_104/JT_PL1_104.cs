@@ -16,6 +16,13 @@ public class JT_PL1_104 : BaseContents
     protected eAlphabet[] targets;
     protected int currentIndex = 0;
 
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        EndGuidnce();
+    }
+
     protected override void Awake()
     {
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };

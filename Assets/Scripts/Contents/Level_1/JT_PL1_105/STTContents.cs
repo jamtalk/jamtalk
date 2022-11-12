@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,13 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
     protected override bool CheckOver() => currentQuestionIndex == QuestionCount;
     protected override int GetTotalScore() => QuestionCount;
     protected override float GetDuration() => (float)(currentQuestionIndex + 1f) / (float)QuestionCount;
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        EndGuidnce();
+    }
     protected override void Awake()
     {
         base.Awake();

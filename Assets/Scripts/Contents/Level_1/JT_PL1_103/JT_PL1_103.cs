@@ -18,6 +18,14 @@ public class JT_PL1_103 : BaseContents
 
     protected override bool CheckOver() => true;
     protected override int GetTotalScore() => 1;
+
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+
+        EndGuidnce();
+    }
+
     protected override void Awake()
     {
         base.Awake();
