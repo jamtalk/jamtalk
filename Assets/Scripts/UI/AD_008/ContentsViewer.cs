@@ -13,17 +13,24 @@ public class ContentsViewer : MonoBehaviour
     public GridLayoutGroup layout;
     public RectTransform content;
     public Toggle[] toggles;
+
+    private bool isFisrt = true;
+
     private void Awake()
     {
         StartCoroutine(SetLayout());
         Show(Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x)).ToArray());
+
         for (int i = 0; i < toggles.Length; i++)
             AddToggleListener(toggles[i], i);
     }
+
     private void AddToggleListener(Toggle toggle,int num)
     {
         toggle.onValueChanged.AddListener((value) =>
         {
+            if (!value) return;
+
             var enums = Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x));
             var ori = enums.Count();
             if (value)
@@ -45,13 +52,17 @@ public class ContentsViewer : MonoBehaviour
         CloseAll();
         for(int i = 0;i < contents.Length; i++)
         {
-            if (i >= items.Count)
+            if ((int)contents[i] < 600)
             {
-                var item = Instantiate(orizinal, content).GetComponent<ContentsButton>();
-                items.Add(item);
+                if (i >= items.Count && isFisrt)
+                {
+                    var item = Instantiate(orizinal, content).GetComponent<ContentsButton>();
+                    items.Add(item);
+                }
+                Show(contents[i], items[i]);
             }
-            Show(contents[i], items[i]);
         }
+        isFisrt = false;
     }
     private void Show(eContents contents, ContentsButton button)
     {
