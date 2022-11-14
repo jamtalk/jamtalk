@@ -20,7 +20,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     private bool isMove = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
-        yield return new WaitForSecondsRealtime(7f);
+        yield return new WaitForSecondsRealtime(10f);
 
         var i = 0;
         isNext = false;

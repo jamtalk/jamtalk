@@ -19,11 +19,13 @@ public class UIMoverControler : MonoBehaviour
     }
     public void Init()
     {
-        Debug.Log(paths.Count);
-        var items = movers.OrderBy(x => Random.Range(0, 100)).Take(paths.Count).ToArray();
+        foreach (var item in movers)
+            item.gameObject.SetActive(false);
+        var items = movers.OrderBy(x => Random.Range(0, 100)).Take(paths.Count).Take(paths.Count).ToArray();
 
         for (int i = 0; i < paths.Count; i++)
         {
+            items[i].gameObject.SetActive(true);
             items[i].paths = paths[i];
             items[i].Move(4f, 3f);
         }
