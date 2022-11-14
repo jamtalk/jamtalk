@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 38843156}
   - component: {fileID: 38843155}
   - component: {fileID: 38843158}
-  - component: {fileID: 38843157}
+  - component: {fileID: 38843159}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -202,30 +202,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38843153}
   m_CullTransparentMesh: 1
---- !u!114 &38843157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38843153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 38843155}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 893645392}
-  images: {fileID: 1345694468}
-  isCheck: 0
 --- !u!114 &38843158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +246,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &38843159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38843153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 38843155}
+  image: {fileID: 1345694468}
+  text: {fileID: 893645392}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &78062116
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +353,7 @@ GameObject:
   - component: {fileID: 120352220}
   - component: {fileID: 120352219}
   - component: {fileID: 120352222}
-  - component: {fileID: 120352221}
+  - component: {fileID: 120352223}
   m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
@@ -424,30 +420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120352217}
   m_CullTransparentMesh: 1
---- !u!114 &120352221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120352217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 120352219}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 2133209240}
-  images: {fileID: 78062118}
-  isCheck: 0
 --- !u!114 &120352222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +464,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &120352223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120352217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 120352219}
+  image: {fileID: 78062118}
+  text: {fileID: 2133209240}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &156073837
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,14 +682,14 @@ MonoBehaviour:
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   backImage: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
   frontImage: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spatulaImage: {fileID: 1684987189}
+  spatulaImage: {fileID: 1684987191}
   pancakes:
-  - {fileID: 859549474}
-  - {fileID: 1911764259}
-  - {fileID: 1524172317}
-  - {fileID: 38843157}
-  - {fileID: 120352221}
-  - {fileID: 633969439}
+  - {fileID: 859549476}
+  - {fileID: 1911764261}
+  - {fileID: 1524172319}
+  - {fileID: 38843159}
+  - {fileID: 120352223}
+  - {fileID: 633969441}
 --- !u!1 &633969435
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +702,7 @@ GameObject:
   - component: {fileID: 633969438}
   - component: {fileID: 633969437}
   - component: {fileID: 633969440}
-  - component: {fileID: 633969439}
+  - component: {fileID: 633969441}
   m_Layer: 0
   m_Name: Image (2)
   m_TagString: Untagged
@@ -777,30 +769,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633969435}
   m_CullTransparentMesh: 1
---- !u!114 &633969439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633969435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 633969437}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 1359859580}
-  images: {fileID: 912233930}
-  isCheck: 0
 --- !u!114 &633969440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,6 +813,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &633969441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633969435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 633969437}
+  image: {fileID: 912233930}
+  text: {fileID: 1359859580}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &708298802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,7 +1001,7 @@ GameObject:
   - component: {fileID: 859549473}
   - component: {fileID: 859549472}
   - component: {fileID: 859549475}
-  - component: {fileID: 859549474}
+  - component: {fileID: 859549476}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -1080,30 +1068,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859549470}
   m_CullTransparentMesh: 1
---- !u!114 &859549474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859549470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 859549472}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 1472673751}
-  images: {fileID: 931773876}
-  isCheck: 0
 --- !u!114 &859549475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1148,6 +1112,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &859549476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859549470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 859549472}
+  image: {fileID: 931773876}
+  text: {fileID: 1472673751}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &893645390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,7 +2259,7 @@ GameObject:
   - component: {fileID: 1524172316}
   - component: {fileID: 1524172315}
   - component: {fileID: 1524172318}
-  - component: {fileID: 1524172317}
+  - component: {fileID: 1524172319}
   m_Layer: 0
   m_Name: Image (2)
   m_TagString: Untagged
@@ -2342,30 +2326,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524172313}
   m_CullTransparentMesh: 1
---- !u!114 &1524172317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524172313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1524172315}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 1582007056}
-  images: {fileID: 1143505603}
-  isCheck: 0
 --- !u!114 &1524172318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,6 +2370,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1524172319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524172313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 1524172315}
+  image: {fileID: 1143505603}
+  text: {fileID: 1582007056}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &1535863102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2566,6 +2546,7 @@ GameObject:
   - component: {fileID: 1684987188}
   - component: {fileID: 1684987190}
   - component: {fileID: 1684987189}
+  - component: {fileID: 1684987191}
   m_Layer: 0
   m_Name: Spatula
   m_TagString: Untagged
@@ -2630,6 +2611,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684987187}
   m_CullTransparentMesh: 1
+--- !u!114 &1684987191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684987187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeca1b921887e47b7b0bd614c3bf17b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1911764255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,7 +2635,7 @@ GameObject:
   - component: {fileID: 1911764258}
   - component: {fileID: 1911764257}
   - component: {fileID: 1911764260}
-  - component: {fileID: 1911764259}
+  - component: {fileID: 1911764261}
   m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
@@ -2709,30 +2702,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911764255}
   m_CullTransparentMesh: 1
---- !u!114 &1911764259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911764255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4702987ab97544bf6a66a1452ccd7a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 1911764257}
-  spriteNormal: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
-  spriteSelected: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onClickFirst:
-    m_PersistentCalls:
-      m_Calls: []
-  textPhanix: {fileID: 708298804}
-  images: {fileID: 1463437724}
-  isCheck: 0
 --- !u!114 &1911764260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2777,6 +2746,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1911764261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911764255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c8a1ae39b814670b6124fc985f8beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG: {fileID: 1911764257}
+  image: {fileID: 1463437724}
+  text: {fileID: 708298804}
+  spatula: {fileID: 1684987191}
+  firstSprite: {fileID: 21300000, guid: dae42e874cf0c294296192ffca2379f2, type: 3}
+  secondSprite: {fileID: 21300000, guid: d12928d5db41f6e49b696729bc2cef05, type: 3}
+  lastSprite: {fileID: 21300000, guid: 2aafaff509659a143ab8e7a0cdda22cf, type: 3}
+  isCheck: 0
 --- !u!1 &2126301825
 GameObject:
   m_ObjectHideFlags: 0

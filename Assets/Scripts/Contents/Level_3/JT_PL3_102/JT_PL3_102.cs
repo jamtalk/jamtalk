@@ -11,8 +11,8 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
     public Sprite backImage;
     public Sprite frontImage;
-    public Image spatulaImage;
-    public DoubleClick302[] pancakes;
+    public SpatulaElement spatulaImage;
+    public PanCakeElement[] pancakes;
 
 
     protected override IEnumerator ShowGuidnceRoutine()
@@ -20,26 +20,39 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         yield return base.ShowGuidnceRoutine();
 
 
-        var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
+        //var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
 
-        guideFinger.DoMove(target.transform.position, () =>
-        {
-            guideFinger.DoClick(() =>
-            {
-                target.isOn = true;
+        //guideFinger.DoMove(target.transform.position, () =>
+        //{
+        //    guideFinger.DoClick(() =>
+        //    {
+        //        target.isOn = true;
 
-                audioPlayer.Play(target.data.audio.phanics, () =>
-                guideFinger.DoClick(() =>
-                {
-                    guideFinger.gameObject.SetActive(false);
-                    ClickMotion(target);
-                }));
-            });
-        });
-        while (!isNext) yield return null;
-        isNext = false;
+        //        audioPlayer.Play(target.data.audio.phanics, () =>
+        //        guideFinger.DoClick(() =>
+        //        {
+        //            guideFinger.gameObject.SetActive(false);
+        //            ClickMotion(target);
+        //        }));
+        //    });
+        //});
+        //while (!isNext) yield return null;
+        //isNext = false;
 
     }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        EndGuidnce();
+        foreach(var item in pancakes)
+        {
+            item.onFirst += () => audioPlayer.Play(item.data.audio.phanics);
+            item.onDouble += () => ClickMotion(item);
+        }
+    }
+
     protected override List<Question3_102> MakeQuestion()
     {
         var questions = new List<Question3_102>();
@@ -65,48 +78,26 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         for (int i = 0; i < pancakes.Length; i++)
         {
             pancakes[i].isCheck = false;
-            pancakes[i].isOn = false;
-            pancakes[i].images.gameObject.SetActive(false);
-            pancakes[i].textPhanix.gameObject.SetActive(true);
+            pancakes[i].image.gameObject.SetActive(false);
+            pancakes[i].text.gameObject.SetActive(true);
 
             pancakes[i].Init(question.totalQuestion[i]);
-            AddListener(pancakes[i]);
         }
     }
 
-    private void AddListener(DoubleClick302 button)
-    {
-        button.onClick.RemoveAllListeners();
-        button.onClickFirst.RemoveAllListeners();
-
-        button.onClickFirst.AddListener(() =>
-        {
-            audioPlayer.Play(button.data.audio.phanics);
-        });
-
-        button.onClick.AddListener(() =>
-        {
-            if (!button.isCheck)
-            {
-                ClickMotion(button);
-            }
-        });
-    }
-
-    private void ClickMotion(DoubleClick302 button)
+    private void ClickMotion(PanCakeElement button)
     {
         button.isCheck = true;
 
-        button.image.sprite = backImage;
-        button.textPhanix.gameObject.SetActive(false);
-        button.images.gameObject.SetActive(true);
-        button.images.preserveAspect = true;
+        button.BG.sprite = backImage;
+        button.text.gameObject.SetActive(false);
+        button.image.gameObject.SetActive(true);
         audioPlayer.Play(button.data.act, () =>
         {
-            button.image.sprite = frontImage;
-            button.textPhanix.text = button.data.key;
-            button.images.gameObject.SetActive(false);
-            button.textPhanix.gameObject.SetActive(true);
+            button.BG.sprite = frontImage;
+            button.text.text = button.data.key;
+            button.image.gameObject.SetActive(false);
+            button.text.gameObject.SetActive(true);
             AddAnswer(button.data);
             isNext = true;
         });
