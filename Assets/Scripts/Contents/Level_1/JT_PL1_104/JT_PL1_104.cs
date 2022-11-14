@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Spine.Unity;
 
 public class JT_PL1_104 : BaseContents
 {
     public DrawAlphabet drawAlphabet;
     public GameObject mask;
+    public SkeletonGraphic aniChar;
     public CanvasScaler scaler;
     public eAlphabetType type;
     protected override eContents contents => eContents.JT_PL1_104;
     protected override int GetTotalScore() => 1;
+    protected override bool CheckOver() => questionsCount == currentIndex && type == eAlphabetType.Lower;
 
     protected eAlphabet[] targets;
     protected int currentIndex = 0;
+    protected int questionsCount => 2;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -36,16 +40,22 @@ public class JT_PL1_104 : BaseContents
             audioPlayer.Play(GameManager.Instance.GetResources(targets[currentIndex]).AudioData.act2, () =>
             {
                 currentIndex += 1;
-                if (currentIndex < targets.Length)
-                    drawAlphabet.Init(targets[currentIndex], type);
-                else
+                if (CheckOver())
                     ShowResult();
+                else
+                {
+                    if (questionsCount == currentIndex)
+                    {
+                        type = eAlphabetType.Lower;
+                        currentIndex = 0;
+                    }
+                    drawAlphabet.Init(targets[currentIndex], type);
+                }
             });
         };
         drawAlphabet.Init(GameManager.Instance.currentAlphabet, type);
     }
 
-    protected override bool CheckOver() => true;
     private void OnDisable()
     {
         drawAlphabet.onCompleted -= ShowResult;

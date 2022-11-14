@@ -1235,6 +1235,7 @@ MonoBehaviour:
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   drawAlphabet: {fileID: 634881749}
   mask: {fileID: 1672353127}
+  aniChar: {fileID: 2058555720}
   scaler: {fileID: 1580109401}
   type: 0
 --- !u!1 &1672353127
@@ -1688,5 +1689,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC5D0\uB9AD"
       objectReference: {fileID: 0}
+    - target: {fileID: 4386785601087377491, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: timeScale
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386785601087377491, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ee30677587dbd4a48a1d6885ca7c511f, type: 2}
+    - target: {fileID: 4386785601087377491, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: startingAnimation
+      value: 1_idle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f255ec78b554144a29397457447ce8db, type: 3}
+--- !u!114 &2058555720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4386785601087377491, guid: f255ec78b554144a29397457447ce8db, type: 3}
+  m_PrefabInstance: {fileID: 2058555719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
