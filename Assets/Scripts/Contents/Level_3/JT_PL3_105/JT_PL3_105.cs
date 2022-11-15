@@ -21,7 +21,7 @@ public class JT_PL3_105 : BaseContents
 
     public Text currentText;
     public GameObject hammer;
-    public Image effectImage;
+    public ParticleElement effectImage;
     public Image progressBar;
     public MoleElement305[] elements;
     public RectTransform[] layouts;
