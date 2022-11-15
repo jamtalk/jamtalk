@@ -61,9 +61,12 @@ public class JT_PL4_105 : BaseContents
     protected override void Awake()
     {
         ani.SetBool("Eat", true);
-
         base.Awake();
-        currentButton.onClick.AddListener(() => audioPlayer.Play(current.clip));
+        currentButton.onClick.AddListener(() =>
+        {
+            ani.SetBool("Eat", true);
+            audioPlayer.Play(current.clip);
+        });
         defaultPosition = currentButton.transform.position;
         MakeQuestion();
     }
