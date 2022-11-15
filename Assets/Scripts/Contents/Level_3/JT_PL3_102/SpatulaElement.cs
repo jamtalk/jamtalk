@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class SpatulaElement : MonoBehaviour
 {
+    [HideInInspector]
+    public bool isGuide = true;
+
     private void Update()
     {
-        transform.position = GameManager.Instance.GetMousePosition();
+        if (!isGuide)
+        {
+            transform.position = GameManager.Instance.GetMousePosition();
+        }
     }
 }

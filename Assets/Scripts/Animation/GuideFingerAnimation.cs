@@ -28,6 +28,21 @@ public class GuideFingerAnimation : MonoBehaviour
         tween.SetLoops(-1, LoopType.Yoyo);
     }
 
+    public void DoShake(GameObject target, TweenCallback callback, float duration = 1f, float power = 10f)
+    {
+        gameObject.SetActive(true);
+        target.gameObject.SetActive(true);
+
+        target.transform.position = gameObject.transform.position;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(target.transform.DOShakePosition(duration, power));
+        seq.Insert(0, gameObject.transform.DOShakePosition(duration, power));
+        seq.onComplete += callback;
+
+        seq.Play();
+    }
+
     public void DoMove(Vector3 target ,TweenCallback callback)
     {
         gameObject.SetActive(true);
@@ -74,7 +89,7 @@ public class GuideFingerAnimation : MonoBehaviour
         seq.Play();
     }
 
-    public void DoPress(TweenCallback callback)
+    public void DoPress(TweenCallback callback = null)
     {
         gameObject.SetActive(true);
         Sequence seq = DOTween.Sequence();

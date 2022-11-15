@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 {
@@ -18,34 +19,50 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
+        spatulaImage.isGuide = true;
 
+        var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
 
-        //var target = pancakes.Where(x => !x.isCheck).OrderBy(x => Random.Range(0, 100)).First();
+        guideFinger.DoMove(target.transform.position, () =>
+        {
+            //    guideFinger.DoClick(() =>
+            //    {
+            //        target.isOn = true;
 
-        //guideFinger.DoMove(target.transform.position, () =>
-        //{
-        //    guideFinger.DoClick(() =>
-        //    {
-        //        target.isOn = true;
+            //        audioPlayer.Play(target.data.audio.phanics, () =>
+            //        guideFinger.DoClick(() =>
+            //        {
+            //            guideFinger.gameObject.SetActive(false);
+            //            ClickMotion(target);
+            //        }));
+            //    });
 
-        //        audioPlayer.Play(target.data.audio.phanics, () =>
-        //        guideFinger.DoClick(() =>
-        //        {
-        //            guideFinger.gameObject.SetActive(false);
-        //            ClickMotion(target);
-        //        }));
-        //    });
-        //});
-        //while (!isNext) yield return null;
-        //isNext = false;
+            guideFinger.DoPress(() =>
+            {
+                guideFinger.DoShake(spatulaImage.gameObject, () =>
+                {
+                    target.BG.sprite = target.secondSprite;
+                    audioPlayer.Play(target.data.audio.phanics, () =>
+                    {
+                        guideFinger.DoShake(spatulaImage.gameObject, () =>
+                        {
+                            guideFinger.gameObject.SetActive(false);
+                            spatulaImage.gameObject.SetActive(false);
+                            ClickMotion(target);
+                        });
+                    });
+                });
+            });
+        });
+        while (!isNext) yield return null;
+        isNext = false;
 
+        spatulaImage.gameObject.SetActive(false);
     }
 
     protected override void Awake()
     {
         base.Awake();
-
-        EndGuidnce();
         foreach(var item in pancakes)
         {
             item.onFirst += () => audioPlayer.Play(item.data.audio.phanics);
@@ -99,6 +116,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
             button.image.gameObject.SetActive(false);
             button.text.gameObject.SetActive(true);
             AddAnswer(button.data);
+            spatulaImage.isGuide = false;
             isNext = true;
         });
     }

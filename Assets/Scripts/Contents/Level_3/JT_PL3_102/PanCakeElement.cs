@@ -38,10 +38,6 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            // 마우스 왼쪽 버튼을 누르고 있는 도중의 처리
-        }
         if (Input.GetMouseButtonDown(0))
         {
             spatula.transform.position = GameManager.Instance.GetMousePosition();
@@ -64,7 +60,6 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
         if (!isHalf)
         {
             transform.DOShakePosition(1f, 10f);
-            spatula.gameObject.transform.DOShakePosition(1f, 10f);
             yield return new WaitForSecondsRealtime(1f);
             onFirst?.Invoke();
             isHalf = true;
@@ -72,7 +67,6 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
 
         BG.sprite = secondSprite;
         transform.DOShakePosition(1f, 10f);
-        spatula.gameObject.transform.DOShakePosition(1f, 10f);
         yield return new WaitForSecondsRealtime(1f);
         onDouble?.Invoke();
         isStart = false;
@@ -82,7 +76,7 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if ( isCheck || isStart)
+        if (isCheck || isStart)
             return;
         coroutine = StartCoroutine(BeginDrag());
     }
