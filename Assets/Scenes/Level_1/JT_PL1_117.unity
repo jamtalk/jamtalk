@@ -473,6 +473,7 @@ MonoBehaviour:
   imageStamp: {fileID: 472798166}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &99320732
 MonoBehaviour:
@@ -839,6 +840,7 @@ MonoBehaviour:
   imageStamp: {fileID: 213553614}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &147909504
 MonoBehaviour:
@@ -1022,6 +1024,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &194877397
 MonoBehaviour:
@@ -1236,6 +1239,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &213553614
 MonoBehaviour:
@@ -1715,6 +1719,7 @@ MonoBehaviour:
   imageStamp: {fileID: 952524775}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &365911688
 MonoBehaviour:
@@ -1973,6 +1978,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &377050745
 MonoBehaviour:
@@ -2197,6 +2203,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &424815953
 MonoBehaviour:
@@ -2294,6 +2301,7 @@ MonoBehaviour:
   imageStamp: {fileID: 2070611328}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &439611181
 MonoBehaviour:
@@ -2435,6 +2443,7 @@ MonoBehaviour:
   imageStamp: {fileID: 751352873}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &454051775
 MonoBehaviour:
@@ -2618,6 +2627,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &472798166
 MonoBehaviour:
@@ -2833,6 +2843,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &566493407
 MonoBehaviour:
@@ -3522,6 +3533,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &751352873
 MonoBehaviour:
@@ -3661,6 +3673,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &811631595
 MonoBehaviour:
@@ -3891,6 +3904,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &952524775
 MonoBehaviour:
@@ -4115,6 +4129,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &1000662932
 MonoBehaviour:
@@ -4887,6 +4902,7 @@ MonoBehaviour:
   imageStamp: {fileID: 194877397}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1291835546
 MonoBehaviour:
@@ -5145,6 +5161,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &1325139799
 MonoBehaviour:
@@ -5242,6 +5259,7 @@ MonoBehaviour:
   imageStamp: {fileID: 1000662932}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1388578589
 MonoBehaviour:
@@ -5325,6 +5343,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388578586}
   m_CullTransparentMesh: 1
+--- !u!1001 &1389700114
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1580109403}
+    m_Modifications:
+    - target: {fileID: 2075149653190856185, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: initialFlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075149653190856191, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: m_Name
+      value: "\uB2E4\uC774\uB178"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+--- !u!224 &1389700115 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+  m_PrefabInstance: {fileID: 1389700114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1397666758
 GameObject:
   m_ObjectHideFlags: 0
@@ -5425,6 +5557,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &1397666762
 MonoBehaviour:
@@ -5522,6 +5655,7 @@ MonoBehaviour:
   imageStamp: {fileID: 1397666762}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1529009948
 MonoBehaviour:
@@ -5820,6 +5954,7 @@ MonoBehaviour:
   imageStamp: {fileID: 1325139799}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!1 &1575478248
 GameObject:
@@ -5921,6 +6056,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &1575478252
 MonoBehaviour:
@@ -6057,6 +6193,7 @@ RectTransform:
   - {fileID: 1325116111}
   - {fileID: 698116361}
   - {fileID: 129590174}
+  - {fileID: 1389700115}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6144,6 +6281,7 @@ MonoBehaviour:
   imageStamp: {fileID: 566493407}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1691726198
 MonoBehaviour:
@@ -6435,6 +6573,7 @@ MonoBehaviour:
   imageStamp: {fileID: 1970246165}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1749960697
 MonoBehaviour:
@@ -7069,6 +7208,7 @@ MonoBehaviour:
   imageStamp: {fileID: 811631595}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1889127584
 MonoBehaviour:
@@ -7210,6 +7350,7 @@ MonoBehaviour:
   imageStamp: {fileID: 2012742529}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1907413565
 MonoBehaviour:
@@ -7393,6 +7534,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &1970246165
 MonoBehaviour:
@@ -7490,6 +7632,7 @@ MonoBehaviour:
   imageStamp: {fileID: 424815953}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &1979795651
 MonoBehaviour:
@@ -7758,6 +7901,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &2012742529
 MonoBehaviour:
@@ -8082,6 +8226,7 @@ MonoBehaviour:
   imageStamp: {fileID: 377050745}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &2061250872
 MonoBehaviour:
@@ -8265,6 +8410,7 @@ MonoBehaviour:
   imageStamp: {fileID: 0}
   audioPlayer: {fileID: 0}
   stampingClip: {fileID: 0}
+  strValue: 
   style: 0
 --- !u!114 &2070611328
 MonoBehaviour:
@@ -8491,6 +8637,7 @@ MonoBehaviour:
   imageStamp: {fileID: 1575478252}
   audioPlayer: {fileID: 1130099607}
   stampingClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  strValue: 
   style: 8
 --- !u!114 &2098239081
 MonoBehaviour:
