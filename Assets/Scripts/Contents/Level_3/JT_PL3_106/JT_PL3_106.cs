@@ -22,7 +22,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     public Text currentText;
     public Button currentButton;
     public Image currentImage;
-    public Image bagImage;
+    public BagElement bag;
     [SerializeField]
     private List<DoubleClick306> elements = new List<DoubleClick306>();
 
@@ -57,7 +57,11 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     protected override void Awake()
     {
         base.Awake();
-        currentButton.onClick.AddListener(() => audioPlayer.Play(currentQuestion.correct.clip));
+        currentButton.onClick.AddListener(() =>
+        {
+            bag.MouseSpeak();
+            audioPlayer.Play(currentQuestion.correct.clip);
+        });
     }
 
 
@@ -90,7 +94,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
         currentText.text = question.correct.key.Replace(question.correct.IncludedDigraphs, "__");
 
         thrower.gameObject.SetActive(false);
-        bagImage.gameObject.SetActive(false);
+        bag.image.gameObject.SetActive(false);
 
         //var incorrects = question.questions.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         for (int i = 0;i < elements.Count; i++)
@@ -102,12 +106,6 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
         }
 
         audioPlayer.Play(currentQuestion.correct.clip, () => isNext = true);
-    }
-    private void SetBagImage()
-    {
-        bagImage.sprite = currentImage.sprite;
-        bagImage.preserveAspect = true;
-        bagImage.gameObject.SetActive(true);
     }
 
     protected virtual void AddDoubleClickListener(DoubleClick306 element, DigraphsWordsData data)
@@ -135,6 +133,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
     private void DoubleClickMotion(DigraphsWordsData data)
     {
+        bag.EyeAni(BagElement.eAnis.Tracking);
         for (int i = 0; i < elements.Count; i++)
             elements[i].gameObject.SetActive(false);
         currentImage.gameObject.SetActive(false);
@@ -144,13 +143,14 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
         trowerImage.preserveAspect = true;
 
         thrower.gameObject.SetActive(true);
-        thrower.Throw(currentImage, bagImage.GetComponent<RectTransform>(), () =>
+        thrower.Throw(currentImage, bag.imageRt, () =>
         {
             currentText.text = data.key;
-            SetBagImage();
+            bag.SetBagImage(currentImage.sprite);
 
             audioPlayer.Play(currentQuestion.correct.act, () =>
             {
+                bag.EyeAni(BagElement.eAnis.EyeIdle);
                 AddAnswer(currentQuestion.correct);
                 isNext = true;
             });
