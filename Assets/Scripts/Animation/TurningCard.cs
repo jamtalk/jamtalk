@@ -35,6 +35,10 @@ public class TurningCard : MonoBehaviour
                 SetBack();
         }
     }
+    public virtual void RemoveLisnter()
+    {
+        onClick = null;
+    }
     public void Init(float duration=1, TweenCallback callback = null, bool alwaysBackDisable = false, bool alwaysFrontDisable = false)
     {
         this.alwaysBackDisable = alwaysBackDisable;

@@ -12,11 +12,20 @@ public class Card114 : MonoBehaviour
     public Text text;
     public Card114Data alhpabetData;
     public DigraphsWordsData DigraphsWordsData;
+    public RectTransform parentRt;
     public event Action<Card114Data> onSelected;
     public event Action<DigraphsWordsData> onSelecte;
     public event Action onDeselected;
 
     public RectTransform star;
+
+    public virtual void RemoveLisnter()
+    {
+        card.RemoveLisnter();
+        onSelected = null;
+        onSelecte = null;
+    }
+
     public void Init(Card114Data data)
     {
         this.alhpabetData = data;

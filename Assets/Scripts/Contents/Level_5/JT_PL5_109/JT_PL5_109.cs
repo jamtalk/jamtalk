@@ -5,4 +5,10 @@ using UnityEngine;
 public class JT_PL5_109 : JT_PL4_109
 {
     protected override eContents contents => eContents.JT_PL5_109;
+
+    protected override void Awake()
+    {
+        index = 1;
+        base.Awake();
+    }
 }

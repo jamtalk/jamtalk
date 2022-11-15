@@ -9,14 +9,22 @@ using Random = UnityEngine.Random;
 public class JT_PL4_109 : BaseContents
 {
     protected override eContents contents => eContents.JT_PL4_109;
-    protected override bool CheckOver() => !cards.Select(x => x.card.IsFornt).Contains(false);
+    protected override bool CheckOver() => questionCount == index;
     protected override int GetTotalScore() => cards.Where(x => x.card.IsFornt).Count();
+    private bool TurnCard() => !cards.Select(x => x.card.IsFornt).Contains(false);
+    private int questionCount => 2;
+    protected int index = 0;
 
     private string[] richs =
         { "blue", "cyan", "magenta", "green", "red", "brown"
             , "grey" , "teal", "orange", "darkblue", "purple", "maroon"};
     private List<Card114> selected = new List<Card114>();
-    public Card114[] cards;
+
+    public GameObject layouts;
+    public Card114[] cardsSix;
+    public Card114[] cardsEight;
+    public Card114[] cardsTotal;
+    private Card114[] cards;
     public Sprite[] cardImages;
 
     
@@ -68,12 +76,19 @@ public class JT_PL4_109 : BaseContents
     protected override void EndGuidnce()
     {
         base.EndGuidnce();
-        
+
+        ResetCard();
+    }
+    private void ResetCard()
+    {
         selected.Clear();
-        foreach (var item in cards)
+        layouts.SetActive(true);
+        foreach (var item in cardsTotal)
         {
+            item.RemoveLisnter();
             item.card.SetFront();
             item.star.gameObject.SetActive(false);
+            item.parentRt.gameObject.SetActive(false);
         }
         MakeQuestion();
     }
@@ -86,6 +101,17 @@ public class JT_PL4_109 : BaseContents
 
     private void MakeQuestion()
     {
+        if (!isGuide)
+        {
+            layouts.SetActive(false);
+            cards = index == 0 ? cardsSix : cardsEight;
+        }
+        else
+            cards = cardsTotal;
+
+        foreach (var item in cards)
+            item.parentRt.gameObject.SetActive(true);
+
         var question = GameManager.Instance.GetDigraphs()
             .OrderBy(x=>Random.Range(0f,100f))
             .Take(cards.Length/2)
@@ -93,8 +119,9 @@ public class JT_PL4_109 : BaseContents
             .OrderBy(y => Random.Range(0f, 100f))
             .ToArray();
 
+        Debug.Log("asdf : " + question.Length);
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-        var randomColor = richs.OrderBy(x => Random.Range(0f, 100f)).ToArray();
+        var randomColor = richs.Take(cards.Length).OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
         for (int i = 0; i < cards.Length; i++)
         {
@@ -105,11 +132,8 @@ public class JT_PL4_109 : BaseContents
             var upper = i;
             var lower = i + 1;
 
-            if (isGuide)
-            {
-                SetCard(randomCards[upper], question[upper], randomColor[i]);
-                SetCard(randomCards[lower], question[lower], randomColor[i]);
-            }
+            SetCard(randomCards[upper], question[upper], randomColor[i]);
+            SetCard(randomCards[lower], question[lower], randomColor[i]);
         }
 
         StartCoroutine(StartContent());
@@ -126,15 +150,24 @@ public class JT_PL4_109 : BaseContents
             {
                 if (selected[0].DigraphsWordsData.key == selected[1].DigraphsWordsData.key)
                 {
-                    if (CheckOver())
-                        audioPlayer.Play(data.clip, ShowResult);
-                    else
+                    audioPlayer.Play(data.act, () =>
                     {
-                        audioPlayer.Play(data.act, () =>
+                        if (TurnCard())
                         {
+                            index++;
+
+                            MatchMotion(selected, () =>
+                            {
+                                if (CheckOver())
+                                    ShowResult();
+                                else
+                                    ResetCard();
+                            });
+
+                        }
+                        else
                             MatchMotion(selected);
-                        });
-                    }
+                    });
                 }
                 else
                 {
