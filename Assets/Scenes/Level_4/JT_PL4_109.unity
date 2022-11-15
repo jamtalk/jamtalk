@@ -346,6 +346,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 464754772}
   star: {fileID: 1192142534}
 --- !u!114 &81497279 stripped
 MonoBehaviour:
@@ -556,6 +557,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1984432910}
   star: {fileID: 1835666878}
 --- !u!114 &86782101 stripped
 MonoBehaviour:
@@ -1139,6 +1141,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 887854758}
   star: {fileID: 1391706264}
 --- !u!114 &232759764 stripped
 MonoBehaviour:
@@ -1441,6 +1444,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1211874066}
   star: {fileID: 1486886623}
 --- !u!114 &321990116 stripped
 MonoBehaviour:
@@ -1753,6 +1757,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 4945863}
   star: {fileID: 1328823243}
 --- !u!114 &438198921 stripped
 MonoBehaviour:
@@ -2478,6 +2483,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 595290175}
   star: {fileID: 1032682125}
 --- !u!114 &735498352 stripped
 MonoBehaviour:
@@ -2852,6 +2858,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 753842528}
   star: {fileID: 166281801}
 --- !u!114 &972641394 stripped
 MonoBehaviour:
@@ -3062,6 +3069,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1618388949}
   star: {fileID: 1068570132}
 --- !u!114 &987752554 stripped
 MonoBehaviour:
@@ -3648,7 +3656,24 @@ MonoBehaviour:
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 155458490}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
-  cards:
+  layouts: {fileID: 1292305965}
+  cardsSix:
+  - {fileID: 81497278}
+  - {fileID: 2101416940}
+  - {fileID: 1937618125}
+  - {fileID: 232759763}
+  - {fileID: 987752553}
+  - {fileID: 972641393}
+  cardsEight:
+  - {fileID: 81497278}
+  - {fileID: 2101416940}
+  - {fileID: 1937618125}
+  - {fileID: 1252022472}
+  - {fileID: 232759763}
+  - {fileID: 987752553}
+  - {fileID: 972641393}
+  - {fileID: 1263907059}
+  cardsTotal:
   - {fileID: 81497278}
   - {fileID: 2101416940}
   - {fileID: 1937618125}
@@ -4043,6 +4068,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1130892299}
   star: {fileID: 455036347}
 --- !u!114 &1252022473 stripped
 MonoBehaviour:
@@ -4253,6 +4279,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1723298936}
   star: {fileID: 1651969178}
 --- !u!114 &1263907060 stripped
 MonoBehaviour:
@@ -5586,6 +5613,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 1717239530}
   star: {fileID: 1566486827}
 --- !u!114 &1937618126 stripped
 MonoBehaviour:
@@ -5898,6 +5926,7 @@ MonoBehaviour:
     clip: 
     level: 0
     digraphs: 
+  parentRt: {fileID: 373726214}
   star: {fileID: 1066070182}
 --- !u!114 &2101416941 stripped
 MonoBehaviour:
