@@ -130,6 +130,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
         PlayWord(value);
         if (currentQuestion.currentCorrect == value)
         {
+            rocket.fire.preserveAspect = true;
             if (finger != null)
                 finger.gameObject.SetActive(false);
 
@@ -176,10 +177,12 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     private void PlayWord(DigraphsWordsData word, Action action = null) => audioPlayer.Play(word.clip, action);
     private void CallRokect()
     {
+        rocket.fire.preserveAspect = true;
         if (finger != null)
             finger.gameObject.SetActive(false);
         rocket.Call(() =>
         {
+            rocket.fire.preserveAspect = false;
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
             PlayCurrentWord(() => isStop = true);
