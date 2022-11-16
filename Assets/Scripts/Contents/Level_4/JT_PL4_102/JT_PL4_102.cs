@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
@@ -13,11 +14,13 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     private DigraphsWordsData[] current;
     private int currentCnt;
 
+    public EventSystem eventSystem;
     public Image successEffect;
     public Text successText;
     public Image successImage;
     public Sprite successedImage;
     public Sprite defaultImage;
+    public FishingElement charactor;
     //public ImageButton[] buttons;
     public BubbileButtons[] buttons;
     public Image[] childrenImages;
@@ -26,14 +29,16 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
+
         var target = buttons.Where(x => x.button.interactable).OrderBy(x => Random.Range(0, 100)).First();
 
-        guideFinger.DoMove(target.transform.position, () =>
+        guideFinger.DoMove(target.image.transform.position, () =>
         {
             guideFinger.DoClick(() =>
             {
                 guideFinger.gameObject.SetActive(false);
-                ClickMotion(target);
+                charactor.ThrowBobber(target.gameObject, () => ClickMotion(target));
+                //ClickMotion(target);
             });
         });
         while (!isNext) yield return null;
@@ -61,16 +66,17 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     }
 
     protected override void ShowQuestion(Question4_102 question)
-    {
+    { 
+        ResetElement();
+
         Debug.Log(question.totalQuestion.Length);
         currentCnt = 0;
         for(int i = 0; i < buttons.Length; i ++)
         {
             var data = question.totalQuestion[i];
+
             buttons[i].GetComponent<Image>().sprite = defaultImage;
-            buttons[i].sprite = data.sprite;
-            buttons[i].data = data;
-            buttons[i].button.interactable = true;
+            buttons[i].Init(data);
             AddListener(buttons[i]);
         }
     }
@@ -82,12 +88,9 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
         button.onClick.AddListener(() =>
         {
-            ClickMotion(imageButton);
+            eventSystem.enabled = false;
+            charactor.ThrowBobber(imageButton.gameObject, () => ClickMotion(imageButton));
         });
-    }
-
-    private void SetCurrentColor(DigraphsWordsData data)
-    {
     }
 
     private void ClickMotion(BubbileButtons imageButton)
@@ -110,16 +113,32 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         successEffect.gameObject.SetActive(true);
         audioPlayer.Play(data.act, () =>
         {
-            //if (CheckOver() && isGuide)
-            //    currentQuestion.ResetCurrentIndex();
             successEffect.gameObject.SetActive(false);
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].gameObject.SetActive(true);
             AddAnswer(currentQuestion.currentCorrect);
             isNext = true;
+            eventSystem.enabled = true;
         });
 
         button.image.sprite = successedImage;
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        ResetElement();
+    }
+
+    private void ResetElement()
+    {
+        foreach(var item in buttons)
+        {
+            item.transform.localScale = new Vector3(1f, 1f, 1f);
+            item.rt.offsetMin = new Vector2(0f, 0f);
+            item.rt.offsetMax = new Vector2(0f, 0f);
+        }
     }
 }
 
