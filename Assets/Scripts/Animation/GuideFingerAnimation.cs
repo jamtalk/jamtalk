@@ -73,6 +73,24 @@ public class GuideFingerAnimation : MonoBehaviour
 
         seq.Play();
     }
+    public void DoMove(RectTransform[] targets, GameObject move, TweenCallback callback)
+    {
+        move.transform.position = gameObject.transform.position;
+        gameObject.SetActive(true);
+        move.SetActive(true);
+        Sequence seq = DOTween.Sequence();
+        var index = 0;
+        foreach (var item in targets)
+        {
+            seq.Insert(index, transform.DOMove(item.transform.position, 1f));
+            seq.Insert(index, move.transform.DOMove(item.transform.position, 1f));
+            index++;
+        }
+
+        seq.onComplete += callback;
+
+        seq.Play();
+    }
     public void DoMove(RectTransform[] move, Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);

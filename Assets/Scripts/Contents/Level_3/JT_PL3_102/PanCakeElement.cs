@@ -11,16 +11,19 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public Image BG;
     public Image image;
     public Text text;
+    public Button button;
     public SpatulaElement spatula;
 
     public Sprite firstSprite;
     public Sprite secondSprite;
     public Sprite lastSprite;
 
+    public RectTransform[] rects;
     public DigraphsWordsData data { get; private set; }
 
     public Action onFirst;
     public Action onDouble;
+    public Action onClick;
 
     public bool isCheck = false;
     private bool isHalf = false;
@@ -42,6 +45,7 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
         {
             spatula.transform.position = GameManager.Instance.GetMousePosition();
             spatula.gameObject.SetActive(true);
+            onClick?.Invoke();
         }
 
         if (Input.GetMouseButtonUp(0))

@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using Random = UnityEngine.Random;
 
 public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 {
@@ -14,7 +16,8 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     public Sprite frontImage;
     public SpatulaElement spatulaImage;
     public PanCakeElement[] pancakes;
-
+    public Image[] panckede;
+    private int index = 0;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -25,30 +28,30 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
         guideFinger.DoMove(target.transform.position, () =>
         {
-            //    guideFinger.DoClick(() =>
-            //    {
-            //        target.isOn = true;
-
-            //        audioPlayer.Play(target.data.audio.phanics, () =>
-            //        guideFinger.DoClick(() =>
-            //        {
-            //            guideFinger.gameObject.SetActive(false);
-            //            ClickMotion(target);
-            //        }));
-            //    });
 
             guideFinger.DoPress(() =>
             {
-                guideFinger.DoShake(spatulaImage.gameObject, () =>
+                guideFinger.DoMove(target.rects, spatulaImage.gameObject, () =>
                 {
                     target.BG.sprite = target.secondSprite;
                     audioPlayer.Play(target.data.audio.phanics, () =>
                     {
-                        guideFinger.DoShake(spatulaImage.gameObject, () =>
+                        guideFinger.DoMove(target.rects,spatulaImage.gameObject, () =>
                         {
                             guideFinger.gameObject.SetActive(false);
                             spatulaImage.gameObject.SetActive(false);
-                            ClickMotion(target);
+                            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                            ClickMotion(target, () =>
+                            {
+                                guideFinger.DoClick(() =>
+                                {
+                                    panckede[0].gameObject.SetActive(true);
+                                    target.gameObject.SetActive(false);
+                                    guideFinger.gameObject.SetActive(false);
+
+                                    isNext = true;
+                                });
+                            });
                         });
                     });
                 });
@@ -56,6 +59,10 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         });
         while (!isNext) yield return null;
         isNext = false;
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        AddAnswer(target.data);
 
         spatulaImage.gameObject.SetActive(false);
     }
@@ -67,6 +74,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         {
             item.onFirst += () => audioPlayer.Play(item.data.audio.phanics);
             item.onDouble += () => ClickMotion(item);
+            item.onClick += () => StackCake(item);
         }
     }
 
@@ -94,6 +102,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     {
         for (int i = 0; i < pancakes.Length; i++)
         {
+            pancakes[i].gameObject.SetActive(true);
             pancakes[i].isCheck = false;
             pancakes[i].image.gameObject.SetActive(false);
             pancakes[i].text.gameObject.SetActive(true);
@@ -102,7 +111,7 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         }
     }
 
-    private void ClickMotion(PanCakeElement button)
+    private void ClickMotion(PanCakeElement button, Action action = null)
     {
         button.isCheck = true;
 
@@ -115,10 +124,36 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
             button.text.text = button.data.key;
             button.image.gameObject.SetActive(false);
             button.text.gameObject.SetActive(true);
-            AddAnswer(button.data);
+            //AddAnswer(button.data);
+            //isNext = true;
             spatulaImage.isGuide = false;
-            isNext = true;
+            action?.Invoke();
         });
+    }
+
+    private void StackCake(PanCakeElement item)
+    {
+        if (item.isCheck)
+        {
+            panckede[index].gameObject.SetActive(true);
+            index++;
+            item.gameObject.SetActive(false);
+
+            AddAnswer(item.data);
+        }
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        foreach (var item in pancakes)
+            item.gameObject.SetActive(true);
+
+        foreach (var item in panckede)
+            item.gameObject.SetActive(false);
+
+        index = 0;
     }
 }
 
