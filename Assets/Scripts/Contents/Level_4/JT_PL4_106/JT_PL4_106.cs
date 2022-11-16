@@ -13,9 +13,11 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     protected override int QuestionCount => 4;
 
     public Text currentText;
-    public Button charactorButton;
+    public AnimationElement charactorButton;
     public DoubleClickButton4_104[] buttons;
+    public AnimationElement seagullElement;
 
+    public SeagullControler seagullController;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -51,11 +53,21 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
     protected override void Awake()
     {
         base.Awake();
-
-        charactorButton.onClick.AddListener(() =>
+        charactorButton.button.onClick.AddListener(() =>
         {
             audioPlayer.Play(currentQuestion.correct.clip);
         });
+        StartCoroutine(GetBg());
+    }
+
+    private IEnumerator GetBg()
+    {
+        while (true)
+        {
+            var item = seagullController.GetObject(seagullElement, seagullController.transform);
+            seagullController.MoveElement(item, () => seagullController.MoveCompleted(item));
+            yield return new WaitForSecondsRealtime(5f);
+        }
     }
     protected override List<Question4_106> MakeQuestion()
     {

@@ -102,6 +102,9 @@ public class JT_PL4_101 : BaseContents
         var addObj = addImages[index];
         Slider slider = sliders[index];
 
+        //var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), headTexts[index].text);
+        //Debug.Log(alphabet.ToString());
+
         button.interactable = false;
         var seq = DOTween.Sequence();
         var tween = slider.DOValue(1f, 1.5f, true);

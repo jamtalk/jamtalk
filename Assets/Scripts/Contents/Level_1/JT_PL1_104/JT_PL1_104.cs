@@ -19,6 +19,7 @@ public class JT_PL1_104 : BaseContents
     protected eAlphabet[] targets;
     protected int currentIndex = 0;
     protected int questionsCount => 2;
+    public string[] asdf = { };
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -29,11 +30,14 @@ public class JT_PL1_104 : BaseContents
 
     protected override void Awake()
     {
+        aniChar.AnimationState.SetAnimation(0, "2_hi", false);
+
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         base.Awake();
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         drawAlphabet.onCompleted += ()=>
         {
+            
             mask.gameObject.SetActive(false);
             var tween = drawAlphabet.transform.DOScale(1.5f, .5f);
             tween.SetLoops(2, LoopType.Yoyo);
