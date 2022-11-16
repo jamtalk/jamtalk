@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
+public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
 {
     public Image BG;
     public Image image;
@@ -26,6 +26,7 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public Action onClick;
 
     public bool isCheck = false;
+    public bool isCompleted = false;
     private bool isHalf = false;
     private bool isStart = false;
 
@@ -34,19 +35,30 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public void Init(DigraphsWordsData data)
     {
         this.data = data;
+
+        name = data.key;
         text.text = data.Digraphs.ToString().ToLower();
         image.sprite = data.sprite;
+
+        gameObject.SetActive(true);
+        image.gameObject.SetActive(false);
+        text.gameObject.SetActive(true);
+        isCompleted = false;
+        isCheck = false;
+        isHalf = false;
+        isStart = false;
         image.preserveAspect = true;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            spatula.transform.position = GameManager.Instance.GetMousePosition();
-            spatula.gameObject.SetActive(true);
-            onClick?.Invoke();
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    spatula.transform.position = GameManager.Instance.GetMousePosition();
+        //    spatula.gameObject.SetActive(true);
+        //    if(isCompleted)
+        //        onClick?.Invoke();
+        //}
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -93,5 +105,13 @@ public class PanCakeElement : MonoBehaviour, IDragHandler, IEndDragHandler, IBeg
     public void OnEndDrag(PointerEventData eventData)
     {
 
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        spatula.transform.position = GameManager.Instance.GetMousePosition();
+        spatula.gameObject.SetActive(true);
+        if (isCompleted)
+            onClick?.Invoke();
     }
 }

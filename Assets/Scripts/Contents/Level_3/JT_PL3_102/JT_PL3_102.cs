@@ -36,23 +36,23 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
                     target.BG.sprite = target.secondSprite;
                     audioPlayer.Play(target.data.audio.phanics, () =>
                     {
-                        guideFinger.DoMove(target.rects,spatulaImage.gameObject, () =>
-                        {
-                            guideFinger.gameObject.SetActive(false);
-                            spatulaImage.gameObject.SetActive(false);
-                            guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
-                            ClickMotion(target, () =>
-                            {
-                                guideFinger.DoClick(() =>
-                                {
-                                    panckede[0].gameObject.SetActive(true);
-                                    target.gameObject.SetActive(false);
-                                    guideFinger.gameObject.SetActive(false);
+                        guideFinger.DoMove(target.rects, spatulaImage.gameObject, () =>
+                         {
+                             guideFinger.gameObject.SetActive(false);
+                             spatulaImage.gameObject.SetActive(false);
+                             guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
+                             ClickMotion(target, () =>
+                             {
+                                 guideFinger.DoClick(() =>
+                                 {
+                                     panckede[0].gameObject.SetActive(true);
+                                     target.gameObject.SetActive(false);
+                                     guideFinger.gameObject.SetActive(false);
 
-                                    isNext = true;
-                                });
-                            });
-                        });
+                                     isNext = true;
+                                 });
+                             });
+                         });
                     });
                 });
             });
@@ -70,13 +70,13 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
     protected override void Awake()
     {
         base.Awake();
-        foreach(var item in pancakes)
+        foreach (var item in pancakes)
         {
             item.onFirst += () => audioPlayer.Play(item.data.audio.phanics);
             item.onDouble += () => ClickMotion(item);
             item.onClick += () => StackCake(item);
         }
-    }
+    } 
 
     protected override List<Question3_102> MakeQuestion()
     {
@@ -100,15 +100,10 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
     protected override void ShowQuestion(Question3_102 question)
     {
-        for (int i = 0; i < pancakes.Length; i++)
-        {
-            pancakes[i].gameObject.SetActive(true);
-            pancakes[i].isCheck = false;
-            pancakes[i].image.gameObject.SetActive(false);
-            pancakes[i].text.gameObject.SetActive(true);
+        ResetElements();
 
+        for (int i = 0; i < pancakes.Length; i++)
             pancakes[i].Init(question.totalQuestion[i]);
-        }
     }
 
     private void ClickMotion(PanCakeElement button, Action action = null)
@@ -120,12 +115,12 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
         button.image.gameObject.SetActive(true);
         audioPlayer.Play(button.data.act, () =>
         {
+            button.isCompleted = true;
             button.BG.sprite = frontImage;
             button.text.text = button.data.key;
             button.image.gameObject.SetActive(false);
             button.text.gameObject.SetActive(true);
-            //AddAnswer(button.data);
-            //isNext = true;
+
             spatulaImage.isGuide = false;
             action?.Invoke();
         });
@@ -133,20 +128,25 @@ public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
 
     private void StackCake(PanCakeElement item)
     {
-        if (item.isCheck)
-        {
-            panckede[index].gameObject.SetActive(true);
-            index++;
-            item.gameObject.SetActive(false);
+        if (!item.isCompleted)
+            return;
 
-            AddAnswer(item.data);
-        }
+        panckede[index].gameObject.SetActive(true);
+        index++;
+        item.gameObject.SetActive(false);
+
+        AddAnswer(item.data);
     }
 
     protected override void EndGuidnce()
     {
         base.EndGuidnce();
 
+        ResetElements();
+    }
+
+    private void ResetElements()
+    {
         foreach (var item in pancakes)
             item.gameObject.SetActive(true);
 
