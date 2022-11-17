@@ -28,4 +28,9 @@ public class SeagullControler : Pooling<PoolingElement>
     {
         element.gameObject.SetActive(false);
     }
+
+    public override void SetElement(PoolingElement element)
+    {
+        MoveElement(element, () => MoveCompleted(element));
+    }
 }

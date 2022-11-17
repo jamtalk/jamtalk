@@ -65,7 +65,7 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
         while (true)
         {
             var item = seagullController.GetObject(seagullElement, seagullController.transform);
-            seagullController.MoveElement(item, () => seagullController.MoveCompleted(item));
+            //seagullController.MoveElement(item, () => seagullController.MoveCompleted(item));
             yield return new WaitForSecondsRealtime(5f);
         }
     }

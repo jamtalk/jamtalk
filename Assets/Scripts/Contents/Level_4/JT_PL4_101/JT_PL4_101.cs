@@ -15,13 +15,13 @@ public class JT_PL4_101 : BaseContents
     private int index = 0;
     private int slideCount = 0;
 
-    public Slider[] sliders;
-    public Button[] buttons;
-    public Text[] headTexts;
     public GameObject[] addImages;
     public Animator[] anis;
     public Text[] digraphsTexts;
     public Text[] pairsTexts;
+    public Text[] splitTexts;
+    public SliderElement[] sliderElements;
+    public MonsterElemet[] monsters;
     public Image successImages;
 
     private DigraphsWordsData data;
@@ -31,14 +31,14 @@ public class JT_PL4_101 : BaseContents
     {
         yield return base.ShowGuidnceRoutine();
 
-        for (int i = 0; i < buttons.Length; i++)
+        foreach(var item in sliderElements)
         {
-            guideFinger.DoMove(headTexts[i == 0 ? 0 : 2].transform.position, () =>
+            guideFinger.DoMove(item.text.transform.position, () =>
             {
                 guideFinger.DoClick(() =>
                 {
                     guideFinger.gameObject.SetActive(false);
-                    ClickMotion(i);
+                    ClickMotion(item);
                 });
             });
 
@@ -55,12 +55,14 @@ public class JT_PL4_101 : BaseContents
 
         MakeQuestion();
 
-        for(int i = 0; i < buttons.Length; i++)
-            AddListener(i);
+        foreach (var item in sliderElements)
+            item.button.onClick.AddListener(() => ClickMotion(item));
     }
 
     private void MakeQuestion()
     {
+        ResetScene();
+
         data = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
             .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
@@ -82,77 +84,66 @@ public class JT_PL4_101 : BaseContents
             values.Add(item.ToString());
 
         for (int i = 0; i < values.Count; i++)
-            headTexts[i].text = values[i];
+            splitTexts[i].text = values[i];
     }
 
-    private void AddListener(int index)
+    private void ClickMotion(SliderElement element)
     {
-        var button = buttons[index];
-        button.onClick.RemoveAllListeners();
+        var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), element.text.text.ToUpper());
+        element.button.interactable = false;
 
-        button.onClick.AddListener(() =>
+        audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(alphabet).clip, () =>
         {
-            ClickMotion(index);
+            element.Move(true, () =>
+            {
+                element.isCompleted = true;
+                isNext = true;
+                slideCount += 1;
+                element.slider.gameObject.SetActive(false);
+                element.addImage.gameObject.SetActive(true);
+
+                audioPlayer.Play(data.audio.phanics, () =>
+                {
+                    if (slideCount >= 2)
+                    {
+                        if (!isGuide)
+                            ShowResult();
+                        else
+                        {
+                            EndGuidnce();
+                            MakeQuestion();
+                        }
+                    }
+                });
+            });
         });
     }
 
-    private void ClickMotion(int index)
+    protected override void EndGuidnce()
     {
-        var button = buttons[index];
-        var addObj = addImages[index];
-        Slider slider = sliders[index];
+        base.EndGuidnce();
 
-        //var alphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), headTexts[index].text);
-        //Debug.Log(alphabet.ToString());
-
-        button.interactable = false;
-        var seq = DOTween.Sequence();
-        var tween = slider.DOValue(1f, 1.5f, true);
-        seq.onComplete += () =>
-        {
-            isNext = true;
-            slideCount += 1;
-            slider.gameObject.SetActive(false);
-            addObj.gameObject.SetActive(true);
-
-            if (slideCount >= 2)
-            {
-                var pair = GameManager.Instance.schema.GetDigrpahsAudio(data.PairDigrpahs);
-                audioPlayer.Play(data.audio.phanics, () =>
-                {
-                    StartCoroutine(ResetScene());
-                });
-                //audioPlayer.Play(data.audio.phanics, () => audioPlayer.Play(pair.phanics));
-            }
-        };
-        seq.Append(tween);
-
+        foreach (var item in monsters)
+            item.StartCoroutine();
+        ResetScene();
     }
-
-    private IEnumerator ResetScene()
+    private void ResetScene()
     {
         successImages.gameObject.SetActive(true);
-
-        yield return new WaitForSecondsRealtime(1f);
         slideCount = 0;
         index += 1;
 
-        for (int i = 0; i < sliders.Length; i++)
+        foreach(var item in sliderElements)
         {
-            sliders[i].value = 25;
-            addImages[i].gameObject.SetActive(false);
-            sliders[i].gameObject.SetActive(true);
-            buttons[i].interactable = true;
+            item.slider.value = 25f;
+            item.addImage.gameObject.SetActive(false);
+            item.slider.gameObject.SetActive(true);
+            item.button.interactable = true;
+            item.isCompleted = false;
         }
         successImages.gameObject.SetActive(false);
 
-        if(!isGuide)
-            ShowResult();
-        else
-        {
-            EndGuidnce();
-            MakeQuestion();
-        }
+        
     }
 
 }
