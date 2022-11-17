@@ -101,7 +101,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         var data = imageButton.data;
 
         button.interactable = false;
-        audioPlayer.Play(data.clip);
         for (int i = 0; i < buttons.Length; i++)
             buttons[i].gameObject.SetActive(false);
 
