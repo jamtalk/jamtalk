@@ -116,10 +116,11 @@ public class JT_PL4_109 : BaseContents
             .OrderBy(x=>Random.Range(0f,100f))
             .Take(cards.Length/2)
             .SelectMany(x=> new DigraphsWordsData[] {x,x})
-            .OrderBy(y => Random.Range(0f, 100f))
+            //.OrderBy(y => Random.Range(0f, 100f))
             .ToArray();
 
-        Debug.Log("asdf : " + question.Length);
+        for (int i = 0; i < question.Length; i++)
+            Debug.LogFormat("{0} : {1}", i, question[i].key);
         var randomCards = cards.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         var randomColor = richs.Take(cards.Length).OrderBy(x => Random.Range(0f, 100f)).ToArray();
 
