@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggle: {fileID: 5068443204845654344}
   text: {fileID: 5068443204602317495}
+  value: 
 --- !u!1 &5068443205791114327
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +324,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 8194815106dcc4a84acf54002241057f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
