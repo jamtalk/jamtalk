@@ -16,7 +16,7 @@ using GJGameLibrary;
 public partial class RequestManager : MonoSingleton<RequestManager>
 {
     public delegate void OnResponse(ResponseData data);
-    private const string ACTAPI = @"https://app.jamtalk.live/shop/api/";
+    private const string ACTAPI = @"http://app.jamtalk.live/shop/api/";
     private const string STTAPI= @"https://api.maum.ai/stt/cnnSttSimple";
 
     public void RequestAct<T>(T param, OnResponse onResponse) where T:IParam
