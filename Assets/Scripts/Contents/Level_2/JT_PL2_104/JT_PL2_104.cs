@@ -246,10 +246,12 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
 
     protected virtual void ThrowElement(BubbleElement bubble, VowelWordsData data, Action action)
     {
+        eventSystem.enabled = false;
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {
             audioPlayer.Play(1f, putClip, () =>
             {
+                eventSystem.enabled = true;
                 AddAnswer(data);
             });
         });
