@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
 {
@@ -30,9 +32,9 @@ public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
         return questions;
     }
 
-    protected override void Speak()
+    protected override void Speak(Action action = null)
     {
         base.Speak();
-        audioPlayer.Play(currentQuestion.correct.clip);
+        audioPlayer.Play(currentQuestion.correct.clip, action);
     }
 }

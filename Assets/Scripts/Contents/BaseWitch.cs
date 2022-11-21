@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     where T : ResourceWordsElement
@@ -25,6 +28,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     public AudioClip potSound;
     public AudioClip potionSound;
     public AudioClip effectSound;
+    public EventSystem eventSystem;
 
     [SerializeField]
     private Animator ani;
@@ -76,7 +80,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
     {
         result.gameObject.SetActive(false);
         Debug.Log(question.totalQuestion.Length);
-        Speak();
+        Speak(() => eventSystem.enabled = true);
         for (int i = 0; i < question.totalQuestion.Length; i++)
         {
             elements[i].gameObject.SetActive(true);
@@ -90,6 +94,8 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
     private void DropMotion(PotionElement<T> target)
     {
+        eventSystem.enabled = false;
+
         magicWand.gameObject.SetActive(false);
         result.ShowResult(target.data.sprite, .5f);
         audioPlayer.Play(1.5f, effectSound, () =>
@@ -115,7 +121,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         magicWand.SetDrag(target);
     }
 
-    protected virtual void Speak()
+    protected virtual void Speak(Action action = null)
     {
         ani.SetBool("Speak", true);
         //audioPlayer.Play(currentQuestion.correct.clip);

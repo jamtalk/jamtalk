@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
+using Random = UnityEngine.Random;
 
 public class JT_PL2_108 : BaseWitch<VowelWordsData>
 {
@@ -30,9 +32,9 @@ public class JT_PL2_108 : BaseWitch<VowelWordsData>
         return questions;
     }
 
-    protected override void Speak()
+    protected override void Speak(Action action = null)
     {
         base.Speak();
-        audioPlayer.Play(currentQuestion.correct.clip);
+        audioPlayer.Play(currentQuestion.correct.clip, action);
     }
 }

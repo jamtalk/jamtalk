@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_AnchorMin.y
@@ -738,7 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 394
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1247,8 +1247,10 @@ MonoBehaviour:
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   drawAlphabet: {fileID: 634881749}
   mask: {fileID: 1672353127}
+  aniChar: {fileID: 0}
   scaler: {fileID: 1580109401}
   type: 1
+  asdf: []
 --- !u!1 &1672353127
 GameObject:
   m_ObjectHideFlags: 0

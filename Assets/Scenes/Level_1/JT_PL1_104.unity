@@ -895,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_AnchorMin.y
@@ -903,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 394
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5968563126517331434, guid: a79169e6fcc9e4678867148cf90b597a, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1238,6 +1238,7 @@ MonoBehaviour:
   aniChar: {fileID: 2058555720}
   scaler: {fileID: 1580109401}
   type: 0
+  asdf: []
 --- !u!1 &1672353127
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public abstract class BaseMatchImage<T> : BaseContents
     protected override int GetTotalScore() => drops.Length;
     protected override bool CheckOver() => questionCounts == index;
     protected virtual bool DropCompleted() => !drops.Select(x => x.isConnected).Contains(false);
-    protected virtual int questionCounts => 1;
+    protected virtual int questionCounts => 4;
     protected int index = 0;
 
 

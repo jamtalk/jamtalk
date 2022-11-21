@@ -688,9 +688,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8fb6b4c6ca206a744af92eed84b2c29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7c5acbe0c4c734e2f89eafa765acb00f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1002,6 +1002,7 @@ MonoBehaviour:
   potSound: {fileID: 8300000, guid: 56ac281982face44281cac3f4f13b232, type: 3}
   potionSound: {fileID: 8300000, guid: 7969319abf929b04bb354b68ec9a0acf, type: 3}
   effectSound: {fileID: 8300000, guid: 85f75b5d6f69f1246bdf94de863f53de, type: 3}
+  eventSystem: {fileID: 538056963}
   ani: {fileID: 44084052}
 --- !u!1 &350945939
 GameObject:
