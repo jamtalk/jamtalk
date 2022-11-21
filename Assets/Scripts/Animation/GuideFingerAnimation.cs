@@ -11,6 +11,16 @@ public class GuideFingerAnimation : MonoBehaviour
     private RectTransform finger;
 
     Tween tween;
+    Sequence seq;
+
+    public void GuideStop()
+    {
+        if( seq != null)
+        {
+            seq.Kill();
+            seq = null;
+        }
+    }
     public void Stop()
     {
         if (tween != null)
@@ -35,7 +45,7 @@ public class GuideFingerAnimation : MonoBehaviour
 
         target.transform.position = gameObject.transform.position;
 
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         seq.Append(target.transform.DOShakePosition(duration, power));
         seq.Insert(0, gameObject.transform.DOShakePosition(duration, power));
         seq.onComplete += callback;
@@ -46,7 +56,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoMove(Vector3 target ,TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         seq.Append(transform.DOMove(target, 2f));
         seq.onComplete += callback;
 
@@ -55,7 +65,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoMove(float delay,Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         seq.Append(transform.DOMove(target, 2f).SetDelay(delay));
         seq.onComplete += callback;
 
@@ -65,7 +75,7 @@ public class GuideFingerAnimation : MonoBehaviour
     {
         gameObject.SetActive(true);
         var moveTarget = move.GetComponent<RectTransform>();
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         seq.Append(transform.DOMove(target, 2f));
         seq.Insert(0f, moveTarget.DOMove(target, 2f));
 
@@ -78,7 +88,7 @@ public class GuideFingerAnimation : MonoBehaviour
         move.transform.position = gameObject.transform.position;
         gameObject.SetActive(true);
         move.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         var index = 0;
         foreach (var item in targets)
         {
@@ -94,7 +104,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoMove(RectTransform[] move, Vector3 target, TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
 
         seq.Insert(0f, transform.DOMove(target, 2f));
         foreach (var item in move)
@@ -110,7 +120,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoPress(TweenCallback callback = null)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         Tween tween = transform.DOScale(.7f, 1f);
 
         seq.Append(tween);
@@ -120,7 +130,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoPress(float delay, TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         Tween tween = transform.DOScale(.7f, 1f).SetDelay(delay);
 
         seq.Append(tween);
@@ -131,7 +141,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoClick(TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         Tween firstTween = transform.DOScale(1.2f, 1f);
         Tween secondsTween = transform.DOScale(1f, 1f);
 
@@ -144,7 +154,7 @@ public class GuideFingerAnimation : MonoBehaviour
     public void DoFade(int loopCnt, TweenCallback callback)
     {
         gameObject.SetActive(true);
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
 
         foreach (var item in images)
             seq.Insert(0, item.DOFade(0, 1));

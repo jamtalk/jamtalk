@@ -77,7 +77,7 @@ public abstract class BaseContents : MonoBehaviour
         GameManager.Instance.currentAlphabet = targetAlphabet;
 #endif
         startTime = DateTime.Now;
-
+        
         ShowGuidnce();
     }
     protected virtual void ShowGuidnce()
@@ -88,6 +88,7 @@ public abstract class BaseContents : MonoBehaviour
         guideFinger = guidePopup.guideFinger;
         guideFinger.gameObject.SetActive(false);
         guideRoutine = StartCoroutine(ShowGuidnceRoutine());
+        guidePopup.exitButton.onClick.AddListener(() => EndGuidnce());
     }
     protected virtual IEnumerator ShowGuidnceRoutine()
     {
@@ -99,6 +100,7 @@ public abstract class BaseContents : MonoBehaviour
         Debug.Log("endgudie");
         isGuide = false;
         guidePopup.gameObject.SetActive(false);
+        guidePopup.guideFinger.GuideStop();
         StopCoroutine(guideRoutine);
     }
 
