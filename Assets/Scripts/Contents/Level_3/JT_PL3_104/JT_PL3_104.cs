@@ -142,6 +142,9 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
             elements[i].isOn = false;
             AddDoubleClickListener(elements[i], data);
         }
+
+
+        eventSystem.enabled = true;
     }
 
     protected virtual void AddDoubleClickListener(BubbleElement bubble, DigraphsWordsData data)
@@ -233,6 +236,7 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
     private void SmallBubbleClickMotion(BubbleElement bubble, BubbleElement smallBubbles, DigraphsWordsData data, Action action = null)
     {
+        eventSystem.enabled = false;
         ThrowElement(smallBubbles, data, action);
         smallBubbles.isOn = false;
         audioPlayer.Play(1f, putClip);

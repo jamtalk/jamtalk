@@ -151,6 +151,8 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
             elements[i].isOn = false;
             AddDoubleClickListener(elements[i], data);
         }
+
+        eventSystem.enabled = true;
     }
 
     protected virtual void AddDoubleClickListener(BubbleElement bubble, VowelWordsData data)
@@ -251,7 +253,6 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
         {
             audioPlayer.Play(1f, putClip, () =>
             {
-                eventSystem.enabled = true;
                 AddAnswer(data);
             });
         });
