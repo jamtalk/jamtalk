@@ -43,11 +43,12 @@ public class MonsterElemet : PoolingElement
 
     IEnumerator MoveElement()
     {
+        yield return new WaitForSecondsRealtime(Random.Range(0f, 2.0f));
         while(true)
         {
+            Move();
             var delay = Random.Range(3, 10);
             yield return new WaitForSecondsRealtime(delay);
-            Move();
         }
     }
 

@@ -15,6 +15,15 @@ public class SliderElement : MonoBehaviour
     bool isTrigger = false;
     public bool isCompleted = false;
 
+    public void Stop()
+    {
+        if(seq != null)
+        {
+            seq.Kill();
+            seq = null;
+        }
+    }
+
     public void Move(bool front = true, TweenCallback callback = null)
     {
         var value = front ? 1f : 20f;

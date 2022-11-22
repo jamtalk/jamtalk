@@ -53,6 +53,8 @@ public class JT_PL4_104 : BaseContents
 
     protected override void EndGuidnce()
     {
+        foreach (var item in elements)
+            item.Close();
         base.EndGuidnce();
         index = 0;
     }

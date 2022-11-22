@@ -68,6 +68,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
     protected override void ShowQuestion(Question4_102 question)
     { 
         ResetElement();
+        eventSystem.enabled = true;
 
         Debug.Log(question.totalQuestion.Length);
         currentCnt = 0;
@@ -88,13 +89,13 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
         button.onClick.AddListener(() =>
         {
-            eventSystem.enabled = false;
             charactor.ThrowBobber(imageButton.gameObject, () => ClickMotion(imageButton));
         });
     }
 
     private void ClickMotion(BubbileButtons imageButton)
     {
+        eventSystem.enabled = false;
         currentCnt++;
         Debug.Log(currentCnt);
         var button = imageButton.button;
@@ -125,6 +126,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
     protected override void EndGuidnce()
     {
+        charactor.Stop();
         base.EndGuidnce();
 
         ResetElement();

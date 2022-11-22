@@ -37,6 +37,7 @@ public class JT_PL4_108 : BaseContents
 
         for (int i = 0; i < optionElements.Count; i++)
         {
+            while (!isGuide) yield return null;
             var target = optionElements.Where(x => x.value == answerElements[i].value).First();
             yield return new WaitForEndOfFrame();
             guideFinger.DoMove(target.transform.position, () =>

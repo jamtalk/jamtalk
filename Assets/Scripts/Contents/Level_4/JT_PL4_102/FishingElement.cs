@@ -18,10 +18,28 @@ public class FishingElement : MonoBehaviour
     private float pullTime = 2f;
     private float throwTime = 1f;
     public RectTransform target;
-    public void Awake()
+
+    Sequence seq;
+
+    public void Stop()
     {
-        
+        if(seq != null)
+        {
+            seq.Kill();
+            seq = null;
+        }
+
+        line_rt.anchoredPosition = Vector3.zero;
+        var bobberRect = imageBobber.GetComponent<RectTransform>();
+        bobberRect.anchoredPosition = Vector3.zero;
+        var armRt = imageArm.GetComponent<RectTransform>();
+        armRt.anchoredPosition = Vector3.zero;
+
+        line_rt.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        bobberRect.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        armRt.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
     }
+
     private void Update()
     {
         var pos = Camera.main.WorldToScreenPoint(bobberRt.position);
@@ -44,7 +62,7 @@ public class FishingElement : MonoBehaviour
 
     public void ThrowBobber(GameObject target, TweenCallback callback = null)
     {
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
 
         Tween tweenPull = imageArm.transform.DORotate(new Vector3(0, 0, 30), pullTime);
         Tween tweenThrow = imageArm.transform.DORotate(new Vector3(0, 0, 0), throwTime);

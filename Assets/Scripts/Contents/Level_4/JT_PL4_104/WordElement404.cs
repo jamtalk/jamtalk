@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class WordElement404 : MonoBehaviour
 {
     public Text text;
+    public Image textImage;
     public Image closeImage;
     public Image openImage;
     public GameObject[] charactors;
@@ -39,6 +40,7 @@ public class WordElement404 : MonoBehaviour
     }
     public void Correct()
     {
+        textImage.gameObject.SetActive(false);
         charactor.gameObject.SetActive(false);
     }
 }

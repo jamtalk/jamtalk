@@ -121,6 +121,10 @@ public class JT_PL4_101 : BaseContents
 
     protected override void EndGuidnce()
     {
+        audioPlayer.Stop();
+        foreach (var item in sliderElements)
+            item.Stop();
+
         base.EndGuidnce();
 
         foreach (var item in monsters)
