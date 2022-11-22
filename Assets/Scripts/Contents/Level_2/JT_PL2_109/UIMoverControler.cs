@@ -17,6 +17,12 @@ public class UIMoverControler : MonoBehaviour
         paths.Add(firstPaths);
         paths.Add(secondPaths);
     }
+
+    public void Stop()
+    {
+        foreach (var item in movers)
+            item.Stop();
+    }
     public void Init()
     {
         foreach (var item in movers)

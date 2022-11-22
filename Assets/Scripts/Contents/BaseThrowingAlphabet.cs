@@ -54,6 +54,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
 
     protected override void EndGuidnce()
     {
+        moverControler.Stop();
+        audioPlayer.Stop();
         base.EndGuidnce();
 
         questions = MakeQuestion();

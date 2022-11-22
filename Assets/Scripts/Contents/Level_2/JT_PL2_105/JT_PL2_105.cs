@@ -34,6 +34,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private BubbleElement currentElement;
     private List<Tween> tweens = new List<Tween>();
 
+    Coroutine coroutine;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -137,7 +138,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     {
         currentElement = planet;
         planet.transform.DOShakePosition(1f, 5f);
-        StartCoroutine(InitPlanet(data));
+        coroutine = StartCoroutine(InitPlanet(data));
     }
     private void AddClickListener(BubbleElement planet, VowelWordsData data)
     {
@@ -188,6 +189,16 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
         //var ani = astronaut.GetComponent<Animator>();
         //ani.SetBool("Speak", true);
         audioPlayer.Play(currentQuestion.correct.clip);
+    }
+
+    protected override void EndGuidnce()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+        base.EndGuidnce();
     }
 }
 

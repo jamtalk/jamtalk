@@ -82,6 +82,14 @@ public class JT_PL2_106 : BaseContents
 
     protected override void EndGuidnce()
     {
+        if (seq != null)
+        {
+            seq.Kill();
+            seq = null;
+            audioPlayer.Stop();
+            rouletteImage.transform.rotation = Quaternion.identity;
+        }
+
         base.EndGuidnce();
         index = 0;
         foreach (var item in currentCount)
@@ -183,7 +191,7 @@ public class JT_PL2_106 : BaseContents
             seq = null;
         }
         audioPlayer.Play(6f, rouletteClip);
-        eventSystem.enabled = false;
+        if(!isGuide) eventSystem.enabled = false;
 
         seq = DOTween.Sequence();
         currentIndex = Random.Range(0, textList.Count);

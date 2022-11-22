@@ -142,6 +142,14 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         for (int i = 0; i < words.Length; i++)
             elements[i].SetDefaultPosition();
     }
+
+    protected override void EndGuidnce()
+    {
+        foreach(var item in elements)
+            item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+        base.EndGuidnce();
+    }
 }
 
 

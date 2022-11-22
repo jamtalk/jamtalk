@@ -287,6 +287,17 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
             item.SetBool("Speak", true);
         audioPlayer.Play(currentQuestion.correct.clip);
     }
+
+    protected override void EndGuidnce()
+    {
+        if (bubbles.Count > 0)
+        {
+            foreach (var item in bubbles)
+                Destroy(item.gameObject);
+            bubbles.Clear();
+        }
+        base.EndGuidnce();
+    }
 }
 
 public class Question2_104 : SingleQuestion<VowelWordsData>

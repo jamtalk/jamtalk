@@ -10,6 +10,7 @@ public class AudioSinglePlayer : MonoBehaviour
     private AudioSource player => GetComponent<AudioSource>();
     private Coroutine stopRoutine = null;
     private Coroutine overRoutine = null;
+    private Coroutine delayRoutine = null;
     private void Awake()
     {
         if (player.clip != null && player.playOnAwake)
@@ -27,6 +28,11 @@ public class AudioSinglePlayer : MonoBehaviour
         {
             StopCoroutine(overRoutine);
             overRoutine = null;
+        }
+        if (delayRoutine != null)
+        {
+            StopCoroutine(delayRoutine);
+            delayRoutine = null;
         }
     }
 
@@ -51,8 +57,11 @@ public class AudioSinglePlayer : MonoBehaviour
             Stop();
         if (clip != null)
             player.clip = clip;
-        Invoke("Play", delay);
+        //Invoke("Play", delay);
+        delayRoutine =  StartCoroutine(DelayRoutine(delay));
     }
+
+    
     public void Play(string clip, float delay)
     {
         AudioClipManager.Instance.GetClip(clip, value =>
@@ -200,5 +209,10 @@ public class AudioSinglePlayer : MonoBehaviour
         yield return new WaitForSeconds(duration);
         Stop();
         onOver?.Invoke();
+    }
+    IEnumerator DelayRoutine(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        Play();
     }
 } 
