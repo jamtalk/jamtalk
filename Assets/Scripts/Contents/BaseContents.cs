@@ -22,6 +22,7 @@ public abstract class BaseContents : MonoBehaviour
     private DateTime endTime;
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
+    public ExitButton exitButton;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected Coroutine guideRoutine;
@@ -77,7 +78,8 @@ public abstract class BaseContents : MonoBehaviour
         GameManager.Instance.currentAlphabet = targetAlphabet;
 #endif
         startTime = DateTime.Now;
-        
+
+        Instantiate(exitButton, transform);
         ShowGuidnce();
     }
     protected virtual void ShowGuidnce()
@@ -99,10 +101,13 @@ public abstract class BaseContents : MonoBehaviour
     {
         Debug.Log("endgudie");
         isGuide = false;
+        ResetContents();
         guidePopup.gameObject.SetActive(false);
         guidePopup.guideFinger.GuideStop();
         StopCoroutine(guideRoutine);
     }
+
+    protected virtual void ResetContents() { }
 
     protected abstract bool CheckOver();
     protected virtual int GetLevel() => 1;
