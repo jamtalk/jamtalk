@@ -40,6 +40,15 @@ public abstract class BaseBingoButton<TValue, TViewer> : MonoBehaviour
         imageStamp.preserveAspect = true;
     }
     protected abstract void SetViewer();
+
+    public void EndGuide()
+    {
+        isOn = false;
+        eventSystem.enabled = true;
+        button.interactable = true;
+        imageStamp.gameObject.SetActive(false);
+        viewer.gameObject.SetActive(true);
+    }
     private void OnClick()
     {
         if (isCorrect.Invoke(value))

@@ -100,7 +100,8 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         //    .ToArray();
         //?????? ????
         var corrects = new List<TValue>();
-        Debug.Log(correctsTarget.Length);
+        Debug.Log("corrects Target Length : " +  correctsTarget.Length);
+        Debug.Log("Board Size : " + board.size);
         if(correctsTarget.Length <board.size)
         {
             for (int i = 0; i < board.size; i++)
@@ -218,6 +219,19 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
             PlayClip();
     }
 
+    protected override void EndGuidnce()
+    {
+        foreach (var item in board.buttons)
+            item.EndGuide();
+
+        base.EndGuidnce();
+
+        scoreBoard.GuideScore(board.size * 100);
+        bingo.gameObject.SetActive(false);
+        ResizeBoard();
+        bingoCount = 0;
+    }
+
     protected override void ShowResult()
     {
         Debug.Log("showResult");
@@ -226,10 +240,7 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
             if (isGuide)
             {
                 EndGuidnce();
-                scoreBoard.GuideScore(board.size * 100);
-                bingo.gameObject.SetActive(false);
-                ResizeBoard();
-                bingoCount = 0;
+                
             }
             else
             {
