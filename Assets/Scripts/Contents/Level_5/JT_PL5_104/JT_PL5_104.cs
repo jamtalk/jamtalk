@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     public GameObject finger;
 
     protected override eContents contents => eContents.JT_PL5_104;
+    public EventSystem eventSystem;
     public ImageRocket rocket;
     public DoubleClick504[] buttons;
     public Button buttonRocket;
@@ -136,6 +138,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     }
     private void CorrectButtonMotion(DoubleClick504 button)
     {
+        eventSystem.enabled = false;
         var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
@@ -160,6 +163,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
                         CallRokect();
                     isRoutine = true;
                     isStop = false;
+                    eventSystem.enabled = true;
                 });
             });
         }
@@ -203,6 +207,13 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
             if (finger != null)
                 finger.gameObject.SetActive(true);
         });
+    }
+
+    protected override void EndGuidnce()
+    {
+        rocket.ResetPosition();
+
+        base.EndGuidnce();
     }
 }
 public class Question5_104 : MultiQuestion<DigraphsWordsData>

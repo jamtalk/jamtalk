@@ -7,6 +7,7 @@ using DG.Tweening;
 using System;
 using Bezier = GJGameLibrary.Util.Bezier.DoTween.BezierTween;
 using Random = UnityEngine.Random;
+using UnityEngine.EventSystems;
 
 public class JT_PL5_101 : BaseContents
 {
@@ -16,6 +17,7 @@ public class JT_PL5_101 : BaseContents
     private int questionCount = 3;
     private int index = 0;
 
+    public EventSystem eventSystem;
     public Image hole;
     public RectTransform[] holePoint;
     public ImageButton501[] anotherButtons;
@@ -163,9 +165,10 @@ public class JT_PL5_101 : BaseContents
         yield return new WaitForEndOfFrame();
 
         audioPlayer.Play(digraphs.audio.phanics);
-
+        eventSystem.enabled = false;
         DoHoleIn(alphabetImages, () =>
         {
+            eventSystem.enabled = true;
             for (int i = 0; i < alphabetImages.Length; i++)
                 alphabetImages[i].gameObject.SetActive(false);
 

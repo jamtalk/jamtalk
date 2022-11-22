@@ -2283,6 +2283,7 @@ MonoBehaviour:
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
   finger: {fileID: 1322307635}
+  eventSystem: {fileID: 53175558}
   rocket: {fileID: 652548413}
   buttons:
   - {fileID: 1528821557}
@@ -2581,11 +2582,11 @@ RectTransform:
   m_Father: {fileID: 652548408}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.3}
+  m_AnchorMax: {x: 0.25, y: 0.7}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 148, y: 132}
-  m_Pivot: {x: 1, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1962840233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2606,7 +2607,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e466c0fee238ac459a50ae2d558562d, type: 3}
+  m_Sprite: {fileID: 5157639753981049711, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2637,11 +2638,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 7e466c0fee238ac459a50ae2d558562d, type: 3}
-  - {fileID: 21300000, guid: 0876a7745229be844b858e362624ca28, type: 3}
-  - {fileID: 21300000, guid: afb4cd39fe4778f40a17f48f98840dbc, type: 3}
-  - {fileID: 21300000, guid: 889ca3b77b174ab43a73a38e18283510, type: 3}
-  - {fileID: 21300000, guid: c291adf3c94c2124eb7f27fc3e2eecc9, type: 3}
+  - {fileID: 5157639753981049711, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: -4449234709758819644, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: 6851680649351089498, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: -4283114931108324326, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: 6876179535086376814, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: -4796220698732042535, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: 8021631359544990060, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: -2408362566233066087, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
+  - {fileID: -1326177468671970230, guid: 529b1108346ca4b57907563fb5d669a3, type: 3}
   playOnAwake: 1
   duration: 0.5
 --- !u!1 &2089497030

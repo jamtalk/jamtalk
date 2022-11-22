@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,8 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     public GameObject finger;
 
     protected override eContents contents => eContents.JT_PL5_110;
+
+    public EventSystem eventSystem;
     public TextRocket rocket;
     public TextButton510[] buttons;
     public Button buttonRocket;
@@ -124,6 +127,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     }
     private void CorrectButtonMotion(TextButton510 button)
     {
+        eventSystem.enabled = false;
         var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
@@ -182,6 +186,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
             finger.gameObject.SetActive(false);
         rocket.Call(() =>
         {
+            eventSystem.enabled = true;
             rocket.fire.preserveAspect = false;
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
@@ -189,6 +194,13 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
             if (finger != null)
                 finger.gameObject.SetActive(true);
         });
+    }
+
+    protected override void EndGuidnce()
+    {
+        rocket.ResetPosition();
+
+        base.EndGuidnce();
     }
 }
 public class Question5_110 : MultiQuestion<DigraphsWordsData>
