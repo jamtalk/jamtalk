@@ -13,15 +13,18 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     where TViewer : MonoBehaviour
 {
     public TBoard board;
+    public TBoard alphaBoard;
     public BingoScoreBoard scoreBoard;
     public Button buttonSound;
-    public int BingoCount => 1;
+    public virtual int BingoCount => 1;
+    public int bingoCount = 0;
     public RectTransform bingo;
     public int currentIndex = 0;
     public TValue[] questions;
     public TValue[] corrects;
     public TValue currentQuestion => corrects[currentIndex];
-    protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
+    //protected override bool CheckOver() => board.GetBingoCount() >= BingoCount;
+    protected override bool CheckOver() => bingoCount == BingoCount;
     protected override int GetTotalScore() => BingoCount;
 
     protected TValue[] _correctsTarget = null;
@@ -35,7 +38,6 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         {
             while (!isNext) yield return null;
             isNext = false;
-            Debug.LogFormat("{0}, {1}", board.buttons[0].strValue, GetValue());
             var target = board.buttons.Where(x=>!x.isOn).Where(x => x.strValue == GetValue()).First();
 
             guideFinger.gameObject.SetActive(true);
@@ -98,6 +100,7 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         //    .ToArray();
         //?????? ????
         var corrects = new List<TValue>();
+        Debug.Log(correctsTarget.Length);
         if(correctsTarget.Length <board.size)
         {
             for (int i = 0; i < board.size; i++)
@@ -172,31 +175,18 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
     {
         if (currentIndex == 0)
             return eGameResult.Fail;
-        else if (board.GetBingoCount() < BingoCount)
+        //else if (board.GetBingoCount() < BingoCount)
+        else if( bingoCount < BingoCount)
             return eGameResult.Greate;
         else
             return eGameResult.Perfect;
     }
-    protected override void ShowResult()
-    {
-        Debug.Log("showResult");
-        ShowBingo(() =>
-        {
-            if (isGuide)
-            {
-                EndGuidnce();
-                scoreBoard.GuideScore(board.size * 100);
-                bingo.gameObject.SetActive(false);
-                ResizeBoard();
-            }
-            else
-                base.ShowResult();
-        });
-    }
+    
     protected void ShowBingo(TweenCallback callback = null)
     {
+        bingoCount++;
         bingo.gameObject.SetActive(true);
-
+        
         var tween = bingo.DOScale(1.5f, .5f);
         tween.SetEase(Ease.Linear);
         tween.SetLoops(2, LoopType.Yoyo);
@@ -218,11 +208,45 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
 
     }
     protected abstract void PlayClip();
+
     public void PlaySound()
     {
-        if (CheckOver())
+        //if (CheckOver())
+        if(board.GetBingoCount() >= 1)
             ShowResult();
         else
             PlayClip();
+    }
+
+    protected override void ShowResult()
+    {
+        Debug.Log("showResult");
+        ShowBingo(() =>
+        {
+            if (isGuide)
+            {
+                EndGuidnce();
+                scoreBoard.GuideScore(board.size * 100);
+                bingo.gameObject.SetActive(false);
+                ResizeBoard();
+                bingoCount = 0;
+            }
+            else
+            {
+                if(CheckOver())
+                    base.ShowResult();
+                else
+                {
+                    bingo.gameObject.SetActive(false);
+                    board.gameObject.SetActive(false);
+                    alphaBoard.gameObject.SetActive(true);
+                    _correctsTarget = null;
+
+                    board = alphaBoard;
+                    scoreBoard.GuideScore(board.size * 100);
+                    ResizeBoard();
+                }
+            }
+        });
     }
 }

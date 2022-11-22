@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoBoard>
 {
     protected override eContents contents => eContents.JT_PL1_117;
+    public override int BingoCount => 2;
 
     protected override string GetValue()
     {
@@ -16,7 +17,7 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
     {
         get
         {
-            if(_correctsTarget == null)
+            if (_correctsTarget == null)
             {
                 var target = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
                 if (GameManager.Instance.currentAlphabet >= eAlphabet.C)
@@ -40,10 +41,10 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
     public override AlphabetData[] GetQuestionType()
     {
         return GameManager.Instance.alphabets
-            .Where(x => !correctsTarget.Select(y=>y.Alphabet).Contains(x))
+            .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x))
             .Take((int)Mathf.Pow(board.size, 2f))
             .OrderBy(x => Random.Range(0f, 100f))
-            .Select(x=>GameManager.Instance.GetResources(x))
+            .Select(x => GameManager.Instance.GetResources(x))
             .ToArray();
     }
 
