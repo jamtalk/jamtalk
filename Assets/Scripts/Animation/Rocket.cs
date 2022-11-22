@@ -29,6 +29,24 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
     private float verticalEndPoint => Screen.height / 2f + rt.sizeDelta.y;
     [Range(0,2)]
     public int tempNum = 0;
+
+
+    Tween tween;
+    private RectTransform defaultRt => GetComponent<RectTransform>();
+
+    public void ResetPosition()
+    {
+        if(tween != null)
+        {
+            tween.Kill();
+            tween = null;
+        }
+        transform.position = defaultRt.position;
+    }
+    private void Awake()
+    {
+        
+    }
     public void Init()
     {
         switch (direction)
@@ -108,7 +126,7 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
         isMoving = true;
         SetStartPosition();
         mask.SetActive(false);
-        Tween tween = null;
+        tween = null;
         float duration = 2f;
         switch (direction)
         {
@@ -157,7 +175,7 @@ public abstract class Rocket<TUI,TValue> : MonoBehaviour
         SetValue(value);
         mask.gameObject.SetActive(true);
 
-        Tween tween = null;
+        tween = null;
         float duration = 2f;
         switch (direction)
         {

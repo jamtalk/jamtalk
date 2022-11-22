@@ -101,13 +101,10 @@ public abstract class BaseContents : MonoBehaviour
     {
         Debug.Log("endgudie");
         isGuide = false;
-        ResetContents();
         guidePopup.gameObject.SetActive(false);
         guidePopup.guideFinger.GuideStop();
         StopCoroutine(guideRoutine);
     }
-
-    protected virtual void ResetContents() { }
 
     protected abstract bool CheckOver();
     protected virtual int GetLevel() => 1;

@@ -127,6 +127,13 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
             thrower.Throw(item, ch.product.GetComponent<RectTransform>(), () => ch.SetProduct(item.product.sprite, item.value.ToString()));
         }
     }
+
+    protected override void EndGuidnce()
+    {
+        foreach (var item in charactors)
+            item.ResetPosition();
+        base.EndGuidnce();
+    }
 }
 public class Question113 : SingleQuestion<eAlphabet>
 {

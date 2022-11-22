@@ -18,6 +18,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
     private bool isStart = false;
     protected override eContents contents => eContents.JT_PL1_108;
 
+    Coroutine coroutine;
     bool isTurn = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -41,6 +42,17 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         });
 
         while (!isNext) { yield return null; }
+    }
+
+    protected override void EndGuidnce()
+    {
+        StopCoroutine(coroutine);
+        foreach (var item in cards)
+        {
+            item.turnner.SeqStop();
+            item.turnner.SetBack();
+        }
+        base.EndGuidnce();
     }
 
     protected override void AddAnswer(AlphabetWordsData answer)
@@ -95,7 +107,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
                 cards[i].gameObject.SetActive(false);
             }
         }
-        StartCoroutine(TurrningCards());
+        coroutine = StartCoroutine(TurrningCards());
     }
     private void AddOnClickCardListener(Card_108 card)
     {

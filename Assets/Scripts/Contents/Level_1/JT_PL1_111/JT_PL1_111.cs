@@ -184,6 +184,12 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
                 finger.gameObject.SetActive(true);
         });
     }
+
+    protected override void EndGuidnce()
+    {
+        rocket.ResetPosition();
+        base.EndGuidnce();
+    }
 }
 public class Question111 : MultiQuestion<AlphabetWordsData>
 {

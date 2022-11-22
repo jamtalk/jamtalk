@@ -39,6 +39,15 @@ public class TurningCard : MonoBehaviour
     {
         onClick = null;
     }
+
+    public void SeqStop()
+    {
+        if (seq != null)
+        {
+            seq.Kill();
+            seq = null;
+        }
+    }
     public void Init(float duration=1, TweenCallback callback = null, bool alwaysBackDisable = false, bool alwaysFrontDisable = false)
     {
         this.alwaysBackDisable = alwaysBackDisable;

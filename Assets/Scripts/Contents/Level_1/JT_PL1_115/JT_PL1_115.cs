@@ -22,6 +22,8 @@ public class JT_PL1_115 : BaseContents
         base.ShowResult();
     }
 
+    Coroutine coroutine;
+
     bool isTurn = false;
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -74,6 +76,13 @@ public class JT_PL1_115 : BaseContents
 
     protected override void EndGuidnce()
     {
+        if (coroutine != null) StopCoroutine(coroutine);
+        foreach (var item in cards)
+        {
+            item.card.SeqStop();
+            item.card.SetFront();
+        }
+
         base.EndGuidnce();
 
         foreach (var item in cards)
@@ -119,7 +128,7 @@ public class JT_PL1_115 : BaseContents
             //SetCard(randomCards[lower], questions[lower], eAlphabetType.Lower);
         }
 
-        StartCoroutine(StartContent());   
+        coroutine = StartCoroutine(StartContent());   
     }
     private void SetCard(Card114 card, eAlphabet alphabet, eAlphabetType type)
     {

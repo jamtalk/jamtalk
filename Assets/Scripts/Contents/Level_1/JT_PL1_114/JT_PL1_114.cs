@@ -110,7 +110,7 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     protected override void ShowQuestion(Question114 question)
     {
         ship.SetInner();
-        if (isGuide)
+        //if (isGuide)
             ship.OutObject(question.alphabet, () =>
             {
                 isNext = true;
@@ -128,6 +128,12 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
     {
         for (int i = 0; i < drags.Length; i++)
             drags[i].intracable = intracable;
+    }
+    protected override void EndGuidnce()
+    {
+        foreach (var item in drags)
+            item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        base.EndGuidnce();
     }
 }
 public class Question114 : SingleQuestion<AlphabetWordsData>

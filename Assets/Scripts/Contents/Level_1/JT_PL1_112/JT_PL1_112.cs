@@ -123,7 +123,7 @@ public class JT_PL1_112 : BaseContents
     {
         foreach (var item in drags)
         {
-            item.image.transform.position = item.GetComponentInParent<RectTransform>().position;
+            item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             item.gameObject.SetActive(true);
         }
     }

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
 {
+    public EventSystem eventSystem;
     public Text textQuestion;
     public Button buttonQuestion;
     public ImageButton[] buttonsAnswer;
@@ -45,9 +47,11 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
 
     private void ButtonClickMotion(ImageButton button, AlphabetWordsData data)
     {
+        eventSystem.enabled = false;
         button.button.interactable = false;
         audioPlayer.Play(data.clip, () =>
         {
+            eventSystem.enabled = true;
             AddAnswer(data);
             if (!CheckOver())
                 button.button.interactable = true;

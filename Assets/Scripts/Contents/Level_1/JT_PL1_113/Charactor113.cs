@@ -29,6 +29,14 @@ public class Charactor113 : MonoBehaviour
             clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
         });
     }
+
+    public void ResetPosition()
+    {
+        var rtX = rt.position;
+        rtX.x = 2000f;
+
+        rt.position = rtX;
+    }
     public void Init(eAlphabet value)
     {
         this.value = value;

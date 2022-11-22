@@ -92,4 +92,11 @@ public class JT_PL1_102 : BaseContents
         else
             egg.Shake();
     }
+
+    protected override void EndGuidnce()
+    {
+        egg.Init();
+        currentClickCount = 0;
+        base.EndGuidnce();
+    }
 }
