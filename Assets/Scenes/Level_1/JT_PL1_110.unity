@@ -1147,7 +1147,7 @@ RectTransform:
   - {fileID: 33253297}
   - {fileID: 631745946}
   m_Father: {fileID: 1411531847}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2488,9 +2488,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 508292592}
   - {fileID: 637596824}
   - {fileID: 1476576232}
-  - {fileID: 508292592}
   - {fileID: 97601343}
   - {fileID: 799870663}
   m_Father: {fileID: 1580109403}
@@ -2778,6 +2778,7 @@ MonoBehaviour:
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 122620620}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+  exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
   caster: {fileID: 1580109400}
   creator: {fileID: 866636544}
   moverControler: {fileID: 1411531848}
