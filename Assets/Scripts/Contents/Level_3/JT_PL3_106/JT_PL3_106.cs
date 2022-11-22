@@ -5,6 +5,7 @@ using System.Linq;
 using Random = UnityEngine.Random;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsData>
 {
@@ -17,6 +18,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
     //private DigraphsWordsData currentDigraphs;
     //private string digraphs;
 
+    public EventSystem eventSystem;
     public Thrower306 thrower;
     public Text[] texts;
     public Text currentText;
@@ -87,6 +89,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
     protected override void ShowQuestion(Question_PL3_106 question)
     {
+        eventSystem.enabled = true;
         currentImage.sprite = question.correct.sprite;
         currentImage.name = question.correct.key;
         currentImage.preserveAspect = true;
@@ -133,6 +136,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
     private void DoubleClickMotion(DigraphsWordsData data)
     {
+        eventSystem.enabled = false;
         bag.EyeAni(BagElement.eAnis.Tracking);
         for (int i = 0; i < elements.Count; i++)
             elements[i].gameObject.SetActive(false);
@@ -150,6 +154,7 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
             audioPlayer.Play(currentQuestion.correct.act, () =>
             {
+                eventSystem.enabled = true;
                 bag.EyeAni(BagElement.eAnis.EyeIdle);
                 AddAnswer(currentQuestion.correct);
                 isNext = true;

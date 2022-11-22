@@ -32,6 +32,15 @@ public class DragElement301 : MonoBehaviour, IDragHandler, IBeginDragHandler
         colors = colorImages[0].color;
         resultColor = resultColorImage.color;
     }
+
+    public void ResetPalet()
+    {
+        brush.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+        var temp = resultColor;
+        temp.a = 0;
+        resultColorImage.color = temp;
+        resultText.gameObject.SetActive(false);
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (isColors)

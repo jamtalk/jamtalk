@@ -62,6 +62,8 @@ public class JT_PL3_101 : BaseContents
     }
     protected override void EndGuidnce()
     {
+        //dragElement.brush.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+        dragElement.ResetPalet();
         base.EndGuidnce();
 
         dragElement.isColors = false;

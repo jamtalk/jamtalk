@@ -315,6 +315,17 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
             item.SetBool("Speak", true);
         audioPlayer.Play(currentQuestion.correct.clip);
     }
+
+    protected override void EndGuidnce()
+    {
+        if (bubbles.Count > 0)
+        {
+            foreach (var item in bubbles)
+                Destroy(item.gameObject);
+            bubbles.Clear();
+        }
+        base.EndGuidnce();
+    }
 }
 
 public class Question3_104 : SingleQuestion<DigraphsWordsData>
