@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -28,10 +29,11 @@ public abstract class BaseContents : MonoBehaviour
     protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
-
+    private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
     protected virtual void ShowResult()
     {
+        eventSystem.enabled = true;
         GC.Collect();
         endTime = DateTime.Now;
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
