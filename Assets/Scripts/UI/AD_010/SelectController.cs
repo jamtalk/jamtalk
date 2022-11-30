@@ -21,26 +21,25 @@ public class SelectController : MonoBehaviour
     {
         Init();
 
-
+        selectButton.onClick.AddListener(() => Selected());
         leftButton.onClick.AddListener(() => OnClickListener(false));
         rightButton.onClick.AddListener(() => OnClickListener(true));
     }
 
+    public void Selected()
+    {
+
+    }
+
     public void OnClickListener(bool isRight)
     {
-        var index = 1;
+        var index = isRight ? 1 : -1;
         var count = 0;
 
         if (isRight)
-        {
-            index = 1;
             count = elements.Where(x => x.index >= rects.Length).Count();
-        }
         else
-        {
-            index = -1;
             count = elements.Where(x => x.index < 0).Count();
-        }
 
         if (elements.Length - count == 3)
             return;
@@ -49,6 +48,7 @@ public class SelectController : MonoBehaviour
         {
             var temp = index + item.index;
             if (temp == 2) text.text = item.name;
+
             if (temp >= rects.Length)
                 item.Move(rightRt, temp);
             else if (temp < 0)

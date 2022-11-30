@@ -20,29 +20,27 @@ public class CharactorElement : MonoBehaviour
     public IEnumerator InitCoroutine(RectTransform rect, int index)
     {
         this.index = index;
-        transform.position = rect.position;
+        transform.DOMove(rect.position, 0f);
+        if(index == 2 ) transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         yield return new WaitForEndOfFrame();
-        //int colorA = index < 0 ? 255 - (index * -1) : 255 - index;
-        //Color color = charactor.color;
-        //color.a = colorA;
-        //charactor.color = color;
-        //plat.color = color;
     }
 
     public void Move(RectTransform rect, int index, TweenCallback callback = null)
     {
         this.index = index;
-        int colorA = index < 0 ? 255 - index * -1 : 255 - index;
+        Vector3 scale;
+        if (index == 2)
+            scale = new Vector3(1.5f, 1.5f, 1.5f);
+        else
+            scale = new Vector3(1f, 1f, 1f);
 
         Sequence seq = DOTween.Sequence();
 
         Tween moveTween = transform.DOMove(rect.position, 1f);
-        //Tween trnspTween = charactor.DOFade(colorA, 1f);
-        //Tween trnspPlatTween = plat.DOFade(colorA, 1f);
+        Tween scaleTween = transform.DOScale(scale, 1f);
 
+        seq.Insert(0, scaleTween);
         seq.Insert(0, moveTween);
-        //seq.Insert(0, trnspTween);
-        //seq.Insert(0, trnspPlatTween);
         seq.onComplete += callback;
         seq.Play();
     }
