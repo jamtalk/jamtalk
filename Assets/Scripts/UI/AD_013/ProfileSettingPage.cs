@@ -23,4 +23,22 @@ public class ProfileSettingPage : MonoBehaviour
     public Text joinDate;
     public Text pointText;
     public ToggleElement pustToggle;
+
+    [Header("others")]
+    public ChildProfileEdit profileEdit;
+
+    private void Awake()
+    {
+        childSettingButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
+
+        Init();
+    }
+
+    /// <summary>
+    /// 아이 데이터 받아와서 출력
+    /// </summary>
+    private void Init()
+    {
+
+    }
 }
