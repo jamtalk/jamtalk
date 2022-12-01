@@ -27,13 +27,16 @@ public class ProfileSettingPage : MonoBehaviour
     [Header("others")]
     public ChildProfileEdit profileEdit;
     public ChildSetting childSettingOrizin;
+    public FindAccount findAccountOrizin;
 
     private ChildSetting childSetting;
+    private FindAccount findAccount;
 
     private void Awake()
     {
         childEditButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
         childSettingButton.onClick.AddListener(() => ChildSetting());
+        FindeIDButton.onClick.AddListener(() => FindAccountAction());
 
         Init();
     }
@@ -44,6 +47,13 @@ public class ProfileSettingPage : MonoBehaviour
     private void Init()
     {
 
+    }
+
+    private void FindAccountAction()
+    {
+        if (findAccount == null)
+            findAccount = Instantiate(findAccountOrizin, transform.parent);
+        findAccount.Init(FindAccount.eTarget.FindID);
     }
 
     private void ChildSetting()
