@@ -7,8 +7,8 @@ using DG.Tweening;
 public class ProfileSettingPage : MonoBehaviour
 {
     [Header("Left")]
+    public Button childEditButton;
     public Button childSettingButton;
-    public Button childSelectButton;
     public Text childName;
     public Text childBirth;
     public Text childGender;
@@ -26,10 +26,14 @@ public class ProfileSettingPage : MonoBehaviour
 
     [Header("others")]
     public ChildProfileEdit profileEdit;
+    public ChildSetting childSettingOrizin;
+
+    private ChildSetting childSetting;
 
     private void Awake()
     {
-        childSettingButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
+        childEditButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
+        childSettingButton.onClick.AddListener(() => ChildSetting());
 
         Init();
     }
@@ -40,5 +44,13 @@ public class ProfileSettingPage : MonoBehaviour
     private void Init()
     {
 
+    }
+
+    private void ChildSetting()
+    {
+        if (childSetting == null)
+            childSetting = Instantiate(childSettingOrizin, transform);
+        else
+            childSetting.gameObject.SetActive(true);
     }
 }
