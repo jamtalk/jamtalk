@@ -5,5 +5,5 @@ using UnityEngine;
 
 public class CharactorBase : MonoBehaviour
 {
-    public SkeletonGraphic charactor; 
+    public SkeletonGraphic charactor;
 }
