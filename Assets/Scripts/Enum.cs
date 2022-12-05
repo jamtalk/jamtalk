@@ -356,3 +356,38 @@ public enum eErrorCode
     WrongPW = 401,
     NonexistID = 402,
 }
+
+public enum eCharactorMotion
+{
+    ecoco_Default,
+    ecoco_Congrats,
+    ecoco_LoadingCompleted,
+
+    ejiji_Default,
+    ejiji_LoadingCompleted,
+    ejiji_Selected,
+
+    soo_Default,
+    soo_LoadingComplted,
+    soo_Loading,
+    soo_Selected,
+
+    eric_Default,
+    eric_LoadingCompleted,
+    eric_Selected,
+
+    mark_Default,
+    mark_LoadingComlpeted,
+
+    mia_Default,
+    mia_LoadingCompleted,
+    mia_Selected,
+
+    Daino_Default,
+    Bambam1,
+    Bambam2,
+    Bambam3,
+    Bambam4,
+    Bambam5,
+    Bambam6,
+}
