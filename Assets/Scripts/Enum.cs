@@ -391,3 +391,57 @@ public enum eCharactorMotion
     Bambam5,
     Bambam6,
 }
+
+public enum eCharactorDetail
+{
+    ecoco_Default_idle,
+    ecoco_Default_hi,
+    ecoco_Congrats_congrats,
+    ecoco_LoadingCompleted_loading,
+    ecoco_LoadingCompleted_flower,
+
+    ejiji_Default_idle,
+    ejiji_Default_hi,
+    ejiji_LoadingCompleted_pout,
+    ejiji_LoadingCompleted_smile,
+    ejiji_Selected_selected,
+
+    soo_Default_idle,
+    soo_Default_hi,
+    soo_LoadingComplted_sit_smile,
+    soo_Loading_sit_assemble,
+    soo_Selected_cheek_idle,
+    soo_Selected_cheek_smile,
+
+    eric_Default_idle,
+    eric_Default_hi,
+    eric_Default_jump,
+    eric_LoadingCompleted_crossArm,
+    eric_LoadingCompleted_exclamation,
+    eric_LoadingCompleted_jump_smile,
+    eric_Selected_twoHand,
+    eric_Selected_nod,
+
+    mark_Default_idle,
+    mark_Default_hi,
+    mark_Default_twoHand,
+    mark_LoadingComlpeted_driftOff,
+    mark_LoadingComlpeted_snooze,
+    mark_LoadingComlpeted_wakeUp,
+
+    mia_Default_idle,
+    mia_Default_hi,
+    mia_Default_twoHand,
+    mia_LoadingCompleted_mirror,
+    mia_LoadingCompleted_mirror_hi,
+    mia_Selected_tilt,
+
+    Daino_Default_walk,
+    Daino_Default_run,
+    Bambam1_idle,
+    Bambam2_idle,
+    Bambam3_idle,
+    Bambam4_idle,
+    Bambam5_idle,
+    Bambam6_idle,
+}					

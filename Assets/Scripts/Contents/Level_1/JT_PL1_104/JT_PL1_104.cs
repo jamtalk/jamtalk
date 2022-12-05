@@ -30,8 +30,6 @@ public class JT_PL1_104 : BaseContents
 
     protected override void Awake()
     {
-        aniChar.AnimationState.SetAnimation(0, "2_hi", false);
-
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         base.Awake();
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);

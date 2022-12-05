@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Spine.Unity;
 using UnityEngine;
 
-public abstract class CharactorBase : MonoBehaviour
+public class CharactorBase : MonoBehaviour
 {
     public SkeletonGraphic charactor;
     public eCharactorMotion eMotion;
 
-    protected string skeletonName;
-    protected string skeletonType;
-    protected string skeletonPath;
+    private string skeletonName;
+    private string skeletonType;
+    private string skeletonPath;
 
     private void Awake()
     {
