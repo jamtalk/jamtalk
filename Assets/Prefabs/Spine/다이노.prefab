@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2075149653190856184}
   - component: {fileID: 2075149653190856185}
   - component: {fileID: 1438448149678793975}
+  - component: {fileID: 3753387135050359826}
   m_Layer: 0
   m_Name: "\uB2E4\uC774\uB178"
   m_TagString: Untagged
@@ -66,11 +67,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 9a701fef1020b214686d2078009cef30, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: df69c81413d3c4d5ab6b2e43c6609a8b, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: action1
+  startingAnimation: walk
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -136,3 +137,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3753387135050359826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075149653190856191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charactor: {fileID: 2075149653190856185}
+  eMotion: 18
+  eDetail: 37

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Spine.Unity;
 using System.Linq;
+using System;
 
 public class SelectController : MonoBehaviour
 {
@@ -28,7 +29,9 @@ public class SelectController : MonoBehaviour
 
     public void Selected()
     {
+        var selectedElement = elements.Where(x => x.index == 2).First();
 
+        selectedElement.selectedAction?.Invoke();
     }
 
     public void OnClickListener(bool isRight)

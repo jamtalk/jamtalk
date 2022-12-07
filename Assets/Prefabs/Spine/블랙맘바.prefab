@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5467380198726635290}
   - component: {fileID: 5467380198726635291}
   - component: {fileID: 756389260903477299}
+  - component: {fileID: 3504017227343994656}
   m_Layer: 0
   m_Name: "\uBE14\uB799\uB9D8\uBC14"
   m_TagString: Untagged
@@ -70,7 +71,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: 1_idle
+  startingAnimation: idle
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -136,3 +137,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3504017227343994656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467380198726635293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charactor: {fileID: 5467380198726635291}
+  eMotion: 19
+  eDetail: 38

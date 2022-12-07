@@ -7,6 +7,7 @@ public class CharactorBase : MonoBehaviour
 {
     public SkeletonGraphic charactor;
     public eCharactorMotion eMotion;
+    public eCharactorDetail eDetail;
 
     private string skeletonName;
     private string skeletonType;
@@ -14,11 +15,13 @@ public class CharactorBase : MonoBehaviour
 
     private void Awake()
     {
-        GetSkeletonPath();
+        MotionChange(eMotion, eDetail);
     }
-
-    private void GetSkeletonPath()
+    public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail)
     {
+        this.eMotion = eMotion;
+        this.eDetail = eDetail;
+
         var temp =  eMotion.ToString().Split('_');
 
         if(eMotion.ToString().Contains("Bambam"))
@@ -46,14 +49,20 @@ public class CharactorBase : MonoBehaviour
         var skeletonDataAsset = Resources.Load<SkeletonDataAsset>(skeletonPath);
         charactor.skeletonDataAsset = skeletonDataAsset;
         charactor.Initialize(true);
+
+        DetailChange(eDetail, true);
     }
 
     /// <summary>
     /// SkeletonGraphic Animation Change
     /// </summary>
-    void DetailChange()
+    public void DetailChange(eCharactorDetail eDetail, bool bLoof = false)
     {
-        charactor.AnimationState.SetAnimation(1, "2_hi", false);
+        this.eDetail = eDetail;
+
+        var detailValue = eDetail.ToString().Replace(eMotion.ToString() + "_", string.Empty);
+
+        charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
         charactor.AnimationState.SetEmptyAnimation(0, 0);
         charactor.unscaledTime = false;
     }

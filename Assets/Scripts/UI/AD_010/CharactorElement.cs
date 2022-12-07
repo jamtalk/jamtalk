@@ -4,14 +4,27 @@ using UnityEngine;
 using DG.Tweening;
 using Spine.Unity;
 using UnityEngine.UI;
+using System;
 
-public class CharactorElement : MonoBehaviour
+public class CharactorElement : CharactorBase
 {
-    public SkeletonGraphic charactor;
     public Image plat;
-    public RectTransform rt;
-    //[HideInInspector]
+    [HideInInspector]
     public int index;
+    public Action selectedAction;
+
+    private void Awake()
+    {
+        selectedAction += () => SelectedAction();
+    }
+
+    private void SelectedAction()
+    {
+        //switch(eMotion)
+        //{
+        //    case 
+        //}
+    }
 
     public void Init(RectTransform rect, int index)
     {

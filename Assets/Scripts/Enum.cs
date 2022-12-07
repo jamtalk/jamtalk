@@ -384,6 +384,7 @@ public enum eCharactorMotion
     mia_Selected,
 
     Daino_Default,
+    BlackMamba_Default,
     Bambam1,
     Bambam2,
     Bambam3,
@@ -438,6 +439,7 @@ public enum eCharactorDetail
 
     Daino_Default_walk,
     Daino_Default_run,
+    BlackMamba_Default_idle,
     Bambam1_idle,
     Bambam2_idle,
     Bambam3_idle,
