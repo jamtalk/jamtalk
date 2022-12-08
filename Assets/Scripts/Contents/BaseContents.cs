@@ -24,6 +24,7 @@ public abstract class BaseContents : MonoBehaviour
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
     public ExitButton exitButton;
+    public AnimationCharactor[] charactors;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected Coroutine guideRoutine;
@@ -31,6 +32,29 @@ public abstract class BaseContents : MonoBehaviour
     protected bool isNext = false;
 
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
+
+    protected void SetCharactorAnimation(bool isQuestion = true)
+    {
+        if (charactors != null)
+        {
+            foreach (var item in charactors)
+            {
+                var motion = isQuestion ? item.eIdleMotion : item.eCorrectMotion;
+                var detail = isQuestion ? item.eIdleDetail : item.eCorrectDetail;
+                item.MotionChange(motion, detail, isQuestion);
+            }
+        }
+    }
+
+    protected void ShowQeustionAction()
+    {
+        SetCharactorAnimation();
+    }
+
+    protected void CorrectAction()
+    {
+        SetCharactorAnimation(false);
+    }
 
     protected virtual void ShowResult()
     {
@@ -84,6 +108,8 @@ public abstract class BaseContents : MonoBehaviour
 
         Instantiate(exitButton, transform);
         ShowGuidnce();
+
+        SetCharactorAnimation();
     }
     protected virtual void ShowGuidnce()
     {

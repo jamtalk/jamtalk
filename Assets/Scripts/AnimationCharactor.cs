@@ -9,8 +9,10 @@ public class AnimationCharactor : MonoBehaviour
     public eCharactorMotion eMotion;
     public eCharactorDetail eDetail;
 
-    private eCharactorMotion eIdleMotion;
-    private eCharactorDetail eIdleDetail;
+    [HideInInspector]
+    public eCharactorMotion eIdleMotion;
+    [HideInInspector]
+    public eCharactorDetail eIdleDetail;
     public eCharactorMotion eCorrectMotion;
     public eCharactorDetail eCorrectDetail;
 
@@ -46,19 +48,19 @@ public class AnimationCharactor : MonoBehaviour
         skeletonPath = string.Format("SpineAnimations/{0}/{1}/{2}_SkeletonData"
             , skeletonName, skeletonType, eMotion.ToString());
 
-        SkeletonChange();
+        SkeletonChange(isLoof);
     }
 
     /// <summary>
     /// SkeletonGraphic Asset data Change 
     /// </summary>
-    void SkeletonChange()
+    void SkeletonChange(bool isLoof = true)
     {
         var skeletonDataAsset = Resources.Load<SkeletonDataAsset>(skeletonPath);
         charactor.skeletonDataAsset = skeletonDataAsset;
         charactor.Initialize(true);
 
-        DetailChange(eDetail, true);
+        DetailChange(eDetail, isLoof);
     }
 
     /// <summary>

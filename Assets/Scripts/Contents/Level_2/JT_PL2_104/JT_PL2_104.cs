@@ -28,7 +28,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
     public FingerAnimation point;
 
     [Header("List")]
-    public Button[] charactors;
+    public Button[] charactorButtons;
     [SerializeField]
     private RectTransform[] smallBubbles;
     [SerializeField]
@@ -94,7 +94,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
         base.Awake();
 
         textPot.text = GameManager.Instance.currentAlphabet.ToString().ToLower();
-        SetButtonAddListener(charactors);
+        SetButtonAddListener(charactorButtons);
     }
     private void SetButtonAddListener(Button[] buttons)
     {

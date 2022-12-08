@@ -2695,6 +2695,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 265338633549549845, guid: 801596173a35e4e68971a2875d14695f, type: 3}
   m_PrefabInstance: {fileID: 1604170916}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1604170918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+  m_PrefabInstance: {fileID: 1604170916}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1684651892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,6 +2903,9 @@ MonoBehaviour:
   audioPlayer: {fileID: 261955339}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 1604170918}
+  - {fileID: 1932708333}
   eventSystem: {fileID: 1990404956}
   longButton: {fileID: 1737210851}
   shortButton: {fileID: 520114611}
@@ -3496,6 +3510,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 959323335255975534, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
   m_PrefabInstance: {fileID: 1932708331}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1932708333 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+  m_PrefabInstance: {fileID: 1932708331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990404954
 GameObject:
   m_ObjectHideFlags: 0

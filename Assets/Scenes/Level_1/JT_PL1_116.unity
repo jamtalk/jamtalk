@@ -1582,6 +1582,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+--- !u!114 &1488792189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+  m_PrefabInstance: {fileID: 1488792188}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1490471568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1890,6 +1901,9 @@ MonoBehaviour:
   audioPlayer: {fileID: 980098656}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 1607857201}
+  - {fileID: 1488792189}
   eventSystem: {fileID: 53175558}
   answerImage: {fileID: 2011176940}
   upper:
@@ -2158,6 +2172,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
+--- !u!114 &1607857201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
+  m_PrefabInstance: {fileID: 1607857200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1637698182
 GameObject:
   m_ObjectHideFlags: 0

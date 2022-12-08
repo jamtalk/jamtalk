@@ -1234,12 +1234,13 @@ MonoBehaviour:
   audioPlayer: {fileID: 649063503}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 1994548038}
   drawAlphabet: {fileID: 634881749}
   mask: {fileID: 1672353127}
   aniChar: {fileID: 2058555720}
   scaler: {fileID: 1580109401}
   type: 0
-  asdf: []
 --- !u!1 &1672353127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1589,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1994548038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
+  m_PrefabInstance: {fileID: 2058555719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2058555719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1701,7 +1713,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ee30677587dbd4a48a1d6885ca7c511f, type: 2}
     - target: {fileID: 4386785601087377491, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: startingAnimation
-      value: 1_idle
+      value: idle
       objectReference: {fileID: 0}
     - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: eDetail

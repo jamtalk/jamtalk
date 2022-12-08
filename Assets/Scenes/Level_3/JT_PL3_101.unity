@@ -625,6 +625,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
   m_PrefabInstance: {fileID: 610879810}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &610879812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+  m_PrefabInstance: {fileID: 610879810}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &675240111
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +759,8 @@ MonoBehaviour:
   audioPlayer: {fileID: 2096603716}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 610879812}
   dragElement: {fileID: 1634351154}
   colors:
   - colors:

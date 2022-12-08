@@ -1617,6 +1617,8 @@ MonoBehaviour:
   audioPlayer: {fileID: 182239835}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 2117790645}
   parentLayout:
   - {fileID: 492124865}
   - {fileID: 2024206664}
@@ -2757,6 +2759,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8344153190651669936, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
   m_PrefabInstance: {fileID: 2117790643}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2117790645 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2768709059320636911, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
+  m_PrefabInstance: {fileID: 2117790643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2120090173
 GameObject:
   m_ObjectHideFlags: 0
