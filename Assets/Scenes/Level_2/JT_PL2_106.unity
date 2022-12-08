@@ -2676,6 +2676,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uBC24\uBC24_2"
       objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eDetail
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eCorrectDetail
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eCorrectMotion
+      value: 21
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 801596173a35e4e68971a2875d14695f, type: 3}
 --- !u!224 &1604170917 stripped
@@ -3464,6 +3476,18 @@ PrefabInstance:
     - target: {fileID: 959323335255975535, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
       propertyPath: m_Name
       value: "\uBC24\uBC24_4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eDetail
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eCorrectDetail
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eCorrectMotion
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}

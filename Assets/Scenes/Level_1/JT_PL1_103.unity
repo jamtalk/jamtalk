@@ -538,6 +538,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uC218"
       objectReference: {fileID: 0}
+    - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: eMotion
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: eIdleDetail
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: eIdleMotion
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: eCorrectDetail
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
+      propertyPath: eCorrectMotion
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
 --- !u!1 &1240862968

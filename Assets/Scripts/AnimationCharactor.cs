@@ -9,6 +9,11 @@ public class AnimationCharactor : MonoBehaviour
     public eCharactorMotion eMotion;
     public eCharactorDetail eDetail;
 
+    private eCharactorMotion eIdleMotion;
+    private eCharactorDetail eIdleDetail;
+    public eCharactorMotion eCorrectMotion;
+    public eCharactorDetail eCorrectDetail;
+
     private string skeletonName;
     private string skeletonType;
     private string skeletonPath;
@@ -17,6 +22,8 @@ public class AnimationCharactor : MonoBehaviour
     private void Awake()
     {
         MotionChange(eMotion, eDetail);
+        eIdleMotion = eMotion;
+        eIdleDetail = eDetail;
     }
     public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
     {

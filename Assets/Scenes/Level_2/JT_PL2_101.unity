@@ -2634,6 +2634,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1078384845}
     m_Modifications:
+    - target: {fileID: 2768709059320636911, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
+      propertyPath: eCorrectDetail
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768709059320636911, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
+      propertyPath: eCorrectMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8344153190651669936, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

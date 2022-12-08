@@ -338,7 +338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
       propertyPath: eDetail
-      value: 28
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
       propertyPath: eMotion
@@ -572,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
       propertyPath: eDetail
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
       propertyPath: eMotion
@@ -629,11 +629,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2768709059320636911, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
       propertyPath: eDetail
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2768709059320636911, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
       propertyPath: eMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8344153190651669936, guid: 9187a525fac2c4bc39a498a3346e03c0, type: 3}
       propertyPath: m_Pivot.x
@@ -1018,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: eDetail
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: eMotion
@@ -2272,7 +2272,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1578791135994773785, guid: e7e5c06bd24274203b95124f52c533d6, type: 3}
       propertyPath: eDetail
-      value: 33
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 1578791135994773785, guid: e7e5c06bd24274203b95124f52c533d6, type: 3}
       propertyPath: eMotion
@@ -2526,6 +2526,10 @@ PrefabInstance:
     - target: {fileID: 2774172496801097435, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921549336728112172, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
+      propertyPath: eDetail
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8921549336728112172, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
       propertyPath: eMotion

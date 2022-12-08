@@ -489,6 +489,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6442246337436753999}
     m_Modifications:
+    - target: {fileID: 3504017227343994656, guid: c6077be862146433fac9a1fda3cb7df6, type: 3}
+      propertyPath: eDetail
+      value: 39
+      objectReference: {fileID: 0}
     - target: {fileID: 5467380198726635292, guid: c6077be862146433fac9a1fda3cb7df6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -605,7 +609,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1578791135994773785, guid: e7e5c06bd24274203b95124f52c533d6, type: 3}
       propertyPath: eDetail
-      value: 33
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 1578791135994773785, guid: e7e5c06bd24274203b95124f52c533d6, type: 3}
       propertyPath: eMotion
@@ -731,7 +735,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
       propertyPath: eDetail
-      value: 28
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
       propertyPath: eMotion
@@ -961,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
       propertyPath: eDetail
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8221619538362947347, guid: 9a9581a5e311a415eb89a1523521c5bc, type: 3}
       propertyPath: eMotion
@@ -1095,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: eDetail
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
       propertyPath: eMotion

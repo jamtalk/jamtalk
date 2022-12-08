@@ -1656,6 +1656,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uBC24\uBC24_3"
       objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eDetail
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eCorrectDetail
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eCorrectMotion
+      value: 22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
 --- !u!224 &2051170423 stripped

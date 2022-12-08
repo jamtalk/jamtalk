@@ -1703,6 +1703,18 @@ PrefabInstance:
       propertyPath: startingAnimation
       value: 1_idle
       objectReference: {fileID: 0}
+    - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: eDetail
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: eCorrectDetail
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609055799770841948, guid: f255ec78b554144a29397457447ce8db, type: 3}
+      propertyPath: eCorrectMotion
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f255ec78b554144a29397457447ce8db, type: 3}
 --- !u!114 &2058555720 stripped

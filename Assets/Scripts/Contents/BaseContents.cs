@@ -29,6 +29,7 @@ public abstract class BaseContents : MonoBehaviour
     protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
+
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
     protected virtual void ShowResult()
