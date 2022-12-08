@@ -10,5 +10,5 @@ public class ContentsButton : BaseContentsButton
         button.image.sprite = sumnail;
         button.image.preserveAspect = true;
     }
-    protected override void LoadScene()=> GJSceneLoader.Instance.LoadScene((eSceneName)System.Enum.Parse(typeof(eSceneName), contents.ToString()));
+    protected override void LoadScene()=> GJSceneLoader.Instance.LoadScene((eSceneName)System.Enum.Parse(typeof(eSceneName), contents.ToString()), true);
 }

@@ -24,9 +24,9 @@ public class MainScene : UserInfoScene
     {
         buttonActivity.onClick.AddListener(() =>
         {
-            Debug.Log("액티비티 클릭");
+            Debug.Log("???????? ????");
             loading.gameObject.SetActive(true);
-            GJSceneLoader.Instance.LoadScene(eSceneName.JT_PL1_102);
+            GJSceneLoader.Instance.LoadScene(eSceneName.JT_PL1_102, true);
         });
         buttonSong.onClick.AddListener(() =>
         {
@@ -41,8 +41,8 @@ public class MainScene : UserInfoScene
     public override void Init()
     {
         base.Init();
-        //TODO.사용자의 레벨에 맞추어 레벨 이미지 세팅 필요
-        int level = 0;  //사용자의 레벨 불러와야함
+        //TODO.???????? ?????? ?????? ???? ?????? ???? ????
+        int level = 0;  //???????? ???? ??????????
         imageLevel.sprite = levelIcons[level];
         textDay.text = string.Format("Day {0}", UserDataManager.Instance.DashBoard.day.ToString());
     }
