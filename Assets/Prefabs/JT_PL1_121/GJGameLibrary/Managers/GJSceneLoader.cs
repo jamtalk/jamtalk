@@ -37,6 +37,9 @@ namespace GJGameLibrary
             {
                 loading = PopupManager.Instance.Popup<LoadingPopup>
                     (Resources.Load<GameObject>(PopupManager.PopupLoadingRecourcePath));
+
+                foreach (var item in loading.charactors)
+                    item.LoadingRoutine();
             }
             while (!op.isDone)
             {

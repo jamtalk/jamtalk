@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoadingPopup : BasePopup 
 {
     public Image progress;
+    public AnimationCharactor[] charactors;
 
     public void progressbarCharging(float percent)
     {

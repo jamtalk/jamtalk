@@ -99,18 +99,18 @@ public class AnimationCharactor : MonoBehaviour
     {
         switch (eDetail)
         {
-            case eCharactorDetail.soo_Selected_cheek_idle:
-                eDetail = eCharactorDetail.soo_Selected_cheek_smile;
+            case eCharactorDetail.soo_Selected_cheekIdle:
+                eDetail = eCharactorDetail.soo_Selected_cheekSmile;
                 break;
             case eCharactorDetail.mark_LoadingComlpeted_snooze:
                 eDetail = eCharactorDetail.mark_LoadingComlpeted_wakeUp;
                 break;
             case eCharactorDetail.eric_Selected_twoHand:
                 eMotion = eCharactorMotion.eric_LoadingCompleted;
-                eDetail = eCharactorDetail.eric_LoadingCompleted_jump_smile;
+                eDetail = eCharactorDetail.eric_LoadingCompleted_jumpSmile;
                 break;
             case eCharactorDetail.mia_LoadingCompleted_mirror:
-                eDetail = eCharactorDetail.mia_LoadingCompleted_mirror_hi;
+                eDetail = eCharactorDetail.mia_LoadingCompleted_mirrorHi;
                 break;
             case eCharactorDetail.ecoco_Default_idle:
                 eMotion = eCharactorMotion.ecoco_Congrats;
@@ -128,18 +128,71 @@ public class AnimationCharactor : MonoBehaviour
 
     }
 
+    public void LoadingRoutine()
+    {
+        StartCoroutine(charactorRoutine());
+    }
+
+    private IEnumerator charactorRoutine()
+    {
+        while (true)
+        {
+            var randomTime = Random.Range(5, 10);
+            yield return new WaitForSecondsRealtime(randomTime);
+
+            LoadingScene();
+        }
+    }
+
+    private void LoadingScene()
+    {
+        isTransaction = !isTransaction;
+
+        switch(eMotion)
+        {
+            case eCharactorMotion.mark_LoadingComlpeted:
+                eDetail = isTransaction ? eCharactorDetail.mark_LoadingComlpeted_snooze : eCharactorDetail.mark_LoadingComlpeted_wakeUp;
+                break;
+            case eCharactorMotion.eric_LoadingCompleted:
+                eDetail = isTransaction ? eCharactorDetail.eric_LoadingCompleted_crossArm : eCharactorDetail.eric_LoadingCompleted_exclamation;
+                break;
+            case eCharactorMotion.mia_LoadingCompleted:
+                eDetail = isTransaction ? eCharactorDetail.mia_LoadingCompleted_mirror : eCharactorDetail.mia_LoadingCompleted_mirrorHi;
+                break;
+            case eCharactorMotion.Daino_Default:
+                eDetail = isTransaction ? eCharactorDetail.Daino_Default_walk : eCharactorDetail.Daino_Default_run;
+                break;
+            case eCharactorMotion.soo_Loading:
+                eMotion = eCharactorMotion.soo_LoadingComplted;
+                eDetail = eCharactorDetail.soo_LoadingComplted_sitSmile;
+                break;
+            case eCharactorMotion.soo_LoadingComplted:
+                eMotion = eCharactorMotion.soo_Loading;
+                eDetail = eCharactorDetail.soo_Loading_sitAssemble;
+                break;
+
+            default:
+                break;
+        }
+
+        if (eMotion.ToString().Contains("soo"))
+            MotionChange(eMotion, eDetail);
+        else
+            DetailChange(eDetail);
+    }
 
     public void OpningScene()
     {
         isTransaction = !isTransaction;
         List<string> defaultList;
+
         if (eMotion == eCharactorMotion.Daino_Default)
             defaultList = new List<string> { "walk", "run" };
         else if (eMotion == eCharactorMotion.BlackMamba_Default)
             defaultList = new List<string> { "idle", "idle" };
         else
             defaultList = new List<string> { "idle", "hi" };
-        Debug.LogFormat("{0}, {1}, {2}", defaultList[0], defaultList[1], isTransaction);
+
         var value = isTransaction ? defaultList[0] : defaultList[1];
 
         DetailChange(value);

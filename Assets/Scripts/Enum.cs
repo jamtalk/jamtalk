@@ -409,17 +409,17 @@ public enum eCharactorDetail
 
     soo_Default_idle,
     soo_Default_hi,
-    soo_LoadingComplted_sit_smile,//
-    soo_Loading_sit_assemble,
-    soo_Selected_cheek_idle,
-    soo_Selected_cheek_smile,
+    soo_LoadingComplted_sitSmile,
+    soo_Loading_sitAssemble,
+    soo_Selected_cheekIdle,
+    soo_Selected_cheekSmile,
 
     eric_Default_idle,
     eric_Default_hi,
     eric_Default_jump,
     eric_LoadingCompleted_crossArm,
     eric_LoadingCompleted_exclamation,
-    eric_LoadingCompleted_jump_smile,//
+    eric_LoadingCompleted_jumpSmile,
     eric_Selected_twoHand,
     eric_Selected_nod,
 
@@ -434,7 +434,7 @@ public enum eCharactorDetail
     mia_Default_hi,
     mia_Default_twoHand,
     mia_LoadingCompleted_mirror,
-    mia_LoadingCompleted_mirror_hi,//
+    mia_LoadingCompleted_mirrorHi,
     mia_Selected_tilt,
 
     Daino_Default_walk,
