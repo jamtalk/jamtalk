@@ -8,6 +8,8 @@ public class StarterScene : MonoBehaviour
 {
     public Button buttonStart;
     public GameObject loading;
+    public AnimationCharactor[] charactors;
+
     private void Awake()
     {
         buttonStart.onClick.AddListener(() =>
@@ -24,5 +26,19 @@ public class StarterScene : MonoBehaviour
             else
                 GJSceneLoader.Instance.LoadScene(eSceneName.AD_002);
         });
+
+        foreach (var item in charactors)
+            StartCoroutine(charactorRoutine(item));
+    }
+
+    IEnumerator charactorRoutine(AnimationCharactor charactor)
+    {
+        while (true)
+        {
+            var randomTime = Random.Range(5, 10);
+            yield return new WaitForSecondsRealtime(randomTime);
+
+            charactor.OpningScene();
+        }
     }
 }

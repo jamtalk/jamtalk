@@ -12,6 +12,7 @@ public class AnimationCharactor : MonoBehaviour
     private string skeletonName;
     private string skeletonType;
     private string skeletonPath;
+    private bool isTransaction = true;
 
     private void Awake()
     {
@@ -68,46 +69,79 @@ public class AnimationCharactor : MonoBehaviour
         charactor.unscaledTime = false;
     }
 
+    public void DetailChange(string detailValue, bool bLoof = true)
+    {
+        charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
+        charactor.AnimationState.SetEmptyAnimation(0, 0);
+        charactor.unscaledTime = false;
+    }
+
     public void CenterAction()
     {
         if (eDetail == eCharactorDetail.ejiji_Default_idle)
         {
             eMotion = eCharactorMotion.ejiji_LoadingCompleted;
             eDetail = eCharactorDetail.ejiji_LoadingCompleted_pout;
-            MotionChange(eMotion, eDetail, true);
+            MotionChange(eMotion, eDetail);
         }
-
+    }
+    public void SideAction()
+    {
+        if(eDetail == eCharactorDetail.ejiji_LoadingCompleted_pout)
+        {
+            eMotion = eCharactorMotion.ejiji_Default;
+            eDetail = eCharactorDetail.ejiji_Default_idle;
+            MotionChange(eMotion, eDetail);
+        }
     }
 
     public void SelectedAction()
     {
-        if (eDetail == eCharactorDetail.soo_Selected_cheek_idle)
-            eDetail = eCharactorDetail.soo_Selected_cheek_smile;
-        else if (eDetail == eCharactorDetail.mark_LoadingComlpeted_snooze)
-            eDetail = eCharactorDetail.mark_LoadingComlpeted_wakeUp;
-        else if (eDetail == eCharactorDetail.eric_Selected_twoHand)
+        switch (eDetail)
         {
-            eMotion = eCharactorMotion.eric_LoadingCompleted;
-            eDetail = eCharactorDetail.eric_LoadingCompleted_jump_smile;
+            case eCharactorDetail.soo_Selected_cheek_idle:
+                eDetail = eCharactorDetail.soo_Selected_cheek_smile;
+                break;
+            case eCharactorDetail.mark_LoadingComlpeted_snooze:
+                eDetail = eCharactorDetail.mark_LoadingComlpeted_wakeUp;
+                break;
+            case eCharactorDetail.eric_Selected_twoHand:
+                eMotion = eCharactorMotion.eric_LoadingCompleted;
+                eDetail = eCharactorDetail.eric_LoadingCompleted_jump_smile;
+                break;
+            case eCharactorDetail.mia_LoadingCompleted_mirror:
+                eDetail = eCharactorDetail.mia_LoadingCompleted_mirror_hi;
+                break;
+            case eCharactorDetail.ecoco_Default_idle:
+                eMotion = eCharactorMotion.ecoco_Congrats;
+                eDetail = eCharactorDetail.ecoco_Congrats_congrats;
+                break;
+            case eCharactorDetail.ejiji_LoadingCompleted_pout:
+                eMotion = eCharactorMotion.ejiji_Selected;
+                eDetail = eCharactorDetail.ejiji_Selected_selected;
+                break;
+            default:
+                break;
         }
-        else if (eDetail == eCharactorDetail.mia_LoadingCompleted_mirror)
-            eDetail = eCharactorDetail.mia_LoadingCompleted_mirror_hi;
-        else if (eDetail == eCharactorDetail.ecoco_Default_idle)
-        {
-            eMotion = eCharactorMotion.ecoco_Congrats;
-            eDetail = eCharactorDetail.ecoco_Congrats_congrats;
-        }
-        else if (eDetail == eCharactorDetail.ejiji_LoadingCompleted_pout)
-        {
-            eMotion = eCharactorMotion.ejiji_Selected;
-            eDetail = eCharactorDetail.ejiji_Selected_selected;
-        }
+
+        MotionChange(eMotion, eDetail);
+
+    }
+
+
+    public void OpningScene()
+    {
+        isTransaction = !isTransaction;
+        List<string> defaultList;
+        if (eMotion == eCharactorMotion.Daino_Default)
+            defaultList = new List<string> { "walk", "run" };
+        else if (eMotion == eCharactorMotion.BlackMamba_Default)
+            defaultList = new List<string> { "idle", "idle" };
         else
-        {
+            defaultList = new List<string> { "idle", "hi" };
+        Debug.LogFormat("{0}, {1}, {2}", defaultList[0], defaultList[1], isTransaction);
+        var value = isTransaction ? defaultList[0] : defaultList[1];
 
-        }
-
-        MotionChange(eMotion, eDetail, true);
-
+        DetailChange(value);
     }
 }

@@ -55,6 +55,10 @@ public class SelectController : MonoBehaviour
                 item.aniCharactor.CenterAction();
                 text.text = item.name;
             }
+            else
+            {
+                item.aniCharactor.SideAction();
+            }
 
             if (temp >= rects.Length)
                 item.Move(rightRt, temp);
