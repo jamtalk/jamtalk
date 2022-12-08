@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Spine.Unity;
 using UnityEngine;
 
-public class CharactorBase : MonoBehaviour
+public class AnimationCharactor : MonoBehaviour
 {
     public SkeletonGraphic charactor;
     public eCharactorMotion eMotion;
@@ -17,7 +17,7 @@ public class CharactorBase : MonoBehaviour
     {
         MotionChange(eMotion, eDetail);
     }
-    public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail)
+    public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
     {
         this.eMotion = eMotion;
         this.eDetail = eDetail;
@@ -60,10 +60,54 @@ public class CharactorBase : MonoBehaviour
     {
         this.eDetail = eDetail;
 
+        //var containeCheck = eDetail.ToString().Contains(eMotion.ToString());
         var detailValue = eDetail.ToString().Replace(eMotion.ToString() + "_", string.Empty);
-
+        
         charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
         charactor.AnimationState.SetEmptyAnimation(0, 0);
         charactor.unscaledTime = false;
+    }
+
+    public void CenterAction()
+    {
+        if (eDetail == eCharactorDetail.ejiji_Default_idle)
+        {
+            eMotion = eCharactorMotion.ejiji_LoadingCompleted;
+            eDetail = eCharactorDetail.ejiji_LoadingCompleted_pout;
+            MotionChange(eMotion, eDetail, true);
+        }
+
+    }
+
+    public void SelectedAction()
+    {
+        if (eDetail == eCharactorDetail.soo_Selected_cheek_idle)
+            eDetail = eCharactorDetail.soo_Selected_cheek_smile;
+        else if (eDetail == eCharactorDetail.mark_LoadingComlpeted_snooze)
+            eDetail = eCharactorDetail.mark_LoadingComlpeted_wakeUp;
+        else if (eDetail == eCharactorDetail.eric_Selected_twoHand)
+        {
+            eMotion = eCharactorMotion.eric_LoadingCompleted;
+            eDetail = eCharactorDetail.eric_LoadingCompleted_jump_smile;
+        }
+        else if (eDetail == eCharactorDetail.mia_LoadingCompleted_mirror)
+            eDetail = eCharactorDetail.mia_LoadingCompleted_mirror_hi;
+        else if (eDetail == eCharactorDetail.ecoco_Default_idle)
+        {
+            eMotion = eCharactorMotion.ecoco_Congrats;
+            eDetail = eCharactorDetail.ecoco_Congrats_congrats;
+        }
+        else if (eDetail == eCharactorDetail.ejiji_LoadingCompleted_pout)
+        {
+            eMotion = eCharactorMotion.ejiji_Selected;
+            eDetail = eCharactorDetail.ejiji_Selected_selected;
+        }
+        else
+        {
+
+        }
+
+        MotionChange(eMotion, eDetail, true);
+
     }
 }

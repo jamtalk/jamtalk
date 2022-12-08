@@ -50,7 +50,11 @@ public class SelectController : MonoBehaviour
         foreach (var item in elements)
         {
             var temp = index + item.index;
-            if (temp == 2) text.text = item.name;
+            if (temp == 2)
+            {
+                item.aniCharactor.CenterAction();
+                text.text = item.name;
+            }
 
             if (temp >= rects.Length)
                 item.Move(rightRt, temp);
@@ -70,7 +74,7 @@ public class SelectController : MonoBehaviour
                 elements[i].Init(rects[i], i);
             else
                 elements[i].Init(rightRt, i);
-            elements[i].name = elements[i].charactor.name;
+            elements[i].name = elements[i].aniCharactor.charactor.name;
             if (i == 2) text.text = elements[i].name;
         }
     }

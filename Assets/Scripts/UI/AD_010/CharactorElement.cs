@@ -6,24 +6,17 @@ using Spine.Unity;
 using UnityEngine.UI;
 using System;
 
-public class CharactorElement : CharactorBase
+public class CharactorElement : MonoBehaviour
 {
     public Image plat;
     [HideInInspector]
     public int index;
     public Action selectedAction;
+    public AnimationCharactor aniCharactor;
 
     private void Awake()
     {
-        selectedAction += () => SelectedAction();
-    }
-
-    private void SelectedAction()
-    {
-        //switch(eMotion)
-        //{
-        //    case 
-        //}
+        selectedAction += () => aniCharactor.SelectedAction();
     }
 
     public void Init(RectTransform rect, int index)
