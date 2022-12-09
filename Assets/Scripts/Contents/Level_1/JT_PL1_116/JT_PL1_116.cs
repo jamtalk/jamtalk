@@ -145,11 +145,15 @@ public class JT_PL1_116 : BaseContents
         {
             if (selected[0].value == alphabets[currentIndex] && selected[1].value == alphabets[currentIndex] && selected[0].type != selected[1].type)
             {
+                CorrectAction();
+
                 guideFinger.gameObject.SetActive(false);
                 var clip = words[currentIndex].act;
                 answerImage.Show(words[currentIndex].sprite);
                 audioPlayer.Play(clip, () =>
                 {
+                    ShowQeustionAction();
+
                     answerImage.gameObject.SetActive(false);
                     eventSystem.enabled = true;
                     currentIndex += 1;

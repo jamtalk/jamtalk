@@ -112,16 +112,13 @@ public class JT_PL2_101 : BaseContents
         Debug.Log(index);
         if (index == 5)
         {
-            Speak();
-            Reset(true);
-
+            Speak(true, () => Reset(true));
             isNext = true;
         }
 
         if (CheckOver())
         {
-            Speak();    
-            ShowResult();
+            Speak(false, () => ShowResult());    
         }
 
     }
@@ -139,6 +136,8 @@ public class JT_PL2_101 : BaseContents
             puzzles[i].gameObject.SetActive(true);
             parentLayout[i].GetComponent<Image>().sprite = puzzlesImage[i];
         }
+
+        ShowQeustionAction();
     }
 
     private void OnDrag(DragElement201 target)
@@ -166,19 +165,35 @@ public class JT_PL2_101 : BaseContents
         speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabet).phanics_long, action);
     }
 
-    private void Speak()
+    private void Speak(bool isShort = true, Action action = null)
     {
-        eAlphabet[] alphabets = { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
-        
-        if (index == 5)
+        StartCoroutine(SpeakRoutine(isShort, action += action));
+    }
+
+    private IEnumerator SpeakRoutine(bool isShort = true, Action action = null)
+    {
+        bool isSpeak = false;
+        CorrectAction();
+
+        yield return new WaitForSecondsRealtime(.5f);
+
+        eAlphabet[] alphabets =
         {
-            for (int i = 0; i < alphabets.Length; i++)
-                speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabets[i]).phanics_short);
-        }
-        else
+            eAlphabet.A,eAlphabet.E,eAlphabet.I,eAlphabet.O,eAlphabet.U
+        };
+
+        foreach(var item in alphabets)
         {
-            for (int i = 0; i < alphabets.Length; i++)
-                speakAudioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(alphabets[i]).phanics_long);
+            if(isShort)
+                ShortSpeak(item.ToString(), () => isSpeak = true);
+            else 
+                LongSpeak(item.ToString(), () => isSpeak = true);
+
+            while (!isSpeak) yield return null;
+            yield return new WaitForSecondsRealtime(.5f);
+            isSpeak = false;
         }
+
+        action?.Invoke();
     }
 }

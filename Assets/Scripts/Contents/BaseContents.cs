@@ -46,18 +46,19 @@ public abstract class BaseContents : MonoBehaviour
         }
     }
 
-    protected void ShowQeustionAction()
+    protected virtual void ShowQeustionAction()
     {
         SetCharactorAnimation();
     }
 
-    protected void CorrectAction()
+    protected virtual void CorrectAction()
     {
         SetCharactorAnimation(false);
     }
 
     protected virtual void ShowResult()
     {
+        CorrectAction();
         eventSystem.enabled = true;
         GC.Collect();
         endTime = DateTime.Now;

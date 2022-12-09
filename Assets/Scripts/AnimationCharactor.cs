@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class AnimationCharactor : MonoBehaviour
     private string skeletonType;
     private string skeletonPath;
     private bool isTransaction = true;
+    private bool isCompleted = false;
 
     private void Awake()
     {
@@ -29,12 +31,22 @@ public class AnimationCharactor : MonoBehaviour
     }
     public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
     {
+        StartCoroutine(MotionRoutine(eMotion, eDetail, isLoof));
+    }
+
+    IEnumerator MotionRoutine(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof)
+    {
+        if (!isLoof)
+            while (!isCompleted)
+                yield return null;
+        isCompleted = false;
+
         this.eMotion = eMotion;
         this.eDetail = eDetail;
 
-        var temp =  eMotion.ToString().Split('_');
+        var temp = eMotion.ToString().Split('_');
 
-        if(eMotion.ToString().Contains("Bambam"))
+        if (eMotion.ToString().Contains("Bambam"))
         {
             skeletonName = "BamBam";
             skeletonType = eMotion.ToString();
@@ -54,7 +66,7 @@ public class AnimationCharactor : MonoBehaviour
     /// <summary>
     /// SkeletonGraphic Asset data Change 
     /// </summary>
-    void SkeletonChange(bool isLoof = true)
+    void SkeletonChange(bool isLoof)
     {
         var skeletonDataAsset = Resources.Load<SkeletonDataAsset>(skeletonPath);
         charactor.skeletonDataAsset = skeletonDataAsset;
@@ -66,7 +78,7 @@ public class AnimationCharactor : MonoBehaviour
     /// <summary>
     /// SkeletonGraphic Animation Change
     /// </summary>
-    public void DetailChange(eCharactorDetail eDetail, bool bLoof = false)
+    public void DetailChange(eCharactorDetail eDetail, bool bLoof)
     {
         this.eDetail = eDetail;
 
@@ -75,7 +87,15 @@ public class AnimationCharactor : MonoBehaviour
         
         charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
         charactor.AnimationState.SetEmptyAnimation(0, 0);
+        charactor.AnimationState.Complete += OnSpineAnimationComplete;
+
         charactor.unscaledTime = false;
+    }
+
+    private void OnSpineAnimationComplete(TrackEntry trackEntry)
+    {
+        isCompleted = trackEntry.IsComplete;
+        Debug.LogFormat("completed : {0}, {1}, {2}", skeletonName, skeletonType, isCompleted);
     }
 
     public void DetailChange(string detailValue, bool bLoof = true)
@@ -187,7 +207,7 @@ public class AnimationCharactor : MonoBehaviour
         if (eMotion.ToString().Contains("soo"))
             MotionChange(eMotion, eDetail);
         else
-            DetailChange(eDetail);
+            DetailChange(eDetail, false);
     }
 
     public void OpningScene()

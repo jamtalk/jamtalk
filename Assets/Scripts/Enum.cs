@@ -409,7 +409,7 @@ public enum eCharactorDetail
 
     soo_Default_idle,
     soo_Default_hi,
-    soo_Default_thumsUp,
+    soo_Default_thumbsUp,
     soo_LoadingComplted_sitSmile,
     soo_Loading_sitAssemble,
     soo_Selected_cheekIdle,
