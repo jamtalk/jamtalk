@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Spine.Unity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class DropSapceShip_114 : MonoBehaviour
 {
     public Button button;
     public Image image;
+    public SkeletonGraphic charactor;
     public AudioSinglePlayer beamPlayer;
     public AudioSinglePlayer alphbetPlayer;
     public event Action<AlphabetWordsData> onInner;
@@ -17,9 +19,23 @@ public class DropSapceShip_114 : MonoBehaviour
     public void Awake()
     {
         button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2));
+
+        Fluffy();
+    }
+
+    public void Fluffy()
+    {
+        Sequence seq = DOTween.Sequence();
+
         var rect = button.GetComponent<RectTransform>();
-        var tween = rect.DOLocalMoveY(30,1).SetLoops(-1, LoopType.Yoyo);
-        tween.Play();
+        var shipTween = rect.DOLocalMoveY(20, 1);
+        var charactorTween = charactor.transform.DOMoveY(.4f, 1);
+
+        seq.Insert(0, shipTween);
+        seq.Insert(0, charactorTween);
+
+        seq.SetLoops(-1, LoopType.Yoyo);
+        seq.Play();
     }
     public void SetInner()
     {
