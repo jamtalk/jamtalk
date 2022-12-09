@@ -28,6 +28,9 @@ public class AnimationCharactor : MonoBehaviour
         eIdleMotion = eMotion;
         eIdleDetail = eDetail;
         MotionChange(eMotion, eDetail);
+
+        if(eMotion == eCharactorMotion.Daino_Default)
+            StartCoroutine(charactorRoutine());
     }
     public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
     {

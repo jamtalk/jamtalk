@@ -251,6 +251,7 @@ public class JT_PL2_104 : SingleAnswerContents<Question2_104, VowelWordsData>
         eventSystem.enabled = false;
         thrower.Throw(bubble, textPot.GetComponent<RectTransform>(), () =>
         {
+            CorrectAction();
             audioPlayer.Play(1f, putClip, () =>
             {
                 AddAnswer(data);
