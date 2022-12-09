@@ -23,9 +23,9 @@ public class AnimationCharactor : MonoBehaviour
 
     private void Awake()
     {
-        MotionChange(eMotion, eDetail);
         eIdleMotion = eMotion;
         eIdleDetail = eDetail;
+        MotionChange(eMotion, eDetail);
     }
     public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
     {

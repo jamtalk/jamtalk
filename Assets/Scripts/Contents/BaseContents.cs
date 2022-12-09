@@ -33,7 +33,7 @@ public abstract class BaseContents : MonoBehaviour
 
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
-    protected void SetCharactorAnimation(bool isQuestion = true)
+    private void SetCharactorAnimation(bool isQuestion = true)
     {
         if (charactors != null)
         {
@@ -108,8 +108,6 @@ public abstract class BaseContents : MonoBehaviour
 
         Instantiate(exitButton, transform);
         ShowGuidnce();
-
-        SetCharactorAnimation();
     }
     protected virtual void ShowGuidnce()
     {
@@ -178,6 +176,7 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     }
     protected virtual void AddAnswer(TAnswer answer)
     {
+        CorrectAction();
         Debug.Log("AddAnswer");
         Debug.Log(CheckOver());
         var question = questions[currentQuestionIndex];
@@ -196,10 +195,14 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
                 if (question.isCorrect)
                     audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
                     {
+                        ShowQeustionAction();
                         ShowQuestion(questions[currentQuestionIndex]);
                     });
                 else
+                {
+                    ShowQeustionAction();
                     ShowQuestion(questions[currentQuestionIndex]);
+                }
             }
         }
     }
