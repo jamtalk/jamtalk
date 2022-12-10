@@ -88,6 +88,8 @@
     Book_Writing_Word,
     Book_Writing_Sentance,
     Book_Conversation,
+    AD_010,
+    AD_010_1,
 }
 
 public enum eContents
