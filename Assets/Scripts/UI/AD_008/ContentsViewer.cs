@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using OptionData = UnityEngine.UI.Dropdown.OptionData;
 
 public class ContentsViewer : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ContentsViewer : MonoBehaviour
     public List<ContentsButton> items;
     public GridLayoutGroup layout;
     public RectTransform content;
+    public Dropdown dropCurrent;
     public Toggle[] toggles;
 
     private bool isFisrt = true;
@@ -44,7 +46,85 @@ public class ContentsViewer : MonoBehaviour
             }
             Debug.LogFormat("{0} -> {1}", ori, enums.Count());
             Show(enums.OrderBy(x => x).ToArray());
+
+            if (0 < num && num < 6)
+            {
+                dropCurrent.gameObject.SetActive(true);
+                CreateInstances(num);
+            }
+            else
+                dropCurrent.gameObject.SetActive(false);
         });
+    }
+
+    public void CreateInstances(int level)
+    {
+        var scenes = Enum.GetNames(typeof(eSceneName))
+            .Select(x => (eSceneName)Enum.Parse(typeof(eSceneName), x))
+            .Where(x => x.ToString().Contains("PL" + level))
+            .ToArray();
+        dropCurrent.onValueChanged.RemoveAllListeners();
+        switch (level)
+        {
+            case 1:
+                dropCurrent.options = GetAlphabetsOption();
+                dropCurrent.onValueChanged.AddListener((value) =>
+                {
+                    var alphabet = (eAlphabet)(value * 2);
+                    GameManager.Instance.currentAlphabet = alphabet;
+                    Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
+                });
+                var alphabet = (eAlphabet)(dropCurrent.value * 2);
+                GameManager.Instance.currentAlphabet = alphabet;
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
+                break;
+            case 2:
+                dropCurrent.options = GetVowelOptions();
+                dropCurrent.onValueChanged.AddListener((value) =>
+                {
+                    GameManager.Instance.currentAlphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), dropCurrent.options[dropCurrent.value].text);
+                    Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
+                });
+                GameManager.Instance.currentAlphabet = (eAlphabet)Enum.Parse(typeof(eAlphabet), dropCurrent.options[dropCurrent.value].text);
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentAlphabet);
+                break;
+            default:
+                dropCurrent.options = GetDigrpahsOption(level);
+                dropCurrent.onValueChanged.AddListener((value) =>
+                {
+                    GameManager.Instance.currentDigrpahs = (eDigraphs)Enum.Parse(typeof(eDigraphs), dropCurrent.options[dropCurrent.value].text);
+                    Debug.LogFormat("{0} 설정", GameManager.Instance.currentDigrpahs);
+                });
+                GameManager.Instance.currentDigrpahs = (eDigraphs)Enum.Parse(typeof(eDigraphs), dropCurrent.options[dropCurrent.value].text);
+                Debug.LogFormat("{0} 설정", GameManager.Instance.currentDigrpahs);
+                break;
+        }
+    }
+    private List<OptionData> GetAlphabetsOption()
+    {
+        var options = new List<OptionData>();
+        var enums = Enum.GetNames(typeof(eAlphabet))
+            .Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x))
+            .ToArray();
+        for (int i = 0; i < enums.Length / 2; i++)
+        {
+            var first = i * 2;
+            var next = first + 1;
+            options.Add(new OptionData(string.Format("{0} ~ {1}", enums[first], enums[next])));
+        }
+        return options;
+    }
+    private List<OptionData> GetVowelOptions()
+    {
+        return GameManager.Instance.vowels.Select(x => new OptionData(x.ToString())).ToList();
+    }
+    private List<OptionData> GetDigrpahsOption(int level)
+    {
+        return GameManager.Instance.digrpahs
+            .Where(x => (int)x >= level * 100)
+            .Where(x => (int)x < (level + 1) * 100)
+            .Select(x => new OptionData(x.ToString()))
+            .ToList();
     }
 
     public void Show(params eContents[] contents)
