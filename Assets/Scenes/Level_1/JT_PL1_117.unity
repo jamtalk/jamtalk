@@ -9063,6 +9063,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 1818914816}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors: []
   board: {fileID: 2082418706}
   alphaBoard: {fileID: 1212476546}
   scoreBoard: {fileID: 698116364}
@@ -11339,6 +11340,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1580109403}
     m_Modifications:
+    - target: {fileID: 885841436069663761, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
+      propertyPath: eDetail
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6920107125180005425, guid: bed49fd02488a4c43b4a3704b3f1b2c0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

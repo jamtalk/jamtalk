@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimationCharactor : MonoBehaviour
 {
     public SkeletonGraphic charactor;
+    public Image circleImage;
     public eCharactorMotion eMotion;
     public eCharactorDetail eDetail;
 
@@ -23,6 +25,26 @@ public class AnimationCharactor : MonoBehaviour
     private bool isTransaction = true;
     private bool isCompleted = false;
 
+    private void Bone()
+    {
+        SkeletonGraphic skg;
+        skg = charactor;
+        for (int i = 0; i < skg.Skeleton.Bones.Count; i++)
+        {
+            Spine.Bone bone = skg.Skeleton.Bones.Items[i];
+
+            bone.UpdateWorldTransform();
+            Debug.Log(bone.Data.Name);
+            Vector3 pos = bone.GetWorldPosition(transform);
+            Debug.Log(pos);
+            if (bone.Data.Name == "얼굴")
+            {
+                var circle = Instantiate(circleImage, transform);
+                circle.transform.position = bone.GetWorldPosition(transform.GetComponentInParent<Canvas>().transform); ;
+            }
+        }
+    }
+
     private void Awake()
     {
         eIdleMotion = eMotion;
@@ -32,14 +54,14 @@ public class AnimationCharactor : MonoBehaviour
         if(eMotion == eCharactorMotion.Daino_Default)
             StartCoroutine(charactorRoutine());
     }
-    public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof = true)
+    public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoop = true)
     {
-        StartCoroutine(MotionRoutine(eMotion, eDetail, isLoof));
+        StartCoroutine(MotionRoutine(eMotion, eDetail, isLoop));
     }
 
-    IEnumerator MotionRoutine(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoof)
+    IEnumerator MotionRoutine(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoop)
     {
-        if (!isLoof)
+        if (!isLoop)
             while (!isCompleted)
                 yield return null;
         isCompleted = false;
@@ -63,32 +85,32 @@ public class AnimationCharactor : MonoBehaviour
         skeletonPath = string.Format("SpineAnimations/{0}/{1}/{2}_SkeletonData"
             , skeletonName, skeletonType, eMotion.ToString());
 
-        SkeletonChange(isLoof);
+        SkeletonChange(isLoop);
     }
 
     /// <summary>
     /// SkeletonGraphic Asset data Change 
     /// </summary>
-    void SkeletonChange(bool isLoof)
+    void SkeletonChange(bool isLoop)
     {
         var skeletonDataAsset = Resources.Load<SkeletonDataAsset>(skeletonPath);
         charactor.skeletonDataAsset = skeletonDataAsset;
         charactor.Initialize(true);
 
-        DetailChange(eDetail, isLoof);
+        DetailChange(eDetail, isLoop);
     }
 
     /// <summary>
     /// SkeletonGraphic Animation Change
     /// </summary>
-    public void DetailChange(eCharactorDetail eDetail, bool bLoof)
+    public void DetailChange(eCharactorDetail eDetail, bool isLoop)
     {
         this.eDetail = eDetail;
 
         //var containeCheck = eDetail.ToString().Contains(eMotion.ToString());
         var detailValue = eDetail.ToString().Replace(eMotion.ToString() + "_", string.Empty);
         
-        charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
+        charactor.AnimationState.SetAnimation(1, detailValue, isLoop);
         charactor.AnimationState.SetEmptyAnimation(0, 0);
         charactor.AnimationState.Complete += OnSpineAnimationComplete;
 
@@ -98,12 +120,11 @@ public class AnimationCharactor : MonoBehaviour
     private void OnSpineAnimationComplete(TrackEntry trackEntry)
     {
         isCompleted = trackEntry.IsComplete;
-        Debug.LogFormat("completed : {0}, {1}, {2}", skeletonName, skeletonType, isCompleted);
     }
 
-    public void DetailChange(string detailValue, bool bLoof = true)
+    public void DetailChange(string detailValue, bool isLoop = true)
     {
-        charactor.AnimationState.SetAnimation(1, detailValue, bLoof);
+        charactor.AnimationState.SetAnimation(1, detailValue, isLoop);
         charactor.AnimationState.SetEmptyAnimation(0, 0);
         charactor.unscaledTime = false;
     }

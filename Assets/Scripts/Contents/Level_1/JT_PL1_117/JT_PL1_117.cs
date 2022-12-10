@@ -22,7 +22,6 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
                 var target = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
                 if (GameManager.Instance.currentAlphabet >= eAlphabet.C)
                 {
-                    Debug.Log("if");
                     var privious = GameManager.Instance.alphabets.Where(x => x < GameManager.Instance.currentAlphabet)
                         .OrderBy(x => Random.Range(0f, 100f))
                         .Take(board.size - 2);
@@ -40,6 +39,7 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
 
     public override AlphabetData[] GetQuestionType()
     {
+        Debug.Log("pow : " + (int)Mathf.Pow(board.size, 2f));
         return GameManager.Instance.alphabets
             .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x))
             .Take((int)Mathf.Pow(board.size, 2f))

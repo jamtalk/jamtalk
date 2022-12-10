@@ -18,7 +18,7 @@ public abstract class BaseBingoBoard<TValue, TViewer, TButton> : MonoBehaviour
 
     public virtual void Init(TValue[] values, TValue[] corrects, Func<TValue, bool> isCorrect, Action<TValue> onClick)
     {
-        Debug.Log(values.Length);
+        Debug.Log("bingoBoard Init : " + values.Length);
         for (int i = 0; i < buttons.Length; i++)
         {
             var stamp = stamps.OrderBy(x => Random.Range(0, stamps.Length)).First();

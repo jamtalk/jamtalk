@@ -102,6 +102,7 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         var corrects = new List<TValue>();
         Debug.Log("corrects Target Length : " +  correctsTarget.Length);
         Debug.Log("Board Size : " + board.size);
+        
         if(correctsTarget.Length <board.size)
         {
             for (int i = 0; i < board.size; i++)
@@ -169,7 +170,6 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
                 question += "\n";
             question += questions[i];
         }
-        Debug.Log(question);
         return questions;
     }
     protected override eGameResult GetResult()
