@@ -20,13 +20,23 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
             if (_correctsTarget == null)
             {
                 var target = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
-                if (GameManager.Instance.currentAlphabet >= eAlphabet.C)
-                {
-                    var privious = GameManager.Instance.alphabets.Where(x => x < GameManager.Instance.currentAlphabet)
-                        .OrderBy(x => Random.Range(0f, 100f))
-                        .Take(board.size - 2);
-                    target = target.Union(privious).ToArray();
-                }
+                //if (GameManager.Instance.currentAlphabet > eAlphabet.B)
+                //{
+                //    var privious = GameManager.Instance.alphabets.Where(x => x < GameManager.Instance.currentAlphabet)
+                //        .OrderBy(x => Random.Range(0f, 100f))
+                //        .Take(board.size - 2);
+                //    target = target.Union(privious).ToArray();
+                //}
+
+                //_correctsTarget = target
+                //    .Select(x => GameManager.Instance.GetResources(x))
+                //    .ToArray();
+
+                var privious = GameManager.Instance.alphabets
+                    .Where(x => x != target[0]).Where(x => x != target[1])
+                    .OrderBy(x => Random.Range(0, 100))
+                    .Take(board.size - 2);
+                target = target.Union(privious).ToArray();
 
                 _correctsTarget = target
                     .Select(x => GameManager.Instance.GetResources(x))
@@ -39,7 +49,6 @@ public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoB
 
     public override AlphabetData[] GetQuestionType()
     {
-        Debug.Log("pow : " + (int)Mathf.Pow(board.size, 2f));
         return GameManager.Instance.alphabets
             .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x))
             .Take((int)Mathf.Pow(board.size, 2f))

@@ -2815,6 +2815,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uB2E4\uC774\uB178"
       objectReference: {fileID: 0}
+    - target: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: eCorrectDetail
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+      propertyPath: eCorrectMotion
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
 --- !u!224 &646897516 stripped
@@ -2822,6 +2830,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2075149653190856190, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
   m_PrefabInstance: {fileID: 646897515}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &646897517 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
+  m_PrefabInstance: {fileID: 646897515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7bf6e7163b945f3af0e8376bab5aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &654312350
 GameObject:
   m_ObjectHideFlags: 0
@@ -6101,6 +6120,8 @@ MonoBehaviour:
   audioPlayer: {fileID: 1818914816}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors:
+  - {fileID: 646897517}
   board: {fileID: 2082418706}
   alphaBoard: {fileID: 0}
   scoreBoard: {fileID: 698116364}

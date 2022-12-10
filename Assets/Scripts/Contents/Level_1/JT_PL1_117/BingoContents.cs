@@ -100,8 +100,6 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         //    .ToArray();
         //?????? ????
         var corrects = new List<TValue>();
-        Debug.Log("corrects Target Length : " +  correctsTarget.Length);
-        Debug.Log("Board Size : " + board.size);
         
         if(correctsTarget.Length <board.size)
         {

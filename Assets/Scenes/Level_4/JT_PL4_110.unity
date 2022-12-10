@@ -1507,6 +1507,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uBC24\uBC24_3"
       objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eDetail
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eCorrectDetail
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900681817730250231, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
+      propertyPath: eCorrectMotion
+      value: 22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ce7e6389274e4b7c9c6a245ab424005, type: 3}
 --- !u!224 &255413299 stripped
@@ -2955,6 +2967,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uBC24\uBC24_4"
       objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eDetail
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eCorrectDetail
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601831381680681198, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
+      propertyPath: eCorrectMotion
+      value: 23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 865f0b3ec327145d98242501fa2d88fb, type: 3}
 --- !u!224 &757551685 stripped
@@ -3056,6 +3080,18 @@ PrefabInstance:
     - target: {fileID: 2774172496801097435, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921549336728112172, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
+      propertyPath: eDetail
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921549336728112172, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
+      propertyPath: eCorrectDetail
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921549336728112172, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
+      propertyPath: eCorrectMotion
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89bb2d9a88f144be9bf719fe878a1ec9, type: 3}
@@ -4998,6 +5034,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uBC24\uBC24_2"
       objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eDetail
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eCorrectDetail
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 1711959380444337276, guid: 801596173a35e4e68971a2875d14695f, type: 3}
+      propertyPath: eCorrectMotion
+      value: 21
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 801596173a35e4e68971a2875d14695f, type: 3}
 --- !u!224 &1159031143 stripped
@@ -5999,6 +6047,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1234467612}
     m_Modifications:
+    - target: {fileID: 914293844984305181, guid: cf505bba5d7804ac38c6d15f4db6c45d, type: 3}
+      propertyPath: eDetail
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 914293844984305181, guid: cf505bba5d7804ac38c6d15f4db6c45d, type: 3}
+      propertyPath: eCorrectDetail
+      value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 914293844984305181, guid: cf505bba5d7804ac38c6d15f4db6c45d, type: 3}
+      propertyPath: eCorrectMotion
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 8337333894768498224, guid: cf505bba5d7804ac38c6d15f4db6c45d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9086,6 +9146,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 1818914816}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  charactors: []
   board: {fileID: 1423087518}
   alphaBoard: {fileID: 0}
   scoreBoard: {fileID: 783788009}
