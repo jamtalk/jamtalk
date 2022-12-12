@@ -25,33 +25,13 @@ public class AnimationCharactor : MonoBehaviour
     private bool isTransaction = true;
     private bool isCompleted = false;
 
-    private void Bone()
-    {
-        SkeletonGraphic skg;
-        skg = charactor;
-        for (int i = 0; i < skg.Skeleton.Bones.Count; i++)
-        {
-            Spine.Bone bone = skg.Skeleton.Bones.Items[i];
-
-            bone.UpdateWorldTransform();
-            Debug.Log(bone.Data.Name);
-            Vector3 pos = bone.GetWorldPosition(transform);
-            Debug.Log(pos);
-            if (bone.Data.Name == "얼굴")
-            {
-                var circle = Instantiate(circleImage, transform);
-                circle.transform.position = bone.GetWorldPosition(transform.GetComponentInParent<Canvas>().transform); ;
-            }
-        }
-    }
-
     private void Awake()
     {
         eIdleMotion = eMotion;
         eIdleDetail = eDetail;
         MotionChange(eMotion, eDetail);
 
-        if(eMotion == eCharactorMotion.Daino_Default)
+        if (eMotion == eCharactorMotion.Daino_Default)
             StartCoroutine(charactorRoutine());
     }
     public void MotionChange(eCharactorMotion eMotion, eCharactorDetail eDetail, bool isLoop = true)
