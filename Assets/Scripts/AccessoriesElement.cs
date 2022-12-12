@@ -11,50 +11,25 @@ public class AccessoriesElement : MonoBehaviour
     public string targetBoneName;
 
     private SkeletonGraphic charactor => GetComponentInParent<SkeletonGraphic>();
-    private Vector3 targetPos;
     private Spine.Bone targetBone;
-    private int targetIndex;
+
+    private Coroutine coroutine;
 
     private void Awake()
     {
         gameObject.SetActive(true);
         GetBoneData();
-
-        //Bone();
-    }
-    private void Bone()
-    {
-        for (int i = 0; i < charactor.Skeleton.Bones.Count; i++)
-        {
-            Spine.Bone bone = charactor.Skeleton.Bones.Items[i];
-
-            //bone.UpdateWorldTransform();
-            Vector3 pos = bone.GetSkeletonSpacePosition();
-            Debug.LogFormat("{0} : {1}", bone.Data.Name, pos);
-            if (bone.Data.Name == targetBoneName)
-            {
-                var temp = image.rectTransform.rect.height / 5f;
-                //Debug.Log(temp);
-                pos *= 100f;
-                pos.y += targetValue;
-                targetPos = pos;
-                transform.localPosition = pos;
-                gameObject.SetActive(true);
-            }
-        }
     }
 
     private void GetBoneData()
     {
-        targetIndex = 0;
         for (int i = 0; i < charactor.Skeleton.Bones.Count; i++)
         {
             Spine.Bone bone = charactor.Skeleton.Bones.Items[i];
 
             if (bone.Data.Name == targetBoneName)
             {
-                targetIndex = i;
-                StartCoroutine(FollowTarget(bone));
+                coroutine = StartCoroutine(FollowTarget(bone));
                 break;
             }
         }
@@ -71,7 +46,6 @@ public class AccessoriesElement : MonoBehaviour
             Vector3 pos = targetBone.GetSkeletonSpacePosition();
             pos *= 100f;
             pos.y += targetValue;
-            targetPos = pos;
             transform.localPosition = pos;
             gameObject.SetActive(true);
         }
