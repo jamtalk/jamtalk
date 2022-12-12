@@ -2719,6 +2719,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 36374521}
     m_Modifications:
+    - target: {fileID: 892078855694572362, guid: f2e3d08c1adc74e9ca07aa7d58c96aec, type: 3}
+      propertyPath: targetY
+      value: 190
+      objectReference: {fileID: 0}
     - target: {fileID: 892078855694572366, guid: f2e3d08c1adc74e9ca07aa7d58c96aec, type: 3}
       propertyPath: m_Name
       value: Accessories

@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class AccessoriesElement : MonoBehaviour
 {
     public Image image;
-    public float targetValue;
+    public float targetY;
+    public float targetX;
     public string targetBoneName;
 
     private AnimationCharactor charactor => GetComponentInParent<AnimationCharactor>();
@@ -50,7 +51,8 @@ public class AccessoriesElement : MonoBehaviour
 
             Vector3 pos = targetBone.GetSkeletonSpacePosition();
             pos *= 100f;
-            pos.y += targetValue;
+            pos.y += targetY;
+            pos.x += targetX;
             transform.localPosition = pos;
             gameObject.SetActive(true);
         }
