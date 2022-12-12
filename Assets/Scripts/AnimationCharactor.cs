@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AnimationCharactor : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class AnimationCharactor : MonoBehaviour
     public eCharactorDetail eIdleDetail;
     public eCharactorMotion eCorrectMotion;
     public eCharactorDetail eCorrectDetail;
+
+    public event Action onChangeAction;
 
     private string skeletonName;
     private string skeletonType;
@@ -95,6 +99,8 @@ public class AnimationCharactor : MonoBehaviour
         charactor.AnimationState.Complete += OnSpineAnimationComplete;
 
         charactor.unscaledTime = false;
+
+        onChangeAction?.Invoke();
     }
 
     private void OnSpineAnimationComplete(TrackEntry trackEntry)
