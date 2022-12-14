@@ -7,7 +7,6 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_107;
 
-
     protected override void GetWords()
     {
         words = GameManager.Instance.digrpahs
@@ -27,6 +26,6 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsWordsData>
 
     protected override void ShowResult()
     {
-        audioPlayer.Play(GameManager.Instance.GetResources().AudioData.act2, base.ShowResult);
+        audioPlayer.Play(GameManager.Instance.currentDigrpahs.ToString(), base.ShowResult);
     }
 }
