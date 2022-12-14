@@ -10043,15 +10043,15 @@ MonoBehaviour:
   audioPlayer: {fileID: 581015219}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
-  charactors: []
+  animationCharactors: []
   eventSystem: {fileID: 53175558}
   thrower: {fileID: 1175568345}
   charactors:
+  - {fileID: 1829403609}
   - {fileID: 1253092155}
   - {fileID: 392692149}
   - {fileID: 1425528910}
   - {fileID: 1163686205}
-  - {fileID: 1829403609}
   items:
   - {fileID: 1821487251}
   - {fileID: 2029433110}
