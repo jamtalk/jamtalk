@@ -725,9 +725,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8fb6b4c6ca206a744af92eed84b2c29e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7c5acbe0c4c734e2f89eafa765acb00f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1100,6 +1100,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 590615601}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
   elements:
   - {fileID: 1014023121}
   - {fileID: 747745488}
