@@ -24,21 +24,22 @@ public class JT_PL5_105 : BaseContents
     public Thrower505 thrower;
     public GameObject textElement;
     public RectTransform textLayout;
-    public GameObject exampleElement;
+    public DoubleClick505 exampleElement;
     public RectTransform exampleLayout;
     public RectTransform layoutElement;
 
     public List<DoubleClick505> elements = new List<DoubleClick505>();
     private List<RectTransform> layoutList = new List<RectTransform>();
     List<string> questions = new List<string>();
-    
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
 
-        
-            while (!isNext) yield return null;
-            isNext = false;
+
+        while (!isNext) yield return null;
+        isNext = false;
+
         for (int j = 0; j < questions.Count - 1; j++)
         {
             var target = elements.Where(x => x.isCheck && x.gameObject.activeSelf)
@@ -84,20 +85,21 @@ public class JT_PL5_105 : BaseContents
 
         ShowQuestion();
     }
+
     private void ShowQuestion()
     {
         var digraphs = current[index].IncludedDigraphs;
         digraphsIndex = current[index].key.IndexOf(digraphs);
-        var temp = current[index].key.Replace(digraphs, string.Empty).ToArray();
-        questions = new List<string>();
-        foreach (var item in temp)
-            questions.Add(item.ToString());
+        questions = current[index].key
+            .Replace(digraphs, string.Empty)
+            .Select(x => x.ToString().ToLower())
+            .ToList();
 
         var inCorrct = GameManager.Instance.alphabets
             .Where(x => !questions.Contains(x.ToString().ToLower()))
             .OrderBy(x => Random.Range(0f, 100f))
-            .ToString()
             .Take(iccorectIndex)
+            .Select(x => x.ToString().ToLower())
             .ToArray();
 
         // bttuon layout 생성 
@@ -107,20 +109,29 @@ public class JT_PL5_105 : BaseContents
             layoutList.Add(layouts);
         }
 
-        // buttons 생성
-        for(int i = 0; i < questions.Count; i++)
+        var optionList = questions.Union(inCorrct).ToArray();
+        var optionsDatas = new List<OptionsData>();
+
+        for(int i = 0; i < optionList.Length; i++)
         {
-            var questionsElement = Instantiate(exampleElement, layoutList[i]).GetComponent<DoubleClick505>();
-            questionsElement.Init(questions[i], i, true);
-            AddListener(questionsElement);
-            elements.Add(questionsElement);
+            var tm = new OptionsData();
+            var isCorrects = false;
+            if (i < questions.Count)
+                isCorrects = true;
+
+            tm.Init(optionList[i], isCorrects);
+            optionsDatas.Add(tm);
         }
-        for (int i = 0; i < inCorrct.Length; i++)
+
+        optionsDatas = optionsDatas.OrderBy(x => Random.Range(0, 100)).ToList();
+
+        // button 생성
+        for( int i = 0; i < layoutList.Count; i++)
         {
-            var questionsElement = Instantiate(exampleElement, layoutList[i + questions.Count]).GetComponent<DoubleClick505>();
-            questionsElement.Init(inCorrct[i].ToString(), i, false);
-            AddListener(questionsElement);
-            elements.Add(questionsElement);
+            var questionElement = Instantiate(exampleElement, layoutList[i]);
+            questionElement.Init(optionsDatas[i].value, i, optionsDatas[i].isCorrect);
+            AddListener(questionElement);
+            elements.Add(questionElement);
         }
 
         // toggles 생성 
@@ -128,6 +139,7 @@ public class JT_PL5_105 : BaseContents
         for (int i = 0; i < questions.Count; i++)
         {
             var toggleElement = Instantiate(textElement, textLayout).GetComponent<ToggleText505>();
+            toggleElement.toggle.interactable = false;
             var isOn = true;
             if (i == digraphsIndex)
                 isOn = false;
@@ -227,5 +239,16 @@ public class JT_PL5_105 : BaseContents
         yield return new WaitForEndOfFrame();
 
         ShowQuestion();
+    }
+}
+public class OptionsData
+{
+    public string value { get; private set; }
+    public bool isCorrect { get; private set; }
+
+    public void Init(string value, bool isCorrect)
+    {
+        this.value = value;
+        this.isCorrect = isCorrect;
     }
 }
