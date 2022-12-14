@@ -131,7 +131,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
         var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
-        PlayWord(value);
+        PlayWord(value, () => eventSystem.enabled = true);
         if (currentQuestion.currentCorrect == value)
         {
             rocket.fire.preserveAspect = true;
