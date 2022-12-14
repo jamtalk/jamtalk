@@ -60,6 +60,8 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
                 Instantiate(orizinalText,content).text = values[i];
             }
         }
+
+        eventSystem.enabled = true;
     }
     private void Clear()
     {
@@ -99,6 +101,7 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
     }
     protected void OnClickSloting()
     {
+        Debug.Log("onClick");
         guideFinger.gameObject.SetActive(false);
         eventSystem.enabled = false;
         image.gameObject.SetActive(false);
@@ -109,7 +112,6 @@ public class JT_PL5_102 : SingleAnswerContents<Question5_102,DigraphsWordsData>
             image.gameObject.SetActive(true);
             audioPlayer.Play(currentQuestion.correct.clip, () =>
             {
-                eventSystem.enabled = true;
                 image.gameObject.SetActive(false);
                 AddAnswer(currentQuestion.correct);
                 isNext = true;
