@@ -24,7 +24,7 @@ public abstract class BaseContents : MonoBehaviour
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
     public ExitButton exitButton;
-    public AnimationCharactor[] charactors;
+    public AnimationCharactor[] animationCharactors;
     protected GuidePopup guidePopup;
     protected GuideFingerAnimation guideFinger;
     protected Coroutine guideRoutine;
@@ -35,9 +35,9 @@ public abstract class BaseContents : MonoBehaviour
 
     private void SetCharactorAnimation(bool isQuestion = true)
     {
-        if (charactors != null)
+        if (animationCharactors != null)
         {
-            foreach (var item in charactors)
+            foreach (var item in animationCharactors)
             {
                 var motion = isQuestion ? item.eIdleMotion : item.eCorrectMotion;
                 var detail = isQuestion ? item.eIdleDetail : item.eCorrectDetail;

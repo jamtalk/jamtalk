@@ -23,8 +23,8 @@ public class SelectController : MonoBehaviour
         Init();
 
         selectButton.onClick.AddListener(() => Selected());
-        leftButton.onClick.AddListener(() => OnClickListener(false));
-        rightButton.onClick.AddListener(() => OnClickListener(true));
+        leftButton.onClick.AddListener(() => OnClickListener(true));
+        rightButton.onClick.AddListener(() => OnClickListener(false));
     }
 
     public void Selected()
@@ -34,12 +34,12 @@ public class SelectController : MonoBehaviour
         selectedElement.selectedAction?.Invoke();
     }
 
-    public void OnClickListener(bool isRight)
+    public void OnClickListener(bool isLeft)
     {
-        var index = isRight ? 1 : -1;
+        var index = isLeft ? 1 : -1;
         var count = 0;
 
-        if (isRight)
+        if (isLeft)
             count = elements.Where(x => x.index >= rects.Length).Count();
         else
             count = elements.Where(x => x.index < 0).Count();

@@ -612,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
       propertyPath: eCorrectDetail
-      value: 37
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 3753387135050359826, guid: dbd4910076bfb4ec3bb0b869625a2519, type: 3}
       propertyPath: eCorrectMotion
@@ -759,7 +759,7 @@ MonoBehaviour:
   audioPlayer: {fileID: 2096603716}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
-  charactors:
+  animationCharactors:
   - {fileID: 610879812}
   dragElement: {fileID: 1634351154}
   colors:
