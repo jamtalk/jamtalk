@@ -370,7 +370,7 @@ public enum eCharactorMotion
     ejiji_Selected,
 
     soo_Default,
-    soo_LoadingComplted,
+    soo_LoadingCompleted,
     soo_Loading,
     soo_Selected,
 
@@ -379,7 +379,7 @@ public enum eCharactorMotion
     eric_Selected,
 
     mark_Default,
-    mark_LoadingComlpeted,
+    mark_LoadingCompleted,
 
     mia_Default,
     mia_LoadingCompleted,
@@ -429,9 +429,9 @@ public enum eCharactorDetail
     mark_Default_idle,
     mark_Default_hi,
     mark_Default_twoHand,
-    mark_LoadingComlpeted_driftOff,
-    mark_LoadingComlpeted_snooze,
-    mark_LoadingComlpeted_wakeUp,
+    mark_LoadingCompleted_driftOff,
+    mark_LoadingCompleted_snooze,
+    mark_LoadingCompleted_wakeUp,
 
     mia_Default_idle,
     mia_Default_hi,

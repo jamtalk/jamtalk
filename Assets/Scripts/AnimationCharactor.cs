@@ -141,8 +141,8 @@ public class AnimationCharactor : MonoBehaviour
             case eCharactorDetail.soo_Selected_cheekIdle:
                 eDetail = eCharactorDetail.soo_Selected_cheekSmile;
                 break;
-            case eCharactorDetail.mark_LoadingComlpeted_snooze:
-                eDetail = eCharactorDetail.mark_LoadingComlpeted_wakeUp;
+            case eCharactorDetail.mark_LoadingCompleted_snooze:
+                eDetail = eCharactorDetail.mark_LoadingCompleted_wakeUp;
                 break;
             case eCharactorDetail.eric_Selected_twoHand:
                 eMotion = eCharactorMotion.eric_LoadingCompleted;
@@ -189,8 +189,8 @@ public class AnimationCharactor : MonoBehaviour
 
         switch(eMotion)
         {
-            case eCharactorMotion.mark_LoadingComlpeted:
-                eDetail = isTransaction ? eCharactorDetail.mark_LoadingComlpeted_snooze : eCharactorDetail.mark_LoadingComlpeted_wakeUp;
+            case eCharactorMotion.mark_LoadingCompleted:
+                eDetail = isTransaction ? eCharactorDetail.mark_LoadingCompleted_snooze : eCharactorDetail.mark_LoadingCompleted_wakeUp;
                 break;
             case eCharactorMotion.eric_LoadingCompleted:
                 eDetail = isTransaction ? eCharactorDetail.eric_LoadingCompleted_crossArm : eCharactorDetail.eric_LoadingCompleted_exclamation;
@@ -202,10 +202,10 @@ public class AnimationCharactor : MonoBehaviour
                 eDetail = isTransaction ? eCharactorDetail.Daino_Default_walk : eCharactorDetail.Daino_Default_run;
                 break;
             case eCharactorMotion.soo_Loading:
-                eMotion = eCharactorMotion.soo_LoadingComplted;
+                eMotion = eCharactorMotion.soo_LoadingCompleted;
                 eDetail = eCharactorDetail.soo_LoadingComplted_sitSmile;
                 break;
-            case eCharactorMotion.soo_LoadingComplted:
+            case eCharactorMotion.soo_LoadingCompleted:
                 eMotion = eCharactorMotion.soo_Loading;
                 eDetail = eCharactorDetail.soo_Loading_sitAssemble;
                 break;
