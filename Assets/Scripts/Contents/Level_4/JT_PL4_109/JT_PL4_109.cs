@@ -27,8 +27,9 @@ public class JT_PL4_109 : BaseContents
     private Card114[] cards;
     public Sprite[] cardImages;
 
-    
     bool isTurn = false;
+    private Coroutine turningCoroutine;
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
@@ -77,6 +78,8 @@ public class JT_PL4_109 : BaseContents
     {
         base.EndGuidnce();
 
+        if (turningCoroutine != null)
+            StopCoroutine(turningCoroutine);
         ResetCard();
     }
     private void ResetCard()
@@ -137,10 +140,11 @@ public class JT_PL4_109 : BaseContents
             SetCard(randomCards[lower], question[lower], randomColor[i]);
         }
 
-        StartCoroutine(StartContent());
+        turningCoroutine = StartCoroutine(StartContent()); 
     }
     private void SetCard(Card114 card, DigraphsWordsData data, string color)
     {
+        Debug.Log("set Card");
         card.Init(data, color);
         card.card.onClick += () => SetCardIntracable(false);
         card.onSelecte += (value) =>
@@ -172,6 +176,7 @@ public class JT_PL4_109 : BaseContents
                 }
                 else
                 {
+                    Debug.Log("set card turning");
                     audioPlayer.Play(data.clip);
                     selected[0].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected[1].card.Turnning(onCompleted: () => SetCardIntracable(true));
@@ -202,6 +207,7 @@ public class JT_PL4_109 : BaseContents
     }
     IEnumerator StartContent()
     {
+        Debug.Log("start contents");
         yield return new WaitForSeconds(3f);
         for (int i = 0; i < cards.Length; i++)
         {
