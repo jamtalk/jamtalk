@@ -39,6 +39,12 @@ public class VoiceRecorder : MonoBehaviour
         source.Stop();
         Microphone.End(deviceName);
         OnRecord?.Invoke(false);
+
+        //RequestManager.Instance.RequestSTT(new STTParam(clip), (response) =>
+        //{
+        //    Debug.Log(response.GetLog());
+        //});
+
         //var param = new STTParam(clip);
         //RequestManager.Instance.RequestSTT(param, (response) =>
         //{

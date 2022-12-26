@@ -15,16 +15,18 @@ public class DevPage : MonoBehaviour
     public Button buttonPlay;
     public Button buttonStop;
     public Button buttonPause;
+    public Button buttonRequest;
     public VoiceRecorder recorder;
     public bool recording = false;
     void Start()
     {
         Debug.Log("마이크 목록---\n" + string.Join("\n", Microphone.devices) + "\n-----");
-        STTManager.Instance.onEnded += () =>
-        {
-            recording = false;
-            recorder.Stop();
-        };
+        //STTManager.Instance.onEnded += () =>
+        //{
+        //    recording = false;
+        //    recorder.Stop();
+        //};
+
         STTManager.Instance.onError += (error) =>
         {
             Debug.Log(error);
@@ -44,6 +46,16 @@ public class DevPage : MonoBehaviour
         buttonPlay.onClick.AddListener(recorder.source.Play);
         buttonStop.onClick.AddListener(recorder.source.Stop);
         buttonPause.onClick.AddListener(recorder.source.Pause);
+
+        buttonRequest.onClick.AddListener(() =>
+        {
+            //var value = new GoogleSTTProtocal(recorder.clip).audio.content;
+            //Debug.Log(value);
+            RequestManager.Instance.RequestGoogleSTT("", (response) =>
+            {
+                Debug.Log(response.GetLog());
+            });
+        });
     }
     private Sprite[] GetAllSprites()
     {
