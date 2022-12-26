@@ -35,7 +35,7 @@ public class GoogleSTTConfig
 {
     //public string encoding => "FLAC";
     //public int sampleRateHertz => 16000;
-    public string languageCode => "en-US";
+    public string languageCode;
     //public bool enableWordTimeOffsets => false;
 }
 

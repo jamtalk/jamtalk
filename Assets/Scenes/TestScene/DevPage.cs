@@ -49,9 +49,9 @@ public class DevPage : MonoBehaviour
 
         buttonRequest.onClick.AddListener(() =>
         {
-            //var value = new GoogleSTTProtocal(recorder.clip).audio.content;
-            //Debug.Log(value);
-            RequestManager.Instance.RequestGoogleSTT("", (response) =>
+            var value = new GoogleSTTProtocal(recorder.clip).audio.content;
+            var languageCode = "en";
+            RequestManager.Instance.RequestGoogleSTT(value, languageCode, (response) =>
             {
                 Debug.Log(response.GetLog());
             });
