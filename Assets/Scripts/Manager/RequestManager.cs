@@ -35,9 +35,15 @@ public partial class RequestManager : MonoSingleton<RequestManager>
         StartCoroutine(SendRequest(STTAPI,param, onResponse));
     }
 
-    public void RequestGoogleSTT(string param, string languageCode, OnResponse onResponse) 
+    public void RequestGoogleSTT(VoiceRecorder param, OnResponse onResponse) 
     {
-        StartCoroutine(GoogleSpeechToText(param, languageCode, value =>
+        if (Microphone.IsRecording(Microphone.devices[0]))
+            param.Stop();
+
+        var value = new GoogleSTTProtocal(param.clip).audio.content;
+        var languageCode = "en";
+
+        StartCoroutine(GoogleSpeechToText(value, languageCode, value =>
         {
             Debug.Log(value);
         }));

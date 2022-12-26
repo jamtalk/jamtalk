@@ -27,16 +27,17 @@ public class DevPage : MonoBehaviour
         //    recorder.Stop();
         //};
 
-        STTManager.Instance.onError += (error) =>
-        {
-            Debug.Log(error);
-        };
+        //STTManager.Instance.onError += (error) =>
+        //{
+        //    Debug.Log(error);
+        //};
         //STTManager.Instance.onStarted += () => recorder.Record();
-        STTManager.Instance.onResult += (value) => Debug.LogFormat("결과 : {0}", value);
+        //STTManager.Instance.onResult += (value) => Debug.LogFormat("결과 : {0}", value);
         buttonRecord.onClick.AddListener(() =>
         {
             recorder.Record();
-            STTManager.Instance.StartSTT("en-US");
+            //STTManager.Instance.StartSTT("en-US");
+
             //if (recording)
             //    recorder.Stop();
             //else
@@ -44,18 +45,9 @@ public class DevPage : MonoBehaviour
             //recording = !recording;
         });
         buttonPlay.onClick.AddListener(recorder.source.Play);
-        buttonStop.onClick.AddListener(recorder.source.Stop);
+        buttonStop.onClick.AddListener(recorder.Stop);
         buttonPause.onClick.AddListener(recorder.source.Pause);
-
-        buttonRequest.onClick.AddListener(() =>
-        {
-            var value = new GoogleSTTProtocal(recorder.clip).audio.content;
-            var languageCode = "en";
-            RequestManager.Instance.RequestGoogleSTT(value, languageCode, (response) =>
-            {
-                Debug.Log(response.GetLog());
-            });
-        });
+        buttonRequest.onClick.AddListener(recorder.SendSTT);
     }
     private Sprite[] GetAllSprites()
     {

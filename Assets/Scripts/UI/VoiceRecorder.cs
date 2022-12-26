@@ -52,6 +52,16 @@ public class VoiceRecorder : MonoBehaviour
         //    onSTT?.Invoke(result.IsSuccessed, result.result);
         //});
     }
+    public void SendSTT()
+    {
+        if (Microphone.IsRecording(deviceName))
+            Stop();
+
+        RequestManager.Instance.RequestGoogleSTT(this, (response) =>
+        {
+            Debug.Log(response.GetLog());
+        });
+    }
     public void Play()
     {
         Debug.Log("실행");
