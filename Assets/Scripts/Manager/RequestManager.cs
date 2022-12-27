@@ -77,10 +77,15 @@ public partial class RequestManager : MonoSingleton<RequestManager>
             else
             {
                 string responseBody = uwr.downloadHandler.text;
-                Debug.Log("[SpeechToText] response body json: " + responseBody);
+                var isRecognition = responseBody.Contains("result");
+                Debug.LogFormat("{0} [SpeechToText] response body json: {1}" ,isRecognition ,responseBody);
 
                 STTResponseBody sttResponse = JsonUtility.FromJson<STTResponseBody>(responseBody);
-                callbackContent?.Invoke(sttResponse.results[0].alternatives[0].transcript);
+
+                if (isRecognition)
+                    callbackContent?.Invoke(sttResponse.results[0].alternatives[0].transcript);
+                else
+                    callbackContent?.Invoke("error : Recognition failed");
             }
         }
     }
