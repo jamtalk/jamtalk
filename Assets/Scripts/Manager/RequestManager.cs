@@ -35,7 +35,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
         StartCoroutine(SendRequest(STTAPI,param, onResponse));
     }
 
-    public void RequestGoogleSTT(VoiceRecorder param, OnResponse onResponse) 
+    public void RequestGoogleSTT(VoiceRecorder param, Action<string> onResponse) 
     {
         if (Microphone.IsRecording(Microphone.devices[0]))
             param.Stop();
@@ -45,7 +45,9 @@ public partial class RequestManager : MonoSingleton<RequestManager>
 
         StartCoroutine(GoogleSpeechToText(value, languageCode, value =>
         {
-            Debug.Log(value);
+            onResponse?.Invoke(value);
+            if(!string.IsNullOrEmpty(value))
+                Debug.Log(value);
         }));
     }
 
@@ -85,7 +87,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
                 if (isRecognition)
                     callbackContent?.Invoke(sttResponse.results[0].alternatives[0].transcript);
                 else
-                    callbackContent?.Invoke("error : Recognition failed");
+                    callbackContent?.Invoke(string.Empty);
             }
         }
     }

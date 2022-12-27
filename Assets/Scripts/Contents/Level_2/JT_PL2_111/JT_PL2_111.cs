@@ -37,11 +37,11 @@ public class JT_PL2_111 : BaseContents
     {
         base.Awake();
 
-        recorder.OnRecord += (value) =>
-        {
-            buttonRecord.image.sprite = value ? spriteRecordOn : spriteRecordOff;
-            AllButtonsIntractable(!value);
-        };
+        //recorder.OnRecord += (value) =>
+        //{
+        //    buttonRecord.image.sprite = value ? spriteRecordOn : spriteRecordOff;
+        //    AllButtonsIntractable(!value);
+        //};
         STTManager.Instance.onEnded += OnEndRecording;
         STTManager.Instance.onResult += OnEndRecording;
 

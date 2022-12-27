@@ -8,16 +8,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class VoiceRecorder : MonoBehaviour
 {
-    public event Action<bool, string> onSTT;
-    public bool isRecording { get; private set; } = false;
-    public event Action<bool> OnRecord;
     public AudioSource source => GetComponent<AudioSource>();
     private string deviceName;
+    public Action<bool, string> onSTTResult;
+
     public AudioClip clip
     {
         get => source.clip;
         private set => source.clip = value;
     }
+
     public void Record()
     {
         if (Microphone.devices.Length == 0)
@@ -29,8 +29,6 @@ public class VoiceRecorder : MonoBehaviour
             deviceName = Microphone.devices[0];
             Debug.LogFormat("녹음 시작 : {0}",deviceName);
             source.clip = Microphone.Start(deviceName, false, 10, 44100);//서버 송신용 8000
-            OnRecord?.Invoke(true);
-            //source.Play();
         }
     }
     public void Stop()
@@ -38,20 +36,8 @@ public class VoiceRecorder : MonoBehaviour
         Debug.Log("종료");
         source.Stop();
         Microphone.End(deviceName);
-        OnRecord?.Invoke(false);
-
-        //RequestManager.Instance.RequestSTT(new STTParam(clip), (response) =>
-        //{
-        //    Debug.Log(response.GetLog());
-        //});
-
-        //var param = new STTParam(clip);
-        //RequestManager.Instance.RequestSTT(param, (response) =>
-        //{
-        //    var result = response.GetResult<STTResult>();
-        //    onSTT?.Invoke(result.IsSuccessed, result.result);
-        //});
     }
+
     public void SendSTT()
     {
         if (Microphone.IsRecording(deviceName))
@@ -59,8 +45,18 @@ public class VoiceRecorder : MonoBehaviour
 
         RequestManager.Instance.RequestGoogleSTT(this, (response) =>
         {
-            Debug.Log(response.GetLog());
+            //Debug.Log(response.GetLog());
+            var isSTTResult = !string.IsNullOrEmpty(response);
+            onSTTResult?.Invoke(isSTTResult, response);
         });
+    }
+
+    public void RecordOrSendSTT()
+    {
+        if (Microphone.IsRecording(deviceName))
+            SendSTT();
+        else
+            Record();
     }
     public void Play()
     {

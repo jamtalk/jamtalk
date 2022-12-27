@@ -15,14 +15,14 @@ public class STTButton : MonoBehaviour
     public event Action<bool> onRecord;
     private void Awake()
     {
-        recorder.onSTT += OnSTTEnded;
+        //recorder.onSTT += OnSTTEnded;
         STTManager.Instance.onStarted += () => onRecord?.Invoke(true);
         STTManager.Instance.onEnded += () =>
         {
             onRecord?.Invoke(false);
             eventSystem.enabled = true;
         };
-        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast("오류 발생 : " + error);
+        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast("???? ???? : " + error);
         STTManager.Instance.onResult += (value) => onSTT(value);
         button.onClick.AddListener(() =>
         {
@@ -36,7 +36,7 @@ public class STTButton : MonoBehaviour
     }
     private void OnDisable()
     {
-        recorder.onSTT -= OnSTTEnded;
+        //recorder.onSTT -= OnSTTEnded;
     }
 
     private void OnSTTEnded(bool success, string result)

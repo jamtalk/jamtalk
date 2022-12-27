@@ -6,18 +6,21 @@ using DG.Tweening;
 
 public class JT_PL1_103 : BaseContents
 {
-    public Image image;
+    public Image currentImage;
     public Button button;
-    public STTButton buttonSTT;
+    public Button buttonSTT;
+    public Image sttButtonBG;
     public Text valueText;
     private Tween buttonTween;
-
+    private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
     protected override eContents contents => eContents.JT_PL1_105;
     private eAlphabet value;
     private eAlphabet question => GameManager.Instance.currentAlphabet;
 
-    protected override bool CheckOver() => true;
+    protected override bool CheckOver() => index >= GetTotalScore();
     protected override int GetTotalScore() => 1;
+    protected int index;
+    private eAlphabetType capsLock = eAlphabetType.Upper;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -28,62 +31,94 @@ public class JT_PL1_103 : BaseContents
 
     protected override void Awake()
     {
+        buttonSTT.onClick.AddListener(RecordAction);
+        recorder.onSTTResult += AddAnswer;
+
         base.Awake();
         button.onClick.AddListener(PlayAudio);
-        image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, question);
-        image.preserveAspect = true;
-        buttonSTT.onRecord += PlayButtonTween;
-        buttonSTT.onSTT += OnSTTResult;
+    }
+
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+
+        ShowQuestion();
+    }
+
+    private void ShowQuestion()
+    {
+        capsLock = index == 0 ? eAlphabetType.Upper : eAlphabetType.Lower;
+        currentImage.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, capsLock, question);
+        currentImage.preserveAspect = true;
+        buttonSTT.interactable = false;
         PlayAudio();
     }
-    private void OnDisable()
+
+    private void RecordAction()
     {
-        buttonSTT.onRecord -= PlayButtonTween;
-        buttonSTT.onSTT -= OnSTTResult;
+        recorder.RecordOrSendSTT();
+        var isRecord = !sttButtonBG.gameObject.activeSelf;
+        sttButtonBG.gameObject.SetActive(isRecord);
+
+        if (isRecord)
+            PlayButtonTween();
+        else
+            StopButtonTween();
     }
-    private void PlayButtonTween(bool activate)
+
+    private void PlayButtonTween()
     {
-        if(buttonTween != null)
-        {
-            buttonTween.Kill();
-            buttonTween = null;
-        }
-        if (!activate)
-        {
-            buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
-            buttonTween.SetEase(Ease.Linear);
-            buttonTween.SetLoops(-1, LoopType.Yoyo);
-            buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
-            buttonTween.Play();
-        }
+        StopButtonTween();
+
+        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+        buttonTween.SetEase(Ease.Linear);
+        buttonTween.SetLoops(-1, LoopType.Yoyo);
+        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+        buttonTween.Play();
     }
-    private void OnSTTStarted()
+
+    private void AddAnswer(bool success, string value)
     {
-        audioPlayer.Stop();
-        if (buttonTween != null)
+        if (!success)
+            Debug.Log("STT Recognition Failed !");
+        else
         {
-            buttonTween.Kill();
-            buttonTween = null;
+            var currentValue = index == 0 ? question.ToString().ToUpper() : question.ToString().ToLower();
+            var isContains = value == currentValue;
+            Debug.LogFormat("{0} == {1}, {2}", currentValue, value, isContains);
+
+            if (isContains)
+            {
+                index++;
+                if (CheckOver())
+                    ShowResult();
+                else
+                    ShowQuestion();
+            }
+            else
+                ShowQuestion();
         }
     }
+
+
     private void PlayAudio()
     {
+        StopButtonTween();
+
+        var clipValue = capsLock == eAlphabetType.Upper ?
+            GameManager.Instance.GetResources(question).AudioData.clip :
+            GameManager.Instance.GetResources(question).AudioData.phanics;
+
+        audioPlayer.Play(clipValue, () => buttonSTT.interactable = true);
+    }
+
+    private void StopButtonTween()
+    {
         if (buttonTween != null)
         {
             buttonTween.Kill();
             buttonTween = null;
+            buttonSTT.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         }
-        audioPlayer.Play(GameManager.Instance.GetResources(question).AudioData.phanics,()=>PlayButtonTween(false));
-    }
-    
-    private void OnSTTResult(string result)
-    {
-        valueText.text = result;
-        if (question.ToString().ToLower() == result.ToLower())
-            audioPlayer.Play(GameManager.Instance.GetResources(question).AudioData.act2, ShowResult);
-    }
-    private void OnSTTError(string message)
-    {
-        Debug.LogError(message);
     }
 }

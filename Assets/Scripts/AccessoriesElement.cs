@@ -29,7 +29,7 @@ public class AccessoriesElement : MonoBehaviour
         {
             Spine.Bone bone = charactor.charactor.Skeleton.Bones.Items[i];
 
-            Debug.Log(bone.Data.Name);
+            //Debug.Log(bone.Data.Name);
             if (bone.Data.Name == targetBoneName)
             {
                 coroutine = StartCoroutine(FollowTarget(bone));
