@@ -393,6 +393,24 @@ public enum eCharactorMotion
     Bambam4,
     Bambam5,
     Bambam6,
+
+    mark_cart,
+    mark_wet_suit,
+
+    mia_cart,
+    mia_space_suit,
+    mia_wizard,
+
+    sue_cart,
+
+    eric_cart,
+    eric_wet_suit,
+    eric_wizard,
+
+    edgege_dough,
+
+    ekoko_cart,
+    ekoko_magician,
 }
 
 public enum eCharactorDetail
@@ -449,4 +467,31 @@ public enum eCharactorDetail
     Bambam4_idle,
     Bambam5_idle,
     Bambam6_idle,
+
+    mark_cart_cartMove0,
+    mark_cart_cartMove1,
+    mark_wet_suit_idle,
+
+    mia_cart_cartMove0,
+    mia_cart_cartMove1,
+    mia_space_suit_idle,
+    mia_space_suit_action,
+    mia_wizard_idle,
+    mia_wizard_magic,
+
+    sue_cart_cartMove0,
+    sue_cart_cartMove1,
+
+    eric_cart_cartMove0,
+    eric_cart_cartMove1,
+    eric_wet_suit_idle,
+    eric_wizard_idle,
+    eric_wizard_magic,
+
+    edgege_dough_action,
+    edgege_dough_idle,
+
+    ekoko_cart_cartMove0,
+    ekoko_cart_cartMove1,
+    ekoko_magician_action,
 }					
