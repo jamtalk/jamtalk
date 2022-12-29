@@ -9,6 +9,7 @@ using System;
 using GJGameLibrary.DesignPattern;
 using System.Linq;
 using UnityEngine.AddressableAssets;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "ResourceSchema.asset", menuName = "Create DB/ResourceSchema")]
 public class ResourceSchema : ScriptableObject
@@ -65,6 +66,23 @@ public class ResourceSchema : ScriptableObject
     {
         var num = (int)digraphs;
         return (ePairDigraphs)num;
+    }
+    public static AudioClip GetInCorrectClip()
+    {
+        var value = GameManager.Instance.schema.data.inCorrectClips
+            .OrderBy(x => Random.Range(0f, 1000f))
+            .First();
+        var clip = Addressables.LoadAssetAsync<AudioClip>(value).WaitForCompletion();
+        return clip;
+    }
+
+    public static AudioClip GetCorrectClip()
+    {
+        var value = GameManager.Instance.schema.data.correctClips
+            .OrderBy(x => Random.Range(0f, 1000f))
+            .First();
+        var clip = Addressables.LoadAssetAsync<AudioClip>(value).WaitForCompletion();
+        return clip;
     }
 }
 
@@ -231,5 +249,7 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
+    public string[] inCorrectClips;
+    public string[] correctClips;
 }
 
