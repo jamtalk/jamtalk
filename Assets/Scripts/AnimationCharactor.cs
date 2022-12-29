@@ -7,9 +7,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(SkeletonGraphic))]
 public class AnimationCharactor : MonoBehaviour
 {
-    public SkeletonGraphic charactor;
+    [HideInInspector]
+    public SkeletonGraphic charactor => GetComponent<SkeletonGraphic>();
     public Image circleImage;
     public eCharactorMotion eMotion;
     public eCharactorDetail eDetail;
