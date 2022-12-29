@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class JT_PL2_108 : BaseWitch<VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_108;
+    protected override eCharactorDetail currectMotion => eCharactorDetail.mia_wizard_magic;
 
     protected override List<Question_Witch<VowelWordsData>> MakeQuestion()
     {

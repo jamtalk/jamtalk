@@ -32,6 +32,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
     [SerializeField]
     private Animator ani;
+    protected abstract eCharactorDetail currectMotion { get; }
 
     
     protected override IEnumerator ShowGuidnceRoutine()
@@ -109,6 +110,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         if (currentQuestion.correct == target.data)
         {
             DropMotion(target);
+            animationCharactors.First().DetailChange(currectMotion, false);
         }
         else
             target.ResetPosition();
