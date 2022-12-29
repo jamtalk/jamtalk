@@ -395,7 +395,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.3}
   m_AnchorMax: {x: 1, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 240, y: 150}
+  m_SizeDelta: {x: 240, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3511430309881310691
 CanvasRenderer:
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8242475eed0e88d4facb68e93b2a011a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95dfd0270408c41988da47adecb7b8eb, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -616,6 +616,14 @@ MonoBehaviour:
   source: {fileID: 4169645387779324537}
   spritePerfect: {fileID: 21300000, guid: 727baba4dac168a4db6674ede3849cb7, type: 3}
   spriteGreate: {fileID: 21300000, guid: 8242475eed0e88d4facb68e93b2a011a, type: 3}
+  spriteSuccess:
+  - {fileID: 21300000, guid: 9e9e6ae1829594c418fef8c9daf61530, type: 3}
+  - {fileID: 21300000, guid: c0eb6f7861ec7487580035b11c9bad73, type: 3}
+  - {fileID: 21300000, guid: 93ef80b6d80114f889017f33aa2e4163, type: 3}
+  - {fileID: 21300000, guid: f01bf50118ab643ceaf49fd4805bfdb1, type: 3}
+  - {fileID: 21300000, guid: b94425ae682b04a0eac64c1dbc21b194, type: 3}
+  - {fileID: 21300000, guid: 3e28d0130cfbb4f449258a47347b1b0c, type: 3}
+  - {fileID: 21300000, guid: 95dfd0270408c41988da47adecb7b8eb, type: 3}
   spriteFail:
   - {fileID: 21300000, guid: 2280ff6a4c8b94b4e8cda7c4eef20055, type: 3}
   - {fileID: 21300000, guid: 3989ccf899b80a243a22566ab03f3440, type: 3}

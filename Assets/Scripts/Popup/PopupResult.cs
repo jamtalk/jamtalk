@@ -18,6 +18,8 @@ public class PopupResult : BasePopup
     [Header("Sprites")]
     public Sprite spritePerfect;
     public Sprite spriteGreate;
+
+    public Sprite[] spriteSuccess;
     public Sprite[] spriteFail;
     public eGameResult result { get; private set; }
     protected override void Awake()
@@ -44,14 +46,17 @@ public class PopupResult : BasePopup
         this.result = result;
         switch (result)
         {
-            case eGameResult.Perfect:
-                imageResult.sprite = spritePerfect;
-                break;
-            case eGameResult.Greate:
-                imageResult.sprite = spriteGreate;
-                break;
+            //case eGameResult.Perfect:
+            //    imageResult.sprite = spritePerfect;
+            //    break;
+            //case eGameResult.Greate:
+            //    imageResult.sprite = spriteGreate;
+            //    break;
             case eGameResult.Fail:
                 imageResult.sprite = spriteFail[Random.Range(0, spriteFail.Length)];
+                break;
+            default:
+                imageResult.sprite = spriteSuccess[Random.Range(0, spriteSuccess.Length)];
                 break;
         }
         source.Play();
