@@ -27,7 +27,7 @@ public class AnimationCharactor : MonoBehaviour
     private string skeletonType;
     private string skeletonPath;
     private bool isTransaction = true;
-    private bool isCompleted = false;
+    public bool isCompleted { get; private set; }
 
     private void Awake()
     {

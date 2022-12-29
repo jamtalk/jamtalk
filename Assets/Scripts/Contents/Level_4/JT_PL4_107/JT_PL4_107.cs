@@ -13,17 +13,15 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
     protected override int GetTotalScore() => QuestionCount;
     protected override int QuestionCount => 3;
 
-    public FingerAnimation Point;
     public Text currentText;
     public Button buttonCharactor;
     public Button[] buttonQuestions;
 
-    [SerializeField]
-    private RectTransform[] charactor;
     private DigraphsWordsData[] current;
     [SerializeField]
     private EventSystem eventSystem;
     private float colorFillamount = 0f;
+    private AnimationCharactor doughCharactor => animationCharactors.First();
 
 
     protected override IEnumerator ShowGuidnceRoutine()
@@ -141,37 +139,29 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
 
     private void OnClickCharactor(TweenCallback callback = null)
     {
-        Point.gameObject.SetActive(false);
         eventSystem.enabled = false;
-        Sequence seq = DOTween.Sequence();
-        var duration = 1f;
 
-        for (int i = 0; i < charactor.Length; i++)
+        doughCharactor.DetailChange(eCharactorDetail.edgege_dough_action, false);
+
+        StartCoroutine(AnimationCompleted());
+    }
+    private IEnumerator AnimationCompleted()
+    {
+        if(!doughCharactor.isCompleted)
+            yield return null;
+
+        colorFillamount += 0.33f;
+        var color = Color.black;
+        color.a = colorFillamount;
+        currentText.color = color;
+
+        if (colorFillamount >= 0.9f)
         {
-            var rt = charactor[i];
-            var tween = rt.DOAnchorPosY(-50f, duration / 2);
-            tween.SetEase(Ease.Linear);
-            tween.SetLoops(2, LoopType.Yoyo);
-            seq.Insert(0, tween);
+            for (int i = 0; i < buttonQuestions.Length; i++)
+                buttonQuestions[i].interactable = true;
         }
-        seq.onComplete += callback;
-        seq.onComplete += () =>
-        {
-            colorFillamount += 0.33f;
-            var color = Color.black;
-            color.a = colorFillamount;
-            currentText.color = color;
-
-            if (colorFillamount >= 0.9f)
-            {
-                for (int i = 0; i < buttonQuestions.Length; i++)
-                    buttonQuestions[i].interactable = true;
-            }
-            isNext = true;
-            eventSystem.enabled = true;
-        };
-
-        seq.Play();
+        isNext = true;
+        eventSystem.enabled = true;
     }
 }
 
