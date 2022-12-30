@@ -193,6 +193,20 @@ public class AudioSinglePlayer : MonoBehaviour
         });
     }
 
+    public void PlayIncorrect()
+    {
+        StartCoroutine(PlayIncorrectRoutine());
+    }
+
+    private IEnumerator PlayIncorrectRoutine()
+    {
+        if (player.isPlaying)
+            yield return null;
+
+        var clip = ResourceSchema.GetInCorrectClip();
+        Play(clip);
+    }
+
     IEnumerator StopRoutine(float duration)
     {
         yield return new WaitForSeconds(duration);

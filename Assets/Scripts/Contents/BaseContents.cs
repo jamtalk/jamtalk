@@ -201,6 +201,7 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
                     });
                 else
                 {
+                    audioPlayer.PlayIncorrect();
                     ShowQeustionAction();
                     ShowQuestion(questions[currentQuestionIndex]);
                 }
@@ -242,6 +243,9 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
             {
                 if (currentQuestion.isCorrect)
                     audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect());
+                else
+                    audioPlayer.PlayIncorrect();
+
                 currentQuestionIndex += 1;
                 ShowQuestion(questions[currentQuestionIndex]);
             }
