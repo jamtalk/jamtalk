@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class PopupResult : BasePopup
 {
@@ -44,21 +45,21 @@ public class PopupResult : BasePopup
     public void SetResult(eGameResult result)
     {
         this.result = result;
+
+        var resultDatas = ResourceSchema.GetCorrectClip();
+        var successSprit = spriteSuccess.Where(x => x.name == resultDatas.Item2.ToString()).First();
+
         switch (result)
         {
-            //case eGameResult.Perfect:
-            //    imageResult.sprite = spritePerfect;
-            //    break;
-            //case eGameResult.Greate:
-            //    imageResult.sprite = spriteGreate;
-            //    break;
             case eGameResult.Fail:
                 imageResult.sprite = spriteFail[Random.Range(0, spriteFail.Length)];
                 break;
             default:
-                imageResult.sprite = spriteSuccess[Random.Range(0, spriteSuccess.Length)];
+                imageResult.sprite = successSprit;
                 break;
         }
+
+        source.clip = resultDatas.Item1;
         source.Play();
     }
     private void OnClickNext()

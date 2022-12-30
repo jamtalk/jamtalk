@@ -76,13 +76,43 @@ public class ResourceSchema : ScriptableObject
         return clip;
     }
 
-    public static AudioClip GetCorrectClip()
+    public static (AudioClip, eSuccessType) GetCorrectClip()
     {
-        var value = GameManager.Instance.schema.data.correctClips
+        Array values = Enum.GetValues(typeof(eSuccessType));
+        var type =  (eSuccessType)values.GetValue(new System.Random().Next(0, values.Length));
+
+        string[] clips;
+        switch (type)
+        {
+            case eSuccessType.Amazing:
+                clips = GameManager.Instance.schema.data.correctAmazingClip;
+                break;
+            case eSuccessType.Excellent:
+                clips = GameManager.Instance.schema.data.correctExcellentClip;
+                break;
+            case eSuccessType.Goodjob:
+                clips = GameManager.Instance.schema.data.correctGoodjobClip;
+                break;
+            case eSuccessType.Great:
+                clips = GameManager.Instance.schema.data.correctGreatClip;
+                break;
+            case eSuccessType.Nice:
+                clips = GameManager.Instance.schema.data.correctNiceClip;
+                break;
+            case eSuccessType.Wonderful:
+                clips = GameManager.Instance.schema.data.correctWonderfulClip;
+                break;
+            case eSuccessType.Perfect:
+            default:
+                clips = GameManager.Instance.schema.data.correctPerfectClip;
+                break;
+        }
+
+        var value = clips
             .OrderBy(x => Random.Range(0f, 1000f))
             .First();
         var clip = Addressables.LoadAssetAsync<AudioClip>(value).WaitForCompletion();
-        return clip;
+        return (clip, type);
     }
 }
 
@@ -250,6 +280,12 @@ public class ResourceData
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
     public string[] inCorrectClips;
-    public string[] correctClips;
+    public string[] correctPerfectClip;
+    public string[] correctGreatClip;
+    public string[] correctWonderfulClip;
+    public string[] correctExcellentClip;
+    public string[] correctGoodjobClip;
+    public string[] correctAmazingClip;
+    public string[] correctNiceClip;
 }
 

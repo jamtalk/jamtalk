@@ -317,13 +317,13 @@ public enum eGameResult
 }
 public enum eSuccessType
 {
-    Amazing,
+    Perfect,
+    Great,
+    Wonderful,
     Excellent,
     Goodjob,
-    Great,
+    Amazing,
     Nice,
-    Perfect,
-    Wonderful
 }
 public enum eRocketDirection
 {
