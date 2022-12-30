@@ -14,7 +14,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
     public UIThrower110 thrower;
     public AudioClip startClip;
     protected override int QuestionCount => 2;
-    protected override eGameResult GetResult() => eGameResult.Perfect;
+    protected override eGameResult GetResult() => eGameResult.Success;
 
     //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     private bool isMove = false;

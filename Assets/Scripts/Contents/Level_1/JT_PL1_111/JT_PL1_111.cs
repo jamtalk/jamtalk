@@ -91,7 +91,7 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
     }
     protected override eGameResult GetResult()
     {
-        return eGameResult.Perfect;
+        return eGameResult.Success;
     }
     protected override void ShowQuestion(Question111 question)
     {

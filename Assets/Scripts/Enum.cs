@@ -312,9 +312,18 @@ public enum eAlphabetType
 
 public enum eGameResult
 {
-    Perfect,
-    Greate,
+    Success,
     Fail
+}
+public enum eSuccessType
+{
+    Amazing,
+    Excellent,
+    Goodjob,
+    Great,
+    Nice,
+    Perfect,
+    Wonderful
 }
 public enum eRocketDirection
 {

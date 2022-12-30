@@ -17,7 +17,7 @@ public abstract class BaseContents : MonoBehaviour
     private GameObject popupResult;
     protected abstract eContents contents { get; }
     protected eAlphabetType type = eAlphabetType.Upper;
-    protected virtual eGameResult GetResult() => eGameResult.Perfect;
+    protected virtual eGameResult GetResult() => eGameResult.Success;
     private float time;
     private DateTime startTime;
     private DateTime endTime;
@@ -211,11 +211,11 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     {
         var corrects = questions.Select(x => x.isCorrect);
         if (!corrects.Contains(false))
-            return eGameResult.Perfect;
+            return eGameResult.Success;
         else if (!corrects.Contains(true))
             return eGameResult.Fail;
         else
-            return eGameResult.Greate;
+            return eGameResult.Success;
     }
     protected abstract void ShowQuestion(TQuestion question);
     protected abstract List<TQuestion> MakeQuestion();

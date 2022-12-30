@@ -70,7 +70,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
             audioPlayer.Play(currentQuestion.correct[currentQuestion.currentIndex].clip);
         });
     }
-    protected override eGameResult GetResult() => eGameResult.Perfect;
+    protected override eGameResult GetResult() => eGameResult.Success;
     protected override List<Question108> MakeQuestion()
     {
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };

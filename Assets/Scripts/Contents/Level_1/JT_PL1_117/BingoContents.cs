@@ -176,9 +176,9 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
             return eGameResult.Fail;
         //else if (board.GetBingoCount() < BingoCount)
         else if( bingoCount < BingoCount)
-            return eGameResult.Greate;
+            return eGameResult.Success;
         else
-            return eGameResult.Perfect;
+            return eGameResult.Success;
     }
     
     protected void ShowBingo(TweenCallback callback = null)

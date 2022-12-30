@@ -97,7 +97,7 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     }
     protected override eGameResult GetResult()
     {
-        return eGameResult.Perfect;
+        return eGameResult.Success;
     }
     protected override void ShowQuestion(Question5_110 question)
     {
