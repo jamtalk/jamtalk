@@ -68,7 +68,14 @@ public class JT_PL1_112 : BaseContents
     protected override void Awake()
     {
         base.Awake();
-        //MakeQuestion();
+
+        foreach (var item in drags)
+        {
+            item.onEndDrag += (value) =>
+            {
+                if (value) audioPlayer.PlayIncorrect();
+            };
+        }
     }
 
     private void MakeQuestion()

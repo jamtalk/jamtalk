@@ -132,7 +132,7 @@ public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
         card.checkVaild += (value) =>
         {
             var vaild = value == currentQuestion.correct[currentQuestion.currentIndex];
-            audioPlayer.Play(value.clip);
+            audioPlayer.PlayIncorrect(value.clip);
             return vaild;
         };
     }

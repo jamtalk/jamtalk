@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,7 @@ public class DragAlphabet : MonoBehaviour, IDragHandler, IEndDragHandler
     public Image image;
     public bool intracable=true;
     public eAlphabet alphabet;
+    public Action<bool> onEndDrag; 
     public void Init(eAlphabet alphabet)
     {
         this.alphabet = alphabet;
@@ -47,5 +49,7 @@ public class DragAlphabet : MonoBehaviour, IDragHandler, IEndDragHandler
         }
 
         GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+        onEndDrag?.Invoke(gameObject.activeSelf);
     }
 }

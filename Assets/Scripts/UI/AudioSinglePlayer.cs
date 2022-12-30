@@ -197,10 +197,13 @@ public class AudioSinglePlayer : MonoBehaviour
     {
         StartCoroutine(PlayIncorrectRoutine());
     }
-
+    public void PlayIncorrect(string beforeClip)
+    {
+        Play(beforeClip, () => StartCoroutine(PlayIncorrectRoutine()));
+    }
     private IEnumerator PlayIncorrectRoutine()
     {
-        if (player.isPlaying)
+        while(player.isPlaying)
             yield return null;
 
         var clip = ResourceSchema.GetInCorrectClip();

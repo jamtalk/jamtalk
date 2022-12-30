@@ -130,6 +130,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
                     drag.gameObject.SetActive(false);
                 }
             }
+            else
+                audioPlayer.PlayIncorrect();
 
             drag.ResetPosition();
         };

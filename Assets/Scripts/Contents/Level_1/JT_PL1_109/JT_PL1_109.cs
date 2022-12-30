@@ -186,7 +186,12 @@ public class JT_PL1_109 : BaseContents
                 }
                 return;
             }
+            else
+                audioPlayer.PlayIncorrect();
         }
+        else
+            audioPlayer.PlayIncorrect();
+
         ResetToggles();
     }
     private void ResetToggles()

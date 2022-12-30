@@ -124,9 +124,9 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
         var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
-        PlayWord(value);
         if (currentQuestion.currentCorrect == value)
         {
+            PlayWord(value);
             if (finger != null)
                 finger.gameObject.SetActive(false);
 
@@ -164,6 +164,8 @@ public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
             };
             seq.Play();
         }
+        else
+            audioPlayer.PlayIncorrect(value.clip);
     }
 
     private void PlayCurrentWord(Action action = null)

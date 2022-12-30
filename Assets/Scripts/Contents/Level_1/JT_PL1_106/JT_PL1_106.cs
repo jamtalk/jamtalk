@@ -144,6 +144,7 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
             }
             else
             {
+                audioPlayer.PlayIncorrect();
                 ResetQuestion();
             }
         });
