@@ -11,6 +11,8 @@ public class AudioSinglePlayer : MonoBehaviour
     private Coroutine stopRoutine = null;
     private Coroutine overRoutine = null;
     private Coroutine delayRoutine = null;
+    private Coroutine incorrectRoutine = null;
+
     private void Awake()
     {
         if (player.clip != null && player.playOnAwake)
@@ -195,11 +197,23 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void PlayIncorrect()
     {
-        StartCoroutine(PlayIncorrectRoutine());
+        if (incorrectRoutine != null)
+        {
+            StopCoroutine(incorrectRoutine);
+            incorrectRoutine = null;
+        }
+
+        incorrectRoutine =  StartCoroutine(PlayIncorrectRoutine());
     }
     public void PlayIncorrect(string beforeClip)
     {
-        Play(beforeClip, () => StartCoroutine(PlayIncorrectRoutine()));
+        if (incorrectRoutine != null)
+        {
+            StopCoroutine(incorrectRoutine);
+            incorrectRoutine = null;
+        }
+
+        Play(beforeClip, () => incorrectRoutine = StartCoroutine(PlayIncorrectRoutine()));
     }
     private IEnumerator PlayIncorrectRoutine()
     {

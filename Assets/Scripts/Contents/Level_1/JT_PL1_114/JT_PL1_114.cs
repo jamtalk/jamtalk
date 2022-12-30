@@ -56,7 +56,6 @@ public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
         });
         ship.onInner += (value) =>
         {
-            
             AddAnswer(value);
             if (!CheckOver())
                 ship.OutObject(currentQuestion.alphabet, () => SetIntractable(true));

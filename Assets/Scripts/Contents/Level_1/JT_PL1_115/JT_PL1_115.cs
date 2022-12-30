@@ -170,7 +170,7 @@ public class JT_PL1_115 : BaseContents
             }
             else
             {
-                audioPlayer.Play(GameManager.Instance.GetResources(value.alhpabet).AudioData.phanics);
+                audioPlayer.PlayIncorrect(GameManager.Instance.GetResources(value.alhpabet).AudioData.phanics);
                 selected[0].card.Turnning(onCompleted: () => eventSystem.enabled = true);
                 selected[1].card.Turnning(onCompleted: () => eventSystem.enabled = true);
                 selected.Clear();

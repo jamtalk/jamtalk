@@ -86,6 +86,8 @@ public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
             {
                 audioPlayer.Play(data.act, () =>
                 {
+                    audioPlayer.PlayIncorrect();
+
                     card.card.Turnning(onCompleted: () => eventSystem.enabled = true);
                     selectText.text = string.Empty;
                 });

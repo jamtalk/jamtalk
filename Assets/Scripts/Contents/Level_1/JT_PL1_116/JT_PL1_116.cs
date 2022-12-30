@@ -172,6 +172,7 @@ public class JT_PL1_116 : BaseContents
             }
             else
             {
+                audioPlayer.PlayIncorrect();
                 selected[0].button.interactable = true;
                 selected[1].button.interactable = true;
             }

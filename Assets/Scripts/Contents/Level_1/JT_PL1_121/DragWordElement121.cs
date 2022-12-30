@@ -46,7 +46,10 @@ public class DragWordElement121 : WordElement121, IDragHandler,IEndDragHandler,I
             onDrop?.Invoke(targets.First());
         }
         else
+        {
+            audioPlayer.PlayIncorrect();
             transform.position = defaultPosition;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)

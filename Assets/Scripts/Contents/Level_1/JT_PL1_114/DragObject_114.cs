@@ -20,7 +20,7 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
     public eAlphabet alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), data.alphabet);
     private void Awake()
     {
-        button.onClick.AddListener(() => audioPlayer.Play(data.clip));
+        //button.onClick.AddListener(() => audioPlayer.Play(data.clip));
     }
     public void Init(AlphabetWordsData data)
     {
@@ -68,6 +68,8 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
             }
             onAnswer?.Invoke(correct);
         }
+        else
+            audioPlayer.PlayIncorrect(data.clip);
 
         rt.anchoredPosition = Vector2.zero;
     }

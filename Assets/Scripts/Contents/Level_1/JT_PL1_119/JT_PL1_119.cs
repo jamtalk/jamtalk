@@ -74,28 +74,26 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
 
     private void ButtonClickMotion(ButtonExitnction button, AlphabetWordsData data)
     {
-        eventSystem.enabled = false;
         if (finger != null)
             finger.gameObject.SetActive(false);
         if (currentQuestion.correct == data)
-            button.Exitnction();
-        else
-            button.Incorrect();
-        audioPlayer.Play(data.clip, () =>
         {
-            eventSystem.enabled = true;
-            if (currentQuestion.correct == data)
+            eventSystem.enabled = false;
+            button.Exitnction();
+            audioPlayer.Play(data.clip, () =>
             {
+                eventSystem.enabled = true;
                 button.Exitnction();
                 AddAnswer(data);
                 isNext = true;
-            }
-            else
-            {
-                if (finger != null)
-                    finger.gameObject.SetActive(true);
-            }
-        });
+            });
+        }
+        else
+        {
+            button.Incorrect();
+            audioPlayer.PlayIncorrect(data.clip);
+        }
+        
     }
 
     private void AddButtonListener(ButtonExitnction button, AlphabetWordsData data)
@@ -137,12 +135,13 @@ public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
         imageAlphabetUpper.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Upper, question.correct.Key);
         imageAlphabetLower.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.Yellow, eAlphabetType.Lower, question.correct.Key);
         var questions = question.totalQuestion;
-        for(int i = 0;i < buttons.Length; i++)
+        for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].Init(questions[i].sprite);
             buttons[i].name = questions[i].key;
             AddButtonListener(buttons[i], questions[i]);
         }
+        audioPlayer.Play(currentQuestion.correct.audio.phanics);
     }
 }
 public class Question119 : SingleQuestion<AlphabetWordsData>

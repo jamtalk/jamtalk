@@ -119,13 +119,16 @@ public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
 
     private void ItemClickMotion(Item113 item)
     {
-        audioPlayer.Play(GameManager.Instance.GetResources(item.value).AudioData.phanics);
+        var clip = GameManager.Instance.GetResources(item.value).AudioData.phanics;
         if (item.value == currentQuestion.correct)
         {
+            audioPlayer.Play(clip);
             ch.finger.gameObject.SetActive(false);
             eventSystem.enabled = false;
             thrower.Throw(item, ch.product.GetComponent<RectTransform>(), () => ch.SetProduct(item.product.sprite, item.value.ToString()));
         }
+        else
+            audioPlayer.PlayIncorrect(clip);
     }
 
     protected override void EndGuidnce()

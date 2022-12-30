@@ -63,10 +63,10 @@ public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
         button.button.onClick.RemoveAllListeners();
         button.button.onClick.AddListener(() =>
         {
-            if(data == currentQuestion.correct)
-            {
+            if (data == currentQuestion.correct)
                 ButtonClickMotion(button, data);
-            }
+            else
+                audioPlayer.PlayIncorrect();
         });
     }
     protected override List<Question118> MakeQuestion()
