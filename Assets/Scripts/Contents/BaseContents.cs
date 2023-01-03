@@ -33,7 +33,7 @@ public abstract class BaseContents : MonoBehaviour
 
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
-    private void SetCharactorAnimation(bool isQuestion = true)
+    private void SetCharactorAnimation(bool isQuestion = true, bool isLoop = false)
     {
         if (animationCharactors != null)
         {
@@ -41,7 +41,7 @@ public abstract class BaseContents : MonoBehaviour
             {
                 var motion = isQuestion ? item.eIdleMotion : item.eCorrectMotion;
                 var detail = isQuestion ? item.eIdleDetail : item.eCorrectDetail;
-                item.MotionChange(motion, detail, isQuestion);
+                item.MotionChange(motion, detail, isQuestion ? isQuestion : isLoop);
             }
         }
     }
@@ -51,9 +51,9 @@ public abstract class BaseContents : MonoBehaviour
         SetCharactorAnimation();
     }
 
-    protected virtual void CorrectAction()
+    protected virtual void CorrectAction(bool isLoop = false)
     {
-        SetCharactorAnimation(false);
+        SetCharactorAnimation(false, isLoop);
     }
 
     protected virtual void ShowResult()

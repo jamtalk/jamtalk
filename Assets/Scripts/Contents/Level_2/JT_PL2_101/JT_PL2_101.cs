@@ -89,13 +89,10 @@ public class JT_PL2_101 : BaseContents
 
     private void OnDrop(WordElement201 target)
     {
-        for(int i = 0; i < puzzles.Length; i++)
-        {
-            if(puzzles[i].name.Contains(target.name))
-            {
-                DropMotion(target);
-            }
-        }
+        if(target == null)
+            audioPlayer.PlayIncorrect();
+        else
+            DropMotion(target);
     }
 
     private void DropMotion(WordElement201 target)
@@ -173,7 +170,7 @@ public class JT_PL2_101 : BaseContents
     private IEnumerator SpeakRoutine(bool isShort = true, Action action = null)
     {
         bool isSpeak = false;
-        CorrectAction();
+        CorrectAction(true);
 
         yield return new WaitForSecondsRealtime(.5f);
 

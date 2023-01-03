@@ -62,6 +62,7 @@ public class DragElement201 : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         }
         else
         {
+            onDrop?.Invoke(null);
             //audioPlayer.Play(erorrClip);
             transform.position = defaultPosition;
         }
