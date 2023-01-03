@@ -146,14 +146,15 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
 
         planet.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(tabClip);
+            audioPlayer.Play(1f, tabClip);
             if (currentQuestion.correct == data)
             {
                 ClickMotion(planet, data);
             }
             else
             {
-                audioPlayer.Play(errorClip);
+                //audioPlayer.Play(errorClip);
+                audioPlayer.PlayIncorrect();
                 planet.transform.DOShakePosition(1f, 5f);
                 planet.isOn = false;
             }
@@ -164,7 +165,7 @@ public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
     private IEnumerator InitPlanet(VowelWordsData data)
     {
         if(isGuide)
-            audioPlayer.Play(tabClip);
+            audioPlayer.Play(1f, tabClip);
         yield return new WaitForSecondsRealtime(1f);
 
         audioPlayer.Play(boomClip);

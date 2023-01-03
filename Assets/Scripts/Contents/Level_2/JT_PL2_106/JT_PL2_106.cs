@@ -104,8 +104,8 @@ public class JT_PL2_106 : BaseContents
         shortButton.interactable = false;
         longButton.interactable = false;
         spinButton.onClick.AddListener(() => Spin());
-        shortButton.onClick.AddListener(() => ButtonListener(shortButton));
-        longButton.onClick.AddListener(() => ButtonListener(longButton));
+        shortButton.onClick.AddListener(() => ButtonListener(true));
+        longButton.onClick.AddListener(() => ButtonListener(false));
     }
 
     private void Init()
@@ -151,29 +151,33 @@ public class JT_PL2_106 : BaseContents
         }
     }
 
-    private void ButtonListener(Button button)
+    private void ButtonListener(bool isButtonShort)
     {
-        audioPlayer.Play(tabClip);
+        audioPlayer.Play(1f, tabClip);
 
-        for(int i = 0; i < WordsCount; i++)
+        string target = string.Empty;
+
+        var shortCount = shortWords.Where(x => x.key == textList[currentIndex].text).Count();
+        var longCount = longWords.Where(x => x.key == textList[currentIndex].text).Count();
+        var isCurrentShort = shortCount > longCount;
+
+        if(isButtonShort == isCurrentShort)
         {
-            var value = button.name == "ShortButton" ? shortWords[i].key : longWords[i].key;
-            if (textList[currentIndex].text.Contains(value))
+            currentCount[index].isOn = true;
+            index += 1;
+            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
             {
-                currentCount[index].isOn = true;
-                index += 1;
-                audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                {
-                    if (CheckOver())
-                        ShowResult();
-                    else if (isGuide)
-                        EndGuidnce();
-                });
-                shortButton.interactable = false;
-                longButton.interactable = false;
-                break;
-            }
+                if (CheckOver())
+                    ShowResult();
+                else if (isGuide)
+                    EndGuidnce();
+            });
+            shortButton.interactable = false;
+            longButton.interactable = false;
         }
+        else
+            audioPlayer.PlayIncorrect();
+            
     }
 
     private void Spin(TweenCallback callback = null)
