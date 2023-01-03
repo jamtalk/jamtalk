@@ -12,7 +12,7 @@ public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, I
 {
     [SerializeField]
     private bool interactable = false;
-    public event Action<PotionElement<T>> onDrop;
+    public event Action<PotionElement<T>, bool> onDrop;
     public event Action<PotionElement<T>> onDrag;
     public Text textValue;
     private Vector3 defaultPosition;
@@ -68,11 +68,12 @@ public class PotionElement<T> : MonoBehaviour , IDragHandler, IEndDragHandler, I
 
         if (targets.Count() > 0)
         {
+            onDrop?.Invoke(this, true);
             gameObject.SetActive(false);
-            onDrop?.Invoke(this);
         }
         else
         {
+            onDrop?.Invoke(this, false);
             ResetPosition();
             image.gameObject.SetActive(true);
             textValue.gameObject.SetActive(true);

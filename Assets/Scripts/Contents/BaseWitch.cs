@@ -53,7 +53,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
                     {
                         guideFinger.gameObject.SetActive(false);
                         target.gameObject.SetActive(false);
-                        OnDrop(target);
+                        OnDrop(target, true);
                         guideFinger.transform.localScale = new Vector3(1f, 1f, 1f);
                     });
                 });
@@ -99,27 +99,38 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
 
         magicWand.gameObject.SetActive(false);
         result.ShowResult(target.data.sprite, .5f);
-        audioPlayer.Play(1.5f, effectSound, () =>
+        audioPlayer.Play(1f, effectSound, () =>
         {
             AddAnswer(target.data);
         });
     }
 
-    protected virtual void OnDrop(PotionElement<T> target)
+    protected virtual void OnDrop(PotionElement<T> target, bool isPot)
     {
-        if (currentQuestion.correct == target.data)
+        if(isPot)
         {
-            DropMotion(target);
-            animationCharactors.First().DetailChange(currectMotion, false);
+            if (currentQuestion.correct.key == target.data.key)
+            {
+                DropMotion(target);
+                animationCharactors.First().DetailChange(currectMotion, false);
+            }
+            else
+            {
+                target.ResetPosition();
+                audioPlayer.PlayIncorrect();
+            }
         }
         else
+        {
             target.ResetPosition();
+            audioPlayer.PlayIncorrect();
+        }
     }
     protected virtual void OnDrag(PotionElement<T> target)
     {
         target.image.gameObject.SetActive(false);
         target.textValue.gameObject.SetActive(false);
-        audioPlayer.Play(potionSound);
+        audioPlayer.Play(1.5f, potionSound);
         magicWand.SetDrag(target);
     }
 
