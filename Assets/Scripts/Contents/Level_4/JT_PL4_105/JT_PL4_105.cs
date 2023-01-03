@@ -148,6 +148,8 @@ public class JT_PL4_105 : BaseContents
                 }
             });
         }
+        else
+            audioPlayer.PlayIncorrect();
     }
 
     private IEnumerator Eat()

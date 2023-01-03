@@ -167,6 +167,8 @@ public class JT_PL4_108 : BaseContents
             {
                 CountMotion();
             }
+            else
+                audioPlayer.PlayIncorrect();
 
             if(answerIndex == answerElements.Count)
             {

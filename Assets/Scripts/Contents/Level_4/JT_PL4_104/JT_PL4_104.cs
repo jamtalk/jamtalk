@@ -124,6 +124,7 @@ public class JT_PL4_104 : BaseContents
                 }
                 else
                 {
+                    audioPlayer.PlayIncorrect();
                     selectElement.Close();
                     element.Close();
                 }

@@ -132,6 +132,8 @@ public class JT_PL4_106 : SingleAnswerContents<Question4_106, DigraphsWordsData>
             var isCorrect = currentQuestion.correct.IncludedDigraphs == button.data.IncludedDigraphs;
             button.incorrectMark.SetActive(!isCorrect);
             button.button.interactable = isCorrect;
+
+            if (!isCorrect) audioPlayer.PlayIncorrect();
         }
         audioPlayer.Play(button.data.audio.phanics, () =>
         {

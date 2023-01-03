@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class SliderElement : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class SliderElement : MonoBehaviour
     public Text text;
     public GameObject addImage;
 
-    Sequence seq;
+    public Action onCollision;
     bool isTrigger = false;
     public bool isCompleted = false;
+    Sequence seq;
 
     public void Stop()
     {
@@ -45,6 +47,7 @@ public class SliderElement : MonoBehaviour
 
         button.transform.localEulerAngles = new Vector3(180, 0, 180);
 
+        onCollision?.Invoke();
         Move(false, () =>
         {
             Debug.Log("moveEnt");

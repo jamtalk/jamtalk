@@ -177,7 +177,8 @@ public class JT_PL4_109 : BaseContents
                 else
                 {
                     Debug.Log("set card turning");
-                    audioPlayer.Play(data.clip);
+                    //audioPlayer.Play(data.clip);
+                    audioPlayer.PlayIncorrect(data.clip);
                     selected[0].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected[1].card.Turnning(onCompleted: () => SetCardIntracable(true));
                     selected.Clear();

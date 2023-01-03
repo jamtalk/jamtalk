@@ -115,6 +115,7 @@ public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
             }
             else
             {
+                audioPlayer.PlayIncorrect();
                 // 우측 캐릭터 실망하는 애니매이팅 
             }
         });

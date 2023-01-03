@@ -56,7 +56,10 @@ public class JT_PL4_101 : BaseContents
         MakeQuestion();
 
         foreach (var item in sliderElements)
+        {
             item.button.onClick.AddListener(() => ClickMotion(item));
+            item.onCollision += () => audioPlayer.PlayIncorrect();
+        }
     }
 
     private void MakeQuestion()

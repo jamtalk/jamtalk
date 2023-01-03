@@ -89,6 +89,7 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
 
         button.onClick.AddListener(() =>
         {
+            button.interactable = false;
             charactor.ThrowBobber(imageButton.gameObject, () => ClickMotion(imageButton));
         });
     }
@@ -101,7 +102,6 @@ public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
         var button = imageButton.button;
         var data = imageButton.data;
 
-        button.interactable = false;
         for (int i = 0; i < buttons.Length; i++)
             buttons[i].gameObject.SetActive(false);
 
