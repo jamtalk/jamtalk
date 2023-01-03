@@ -171,6 +171,7 @@ public class JT_PL3_105 : BaseContents
                 }
                 else
                 {
+                    audioPlayer.PlayIncorrect();
                     SetMolesPosition();
                     eventSystem.enabled = true;
                 }

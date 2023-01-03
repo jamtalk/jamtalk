@@ -129,6 +129,8 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
                     target.Drop();
                     drag.gameObject.SetActive(false);
                 }
+                else
+                    audioPlayer.PlayIncorrect();
             }
             else
                 audioPlayer.PlayIncorrect();

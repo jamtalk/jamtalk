@@ -217,8 +217,11 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     private IEnumerator PlayIncorrectRoutine()
     {
+        yield return new WaitForEndOfFrame();
+        Debug.Log(player.isPlaying);
         while(player.isPlaying)
             yield return null;
+        Debug.Log("end while");
 
         var clip = ResourceSchema.GetInCorrectClip();
         Play(clip);

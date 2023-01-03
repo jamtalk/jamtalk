@@ -118,19 +118,15 @@ public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsDat
 
         element.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(data.audio.phanics);
+            audioPlayer.PlayIncorrect(data.audio.phanics);
         });
 
         element.onClick.AddListener(() =>
         {
             if (currentQuestion.correct.key.Contains(element.name))
-            {
                 DoubleClickMotion(data);
-            }
             else
-            {
-                audioPlayer.Play(data.audio.phanics);
-            }
+                audioPlayer.PlayIncorrect(data.audio.phanics);
         });
     }
 

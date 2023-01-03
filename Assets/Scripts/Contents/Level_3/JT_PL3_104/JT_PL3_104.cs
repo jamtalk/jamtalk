@@ -160,7 +160,6 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
             }
             else
             {
-                audioPlayer.Play(1f, errorClip);
                 bubble.isOn = false;
                 BubblesPlay(elements, 1f);
             }
@@ -303,7 +302,8 @@ public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
 
     private void BubblesPlay(List<BubbleElement> bubbles, float max)
     {
-        audioPlayer.Play(1f, errorClip);
+        //audioPlayer.Play(1f, errorClip);
+        audioPlayer.PlayIncorrect();
         eventSystem.enabled = false;
         for (int i = 0; i < bubbles.Count; i++)
             bubbles[i].InOut(() => eventSystem.enabled = true, 0.5f, max);
