@@ -129,7 +129,11 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     {
         button.onClickFirst.AddListener(() =>
         {
-            audioPlayer.Play(button.data.audio.phanics);
+            if(button.data.Digraphs == currentQuestion.currentCorrect.Digraphs)
+                audioPlayer.Play(button.data.audio.phanics);
+            else
+                audioPlayer.PlayIncorrect(button.data.audio.phanics);
+
         });
         button.onClickData += (value) =>
         {
@@ -138,13 +142,13 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     }
     private void CorrectButtonMotion(DoubleClick504 button)
     {
-        eventSystem.enabled = false;
         var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
 
         if (value.Digraphs == currentQuestion.currentCorrect.Digraphs)
         {
+            eventSystem.enabled = false;
             PlayWord(value);
             if (finger != null)
                 finger.gameObject.SetActive(false);
@@ -167,6 +171,8 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
                 });
             });
         }
+        else
+            audioPlayer.PlayIncorrect(button.data.audio.phanics);
     }
     private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
     { 

@@ -130,10 +130,12 @@ public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
         button.onClickFirst.AddListener(() =>
         {
             for (int i = 0; i < buttonQuestions.Length; i++)
-            {
                 buttonQuestions[i].isOn = buttonQuestions[i] == button;
+
+            if (currentQuestion.correct == data)
                 audioPlayer.Play(data.clip);
-            }
+            else
+                audioPlayer.PlayIncorrect(data.clip);
         });
 
         button.onClick.AddListener(() =>

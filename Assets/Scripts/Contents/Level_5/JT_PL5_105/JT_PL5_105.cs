@@ -154,14 +154,17 @@ public class JT_PL5_105 : BaseContents
     private void AddListener(DoubleClick505 button)
     {
         button.onClickFirst.RemoveAllListeners();
+        button.onClick.RemoveAllListeners();
 
         button.onClickFirst.AddListener(() =>
         {
             if (!button.isCheck)
-                return;
-
-            ClickMotion(button);
+                audioPlayer.PlayIncorrect();
+            else
+                ClickMotion(button);
         });
+
+        button.onClick.AddListener(() => audioPlayer.PlayIncorrect());
     }
 
     private void ClickMotion(DoubleClick505 button)

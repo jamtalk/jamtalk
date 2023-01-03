@@ -122,56 +122,56 @@ public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
     {
         button.onClickData += (value) =>
         {
-            CorrectButtonMotion(button);
+            if (currentQuestion.currentCorrect == button.data)
+                CorrectButtonMotion(button);
+            else
+                audioPlayer.PlayIncorrect(button.data.clip);
         };
     }
     private void CorrectButtonMotion(TextButton510 button)
     {
         eventSystem.enabled = false;
-        var value = button.data;
         var window = rocket.mask.GetComponent<RectTransform>();
         var rt = button.GetComponent<RectTransform>();
-        PlayWord(value, () => eventSystem.enabled = true);
-        if (currentQuestion.currentCorrect == value)
+        PlayWord(button.data, () => eventSystem.enabled = true);
+
+        rocket.fire.preserveAspect = true;
+        if (finger != null)
+            finger.gameObject.SetActive(false);
+
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].button.interactable = false;
+
+        var seq = DOTween.Sequence();
+
+        var moveTween = rt.DOMove(window.position, 1f);
+        moveTween.SetEase(Ease.Linear);
+        var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
+        scaleTweenStart.SetEase(Ease.Linear);
+        var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
+        scaleTweenEnd.SetEase(Ease.Linear);
+
+        seq.Append(scaleTweenStart);
+        seq.Append(scaleTweenEnd);
+        seq.Insert(0, moveTween);
+
+        seq.onComplete += () =>
         {
-            rocket.fire.preserveAspect = true;
-            if (finger != null)
-                finger.gameObject.SetActive(false);
-
-            for (int i = 0; i < buttons.Length; i++)
-                buttons[i].button.interactable = false;
-
-            var seq = DOTween.Sequence();
-
-            var moveTween = rt.DOMove(window.position, 1f);
-            moveTween.SetEase(Ease.Linear);
-            var scaleTweenStart = rt.DOScale(Vector3.one * 1.2f, .5f);
-            scaleTweenStart.SetEase(Ease.Linear);
-            var scaleTweenEnd = rt.DOScale(Vector3.one * 0.3f, .5f);
-            scaleTweenEnd.SetEase(Ease.Linear);
-
-            seq.Append(scaleTweenStart);
-            seq.Append(scaleTweenEnd);
-            seq.Insert(0, moveTween);
-
-            seq.onComplete += () =>
+            button.gameObject.SetActive(false);
+            rocket.Away(button.data.key, () =>
             {
-                button.gameObject.SetActive(false);
-                rocket.Away(value.key, () =>
-                {
-                    isStop = false;
-                    AddAnswer(value);
-                    Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}",
-                        currentQuestionIndex + 1, QuestionCount,
-                        currentQuestion.currentIndex + 1, currentQuestion.correctCount
-                        );
-                    if (!CheckOver())
-                        CallRokect();
-                    isRoutine = true;
-                });
-            };
-            seq.Play();
-        }
+                isStop = false;
+                AddAnswer(button.data);
+                Debug.LogFormat("???? ???? : {0}/{1}\n???? ???? ???? ???? : {2}/{3}",
+                    currentQuestionIndex + 1, QuestionCount,
+                    currentQuestion.currentIndex + 1, currentQuestion.correctCount
+                    );
+                if (!CheckOver())
+                    CallRokect();
+                isRoutine = true;
+            });
+        };
+        seq.Play();
     }
 
     private void PlayCurrentWord(Action action = null)
