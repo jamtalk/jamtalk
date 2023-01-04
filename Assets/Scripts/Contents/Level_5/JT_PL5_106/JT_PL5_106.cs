@@ -78,6 +78,8 @@ public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsDa
         {
             for (int i = 0; i < stars.Length; i++)
                 stars[i].ResetLine();
+
+            audioPlayer.PlayIncorrect();
         }
     }
 
