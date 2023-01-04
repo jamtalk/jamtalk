@@ -163,6 +163,7 @@ public class JT_PL2_103 : BaseContents
             throwingElements.Add(dragElement);
             list.Add(dragElement.GetComponent<RectTransform>());
             dragElement.onDrop += OnDrop;
+            dragElement.onIncorrectDrop += () => audioPlayer.PlayIncorrect();
 
             var size = throwingElements[i].GetComponent<RectTransform>().sizeDelta;
             size.y = elements[i].GetComponent<RectTransform>().sizeDelta.y;

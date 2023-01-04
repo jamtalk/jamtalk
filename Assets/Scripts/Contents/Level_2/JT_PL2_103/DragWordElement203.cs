@@ -12,10 +12,8 @@ public class DragWordElement203 : WordElement203, IDragHandler, IEndDragHandler,
     [SerializeField]
     private bool intractable = false;
     public event Action<WordElement203> onDrop;
+    public Action onIncorrectDrop;
     public event Action<DragWordElement203> onDrag;
-
-    public AudioSinglePlayer audioPlayer;
-    public AudioClip erorrClip;
 
     private Vector3 defaultPosition;
     private GraphicRaycaster caster => FindObjectOfType<GraphicRaycaster>();
@@ -56,7 +54,7 @@ public class DragWordElement203 : WordElement203, IDragHandler, IEndDragHandler,
         }
         else
         {
-            audioPlayer.Play(erorrClip);
+            onIncorrectDrop?.Invoke();
             transform.position = defaultPosition;
         }
     }
