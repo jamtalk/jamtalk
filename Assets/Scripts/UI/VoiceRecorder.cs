@@ -39,10 +39,10 @@ public class VoiceRecorder : MonoBehaviour
             Debug.LogFormat("녹음 시작 : {0}",deviceName);
             source.clip = Microphone.Start(deviceName, false, 10, 44100);//서버 송신용 8000
 
-            if(isSTT)
+            recordRoutine = StartCoroutine(RecordStopRoutine());
+            
+            if(!isSTT)
                 decibelRoutine = StartCoroutine(DecibelRoutine());
-            else
-                recordRoutine = StartCoroutine(RecordStopRoutine());
         }
     }
     public void Stop()
