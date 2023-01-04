@@ -35,7 +35,7 @@ public class JT_PL1_103 : BaseContents
     {
         base.EndGuidnce();
 
-        ShowQuestion();
+        ShowQuestion(0f);
     }
 
     protected override void Awake()
@@ -51,18 +51,16 @@ public class JT_PL1_103 : BaseContents
             sttButtonBG.gameObject.SetActive(false);
         };
         button.onClick.AddListener(() => PlayAudio());
-
-        PlayAudio();
     }
 
     
 
-    private void ShowQuestion()
+    private void ShowQuestion(float delay = 3f)
     {
         currentImage.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, capsLock, value);
         currentImage.preserveAspect = true;
         buttonSTT.interactable = false;
-        StartCoroutine(ShowQuestionAction());
+        StartCoroutine(ShowQuestionAction(delay));
     }
 
     private void RecordAction()
@@ -88,20 +86,22 @@ public class JT_PL1_103 : BaseContents
             {
                 CorrectAction();
 
-                if (capsLock == eAlphabetType.Upper)
-                    capsLock = eAlphabetType.Lower;
-                else
+                audioPlayer.Play(GameManager.Instance.GetResources(value).AudioData.act1, () =>
                 {
-                    capsLock = eAlphabetType.Upper;
-                    value++;
-                    index++;
-                }
+                    if (capsLock == eAlphabetType.Upper)
+                        capsLock = eAlphabetType.Lower;
+                    else
+                    {
+                        capsLock = eAlphabetType.Upper;
+                        value++;
+                        index++;
+                    }
 
-                if (CheckOver())
-                    ShowResult();
-                else
-                    ShowQuestion();
-
+                    if (CheckOver())
+                        ShowResult();
+                    else
+                        ShowQuestion();
+                });
             }
             else
                 ShowQuestion();
@@ -120,7 +120,7 @@ public class JT_PL1_103 : BaseContents
         audioPlayer.Play(clipValue, () => buttonSTT.interactable = true); 
     }
 
-    private IEnumerator ShowQuestionAction(float value = 3f)
+    private IEnumerator ShowQuestionAction(float value = 1f)
     {
         yield return new WaitForSecondsRealtime(value);
 

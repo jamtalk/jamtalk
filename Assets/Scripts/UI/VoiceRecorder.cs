@@ -12,11 +12,11 @@ using sw = System.Diagnostics;
 public class VoiceRecorder : MonoBehaviour
 {
     public AudioSource source => GetComponent<AudioSource>();
+    [HideInInspector]
     public string deviceName;
     public Action<bool, string> onSTTResult;
     public Action<bool> onDecibelResult;
     public Action onStopRecord;
-    public bool isLetter = false;
 
     private Coroutine decibelRoutine;
     private Coroutine recordRoutine;

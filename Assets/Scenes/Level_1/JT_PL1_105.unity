@@ -1046,10 +1046,11 @@ MonoBehaviour:
   audioPlayer: {fileID: 2030932875}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
   valueViewer:
   - {fileID: 349261876}
   - {fileID: 300474237}
-  wordImage: {fileID: 0}
+  wordImage: {fileID: 1798120681}
   buttonAudio:
   - {fileID: 505905497}
   - {fileID: 1801284724}
@@ -1514,6 +1515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce14ecb39c187364884b26d868482629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceName: 
+  isLetter: 0
 --- !u!82 &1917061397
 AudioSource:
   m_ObjectHideFlags: 0
