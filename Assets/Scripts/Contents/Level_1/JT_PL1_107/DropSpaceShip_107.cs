@@ -21,6 +21,7 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public Image lineImage => line_rt.GetComponent<Image>();
     public Action<ResourceWordsElement> onClick;
     public event Action onDrop;
+    public Action onIncorrectDrop;
     public ResourceWordsElement data { get; private set; }
     private void Awake()
     {
@@ -102,6 +103,7 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
         }
         else
         {
+            onIncorrectDrop?.Invoke();
             var size = line_rt.sizeDelta;
             size.y = 0;
             line_rt.sizeDelta = size;

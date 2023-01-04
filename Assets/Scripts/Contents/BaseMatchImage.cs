@@ -73,16 +73,10 @@ public abstract class BaseMatchImage<T> : BaseContents
             drops[i].onClick += PlayAudio;
             drags[i].onClick += PlayAudio;
 
-            drags[i].onDrop += () =>
-            {
-                onDrop();
-                Debug.Log(drags[i].name);
-            };
-            drops[i].onDrop += () =>
-            {
-                onDrop();
-                Debug.Log(drops[i].name);
-            };
+            drags[i].onDrop += () => onDrop();
+            drops[i].onDrop += () => onDrop();
+            drags[i].onIncorrectDrop += () => audioPlayer.PlayIncorrect();
+            drops[i].onIncorrectDrop += () => audioPlayer.PlayIncorrect();
         }
     }
 

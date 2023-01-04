@@ -16,6 +16,7 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     public RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
     public event Action onDrop;
+    public Action onIncorrectDrop;
     public event Action<ResourceWordsElement> onClick;
     public bool intractable = true;
     public bool isConnected = false;
@@ -67,6 +68,7 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
         }
         else
         {
+            onIncorrectDrop?.Invoke();
             var size = line_rt.sizeDelta;
             size.y = 0;
             line_rt.sizeDelta = size;
