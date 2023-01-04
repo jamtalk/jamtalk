@@ -172,7 +172,6 @@ GameObject:
   - component: {fileID: 533726738}
   - component: {fileID: 533726737}
   - component: {fileID: 533726736}
-  - component: {fileID: 533726735}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -199,21 +198,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &533726735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533726733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6eace829edb7fc40b9813aae5065e7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRecoding: {fileID: 1388532540}
-  eventSystem: {fileID: 1106098559}
-  button: {fileID: 533726738}
 --- !u!114 &533726736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce14ecb39c187364884b26d868482629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceName: 
 --- !u!82 &533726737
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1129,12 +1114,13 @@ MonoBehaviour:
   audioPlayer: {fileID: 1951552059}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
   valueViewer: {fileID: 1282102808}
   wordImage: {fileID: 1985653729}
   buttonAudio:
   - {fileID: 544977240}
   - {fileID: 1190836500}
-  buttonSTT: {fileID: 533726735}
+  buttonSTT: {fileID: 533726738}
   sttResultViewer: {fileID: 2080804971}
 --- !u!1 &1951552057
 GameObject:

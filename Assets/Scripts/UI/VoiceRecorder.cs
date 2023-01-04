@@ -95,8 +95,6 @@ public class VoiceRecorder : MonoBehaviour
             decibelRoutine = null;
         }
 
-        Debug.Log(GetAveragedVolume());
-
         RequestManager.Instance.RequestGoogleSTT(this, (response) =>
         {
             //Debug.Log(response.GetLog());

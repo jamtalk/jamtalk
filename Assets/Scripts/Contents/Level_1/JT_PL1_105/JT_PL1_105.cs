@@ -9,7 +9,7 @@ public class JT_PL1_105 : STTContents<AlphabetWordsData, Image[]>
 {
     protected override int QuestionCount => 3;
 
-    protected override eContents contents => throw new System.NotImplementedException();
+    protected override eContents contents => eContents.JT_PL1_105;
 
     protected override List<Question_STT<AlphabetWordsData>> MakeQuestion()
     {

@@ -11,10 +11,11 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
     public TValueViewer valueViewer;
     public Image wordImage;
     public Button[] buttonAudio;
-    public STTButton buttonSTT;
+    public Button buttonSTT;
+    private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
     public Text sttResultViewer;
     private Tween buttonTween;
-    protected override bool CheckOver() => currentQuestionIndex == QuestionCount;
+    protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
     protected override float GetDuration() => (float)(currentQuestionIndex + 1f) / (float)QuestionCount;
 
@@ -33,13 +34,56 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
         {
             buttonAudio[i].onClick.AddListener(() =>
             {
-                audioPlayer.Play(currentQuestion.correct.clip, PlayButtonTween);
+                audioPlayer.Play(currentQuestion.correct.clip); //, PlayButtonTween);
             });
         }
 
-        buttonSTT.onSTT += OnSTTResult;
-        buttonSTT.onRecord += STTButtonAnimating;
+        buttonSTT.onClick.AddListener(RecordAction);
+        recorder.onSTTResult += OnSTTResult;
+        recorder.onStopRecord += () =>
+        {
+            StopButtonTween();
+            //recorder.SendSTT();
+        };
     }
+
+    private void RecordAction()
+    {
+        recorder.RecordOrSendSTT();
+        var isRecord = Microphone.IsRecording(recorder.deviceName);
+
+        if (isRecord)
+            PlayButtonTween();
+        else
+            StopButtonTween();
+    }    
+
+    protected abstract void ShowValue(Question_STT<TData> question);
+    protected override void ShowQuestion(Question_STT<TData> question)
+    {
+        ShowValue(question);
+        StopButtonTween();
+
+        wordImage.sprite = question.correct.sprite;
+        wordImage.preserveAspect = true;
+
+        if (PlayClipOnShow)
+            audioPlayer.Play(question.correct.clip);
+    }
+
+    protected virtual void OnSTTResult(bool success, string result)
+    {
+
+        Debug.LogFormat("question lenth : {0}\n currentQuestionIndex : {1}", questions.Count, currentQuestionIndex);
+        sttResultViewer.text = result;
+        //if ("hey".Contains(result))
+        if (CheckCorrect(result))
+        {
+            AddAnswer(currentQuestion.correct);
+        }
+    }
+
+    protected virtual bool CheckCorrect(string value) => currentQuestion.correct.key.ToLower() == value.ToLower();
 
     private void PlayButtonTween()
     {
@@ -54,56 +98,16 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
         buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
         buttonTween.Play();
     }
-    private void OnDisable()
+    private void StopButtonTween()
     {
-        buttonSTT.onSTT -= OnSTTResult;
-        buttonSTT.onRecord -= STTButtonAnimating;
-    }
-    protected override void ShowQuestion(Question_STT<TData> question)
-    {
-        ShowValue(question);
-        wordImage.sprite = question.correct.sprite;
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
 
-        if (buttonTween != null)
-        {
-            buttonTween.Kill();
-            buttonTween = null;
-        }
-        if(PlayClipOnShow)
-            audioPlayer.Play(question.correct.clip, PlayButtonTween);
-        wordImage.preserveAspect = true;
+        buttonSTT.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f);
     }
-    protected abstract void ShowValue(Question_STT<TData> question);
-    protected virtual void OnSTTResult(string result)
-    {
-        sttResultViewer.text = result;
-        if (CheckCorrect(result))
-        {
-            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-            {
-                currentQuestionIndex += 1;
-                if (CheckOver())
-                    ShowResult();
-                else
-                    AddAnswer(currentQuestion.correct);
-            });
-        }
-    }
-    private void STTButtonAnimating(bool activate)
-    {
-        if (buttonTween != null)
-        {
-            buttonTween.Kill();
-            buttonTween = null;
-        }
-        if (!activate)
-            PlayButtonTween();
-    }
-    private void OnSTTError(string message)
-    {
-        Debug.LogError(message);
-    }
-    protected virtual bool CheckCorrect(string value) => currentQuestion.correct.key.ToLower() == value.ToLower();
 }
 public class Question_STT<TData> : SingleQuestion<TData> where TData : ResourceWordsElement
 {
