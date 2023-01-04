@@ -199,11 +199,14 @@ public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseCont
         {
             currentIndex += 1;
             scoreBoard.AddScore(100);
+            PlaySound();
         }
         else
+        {
+            audioPlayer.PlayIncorrect();
             scoreBoard.IncreaseIncorrect();
+        }
 
-        PlaySound();
 
     }
     protected abstract void PlayClip();
