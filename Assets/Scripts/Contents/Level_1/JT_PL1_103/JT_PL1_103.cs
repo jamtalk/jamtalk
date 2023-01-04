@@ -32,10 +32,15 @@ public class JT_PL1_103 : BaseContents
     protected override void Awake()
     {
         buttonSTT.onClick.AddListener(RecordAction);
-        recorder.onSTTResult += AddAnswer;
+        recorder.onDecibelResult += AddAnswer;
 
         base.Awake();
         button.onClick.AddListener(PlayAudio);
+
+        recorder.onStopRecord += () =>
+        {
+            StopButtonTween();
+        };
     }
 
     protected override void EndGuidnce()
@@ -56,7 +61,7 @@ public class JT_PL1_103 : BaseContents
 
     private void RecordAction()
     {
-        recorder.RecordOrSendSTT();
+        recorder.RecordOrSendSTT(false);
         var isRecord = !sttButtonBG.gameObject.activeSelf;
         sttButtonBG.gameObject.SetActive(isRecord);
 
@@ -77,17 +82,13 @@ public class JT_PL1_103 : BaseContents
         buttonTween.Play();
     }
 
-    private void AddAnswer(bool success, string value)
+    private void AddAnswer(bool success)
     {
         if (!success)
-            Debug.Log("STT Recognition Failed !");
+            Debug.Log("Decibel Recognition Failed !");
         else
         {
-            var currentValue = index == 0 ? question.ToString().ToUpper() : question.ToString().ToLower();
-            var isContains = value == currentValue;
-            Debug.LogFormat("{0} == {1}, {2}", currentValue, value, isContains);
-
-            if (isContains)
+            if (success)
             {
                 index++;
                 if (CheckOver())
@@ -120,5 +121,7 @@ public class JT_PL1_103 : BaseContents
             buttonTween = null;
             buttonSTT.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         }
+
+        sttButtonBG.gameObject.SetActive(false);
     }
 }
