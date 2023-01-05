@@ -43,7 +43,7 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
         recorder.onStopRecord += () =>
         {
             StopButtonTween();
-            //recorder.SendSTT();
+            recorder.SendSTT();
         };
     }
 

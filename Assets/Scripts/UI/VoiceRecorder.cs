@@ -48,7 +48,6 @@ public class VoiceRecorder : MonoBehaviour
     public void Stop()
     {
         Debug.Log("종료");
-        onStopRecord?.Invoke();
         source.Stop();
         Microphone.End(deviceName);
 
@@ -63,6 +62,7 @@ public class VoiceRecorder : MonoBehaviour
             StopCoroutine(recordRoutine);
             recordRoutine = null;
         }
+        onStopRecord?.Invoke();
     }
 
     public void RecordOrSendSTT(bool isSTT = true)
