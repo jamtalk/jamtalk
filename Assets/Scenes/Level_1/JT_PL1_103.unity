@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce14ecb39c187364884b26d868482629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceName: 
 --- !u!82 &195851904
 AudioSource:
   m_ObjectHideFlags: 0
@@ -623,6 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce14ecb39c187364884b26d868482629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceName: 
 --- !u!82 &1030507342
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1299,6 +1301,7 @@ MonoBehaviour:
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
   animationCharactors:
   - {fileID: 815886431}
+  isGUidence: 0
   currentImage: {fileID: 1657572395}
   button: {fileID: 815886432}
   buttonSTT: {fileID: 1030507344}

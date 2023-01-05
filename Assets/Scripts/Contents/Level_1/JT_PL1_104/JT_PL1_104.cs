@@ -15,6 +15,7 @@ public class JT_PL1_104 : BaseContents
     protected override eContents contents => eContents.JT_PL1_104;
     protected override int GetTotalScore() => 1;
     protected override bool CheckOver() => questionsCount == currentIndex && type == eAlphabetType.Lower;
+    protected override bool isGuidence => false;
 
     protected eAlphabet[] targets;
     protected int currentIndex = 0;

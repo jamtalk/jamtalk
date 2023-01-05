@@ -21,6 +21,7 @@ public class JT_PL1_103 : BaseContents
 
     protected override bool CheckOver() => index >= GetTotalScore();
     protected override int GetTotalScore() => Enum.GetNames(typeof(eAlphabet)).ToList().Count;
+    protected override bool isGuidence => false;
     protected int index = 0;
     private eAlphabetType capsLock = eAlphabetType.Upper;
 

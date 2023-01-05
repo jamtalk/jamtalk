@@ -30,6 +30,7 @@ public abstract class BaseContents : MonoBehaviour
     protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
+    protected virtual bool isGuidence => true;
 
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
@@ -108,7 +109,9 @@ public abstract class BaseContents : MonoBehaviour
         startTime = DateTime.Now;
 
         Instantiate(exitButton, transform);
-        ShowGuidnce();
+
+        if(isGuidence)
+            ShowGuidnce();
     }
     protected virtual void ShowGuidnce()
     {

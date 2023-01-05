@@ -18,13 +18,8 @@ public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Que
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
     protected override float GetDuration() => (float)(currentQuestionIndex + 1f) / (float)QuestionCount;
+    protected override bool isGuidence => false;
 
-    protected override IEnumerator ShowGuidnceRoutine()
-    {
-        yield return base.ShowGuidnceRoutine();
-
-        EndGuidnce();
-    }
     protected override void Awake()
     {
         base.Awake();

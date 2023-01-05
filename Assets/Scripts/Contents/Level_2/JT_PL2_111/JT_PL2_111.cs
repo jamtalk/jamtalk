@@ -33,6 +33,8 @@ public class JT_PL2_111 : BaseContents
     protected override bool CheckOver() => currentIndex == QuestionCount;
 
     protected override int GetTotalScore() => QuestionCount;
+    protected override bool isGuidence => false;
+
     protected override void Awake()
     {
         base.Awake();
