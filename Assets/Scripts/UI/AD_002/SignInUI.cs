@@ -1,4 +1,5 @@
 using GJGameLibrary;
+using Kakaotalk;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,25 +27,39 @@ public class SignInUI : MonoBehaviour
             signUp.gameObject.SetActive(true);
         });
         buttonSignIn.onClick.AddListener(SignIn);
+        buttonKakao.onClick.AddListener(kakao);
+
 
         if (PlayerPrefs.HasKey("ID"))
             email.text = PlayerPrefs.GetString("ID");
 
         toggleSave.isOn = PlayerPrefs.HasKey("ID");
     }
+    private void kakao()
+    {
+        KakaoSdk.Initialize(() => {
+            KakaoSdk.Login(LoginMethod.Both, (token) => {
+                Debug.Log(JsonUtility.ToJson(token));
+                KakaoSdk.GetProfile((profile) => {
+                    Debug.Log(JsonUtility.ToJson(profile));
+                }, e => Debug.Log(e));
+            }, e => Debug.Log(e));
+        }, e => Debug.Log(e));
+    }
+
     public void SignIn()
     {
         if (string.IsNullOrEmpty(email.text))
         {
-            AndroidPluginManager.Instance.Toast("이메일을 입력하세요");
+            AndroidPluginManager.Instance.Toast("???????? ??????????");
         }
         else if (string.IsNullOrEmpty(pw.text))
         {
-            AndroidPluginManager.Instance.Toast("비밀번호를 입력하세요");
+            AndroidPluginManager.Instance.Toast("?????????? ??????????");
         }
         else
         {
-            Debug.Log("리퀘스트 보냄");
+            Debug.Log("???????? ????");
             var param = new SignInParam("email:"+email.text, pw.text, string.Empty, string.Empty);
             loading.gameObject.SetActive(true);
             RequestManager.Instance.RequestAct(param, (res) =>
