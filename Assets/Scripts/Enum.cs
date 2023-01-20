@@ -352,6 +352,12 @@ public enum eAPIAct
     award,          //어워드 달성 기록하기
     child,          //자녀 등록
     childout,       //자녀 정보 수정
+    coupon_list,    //쿠폰조회
+    edustat,        //진척도 상세
+    child_list,     //자녀목록
+    child_info,     //자녀조회
+
+    // 레벨 테스트 edulog 로 중복값 
 }
 
 public enum eAtlasType

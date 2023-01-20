@@ -115,7 +115,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
                 var response = new ResponseData(success, data);
                 if (success)
                 {
-                    Debug.Log(data.ToString());
+                    Debug.Log(param.ToString() + "\n" + data.ToString());
                     onResponse.Invoke(response);
                 }
             }
