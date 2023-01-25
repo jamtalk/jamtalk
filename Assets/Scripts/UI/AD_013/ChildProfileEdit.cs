@@ -121,19 +121,46 @@ public class ChildProfileEdit : MonoBehaviour
 
     private void ConfirmAction()
     {
-        if (isEdit)
+        if (!isEdit)
         {
-            var checkList = childrens.Where(x => x.isCheck).ToArray();
+            if (isAdd)
+            { // 아이 정보 추가
+                if (string.IsNullOrEmpty(addProfile.textName.text) || string.IsNullOrEmpty(addProfile.textBirth.text))
+                    return;
+                else
+                {
+                    var param = new ChildParam(addProfile.textBirth.text, addProfile.textBirth.text, string.Empty);
 
-            if (checkList.Length == 0)
-                return;
+                    RequestManager.Instance.RequestAct(param, (res) =>
+                    {
+                        var result = res.GetResult<ActRequestResult>();
 
-            // 아이 삭제 requset 호출
+                        if(result.code != eErrorCode.Success)
+                        {
+                            Debug.Log(result.code);
+                            AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+                        }
+                        else
+                        {
+                            // 추가 된 아이 정보 표시
+                        }
+                    });
+                }
+            }
+            else
+            { // 아이 정보 삭제 
+                var checkList = childrens.Where(x => x.isCheck).ToArray();
 
-            foreach (var item in checkList)
-                Destroy(item.gameObject);
+                if (checkList.Length == 0)
+                    return;
 
-            childrens.Clear();
+                // 아이 삭제 requset 호출
+
+                foreach (var item in checkList)
+                    Destroy(item.gameObject);
+
+                childrens.Clear();
+            }
         }
         else
         {

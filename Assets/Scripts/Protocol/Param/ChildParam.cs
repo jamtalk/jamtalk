@@ -9,9 +9,9 @@ public class ChildParam : UserParam
     public string name;
     public string jumin;
     public string display;
-    public string level;
+    public int level;
 
-    public ChildParam(string name, string jumin, string display, string level)
+    public ChildParam(string name, string jumin, string display, int level = 1)
     {
         this.name = name;
         this.jumin = jumin;
