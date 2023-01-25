@@ -47,7 +47,7 @@ public class ProfileSettingPage : MonoBehaviour
     /// </summary>
     private void Init()
     {
-        //GetChildren();
+        //GetChildren(); *_*
         //GetChild();
     }
 
@@ -66,7 +66,7 @@ public class ProfileSettingPage : MonoBehaviour
             }
             else
             {
-                // 아이 정보 설정 
+                // 아이 정보 설정 *_*
                 //childName.text =
                 //childBirth.text =
                 //childGender.text =
@@ -88,7 +88,7 @@ public class ProfileSettingPage : MonoBehaviour
             }
             else
             {
-                // 아이 목록 
+                // 아이 목록  *_*
             }
         });
     }

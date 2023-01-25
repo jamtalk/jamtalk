@@ -10,7 +10,6 @@ public class CouponRegist : MonoBehaviour
     public TMP_InputField couponInput;
     public Button registButton;
     public Button exitButton;
-    public Action<string> registAction;
 
     private void OnEnable()
     {
@@ -25,7 +24,11 @@ public class CouponRegist : MonoBehaviour
 
     private void RegistAction()
     {
-        if (couponInput.text == string.Empty)
-            registAction?.Invoke(couponInput.text);
+        if (string.IsNullOrEmpty(couponInput.text))
+            return;
+        else
+        {
+            // 쿠폰 등록 param 설정 *_*
+        }
     }
 }

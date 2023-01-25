@@ -142,7 +142,7 @@ public class ChildProfileEdit : MonoBehaviour
                         }
                         else
                         {
-                            // 추가 된 아이 정보 표시
+                            // 추가 된 아이 정보 표시 *_*
                         }
                     });
                 }
@@ -154,7 +154,7 @@ public class ChildProfileEdit : MonoBehaviour
                 if (checkList.Length == 0)
                     return;
 
-                // 아이 삭제 requset 호출
+                // 아이 삭제 requset 호출 *_*
 
                 foreach (var item in checkList)
                     Destroy(item.gameObject);
@@ -164,7 +164,7 @@ public class ChildProfileEdit : MonoBehaviour
         }
         else
         {
-            // 아이 정보 수정 requset 호출 
+            // 아이 정보 수정 requset 호출 *_*
         }
     }
 }
