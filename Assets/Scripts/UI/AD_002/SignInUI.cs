@@ -1,5 +1,6 @@
 using GJGameLibrary;
 using Kakaotalk;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,14 +38,17 @@ public class SignInUI : MonoBehaviour
     }
     private void kakao()
     {
+        String keyHash = KakaoSdk.GetKeyHash();
+        Debug.Log("key hash : " +  keyHash);
+
         KakaoSdk.Initialize(() => {
             KakaoSdk.Login(LoginMethod.Both, (token) => {
                 Debug.Log(JsonUtility.ToJson(token));
                 KakaoSdk.GetProfile((profile) => {
                     Debug.Log(JsonUtility.ToJson(profile));
-                }, e => Debug.Log(e));
-            }, e => Debug.Log(e));
-        }, e => Debug.Log(e));
+                }, e => Debug.Log("a : " + e));
+            }, e => Debug.Log("b : " + e));
+        }, e => Debug.Log("c : " +e));
     }
 
     public void SignIn()
