@@ -27,8 +27,8 @@ public class SignInUI : MonoBehaviour
             pw.text = string.Empty;
             signUp.gameObject.SetActive(true);
         });
-        buttonSignIn.onClick.AddListener(SignIn);
-        buttonKakao.onClick.AddListener(kakao);
+        buttonSignIn.onClick.AddListener(() => SignIn(email.text, pw.text, eProvider.none, string.Empty));
+        buttonKakao.onClick.AddListener(KakaoLogin);
 
 
         if (PlayerPrefs.HasKey("ID"))
@@ -36,35 +36,77 @@ public class SignInUI : MonoBehaviour
 
         toggleSave.isOn = PlayerPrefs.HasKey("ID");
     }
-    private void kakao()
+    private void KakaoLogin()
     {
         String keyHash = KakaoSdk.GetKeyHash();
         Debug.Log("key hash : " +  keyHash);
 
         KakaoSdk.Initialize(() => {
             KakaoSdk.Login(LoginMethod.Both, (token) => {
-                Debug.Log(JsonUtility.ToJson(token));
+                Debug.Log("token :" + JsonUtility.ToJson(token));
+
+                KakaoSdk.GetUserInformation((info) =>
+                {
+                    Debug.Log("info : " + JsonUtility.ToJson(info));
+                }, e => Debug.Log("infoError : e"));
+
                 KakaoSdk.GetProfile((profile) => {
-                    Debug.Log(JsonUtility.ToJson(profile));
-                }, e => Debug.Log("a : " + e));
-            }, e => Debug.Log("b : " + e));
-        }, e => Debug.Log("c : " +e));
+                    Debug.Log("profile : " + JsonUtility.ToJson(profile));
+                }, e => Debug.Log("profileError : " + e));
+            }, e => Debug.Log("login : " + e));
+        }, e => Debug.Log("iniitalizeError : " + e));
     }
 
-    public void SignIn()
+    private void SignUpSNS(eProvider eProvider, string UID, string name, string email)
     {
-        if (string.IsNullOrEmpty(email.text))
+        var providerID = eProvider.ToString().Substring(0,2) + UID;
+        var param = new SignUpParam(providerID, providerID, name, email, string.Empty, string.Empty, eProvider.ToString(), string.Empty, UID, string.Empty);
+
+        RequestManager.Instance.RequestAct(param, res =>
         {
-            AndroidPluginManager.Instance.Toast("???????? ??????????");
-        }
-        else if (string.IsNullOrEmpty(pw.text))
-        {
-            AndroidPluginManager.Instance.Toast("?????????? ??????????");
-        }
+            var result = res.GetResult<ActRequestResult>();
+
+            if(result.code != eErrorCode.Success)
+            {
+                //fail
+            }
+            else
+            {
+                string snsType = string.Empty;
+                if (eProvider == eProvider.kakao)
+                    snsType = "카카오";
+                else if (eProvider == eProvider.naver)
+                    snsType = "네이버";
+                else
+                    snsType = "페이스북";
+                
+                AndroidPluginManager.Instance.Toast(string.Format("{0} 회원가입이 완료되었습니다", snsType));
+
+                SignIn(providerID, providerID, eProvider, UID);
+            }
+        });
+    }
+
+    public void SignIn(string id, string pw, eProvider eProvider, string UID)
+    {
+        if (string.IsNullOrEmpty(id))
+            id = email.text;
+        if (string.IsNullOrEmpty(pw))
+            pw = this.pw.text;
+
+        if (string.IsNullOrEmpty(id))
+            AndroidPluginManager.Instance.Toast("아이디를 입력하세요.");
+        else if (string.IsNullOrEmpty(pw))
+            AndroidPluginManager.Instance.Toast("비밀번호를 입력하세요.");
         else
         {
-            Debug.Log("???????? ????");
-            var param = new SignInParam("email:"+email.text, pw.text, string.Empty, string.Empty);
+            var provider = string.Empty;
+            if (eProvider != eProvider.none)
+                provider = eProvider.ToString();
+            else
+                id = "email:" + id;
+
+            var param = new SignInParam(id, pw, provider, UID);
             loading.gameObject.SetActive(true);
             RequestManager.Instance.RequestAct(param, (res) =>
             {
@@ -78,12 +120,12 @@ public class SignInUI : MonoBehaviour
                 else
                 {
                     if(toggleSave.isOn)
-                        PlayerPrefs.SetString("ID", email.text);
+                        PlayerPrefs.SetString("ID", id);
                     else if(PlayerPrefs.HasKey("ID"))
                         PlayerPrefs.DeleteKey("ID");
 
                     if (toggleAutoSignIn.isOn)
-                        PlayerPrefs.SetString("PW", pw.text);
+                        PlayerPrefs.SetString("PW", pw);
                     else if (PlayerPrefs.HasKey("PW"))
                         PlayerPrefs.DeleteKey("PW");
 

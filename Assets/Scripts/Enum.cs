@@ -374,6 +374,14 @@ public enum eErrorCode
     NonexistID = 402,
 }
 
+public enum eProvider
+{
+    kakao,
+    naver,
+    facebook,
+    none,
+}
+
 public enum eCharactorMotion
 {
     ecoco_Default,
