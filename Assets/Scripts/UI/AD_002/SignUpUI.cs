@@ -108,14 +108,15 @@ public class SignUpUI : MonoBehaviour
         {
             loading.gameObject.SetActive(true);
             var param = new ExistIDParam(email.text);
+
             RequestManager.Instance.RequestAct(param, callback =>
             {
                 loading.gameObject.SetActive(false);
                 isChecked = callback.GetResult<ActRequestResult>().code == eErrorCode.Success;
-                if (!isChecked)
-                    AndroidPluginManager.Instance.Toast("이미 존재하는 계정 입니다");
-                else
+                if (isChecked)
                     AndroidPluginManager.Instance.Toast("사용 가능한 계정 입니다");
+                else
+                    AndroidPluginManager.Instance.Toast("이미 존재하는 계정 입니다");
             });
         }
     }
