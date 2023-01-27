@@ -32,8 +32,11 @@ public abstract class UserParam : ActParam
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
+
         if (string.IsNullOrEmpty(user_id))
-            user_id = UserDataManager.Instance.CurrentUser.user_id.Replace("eamil:", string.Empty);
+            user_id = UserDataManager.Instance.CurrentUser.user_id.Replace("email:", string.Empty);
+        else
+            user_id.Replace("email:", string.Empty);
 
         form.AddField("user_id", "email:"+user_id);
         return form;
