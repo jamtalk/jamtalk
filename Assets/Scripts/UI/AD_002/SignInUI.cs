@@ -3,6 +3,7 @@ using System.Collections;
 using GJGameLibrary;
 using Kakaotalk;
 using Newtonsoft.Json.Linq;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 public class SignInUI : MonoBehaviour
@@ -34,14 +35,17 @@ public class SignInUI : MonoBehaviour
         buttonNaver.onClick.AddListener(() => OnClickSigninSNS(eProvider.naver));
         buttonFaceBook.onClick.AddListener(() => OnClickSigninSNS(eProvider.facebook));
 
-        if (!PlayerPrefs.HasKey("SignInSNS"))
+        var userProvider = (eProvider)Enum.Parse(typeof(eProvider), PlayerPrefs.GetString("Provider"));
+        if (userProvider == eProvider.none)
         {
             if (PlayerPrefs.HasKey("ID"))
                 email.text = PlayerPrefs.GetString("ID");
             toggleSave.isOn = PlayerPrefs.HasKey("ID");
         }
+        else
+        {
 
-        //SignSNS.Instance.onSignIn += SignIn;
+        }
     }
 
     private void OnClickSigninSNS(eProvider provider) =>
@@ -68,25 +72,20 @@ public class SignInUI : MonoBehaviour
                 }
                 else
                 {
-                    if(toggleSave.isOn && eProvider == eProvider.none)
+
+                    if (toggleSave.isOn)
                         PlayerPrefs.SetString("ID", id);
                     else if(PlayerPrefs.HasKey("ID"))
                         PlayerPrefs.DeleteKey("ID");
 
                     if (toggleAutoSignIn.isOn)
-                    {
-                        if (eProvider != eProvider.none)
-                        {
-                            PlayerPrefs.SetString("ID", id);
-                            PlayerPrefs.SetInt("SignInSNS", System.Convert.ToInt16(true));
-                        }
-                        else
-                            PlayerPrefs.DeleteKey("SignInSNS");
-
                         PlayerPrefs.SetString("PW", pw);
-                    }
                     else if (PlayerPrefs.HasKey("PW"))
                         PlayerPrefs.DeleteKey("PW");
+
+                    if (eProvider != eProvider.none)
+                        PlayerPrefs.SetString("ID", id);
+                    PlayerPrefs.SetString("Provider", eProvider.ToString());
 
                     PlayerPrefs.Save();
                     UserDataManager.Instance.LoadUserData(email.text, () =>

@@ -15,9 +15,11 @@ public class KakaoSigner : BaseSigner
         var name = string.Empty;
         var email = string.Empty;
         bool isRecived = false;
-        KakaoSdk.Initialize(() => {
 
-            KakaoSdk.Login(LoginMethod.Both, (token) => {
+        KakaoSdk.Initialize(() =>
+        {
+            KakaoSdk.Login(LoginMethod.Both, (token) =>
+            {
                 Debug.Log("token :" + JsonUtility.ToJson(token));
 
                 KakaoSdk.GetUserInformation((info) =>
@@ -26,7 +28,8 @@ public class KakaoSigner : BaseSigner
                     uid = info.id.ToString();
                     email = info.kakao_account.email;
 
-                    KakaoSdk.GetProfile((profile) => {
+                    KakaoSdk.GetProfile((profile) =>
+                    {
                         Debug.Log("profile : " + JsonUtility.ToJson(profile));
                         name = profile.nickname;
 

@@ -1,6 +1,6 @@
-using GJGameLibrary;
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using GJGameLibrary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +19,9 @@ public class StarterScene : MonoBehaviour
                 loading.gameObject.SetActive(true);
                 UserDataManager.Instance.LoadUserData(PlayerPrefs.GetString("ID"),() =>
                 {
-                    //if(UserDataManager.Instance.UserProvider == eProvider.none)
-                    //    SignSNS.Instance.LoginSNS(UserDataManager.Instance.UserProvider);
+                    Debug.Log(UserDataManager.Instance.UserProvider);
+                    var provider = UserDataManager.Instance.UserProvider;
+                    GameManager.Instance.SignInSNS(provider, new SignInUI().SignIn);
 
                     GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
                 });
@@ -38,7 +39,7 @@ public class StarterScene : MonoBehaviour
     {
         while (true)
         {
-            var randomTime = Random.Range(5, 10);
+            var randomTime = UnityEngine.Random.Range(5, 10);
             yield return new WaitForSecondsRealtime(randomTime);
 
             charactor.OpningScene();
