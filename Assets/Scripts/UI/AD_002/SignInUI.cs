@@ -1,6 +1,7 @@
 using System.Collections;
 using GJGameLibrary;
 using Kakaotalk;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 public class SignInUI : MonoBehaviour
@@ -28,11 +29,12 @@ public class SignInUI : MonoBehaviour
         buttonSignIn.onClick.AddListener(() => SignIn(email.text, pw.text, eProvider.none, string.Empty));
         buttonKakao.onClick.AddListener(() => StartCoroutine(KakaoLogin()));
 
-
-        if (PlayerPrefs.HasKey("ID"))
-            email.text = PlayerPrefs.GetString("ID");
-
-        toggleSave.isOn = PlayerPrefs.HasKey("ID");
+        if (!PlayerPrefs.HasKey("SignInSNS"))
+        {
+            if (PlayerPrefs.HasKey("ID"))
+                email.text = PlayerPrefs.GetString("ID");
+            toggleSave.isOn = PlayerPrefs.HasKey("ID");
+        }
     }
 
     private IEnumerator KakaoLogin()
@@ -66,18 +68,24 @@ public class SignInUI : MonoBehaviour
 
         while (!isRecived) { yield return null; }
 
-        var providerID = eProvider.kakao.ToString().Substring(0, 2) + uid;
+        ExistSNS(eProvider.kakao, uid, email, name);
+    }
+
+    private void ExistSNS(eProvider eProvider ,string uid, string email, string name)
+    {
+        var providerID = eProvider.ToString().Substring(0, 2) + uid;
         var param = new ExistIDParam(providerID);
+
         RequestManager.Instance.RequestAct(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
-            if(result.code == eErrorCode.Success)
-                SignUpSNS(eProvider.kakao, uid, name, email);
+            if (result.code == eErrorCode.Success)
+                SignUpSNS(eProvider, uid, name, email);
             else
-                SignIn(providerID, providerID, eProvider.kakao, uid);
+                SignIn(providerID, providerID, eProvider, uid);
         });
-
     }
+
 
     private void SignUpSNS(eProvider eProvider, string UID, string name, string email)
     {
@@ -151,7 +159,13 @@ public class SignInUI : MonoBehaviour
                     if (toggleAutoSignIn.isOn)
                     {
                         if (eProvider != eProvider.none)
+                        {
                             PlayerPrefs.SetString("ID", id);
+                            PlayerPrefs.SetInt("SignInSNS", System.Convert.ToInt16(true));
+                        }
+                        else
+                            PlayerPrefs.DeleteKey("SignInSNS");
+
                         PlayerPrefs.SetString("PW", pw);
                     }
                     else if (PlayerPrefs.HasKey("PW"))
