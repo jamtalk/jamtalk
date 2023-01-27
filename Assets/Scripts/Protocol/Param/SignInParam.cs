@@ -5,10 +5,10 @@ public class SignInParam : ActParam
     protected override eAPIAct act => eAPIAct.login;
     public string user_id;
     public string user_pw;
-    public string provider;
+    public eProvider provider;
     public string identifier;
 
-    public SignInParam(string user_id, string user_pw, string provider, string identifier)
+    public SignInParam(string user_id, string user_pw, eProvider provider, string identifier)
     {
         this.user_id = "email:"+user_id;
         this.user_pw = user_pw;
@@ -19,9 +19,11 @@ public class SignInParam : ActParam
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
+        var providerValue = provider == eProvider.none ? string.Empty : provider.ToString(); 
+
         form.AddField("user_id", user_id);
         form.AddField("user_pw", user_pw);
-        form.AddField("provider", provider);
+        form.AddField("provider", providerValue);
         form.AddField("identifier", identifier);
         return form;
     }

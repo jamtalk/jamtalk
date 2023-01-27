@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GJGameLibrary;
 using Kakaotalk;
@@ -18,6 +19,7 @@ public class SignInUI : MonoBehaviour
     public Button buttonSignIn;
     public GameObject loading;
     public GameObject signUp;
+
     private void Awake()
     {
         buttonRegist.onClick.AddListener(() =>
@@ -27,7 +29,9 @@ public class SignInUI : MonoBehaviour
             signUp.gameObject.SetActive(true);
         });
         buttonSignIn.onClick.AddListener(() => SignIn(email.text, pw.text, eProvider.none, string.Empty));
-        buttonKakao.onClick.AddListener(() => StartCoroutine(KakaoLogin()));
+        buttonKakao.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.kakao));
+        buttonNaver.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.naver));
+        buttonFaceBook.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.facebook));
 
         if (!PlayerPrefs.HasKey("SignInSNS"))
         {
@@ -35,110 +39,19 @@ public class SignInUI : MonoBehaviour
                 email.text = PlayerPrefs.GetString("ID");
             toggleSave.isOn = PlayerPrefs.HasKey("ID");
         }
-    }
 
-    private IEnumerator KakaoLogin()
-    {
-        var uid = string.Empty;
-        var name = string.Empty;
-        var email = string.Empty;
-        bool isRecived = false;
-        KakaoSdk.Initialize(() => {
-
-            KakaoSdk.Login(LoginMethod.Both, (token) => {
-                Debug.Log("token :" + JsonUtility.ToJson(token));
-
-                KakaoSdk.GetUserInformation((info) =>
-                {
-                    Debug.Log("info : " + JsonUtility.ToJson(info));
-                    uid = info.id.ToString();
-                    email = info.kakao_account.email;
-
-                    KakaoSdk.GetProfile((profile) => {
-                        Debug.Log("profile : " + JsonUtility.ToJson(profile));
-                        name = profile.nickname;
-
-                        Debug.LogFormat("provider : {0}, uid : {1}, name : {2}, email : {3}", "kakao", uid, name, email);
-                        isRecived = true;
-
-                    }, error => Debug.Log("profileError : " + error));
-                }, error => Debug.Log("infoError : " + error));
-            }, error => Debug.Log("login : " + error));
-        }, error => Debug.Log("iniitalizeError : " + error));
-
-        while (!isRecived) { yield return null; }
-
-        ExistSNS(eProvider.kakao, uid, email, name);
-    }
-
-    private void ExistSNS(eProvider eProvider ,string uid, string email, string name)
-    {
-        var providerID = eProvider.ToString().Substring(0, 2) + uid;
-        var param = new ExistIDParam(providerID);
-
-        RequestManager.Instance.RequestAct(param, (res) =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-            if (result.code == eErrorCode.Success)
-                SignUpSNS(eProvider, uid, name, email);
-            else
-                SignIn(providerID, providerID, eProvider, uid);
-        });
-    }
-
-
-    private void SignUpSNS(eProvider eProvider, string UID, string name, string email)
-    {
-        var providerID = eProvider.ToString().Substring(0,2) + UID;
-        var param = new SignUpParam(providerID, providerID, name, email, string.Empty, string.Empty, eProvider.ToString(), string.Empty, UID, string.Empty);
-
-        RequestManager.Instance.RequestAct(param, res =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-
-            if(result.code != eErrorCode.Success)
-            {
-                AndroidPluginManager.Instance.Toast(result.msg);
-                Debug.Log("SignUp SNS Failed : " + result.msg);
-            }
-            else
-            {
-                string snsType = string.Empty;
-                if (eProvider == eProvider.kakao)
-                    snsType = "카카오";
-                else if (eProvider == eProvider.naver)
-                    snsType = "네이버";
-                else
-                    snsType = "페이스북";
-
-                Debug.Log(string.Format("{0} 회원가입이 완료되었습니다", snsType));
-                AndroidPluginManager.Instance.Toast(string.Format("{0} 회원가입이 완료되었습니다", snsType));
-
-                SignIn(providerID, providerID, eProvider, UID);
-            }
-        });
+        SignSNS.Instance.onSignIn += SignIn;
     }
 
     public void SignIn(string id, string pw, eProvider eProvider, string UID)
     {
-        var provider = string.Empty;
-        if (eProvider == eProvider.none)
-        {
-            id = email.text;
-            pw = this.pw.text;
-        }
-        else
-        {
-            provider = eProvider.ToString();
-        }
-
         if (string.IsNullOrEmpty(id))
             AndroidPluginManager.Instance.Toast("아이디를 입력하세요.");
         else if (string.IsNullOrEmpty(pw))
             AndroidPluginManager.Instance.Toast("비밀번호를 입력하세요.");
         else
         {
-            var param = new SignInParam(id, pw, provider, UID);
+            var param = new SignInParam(id, pw, eProvider, UID);
             loading.gameObject.SetActive(true);
             RequestManager.Instance.RequestAct(param, (res) =>
             {

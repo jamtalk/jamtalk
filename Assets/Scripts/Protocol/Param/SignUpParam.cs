@@ -8,13 +8,13 @@ public class SignUpParam : ActParam
     public string user_name;
     public string user_email;
     public string user_hp;
-    public string provider;
+    public eProvider provider;
     public string sha;
     public string identifier;
     public string photourl;
     public string displayname;
 
-    public SignUpParam(string user_id, string user_pw, string user_name, string user_email, string user_hp, string provider, string sha, string identifier, string photourl, string displayname)
+    public SignUpParam(string user_id, string user_pw, string user_name, string user_email, string user_hp, eProvider provider, string sha, string identifier, string photourl, string displayname)
     {
         this.user_id = user_id;
         this.user_pw = user_pw;
@@ -31,12 +31,14 @@ public class SignUpParam : ActParam
     public override WWWForm GetForm()
     {
         var form =  base.GetForm();
+        var providerValue = provider == eProvider.none ? string.Empty : provider.ToString();
+
         form.AddField("user_id", user_id);
         form.AddField("user_pw", user_pw);
         form.AddField("user_name", user_name);
         form.AddField("user_email", user_email);
         form.AddField("user_hp", user_hp);
-        form.AddField("provider", provider);
+        form.AddField("provider", providerValue);
         form.AddField("sha", sha);
         form.AddField("identifier", identifier);
         form.AddField("photourl", photourl);

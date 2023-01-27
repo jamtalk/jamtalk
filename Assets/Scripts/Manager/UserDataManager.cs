@@ -11,6 +11,8 @@ public class UserDataManager : MonoSingleton<UserDataManager>
     public UserInfoData CurrentUser { get; private set; }
     public DashBoardData DashBoard { get; private set; }
     public bool UserDataLoaded { get; private set; } = false;
+    public eProvider UserProvider { get; private set; }
+
     public void LoadUserData(string id, Action callback)
     {
         StartCoroutine(LoadAll(id, callback));
@@ -26,6 +28,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
             {
                 CurrentUser = callback.GetResult<DataRequestResult<UserInfoData>>().data;
             }
+
             list.Add(successed);
         });
         dic.Add(new DashboardParam(id), callback =>
@@ -35,6 +38,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
             {
                 DashBoard = callback.GetResult<DataRequestResult<DashBoardData>>().data;
             }
+
             list.Add(successed);
         });
 

@@ -79,7 +79,7 @@ public class SignUpUI : MonoBehaviour
         else
         {
             loading.gameObject.SetActive(true);
-            var param = new SignUpParam(email.text, pw.text, nameField.text, email.text, code.text, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+            var param = new SignUpParam(email.text, pw.text, nameField.text, email.text, code.text, eProvider.none, string.Empty, string.Empty, string.Empty, string.Empty);
             Debug.LogFormat("{0}/{1}", email.text, param.user_id);
             RequestManager.Instance.RequestAct(param, callback =>
             {
