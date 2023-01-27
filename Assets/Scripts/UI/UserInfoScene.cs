@@ -5,7 +5,8 @@ public abstract class UserInfoScene : MonoBehaviour
     protected virtual void Awake()
     {
 #if UNITY_EDITOR
-        UserDataManager.Instance.LoadUserData("tabletasd123-asdasdfkjb1-asdas1", Init);
+        var id = UserDataManager.Instance.CurrentUser.user_id.Replace("email:", string.Empty);
+        UserDataManager.Instance.LoadUserData(id, Init);
 #else
         Init();
 #endif

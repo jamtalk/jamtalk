@@ -28,12 +28,14 @@ public abstract class UserParam : ActParam
 
     protected UserParam()
     {
-        user_id = "tabletasd123-asdasdfkjb1-asdas1";
     }
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
-        form.AddField("user_id", user_id);
+        if (string.IsNullOrEmpty(user_id))
+            user_id = UserDataManager.Instance.CurrentUser.user_id.Replace("eamil:", string.Empty);
+
+        form.AddField("user_id", "email:"+user_id);
         return form;
     }
 }
