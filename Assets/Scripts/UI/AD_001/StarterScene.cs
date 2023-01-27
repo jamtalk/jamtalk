@@ -19,6 +19,9 @@ public class StarterScene : MonoBehaviour
                 loading.gameObject.SetActive(true);
                 UserDataManager.Instance.LoadUserData(PlayerPrefs.GetString("ID"),() =>
                 {
+                    //if(UserDataManager.Instance.UserProvider == eProvider.none)
+                    //    SignSNS.Instance.LoginSNS(UserDataManager.Instance.UserProvider);
+
                     GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
                 });
                 

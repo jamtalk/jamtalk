@@ -71,7 +71,7 @@ public class GameManager : MonoSingleton<GameManager>
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     /// <summary>
-    /// eDigraphs °ª¸¸ ºñ±³
+    /// eDigraphs ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     /// </summary>
     public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
     public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
@@ -86,6 +86,26 @@ public class GameManager : MonoSingleton<GameManager>
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos.z = z;
         return pos;
+    }
+
+    public void SignInSNS(eProvider provider, Action<string,string,eProvider,string> callback)
+    {
+        if (provider == eProvider.kakao)
+            new KakaoSigner().SignInSNS(callback);
+        else if (provider == eProvider.naver)
+            new NaverSigner().SignInSNS(callback);
+        else if (provider == eProvider.facebook)
+            new FacebookSigner().SignInSNS(callback);
+    }
+
+    public void SignOutSNS(eProvider provider)
+    {
+        if (provider == eProvider.kakao)
+            new KakaoSigner().SignOutSNS();
+        else if (provider == eProvider.naver)
+            new NaverSigner().SignOutSNS();
+        else if (provider == eProvider.facebook)
+            new FacebookSigner().SignOutSNS();
     }
 }
 public class AlphabetData
@@ -104,6 +124,8 @@ public class AlphabetData
     }
     public Sprite Get(eAlphabetStyle style, eAlphabetType type) => GameManager.Instance.GetAlphbetSprite(style, type, Alphabet);
 }
+
+
 //[Serializable]
 //public class DigraphsWordsData
 //{

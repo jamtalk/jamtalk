@@ -28,10 +28,11 @@ public class SignInUI : MonoBehaviour
             pw.text = string.Empty;
             signUp.gameObject.SetActive(true);
         });
+
         buttonSignIn.onClick.AddListener(() => SignIn(email.text, pw.text, eProvider.none, string.Empty));
-        buttonKakao.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.kakao));
-        buttonNaver.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.naver));
-        buttonFaceBook.onClick.AddListener(() => SignSNS.Instance.LoginSNS(eProvider.facebook));
+        buttonKakao.onClick.AddListener(() => OnClickSigninSNS(eProvider.kakao));
+        buttonNaver.onClick.AddListener(() => OnClickSigninSNS(eProvider.naver));
+        buttonFaceBook.onClick.AddListener(() => OnClickSigninSNS(eProvider.facebook));
 
         if (!PlayerPrefs.HasKey("SignInSNS"))
         {
@@ -40,8 +41,11 @@ public class SignInUI : MonoBehaviour
             toggleSave.isOn = PlayerPrefs.HasKey("ID");
         }
 
-        SignSNS.Instance.onSignIn += SignIn;
+        //SignSNS.Instance.onSignIn += SignIn;
     }
+
+    private void OnClickSigninSNS(eProvider provider) =>
+        GameManager.Instance.SignInSNS(provider, SignIn);
 
     public void SignIn(string id, string pw, eProvider eProvider, string UID)
     {
