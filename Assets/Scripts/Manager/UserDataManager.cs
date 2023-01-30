@@ -29,7 +29,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
                 CurrentUser = callback.GetResult<DataRequestResult<UserInfoData>>().data;
                 var temp = string.IsNullOrEmpty(UserDataManager.Instance.CurrentUser.provider);
                 UserProvider = temp ? eProvider.none : ((eProvider)Enum.Parse(typeof(eProvider), UserDataManager.Instance.CurrentUser.provider));
-                Debug.Log("userPorvider : " + UserProvider.ToString());
+                Debug.Log("load all userPrvider : " + UserProvider.ToString());
             }
 
             list.Add(successed);
