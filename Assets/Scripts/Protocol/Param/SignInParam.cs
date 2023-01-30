@@ -10,7 +10,8 @@ public class SignInParam : ActParam
 
     public SignInParam(string user_id, string user_pw, eProvider provider, string identifier)
     {
-        this.user_id = "email:"+user_id;
+        //this.user_id = "email:"+user_id;
+        this.user_id = user_id;
         this.user_pw = user_pw;
         this.provider = provider;
         this.identifier = identifier;

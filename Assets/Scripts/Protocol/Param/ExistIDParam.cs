@@ -7,7 +7,8 @@ public class ExistIDParam : ActParam
 
     public ExistIDParam(string user_id)
     {
-        this.user_id = "email:"+user_id;
+        //this.user_id = "email:"+user_id;
+        this.user_id = user_id;
     }
     public override WWWForm GetForm()
     {
