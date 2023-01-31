@@ -38,6 +38,7 @@ public class ProfileSettingPage : MonoBehaviour
         childSettingButton.onClick.AddListener(() => ChildSetting());
         FindeIDButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.FindID));
         ChangePWButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.ChangePW));
+        fireButton.onClick.AddListener(FireMember);
 
         Init();
     }
@@ -106,5 +107,33 @@ public class ProfileSettingPage : MonoBehaviour
             childSetting = Instantiate(childSettingOrizin, transform);
         else
             childSetting.gameObject.SetActive(true);
+    }
+
+    private void FireMember()
+    {
+        var param = new MemberOutParam();
+
+        RequestManager.Instance.RequestAct(param, (res) =>
+        {
+            var result = res.GetResult<ActRequestResult>();
+
+            Debug.Log(result.code);
+            if(result.code != eErrorCode.Success)
+            {
+                Debug.Log(result.code);
+                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+            }
+            else
+            {
+                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+
+                if (PlayerPrefs.HasKey("ID")) PlayerPrefs.DeleteKey("ID");
+                if (PlayerPrefs.HasKey("UID")) PlayerPrefs.DeleteKey("UID");
+                if (PlayerPrefs.HasKey("PROVIDER")) PlayerPrefs.DeleteKey("PROVIDER");
+                PlayerPrefs.Save();
+
+                GameManager.Instance.SignOut();
+            }
+        });
     }
 }

@@ -17,12 +17,26 @@ public class StarterScene : MonoBehaviour
             if (PlayerPrefs.HasKey("PW"))
             {
                 loading.gameObject.SetActive(true);
-                UserDataManager.Instance.LoadUserData(PlayerPrefs.GetString("ID"),() =>
-                {
-                    Debug.Log(UserDataManager.Instance.UserProvider);
-                    var provider = UserDataManager.Instance.UserProvider;
-                    GameManager.Instance.SignInSNS(provider, new SignInUI().SignIn);
 
+                var id = PlayerPrefs.GetString("ID");
+                var pw = PlayerPrefs.GetString("PW");
+                var uid = string.Empty;
+                var provider = eProvider.none;
+
+                if (PlayerPrefs.HasKey("UID"))
+                    uid = PlayerPrefs.GetString("UID");
+
+                if (PlayerPrefs.HasKey("PROVIDER"))
+                    provider = (eProvider)Enum.Parse(typeof(eProvider), PlayerPrefs.GetString("PROVIDER"));
+                else
+                    id = "email:" + id;
+
+                Debug.LogFormat("id : {0}, pw : {1} uid : {2}, provider : {3}", id, pw, uid, provider);
+
+                UserDataManager.Instance.LoadUserData(id,() =>
+                {
+                    new SignInUI().SignIn(id, pw, provider, uid);
+                    
                     GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
                 });
                 

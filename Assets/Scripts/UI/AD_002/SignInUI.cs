@@ -14,7 +14,6 @@ public class SignInUI : MonoBehaviour
     public Button buttonKakao;
     public Button buttonNaver;
     public Button buttonSignIn;
-    public GameObject loading;
     public GameObject signUp;
 
     private void Awake()
@@ -32,8 +31,8 @@ public class SignInUI : MonoBehaviour
         buttonFaceBook.onClick.AddListener(() => OnClickSigninSNS(eProvider.facebook));
 
         eProvider userProvider = eProvider.none;
-        if(PlayerPrefs.HasKey("Provider"))
-            userProvider = (eProvider)Enum.Parse(typeof(eProvider), PlayerPrefs.GetString("Provider"));
+        if(PlayerPrefs.HasKey("PROVIDER"))
+            userProvider = (eProvider)Enum.Parse(typeof(eProvider), PlayerPrefs.GetString("PROVIDER"));
         Debug.Log("signInUI userProvider : " + userProvider.ToString());
 
         toggleSave.isOn = PlayerPrefs.HasKey("ID");
@@ -45,7 +44,7 @@ public class SignInUI : MonoBehaviour
     private void OnClickSigninSNS(eProvider provider) =>
         GameManager.Instance.SignInSNS(provider, SignIn);
 
-    public void SignIn(string id, string pw, eProvider eProvider, string UID)
+    public void SignIn(string id, string pw, eProvider eProvider, string uid)
     {
         if (string.IsNullOrEmpty(id))
             AndroidPluginManager.Instance.Toast("아이디를 입력하세요.");
@@ -53,14 +52,12 @@ public class SignInUI : MonoBehaviour
             AndroidPluginManager.Instance.Toast("비밀번호를 입력하세요.");
         else
         {
-            var param = new SignInParam(id, pw, eProvider, UID);
-            loading.gameObject.SetActive(true);
+            var param = new SignInParam(id, pw, eProvider, uid);
             RequestManager.Instance.RequestAct(param, (res) =>
             {
                 var result = res.GetResult<ActRequestResult>();
                 if (result.code != eErrorCode.Success)
                 {
-                    loading.gameObject.SetActive(false);
                     Debug.Log(result.code + " : " + result.msg);
                     AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
                 }
@@ -78,11 +75,18 @@ public class SignInUI : MonoBehaviour
                         PlayerPrefs.DeleteKey("PW");
 
                     if (eProvider != eProvider.none)
+                    {
                         PlayerPrefs.SetString("ID", id);
+                        PlayerPrefs.SetString("UID", uid);
+                        PlayerPrefs.SetString("PROVIDER", eProvider.ToString());
+                    }
                     else
-                        id = email.text;
+                    {
+                        id = "email:"+email.text;
+                        PlayerPrefs.DeleteKey("UID");
+                        PlayerPrefs.DeleteKey("PROVIDER");
+                    }
 
-                    PlayerPrefs.SetString("Provider", eProvider.ToString());
 
                     PlayerPrefs.Save();
                     UserDataManager.Instance.LoadUserData(id, () =>

@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using GJGameLibrary;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -98,14 +99,21 @@ public class GameManager : MonoSingleton<GameManager>
             new FacebookSigner().SignInSNS(callback);
     }
 
-    public void SignOutSNS(eProvider provider)
+    public void SignOut()
     {
+        eProvider provider = UserDataManager.Instance.UserProvider;
+
         if (provider == eProvider.kakao)
             new KakaoSigner().SignOutSNS();
         else if (provider == eProvider.naver)
             new NaverSigner().SignOutSNS();
         else if (provider == eProvider.facebook)
             new FacebookSigner().SignOutSNS();
+
+        if (PlayerPrefs.HasKey("PW")) PlayerPrefs.DeleteKey("PW");
+        PlayerPrefs.Save();
+
+        GJSceneLoader.Instance.LoadScene(eSceneName.AD_002);
     }
 }
 public class AlphabetData

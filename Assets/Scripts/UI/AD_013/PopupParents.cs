@@ -15,10 +15,7 @@ public class PopupParents : BasePopup
         buttonSingOut.onClick.AddListener(() =>
         {
             Debug.Log(UserDataManager.Instance.UserProvider);
-            GameManager.Instance.SignOutSNS(UserDataManager.Instance.UserProvider);
-            UserDataManager.Instance.SignOut();
-
-            GJSceneLoader.Instance.LoadScene(eSceneName.AD_002);
+            GameManager.Instance.SignOut();
         });
     }
 }
