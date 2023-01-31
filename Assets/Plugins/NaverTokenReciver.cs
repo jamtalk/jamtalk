@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +10,9 @@ public class NaverTokenReciver :MonoBehaviour
     private Action<bool, NaverAuthInfo> onSigned;
 
 
-    private static string OAUTH_CLIENT_ID = "Noa5boot3VMLazFeyHLP";//³×ÀÌ¹ö ¾îÇÃ¸®ÄÉÀÌ¼Ç µî·Ï½Ã ¹ß±Ş¹Ş´Â ¾ÆÀÌµğ
-    private static string OAUTH_CLIENT_SECRET = "CNnEY3bxe9";//³×ÀÌ¹ö ¾îÇÃ¸®ÄÉÀÌ¼Ç µî·Ï½Ã ¹ß±Ş¹Ş´Â ÄÚµå(º¸¾È ÁÖÀÇ)
-    private static string OAUTH_CLIENT_NAME = "Jamtalk English";//Á¢¼Ó½Ã ¶ã ÀÌ¸§
+    private static string OAUTH_CLIENT_ID = "Noa5boot3VMLazFeyHLP";//ë„¤ì´ë²„ ì–´í”Œë¦¬ì¼€ì´ì…˜ ë“±ë¡ì‹œ ë°œê¸‰ë°›ëŠ” ì•„ì´ë””
+    private static string OAUTH_CLIENT_SECRET = "CNnEY3bxe9";//ë„¤ì´ë²„ ì–´í”Œë¦¬ì¼€ì´ì…˜ ë“±ë¡ì‹œ ë°œê¸‰ë°›ëŠ” ì½”ë“œ(ë³´ì•ˆ ì£¼ì˜)
+    private static string OAUTH_CLIENT_NAME = "Jamtalk English";//ì ‘ì†ì‹œ ëœ° ì´ë¦„
     private static NaverTokenReciver instance = null;
     public static NaverTokenReciver Instance
     {
@@ -21,7 +21,7 @@ public class NaverTokenReciver :MonoBehaviour
             if (instance == null)
             {
                 instance = new GameObject().AddComponent<NaverTokenReciver>();
-                instance.name = "NaverLoginPlugin";//°ÔÀÓ ¿ÀºêÁ§Æ® ÀÌ¸§À» °¡Áö°í message¸¦ ¹ŞÀ¸¹Ç·Î ÀÌ¸§ Àı´ë ¹Ù²Ù¸é ¾ÈµÊ!
+                instance.name = "NaverLoginPlugin";//ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì´ë¦„ì„ ê°€ì§€ê³  messageë¥¼ ë°›ìœ¼ë¯€ë¡œ ì´ë¦„ ì ˆëŒ€ ë°”ê¾¸ë©´ ì•ˆë¨!
                 DontDestroyOnLoad(instance.gameObject);
             }
 
@@ -35,11 +35,11 @@ public class NaverTokenReciver :MonoBehaviour
     private AndroidJavaObject app;
 
     /// <summary>
-    /// Ã³À½ ½ÃÀÛ½Ã ¼³Á¤ÇØ¾ßÇÏ´Â ÄÚµå(¹İµå½Ã)
+    /// ì²˜ìŒ ì‹œì‘ì‹œ ì„¤ì •í•´ì•¼í•˜ëŠ” ì½”ë“œ(ë°˜ë“œì‹œ)
     /// </summary>
-    /// <param name="OAUTH_CLIENT_ID">³×ÀÌ¹ö ¾îÇÃ¸®ÄÉÀÌ¼Ç µî·Ï½Ã ¹ß±Ş¹Ş´Â ¾ÆÀÌµğ</param>
-    /// <param name="OAUTH_CLIENT_SECRET">³×ÀÌ¹ö ¾îÇÃ¸®ÄÉÀÌ¼Ç µî·Ï½Ã ¹ß±Ş¹Ş´Â ÄÚµå(º¸¾È ÁÖÀÇ)</param>
-    /// <param name="OAUTH_CLIENT_NAME">Á¢¼Ó½Ã ¶ã ÀÌ¸§</param>
+    /// <param name="OAUTH_CLIENT_ID">ë„¤ì´ë²„ ì–´í”Œë¦¬ì¼€ì´ì…˜ ë“±ë¡ì‹œ ë°œê¸‰ë°›ëŠ” ì•„ì´ë””</param>
+    /// <param name="OAUTH_CLIENT_SECRET">ë„¤ì´ë²„ ì–´í”Œë¦¬ì¼€ì´ì…˜ ë“±ë¡ì‹œ ë°œê¸‰ë°›ëŠ” ì½”ë“œ(ë³´ì•ˆ ì£¼ì˜)</param>
+    /// <param name="OAUTH_CLIENT_NAME">ì ‘ì†ì‹œ ëœ° ì´ë¦„</param>
     public void Awake()
     {
 #if !UNITYEDITOR && UNITY_ANDROID
@@ -59,7 +59,7 @@ public class NaverTokenReciver :MonoBehaviour
     }
 
     /// <summary>
-    /// unity message¸¦ ÅëÇØ callbackµÊ
+    /// unity messageë¥¼ í†µí•´ callbackë¨
     /// </summary>
     public void NaverLoginCallBack(string message)
     {
@@ -73,11 +73,11 @@ public class NaverTokenReciver :MonoBehaviour
             switch (callBack.message)
             {
                 case Message.FAIL:
-                    Debug.LogError("·Î±×ÀÎ ½ÇÆĞ!");
+                    Debug.LogError("ë¡œê·¸ì¸ ì‹¤íŒ¨!");
                     onSigned?.Invoke(false, null);
                     break;
                 case Message.SUCCESS:
-                    Debug.Log("·Î±×ÀÎ ¼º°ø!"+ callBack.token);
+                    Debug.Log("ë¡œê·¸ì¸ ì„±ê³µ!"+ callBack.token);
                     StartCoroutine(GetUserData(callBack.token));
                     break;
             }
@@ -105,7 +105,7 @@ public class NaverTokenReciver :MonoBehaviour
             www.SetRequestHeader("X-Naver-Client-Secret", OAUTH_CLIENT_SECRET);
             www.SetRequestHeader("Authorization", "Bearer " + token);
             yield return www.SendWebRequest();
-            Debug.LogFormat("³×ÀÌ¹ö ·Î±×ÀÎ °á°ú µµÂø\n{0}", www.downloadHandler.text);
+            Debug.LogFormat("ë„¤ì´ë²„ ë¡œê·¸ì¸ ê²°ê³¼ ë„ì°©\n{0}", www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.Success)
             {
                 var result = JsonUtility.FromJson<NaverAuthInfo>(www.downloadHandler.text);
@@ -120,7 +120,7 @@ public class NaverTokenReciver :MonoBehaviour
 
     private class ReciveTokenCallback
     {
-        public Message message; //0 = ½ÇÆĞ, 1 = ¼º°ø
+        public Message message; //0 = ì‹¤íŒ¨, 1 = ì„±ê³µ
         public string token;
     }
     private enum Message
