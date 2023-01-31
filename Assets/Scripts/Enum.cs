@@ -356,8 +356,11 @@ public enum eAPIAct
     edustat,        //진척도 상세
     child_list,     //자녀목록
     child_info,     //자녀조회
-
-    // 레벨 테스트 edulog 로 중복값 
+    character,      // 캐릭터 등록/수정
+    leveltest,      // 레벨테스트
+    level_log,      // 레벨변경기록
+    award_log,      // 어워드 내역 조회
+    exists_email,   // 이메일 중복 검사
 }
 
 public enum eAtlasType
