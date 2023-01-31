@@ -9,11 +9,17 @@ public class NaverSigner : BaseSigner
 
     protected override void SignIn()
     {
-        
+        NaverTokenReciver.Instance.AccessLogin((success, result) =>
+        {
+            var uid = result.response.id;
+            var email = result.response.email;
+            var name = result.response.name;
+            if (success)
+                ExistSNS(eProvider.kakao, uid, email, name);
+        });
     }
 
     protected override void SignOut()
     {
-        
     }
 }
