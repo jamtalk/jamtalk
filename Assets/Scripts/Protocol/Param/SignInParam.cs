@@ -10,7 +10,6 @@ public class SignInParam : ActParam
 
     public SignInParam(string user_id, string user_pw, eProvider provider, string identifier)
     {
-        //this.user_id = "email:"+user_id;
         this.user_id = user_id;
         this.user_pw = user_pw;
         this.provider = provider;
@@ -20,7 +19,8 @@ public class SignInParam : ActParam
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
-        var providerValue = provider == eProvider.none ? string.Empty : provider.ToString(); 
+        var providerValue = provider == eProvider.none ? string.Empty : provider.ToString();
+        if (provider == eProvider.none) user_id = "email:" + user_id;
 
         form.AddField("user_id", user_id);
         form.AddField("user_pw", user_pw);
