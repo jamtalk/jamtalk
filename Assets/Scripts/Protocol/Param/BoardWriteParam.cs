@@ -16,6 +16,7 @@ public class BoardWriteParam : UserParam
     {
         this.boardType = boardType;
         this.user_name = UserDataManager.Instance.CurrentUser.name;
+        this.user_id = UserDataManager.Instance.CurrentUser.user_id;
         this.wr_subject = wr_subject;
         this.wr_content = wr_content;
     }
