@@ -21,13 +21,25 @@ public class InquiryDetail : MonoBehaviour
     /// <summary>
     /// 데이터 받아서 상태 변경 / 답변, 제목, 질문 설정
     /// </summary>
-    public void Init()
+    public void Init(int uid)
     {
-        Debug.Log("init");
-        //titleInput.text = 
-        //detailInput.text =
-        //answerInput.text =
-        //answerStatus.ChangeStatus();
-        gameObject.SetActive(true);
+        var param = new BoardParam(eBoardType.qa, uid);
+        RequestManager.Instance.RequestAct(param, (res) =>
+        {
+            var result = res.GetResult<ActRequestResult>();
+
+            if(result.code != eErrorCode.Success)
+            {
+                Debug.Log(result.code);
+                AndroidPluginManager.Instance.Toast(result.msg);
+            }
+            {
+                //titleInput.text = 
+                //detailInput.text =
+                //answerInput.text =
+                //answerStatus.ChangeStatus();
+                gameObject.SetActive(true);
+            }
+        });
     }
 }

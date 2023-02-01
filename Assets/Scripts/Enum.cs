@@ -338,29 +338,30 @@ public enum eCharactorDirection
 }
 public enum eAPIAct
 {
-    register,       //회원가입
-    memberinfo,     //회원정보 수정
-    exists,         //아이디 존재 여부
-    member,         //회원정보 읽기
-    login,          //로그인
-    memberout,      //회원탈퇴
-    board,          //게시판 조회
-    couponreg,      //쿠폰생성
-    edulog,         //학습 기록하기
-    edulog_view,    //학습기록 조회
-    dashboard,      //대시보드
-    award,          //어워드 달성 기록하기
-    child,          //자녀 등록
-    childout,       //자녀 정보 수정
-    coupon_list,    //쿠폰조회
-    edustat,        //진척도 상세
-    child_list,     //자녀목록
-    child_info,     //자녀조회
+    register,       // 회원가입
+    memberinfo,     // 회원정보 수정
+    exists,         // 아이디 존재 여부
+    member,         // 회원정보 읽기
+    login,          // 로그인
+    memberout,      // 회원탈퇴
+    board,          // 게시판 조회
+    couponreg,      // 쿠폰생성
+    edulog,         // 학습 기록하기
+    edulog_view,    // 학습기록 조회
+    dashboard,      // 대시보드
+    award,          // 어워드 달성 기록하기
+    child,          // 자녀 등록
+    childout,       // 자녀 정보 수정
+    coupon_list,    // 쿠폰조회
+    edustat,        // 진척도 상세
+    child_list,     // 자녀목록
+    child_info,     // 자녀조회
     character,      // 캐릭터 등록/수정
     leveltest,      // 레벨테스트
     level_log,      // 레벨변경기록
     award_log,      // 어워드 내역 조회
     exists_email,   // 이메일 중복 검사
+    board_write,    // 게시판 등록
 }
 
 public enum eAtlasType
@@ -520,4 +521,10 @@ public enum eCharactorDetail
     ekoko_cart_cartMove0,
     ekoko_cart_cartMove1,
     ekoko_magician_action,
-}					
+}
+
+public enum eBoardType
+{
+    notice,
+    qa,
+}

@@ -13,7 +13,7 @@ public class InquiryRegist : MonoBehaviour
 
     private void Awake()
     {
-        confirmButton.onClick.AddListener(() => ConfirmInqury());
+        confirmButton.onClick.AddListener(ConfirmInqury);
     }
 
     /// <summary>
@@ -23,26 +23,37 @@ public class InquiryRegist : MonoBehaviour
     {
         if (titleInput.text == string.Empty)
         {
+            AndroidPluginManager.Instance.Toast("제목을 입력하세요.");
             return;
-            //PopupManager.Instance.ShowGuidance("제목을 입력하세요.");
         }
         if (detailInput.text == string.Empty)
         {
+            AndroidPluginManager.Instance.Toast("내용을 입력하세요.");
             return;
-            //PopupManager.Instance.ShowGuidance("내용을 입력하세요.");
         }
 
+        var param = new BoardWriteParam(eBoardType.qa, titleInput.text, detailInput.text);
 
-        /// 질문사항 등록
-        ///
-
-        registPopup.gameObject.SetActive(true);
-        var exitButton = registPopup.GetComponentInChildren<Button>();
-        exitButton.onClick.AddListener(() =>
+        RequestManager.Instance.RequestAct(param, (res) =>
         {
-            registPopup.gameObject.SetActive(false);
-            titleInput.text = string.Empty;
-            detailInput.text = string.Empty;
+            var result = res.GetResult<ActRequestResult>();
+
+            if(result.code != eErrorCode.Success)
+            {
+                Debug.Log(result.code);
+                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+            }
+            else
+            {
+                registPopup.gameObject.SetActive(true);
+                var exitButton = registPopup.GetComponentInChildren<Button>();
+                exitButton.onClick.AddListener(() =>
+                {
+                    registPopup.gameObject.SetActive(false);
+                    titleInput.text = string.Empty;
+                    detailInput.text = string.Empty;
+                });
+            }
         });
     }
 }

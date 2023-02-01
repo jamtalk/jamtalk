@@ -4,18 +4,18 @@ public class BoardParam : UserParam
 {
     protected override eAPIAct act => eAPIAct.board;
 
-    public string bbs;
-    public string uid;
+    public eBoardType boardType;
+    public int uid;
 
-    public BoardParam(string bbs, string uid)
+    public BoardParam(eBoardType boardType, int uid)
     {
-        this.bbs = bbs;
+        this.boardType = boardType;
         this.uid = uid;
     }
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
-        form.AddField("bbs", bbs);
+        form.AddField("bbs", boardType.ToString());
         form.AddField("uid", uid);
 
         return form;

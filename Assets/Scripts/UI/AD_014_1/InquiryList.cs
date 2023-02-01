@@ -14,12 +14,38 @@ public class InquiryList : MonoBehaviour
 
     private void Awake()
     {
-        CreatList();
+        //GetInquiry();
     }
+
+
+    /// <summary>
+    /// user id 가 작성한대한 문의내역 목록 조회
+    /// </summary>
+    private void GetInquiry()
+    {
+        var param = new BoardParam(eBoardType.notice, 1);
+        //var param = new BoardListParam();
+        RequestManager.Instance.RequestAct(param, (res) =>
+        {
+            var result = res.GetResult<ActRequestResult>();
+
+            if (result.code != eErrorCode.Success)
+            {
+                Debug.Log(result.code);
+                AndroidPluginManager.Instance.Toast(result.msg);
+            }
+            else
+            {
+                CreateInquiry();
+            }
+        });
+    }
+
+
     /// <summary>
     /// 문의내역 호출하여 생성
     /// </summary>
-    private void CreatList()
+    private void CreateInquiry()
     {
         //for(int i = 0; i < List; i++) 
         //{ 
@@ -29,7 +55,7 @@ public class InquiryList : MonoBehaviour
         inquiries.Add(element);
         //}
 
-        foreach (var item in inquiries)
-            item.clickAction += () => inquiryDetail.Init();
+        //foreach (var item in inquiries)
+        //    item.clickAction += () => inquiryDetail.Init(0);
     }
 }

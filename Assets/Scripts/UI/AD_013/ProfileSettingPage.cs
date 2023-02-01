@@ -63,7 +63,7 @@ public class ProfileSettingPage : MonoBehaviour
             if (result.code != eErrorCode.Success)
             {
                 Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+                AndroidPluginManager.Instance.Toast(result.msg);
             }
             else
             {
