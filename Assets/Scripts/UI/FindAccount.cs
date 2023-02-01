@@ -36,9 +36,25 @@ public class FindAccount : MonoBehaviour
         if (firstInput.text == string.Empty) return;
         if (secondInput.text == string.Empty) return;
 
-        
-        //PopupManager.Instance.ShowGuidance("test");
+        SendReqeust(target);
     }
+
+    private void SendReqeust(eTarget target)
+    {
+        if (target == eTarget.FindID)
+        {
+            // 아이디 찾기 param
+        }
+        else if (target == eTarget.FindPW)
+        {
+            // 비밃번호 찾기 Param
+        }
+        else if (target == eTarget.ChangePW)
+        {
+            // 비밀번호 변경 param
+        }
+    }
+
 
     public void Init(eTarget target)
     {
@@ -60,8 +76,8 @@ public class FindAccount : MonoBehaviour
         else if( target == eTarget.ChangePW)
         {
             title.text = "비밀번호 변경";
-            var temp = "Test";
-            var detailString = string.Format("{0}님\n비밀번호를 변경합니다.", temp);
+            var nick = UserDataManager.Instance.CurrentUser.nick;
+            var detailString = string.Format("{0}님\n비밀번호를 변경합니다.", nick);
             detail.text = detailString;
             firstTitle.text = "변경할 비밀번호";
             firstInput.placeholder.GetComponent<TextMeshProUGUI>().text = "비밀번호를 입력해 주세요";

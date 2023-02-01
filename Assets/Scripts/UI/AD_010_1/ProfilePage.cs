@@ -16,8 +16,46 @@ public class ProfilePage : UserInfoScene
     public override void Init()
     {
         base.Init();
-        var user = UserDataManager.Instance.CurrentUser;
-        textName.text = user.name;
-        //textAge.text = string.Format("{0} ¼¼", user.Age);  //ÇöÀç »ýÀÏ ÀÔ·ÂÄ­ ¾ø¾î¼­±¸Çö ºÒ°¡
+
+        GetProfileDetail();
+    }
+
+    private void GetProfileDetail()
+    {
+        var awardParam = new Award_logParam(UserDataManager.Instance.CurrentUser.user_id);
+        RequestManager.Instance.RequestAct(awardParam, (res) =>
+        {
+            var result = res.GetResult<ActRequestResult>();
+
+            if(result.code != eErrorCode.Success)
+            {
+
+            }
+            else
+            {
+                // ìˆ˜ì§‘í•œ ì—…ì  ëª©ë¡ì— ì—…ì  ( ex ì•„ì´ì½˜ ) ë°°ì¹˜ 
+            }
+        });
+
+        //var childinfoParam = new ChildInfoParam();
+        RequestManager.Instance.RequestAct(awardParam, (res) => // param ë³€ê²½ ì˜ˆì • 
+        {
+            var result = res.GetResult<ActRequestResult>();
+
+            if (result.code != eErrorCode.Success)
+            {
+
+            }
+            else
+            {
+                var user = UserDataManager.Instance.CurrentUser;
+
+                textName.text = user.name;
+                //textPoints.text = string.Format("{0}pt", user.point);
+                //imageCurrentLevel.sprite = spritesLevel[user.level+1];
+                //imageNextLevel.sprite = spritesLevel[user.level+2];
+                //textAge.text = string.Format("{0} ì„¸", user.Age);
+            }
+        });
     }
 }

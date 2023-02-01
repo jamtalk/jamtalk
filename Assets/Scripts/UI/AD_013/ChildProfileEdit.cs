@@ -29,10 +29,10 @@ public class ChildProfileEdit : MonoBehaviour
     public ChildProfile testProfile;
     private void Awake()
     {
-        exitButton.onClick.AddListener(() => ExitAction());
-        editButton.onClick.AddListener(() => EditAction());
-        addButton.onClick.AddListener(() => AddAction());
-        confirmButton.onClick.AddListener(() => ConfirmAction());
+        exitButton.onClick.AddListener(ExitAction);
+        editButton.onClick.AddListener(EditAction);
+        addButton.onClick.AddListener(AddAction);
+        //confirmButton.onClick.AddListener(() => ConfirmAction());
 
 
         Init();

@@ -6,6 +6,10 @@ using DG.Tweening;
 
 public class ProfileSettingPage : MonoBehaviour
 {
+    public ChildViewPage childViewPage;
+    public AccountViewPage accountViewPage;
+
+
     [Header("Left")]
     public Button childEditButton;
     public Button childSettingButton;
@@ -34,106 +38,7 @@ public class ProfileSettingPage : MonoBehaviour
 
     private void Awake()
     {
-        childEditButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
-        childSettingButton.onClick.AddListener(() => ChildSetting());
-        FindeIDButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.FindID));
-        ChangePWButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.ChangePW));
-        fireButton.onClick.AddListener(FireMember);
-
-        Init();
-    }
-
-    /// <summary>
-    /// 아이 데이터 받아와서 출력
-    /// </summary>
-    private void Init()
-    {
-        //GetChildren(); *_*
-        //GetChild();
-    }
-
-    private void GetChild()
-    { // 현재 설정된 아이 조회 > GetChildren 에서 설정된 아이 조회 가능 시 GetChildren 에서 바로 설정
-
-        var param = new ChildInfoParam(string.Empty); // 아이 이름
-        RequestManager.Instance.RequestAct(param, (res) =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-
-            if (result.code != eErrorCode.Success)
-            {
-                Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(result.msg);
-            }
-            else
-            {
-                // 아이 정보 설정 *_*
-                //childName.text =
-                //childBirth.text =
-                //childGender.text =
-            }
-        });
-    }
-
-    private void GetChildren()
-    { // 아이 목록 조회 
-        var param = new ChildListParam();
-        RequestManager.Instance.RequestAct(param, (res) =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-
-            if (result.code != eErrorCode.Success)
-            {
-                Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
-            }
-            else
-            {
-                // 아이 목록  *_*
-            }
-        });
-    }
-
-    private void FindAccountAction(FindAccount.eTarget target)
-    {
-        if (findAccount == null)
-            findAccount = Instantiate(findAccountOrizin, transform.parent);
-        findAccount.Init(target);
-    }
-
-    private void ChildSetting()
-    {
-        if (childSetting == null)
-            childSetting = Instantiate(childSettingOrizin, transform);
-        else
-            childSetting.gameObject.SetActive(true);
-    }
-
-    private void FireMember()
-    {
-        var param = new MemberOutParam();
-
-        RequestManager.Instance.RequestAct(param, (res) =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-
-            Debug.Log(result.code);
-            if(result.code != eErrorCode.Success)
-            {
-                Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
-            }
-            else
-            {
-                AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
-
-                if (PlayerPrefs.HasKey("ID")) PlayerPrefs.DeleteKey("ID");
-                if (PlayerPrefs.HasKey("UID")) PlayerPrefs.DeleteKey("UID");
-                if (PlayerPrefs.HasKey("PROVIDER")) PlayerPrefs.DeleteKey("PROVIDER");
-                PlayerPrefs.Save();
-
-                GameManager.Instance.SignOut();
-            }
-        });
+        childViewPage.Init();
+        accountViewPage.Init();
     }
 }

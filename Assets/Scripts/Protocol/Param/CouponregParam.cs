@@ -24,8 +24,8 @@ public class CouponregParam : UserParam
     {
         var form = base.GetForm();
         form.AddField("cp_subject", cp_subject);
-        form.AddField("cp_start", cp_start.ToString("yyyy-mm-dd"));
-        form.AddField("cp_end", cp_end.ToString("yyyy-mm-dd"));
+        form.AddField("cp_start", cp_start.ToString("yyyy-MM-dd"));
+        form.AddField("cp_end", cp_end.ToString("yyyy-MM-dd"));
         form.AddField("cp_price", cp_price);
         form.AddField("cp_mem", cp_mem);
 
