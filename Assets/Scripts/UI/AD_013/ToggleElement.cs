@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -16,14 +17,15 @@ public class ToggleElement : MonoBehaviour
 
     private void Awake()
     {
-        pushToggle.onValueChanged.AddListener((value) =>
-        {
-            var toggleSprite = value ? toggleOnSprite : toggleOffSprite;
-            var targetRt = value ? leftRt : rightRt;
+        pushToggle.onValueChanged.AddListener(SetToggle);
+    }
 
-            pushToggle.transform.DOMove(targetRt.position, 1f);
-            toggleBg.sprite = toggleSprite;
-        });
+    public void SetToggle(bool value)
+    {
+        var toggleSprite = value ? toggleOnSprite : toggleOffSprite;
+        var targetRt = value ? leftRt : rightRt;
 
+        pushToggle.transform.DOMove(targetRt.position, 1f);
+        toggleBg.sprite = toggleSprite;
     }
 }

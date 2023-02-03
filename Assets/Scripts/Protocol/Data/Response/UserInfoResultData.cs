@@ -39,8 +39,10 @@ public class UserInfoData
     public string provider;
     public string photo_url;
     public string identifier;
-    public string onPush;
-    public string onEvent;
+    public int onPush = 0;
+    public int onEvent = 0;
+    public bool isPush => Convert.ToBoolean(onPush);
+    public bool isEvent => Convert.ToBoolean(onEvent);
     public string displayname;
     public string mb_certify;
     public int Age => DateTime.Now.Year - BirthDay.Year + 1;

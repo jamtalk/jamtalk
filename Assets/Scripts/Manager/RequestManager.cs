@@ -98,6 +98,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
         {
             //www.SetRequestHeader("Content-Type", "multipart/form-data; boundary=<calculated when request is sent>");
             yield return www.SendWebRequest();
+            Debug.Log(JObject.Parse(www.downloadHandler.text));
             object data = null;
             bool success = true;
             try
