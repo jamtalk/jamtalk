@@ -20,7 +20,12 @@ public class SignInParam : ActParam
     {
         var form = base.GetForm();
         var providerValue = provider == eProvider.none ? string.Empty : provider.ToString();
-        if (provider == eProvider.none) user_id = "email:" + user_id;
+        //if (provider == eProvider.none) user_id = "email:" + user_id;
+        if(provider == eProvider.none)
+        {
+            var isEmail = user_id.Contains("email:");
+            if (!isEmail) user_id = "email:" + user_id;
+        }
 
         form.AddField("user_id", user_id);
         form.AddField("user_pw", user_pw);

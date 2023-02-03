@@ -8,16 +8,26 @@ using UnityEngine.UI;
 public class ToggleElement : MonoBehaviour
 {
     public Toggle pushToggle;
+    public GameObject toggleTarget;
     public Image toggleBg;
-    private RectTransform toggleRt => pushToggle.GetComponent<RectTransform>();
     public RectTransform leftRt;
     public RectTransform rightRt;
     public Sprite toggleOnSprite;
     public Sprite toggleOffSprite;
 
-    private void Awake()
+
+    public void Awake()
     {
+        Init();
         pushToggle.onValueChanged.AddListener(SetToggle);
+    }
+
+    public void Init() => StartCoroutine(WaitRoutine());
+
+    private IEnumerator WaitRoutine()
+    {
+        yield return new WaitForEndOfFrame();
+        SetToggle(UserDataManager.Instance.CurrentUser.isPush);
     }
 
     public void SetToggle(bool value)
@@ -25,7 +35,7 @@ public class ToggleElement : MonoBehaviour
         var toggleSprite = value ? toggleOnSprite : toggleOffSprite;
         var targetRt = value ? leftRt : rightRt;
 
-        pushToggle.transform.DOMove(targetRt.position, 1f);
+        toggleTarget.transform.DOMove(targetRt.position, 1f);
         toggleBg.sprite = toggleSprite;
     }
 }

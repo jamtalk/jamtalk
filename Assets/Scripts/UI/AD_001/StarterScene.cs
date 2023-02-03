@@ -35,7 +35,8 @@ public class StarterScene : MonoBehaviour
 
                 UserDataManager.Instance.LoadUserData(id,() =>
                 {
-                    new SignInUI().SignIn(id, pw, provider, uid);
+                    //SignInUI.SignIn(id, pw, provider, uid);
+                    GameManager.Instance.SignIn(id, pw, provider, uid);
                     
                     GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
                 });

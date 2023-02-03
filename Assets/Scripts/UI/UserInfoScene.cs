@@ -6,8 +6,9 @@ public abstract class UserInfoScene : MonoBehaviour
     {
 #if UNITY_EDITOR
         //var id = UserDataManager.Instance.CurrentUser.user_id.Replace("email:", string.Empty);
-        var id = UserDataManager.Instance.CurrentUser.user_id;
-        UserDataManager.Instance.LoadUserData(id, Init);
+        //var id = UserDataManager.Instance.CurrentUser.user_id;
+        //UserDataManager.Instance.LoadUserData(id, Init);
+        Init();
 #else
         Init();
 #endif

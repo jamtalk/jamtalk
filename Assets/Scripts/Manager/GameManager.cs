@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using GJGameLibrary;
+using UnityEditor.VersionControl;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -97,6 +98,41 @@ public class GameManager : MonoSingleton<GameManager>
             new NaverSigner().SignInSNS(callback);
         else if (provider == eProvider.facebook)
             new FacebookSigner().SignInSNS(callback);
+    }
+
+    public void SignIn(string id, string pw, eProvider provider, string uid, Action onCompleted = null)
+    {
+        if (string.IsNullOrEmpty(id))
+            AndroidPluginManager.Instance.Toast("아이디를 입력하세요.");
+        else if (string.IsNullOrEmpty(pw))
+            AndroidPluginManager.Instance.Toast("비밀번호를 입력하세요.");
+        else
+        {
+            var param = new SignInParam(id, pw, provider, uid);
+            RequestManager.Instance.RequestAct(param, (res) =>
+            {
+                var result = res.GetResult<ActRequestResult>();
+                if (result.code != eErrorCode.Success)
+                {
+                    Debug.Log(result.code + " : " + result.msg);
+                    AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+                }
+                else
+                {
+                    if (provider == eProvider.none)
+                    { 
+                        var isEmail = id.Contains("email:");
+                        if (!isEmail) id = "email:" + id;
+                    }
+                    UserDataManager.Instance.LoadUserData(id, () =>
+                    {
+                        GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);;
+                    });
+                }
+                onCompleted?.Invoke();
+                Debug.Log(res.GetLog());
+            });
+        }
     }
 
     public void SignOut()

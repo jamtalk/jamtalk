@@ -12,6 +12,9 @@ public abstract class BaseSigner
     protected abstract eProvider provider { get; }
     protected string uid { get; private set; }
     protected abstract string snsType { get; }
+    protected string id;
+    protected string pw;
+
     protected abstract void SignIn();
     protected abstract void SignOut();
     Action<string, string, eProvider, string> callback;
@@ -26,7 +29,6 @@ public abstract class BaseSigner
     {
         SignOut();
     }
-
 
     public void ExistSNS(eProvider eProvider, string uid, string email, string name)
     {

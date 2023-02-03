@@ -17,7 +17,8 @@ public class AddChild : MonoBehaviour
 
     private void Awake()
     {
-        termsMoreButton.onClick.AddListener(() => terms.SetActive(true));
+        //termsMoreButton.onClick.AddListener(() => terms.SetActive(true));
+        termsMoreButton.onClick.AddListener(() => Application.OpenURL("https://jamtalk.live/privacy"));
         confirmButton.onClick.AddListener(() => ConfirmAction());
     }
 
