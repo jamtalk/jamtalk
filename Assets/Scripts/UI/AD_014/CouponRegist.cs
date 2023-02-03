@@ -18,7 +18,7 @@ public class CouponRegist : MonoBehaviour
 
     private void Awake()
     {
-        registButton.onClick.AddListener(() => RegistAction());
+        registButton.onClick.AddListener(RegistAction);
         exitButton.onClick.AddListener(() => gameObject.SetActive(false));
     }
 
@@ -28,7 +28,9 @@ public class CouponRegist : MonoBehaviour
             return;
         else
         {
-            // 쿠폰 등록 param 설정 *_*
+            // 등록된 쿠폰 존재 여부 확인
+
+            // 존재, 미사용 시 쿠폰 등록 param 설정 *_*
         }
     }
 }

@@ -21,7 +21,6 @@ public class KakaoSigner : BaseSigner
             KakaoSdk.Initialize(() =>
             {
                 isInitalize = true;
-
             }, error =>
             {
                 isInitalize = true;
@@ -34,7 +33,6 @@ public class KakaoSigner : BaseSigner
         KakaoSdk.Login(LoginMethod.Both, (token) =>
         {
             Debug.Log("token :" + JsonUtility.ToJson(token));
-
             KakaoSdk.GetUserInformation((info) =>
             {
                 Debug.Log("info : " + JsonUtility.ToJson(info));
