@@ -6,11 +6,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectChild : MonoBehaviour
-{ 
+{
     public RectTransform[] rects;
     public ChildIconElement childIconOrizin;
     private List<ChildIconElement> childList = new List<ChildIconElement>();
     public Action addAction;
+    public Action selectAction;
 
     private void OnEnable()
     {
@@ -19,13 +20,24 @@ public class SelectChild : MonoBehaviour
 
     public void Init()
     {
-        // child list 전송받은 후 생성 및 출력
+        var dataList = UserDataManager.Instance.childList;
 
-        if (childList.Count == 0)
+        if (dataList.Length < 2)
         {
-            var addButton = Instantiate(childIconOrizin, rects[0]);
-            addButton.Init(true);
+            var addButton = Instantiate(childIconOrizin, rects[dataList.Length]);
+            addButton.Init(null);
             addButton.addAction += () => addAction?.Invoke();
+        }
+
+        for(int i = 0; i < dataList.Length; i++)
+        {
+            var childIcon = Instantiate(childIconOrizin, rects[i]);
+            childIcon.Init(dataList[i]);
+            childIcon.addAction += () =>
+            {
+                // 선택된 아이 display true 로 변경 , 나머지 아이 false,
+                selectAction?.Invoke();
+            };
         }
     }
 

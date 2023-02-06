@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,10 @@ public class ChildOutParam : UserParam
     protected override eAPIAct act => eAPIAct.childout;
 
     public string name;
-    public string display;
+    public bool display;
     public string level;
 
-    public ChildOutParam(string name, string display, string level)
+    public ChildOutParam(string name, bool display, string level)
     {
         this.name = name;
         this.display = display;
@@ -21,7 +22,7 @@ public class ChildOutParam : UserParam
     {
         var form = base.GetForm();
         form.AddField("name", name);
-        form.AddField("display", display);
+        form.AddField("display", Convert.ToInt16(display));
         form.AddField("level", level);
 
         return form;

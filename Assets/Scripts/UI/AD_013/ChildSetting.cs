@@ -18,7 +18,7 @@ public class ChildSetting : MonoBehaviour
     private void Awake()
     {
         selectChild.addAction += () => addChild.gameObject.SetActive(true);
-        exitButton.onClick.AddListener(() => ExitAction());
+        exitButton.onClick.AddListener(ExitAction);
     }
 
     private void ExitAction()

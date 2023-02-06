@@ -129,7 +129,7 @@ public class ChildProfileEdit : MonoBehaviour
                     return;
                 else
                 {
-                    var param = new ChildParam(addProfile.textBirth.text, addProfile.textBirth.text, string.Empty);
+                    var param = new ChildParam(addProfile.textBirth.text, addProfile.textBirth.text);
 
                     RequestManager.Instance.RequestAct(param, (res) =>
                     {

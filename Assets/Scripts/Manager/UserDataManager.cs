@@ -10,6 +10,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
 {
     public UserInfoData CurrentUser { get; private set; }
     public DashBoardData DashBoard { get; private set; }
+    public ChildInfoData[] childList { get; private set; }
     public bool UserDataLoaded { get; private set; } = false;
     public eProvider UserProvider { get; private set; }
 
@@ -43,6 +44,14 @@ public class UserDataManager : MonoSingleton<UserDataManager>
             }
 
             list.Add(successed);
+        });
+        dic.Add(new ChildListParam(id), res =>
+        {
+            var result = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
+            if (result)
+                childList = res.GetResult<DataRequestResult<ChildInfoData[]>>().data;
+
+            list.Add(result);
         });
 
         foreach(var item in dic)

@@ -17,9 +17,15 @@ public class ChildIconElement : MonoBehaviour
         button.onClick.AddListener(() => ClickAction());
     }
 
-    public void Init(bool isAdd = false)
+    public void Init(ChildInfoData data)
     {
-        this.isAdd = isAdd;
+        if (data == null)
+        {
+            isAdd = true;
+            return;
+        }
+
+        text.text = data.name;
     }
 
     private void ClickAction()

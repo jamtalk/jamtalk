@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,10 @@ public class ChildParam : UserParam
 
     public string name;
     public string jumin;
-    public string display;
+    public bool display;
     public int level;
 
-    public ChildParam(string name, string jumin, string display, int level = 1)
+    public ChildParam(string name, string jumin, bool display = false, int level = 1)
     {
         this.name = name;
         this.jumin = jumin;
@@ -23,7 +24,7 @@ public class ChildParam : UserParam
         var form = base.GetForm();
         form.AddField("name", name);
         form.AddField("jumin", jumin);
-        form.AddField("display", display);
+        form.AddField("display", Convert.ToInt16(display));
         form.AddField("level", level);
 
         return form;
