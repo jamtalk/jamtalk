@@ -1,13 +1,11 @@
-using System.Collections;
-using UnityEngine;
-using GJGameLibrary.DesignPattern;
 using System;
-using System.Linq;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GJGameLibrary;
-using UnityEditor.VersionControl;
+using GJGameLibrary.DesignPattern;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class GameManager : MonoSingleton<GameManager>
 {

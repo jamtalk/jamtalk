@@ -1,16 +1,23 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SignUpUI : MonoBehaviour
 {
     public Button buttonBack;
-    public InputField email;
     public Button buttonCheckExist;
-    public InputField pw;
-    public InputField pwConfirm;
-    public InputField nameField;
-    public InputField code;
-    public Toggle toggleAll;
+    public TMP_InputField email;
+    public TMP_InputField pw;
+    public TMP_InputField pwConfirm;
+    public TMP_InputField nameField;
+    public TMP_InputField birth;
+    public TMP_InputField code;
+
+    //public Toggle toggleAll;
+    public Button toggleAll;
+    public Image checkAll;
     public Toggle toggleAge;
     public Toggle toggleServiceTerms;
     public Toggle togglepolicy;
@@ -18,34 +25,42 @@ public class SignUpUI : MonoBehaviour
     public Toggle toggleReciveEvent;
     public Button buttonConfirm;
     public GameObject loading;
+
     public bool isChecked = false;
     private void Awake()
     {
-        toggleAll.onValueChanged.AddListener(value =>
+        toggleAll.onClick.AddListener(() =>
         {
-            if (value)
-            {
-                toggleAge.isOn = true;
-                toggleServiceTerms.isOn = true;
-                togglepolicy.isOn = true;
-                toggleTerms.isOn = true;
-                toggleReciveEvent.isOn = true;
-            }
+            var isAll = !checkAll.gameObject.activeSelf;
+            checkAll.gameObject.SetActive(isAll);
+
+            toggleAge.isOn = isAll;
+            toggleServiceTerms.isOn = isAll;
+            togglepolicy.isOn = isAll;
+            toggleTerms.isOn = isAll;
+            toggleReciveEvent.isOn = isAll;
         });
+
         email.onValueChanged.AddListener((value) => isChecked = false);
-        buttonCheckExist.onClick.AddListener(CheckExist);
+
         toggleAge.onValueChanged.AddListener(AgreeToggleValueChanged);
         toggleServiceTerms.onValueChanged.AddListener(AgreeToggleValueChanged);
         togglepolicy.onValueChanged.AddListener(AgreeToggleValueChanged);
         toggleTerms.onValueChanged.AddListener(AgreeToggleValueChanged);
         toggleReciveEvent.onValueChanged.AddListener(AgreeToggleValueChanged);
+
+        buttonCheckExist.onClick.AddListener(CheckExist);
         buttonConfirm.onClick.AddListener(RegistID);
         buttonBack.onClick.AddListener(Clear);
     }
+
     private void AgreeToggleValueChanged(bool value)
     {
         if (!value)
-            toggleAll.isOn = false;
+            checkAll.gameObject.SetActive(false);
+
+        if (CheckToggle() && toggleReciveEvent.isOn)
+            checkAll.gameObject.SetActive(true);
     }
     private bool CheckToggle()
     {
@@ -79,6 +94,7 @@ public class SignUpUI : MonoBehaviour
         else
         {
             loading.gameObject.SetActive(true);
+            // param 에 birth 추가 필요 
             var param = new SignUpParam(email.text, pw.text, nameField.text, email.text, code.text, eProvider.none, string.Empty, string.Empty, string.Empty, string.Empty);
             Debug.LogFormat("{0}/{1}", email.text, param.user_id);
             RequestManager.Instance.RequestAct(param, callback =>
@@ -129,14 +145,12 @@ public class SignUpUI : MonoBehaviour
         pw.text = string.Empty;
         pwConfirm.text = string.Empty;
         nameField.text = string.Empty;
+        birth.text = string.Empty;
         code.text = string.Empty;
-        toggleAll.isOn = false;
-        toggleAge.isOn = false;
-        toggleServiceTerms.isOn = false;
-        togglepolicy.isOn = false;
-        toggleReciveEvent.isOn = false;
-        toggleReciveEvent.isOn = false;
-        buttonConfirm.interactable = false;
+
+        //toggleAll.isOn = false;
+
+        //buttonConfirm.interactable = false;
         isChecked = false;
         gameObject.SetActive(false);
     }
