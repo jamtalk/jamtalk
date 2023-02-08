@@ -33,12 +33,8 @@ public abstract class UserParam : ActParam
     {
         var form = base.GetForm();
 
-        //if (string.IsNullOrEmpty(user_id))
-        //    user_id = UserDataManager.Instance.CurrentUser.user_id.Replace("email:", string.Empty);
-        //else
-        //    user_id.Replace("email:", string.Empty);
-
-        //form.AddField("user_id", "email:"+user_id);
+        if (string.IsNullOrEmpty(user_id))
+            user_id = UserDataManager.Instance.CurrentUser.user_id;
         form.AddField("user_id", user_id);
         return form;
     }

@@ -19,6 +19,7 @@ public class EduLogParam : UserParam
     public EduLogParam(string app_token, DateTime regdate, eContents contents_title, eAlphabet alphabet, eAlphabetType alphabetType, int level, DateTime end_time, TimeSpan timespan, int total_score, int correct_score, float due)
         : base()
     {
+        user_id = UserDataManager.Instance.CurrentUser.user_id;
         this.app_token = app_token;
         this.regdate = regdate;
         this.contents_title = contents_title;

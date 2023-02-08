@@ -63,6 +63,17 @@ public class UserDataManager : MonoSingleton<UserDataManager>
         UserDataLoaded = true;
         callback?.Invoke();
     }
+    public void LoadChildList()
+    {
+        var param = new ChildListParam(CurrentUser.user_id);
+
+        RequestManager.Instance.RequestAct(param, res =>
+        {
+            var result = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
+            if (result)
+                childList = res.GetResult<DataRequestResult<ChildInfoData[]>>().data;
+        });
+    }
     public void SignOut()
     {
         if (PlayerPrefs.HasKey("PW"))

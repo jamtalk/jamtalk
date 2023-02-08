@@ -20,6 +20,10 @@ public class MainScene : UserInfoScene
     public GameObject videoPopup;
     public VideoClip clipSong;
     public VideoClip clipVideo;
+
+    public ChildSetting childSettingOrizin;
+    private ChildSetting childSetting;
+
     protected override void Awake()
     {
         buttonActivity.onClick.AddListener(() =>
@@ -45,5 +49,18 @@ public class MainScene : UserInfoScene
         int level = 0;  //???????? ???? ??????????
         imageLevel.sprite = levelIcons[level];
         textDay.text = string.Format("Day {0}", UserDataManager.Instance.DashBoard.day.ToString());
+
+        if (UserDataManager.Instance.childList == null)
+            SetChild();
+    }
+
+    private void SetChild()
+    {
+        if (childSetting == null)
+            childSetting = Instantiate(childSettingOrizin, transform);
+        else
+            childSetting.gameObject.SetActive(true);
+
+        childSetting.Init(true);
     }
 }

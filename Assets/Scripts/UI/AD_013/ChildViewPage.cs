@@ -38,6 +38,7 @@ public class ChildViewPage : MonoBehaviour
         if (childSetting == null)
         {
             childSetting = Instantiate(childSettingOrizin, transform.parent);
+            childSetting.Init();
             childSetting.selectChild.selectAction += () => Init();
         }
         else

@@ -13,11 +13,6 @@ public class SelectChild : MonoBehaviour
     public Action addAction;
     public Action selectAction;
 
-    private void OnEnable()
-    {
-        Init();
-    }
-
     public void Init()
     {
         var dataList = UserDataManager.Instance.childList;
@@ -29,7 +24,7 @@ public class SelectChild : MonoBehaviour
             addButton.addAction += () => addAction?.Invoke();
         }
 
-        for(int i = 0; i < dataList.Length; i++)
+        for (int i = 0; i < dataList.Length; i++)
         {
             var childIcon = Instantiate(childIconOrizin, rects[i]);
             childIcon.Init(dataList[i]);

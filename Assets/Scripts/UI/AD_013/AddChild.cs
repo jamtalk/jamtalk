@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class AddChild : MonoBehaviour
     public Button termsMoreButton;
     public Button confirmButton;
     public GameObject terms;
+    public Action onAdd;
 
     private void Awake()
     {
@@ -50,7 +52,7 @@ public class AddChild : MonoBehaviour
             else
             {
                 AndroidPluginManager.Instance.Toast("아이가 추가되었습니다.");
-                gameObject.SetActive(false);
+                onAdd?.Invoke();
             }
         });
     }

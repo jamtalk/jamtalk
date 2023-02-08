@@ -14,6 +14,7 @@ public class ChildParam : UserParam
 
     public ChildParam(string name, string jumin, bool display = false, int level = 1)
     {
+        user_id = UserDataManager.Instance.CurrentUser.user_id;
         this.name = name;
         this.jumin = jumin;
         this.display = display;
@@ -24,6 +25,7 @@ public class ChildParam : UserParam
         var form = base.GetForm();
         form.AddField("name", name);
         form.AddField("jumin", jumin);
+        int display = Convert.ToInt16(this.display);
         form.AddField("display", Convert.ToInt16(display));
         form.AddField("level", level);
 
