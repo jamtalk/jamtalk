@@ -17,6 +17,9 @@ public class SignInUI : MonoBehaviour
     public Button buttonSignIn;
     public GameObject signUp;
 
+    public FindAccount findAccountOrizin;
+    private FindAccount findAccount;
+
     private void Awake()
     {
         buttonRegist.onClick.AddListener(() =>
@@ -36,6 +39,7 @@ public class SignInUI : MonoBehaviour
         buttonKakao.onClick.AddListener(() => OnClickSigninSNS(eProvider.kakao));
         buttonNaver.onClick.AddListener(() => OnClickSigninSNS(eProvider.naver));
         buttonFaceBook.onClick.AddListener(() => OnClickSigninSNS(eProvider.facebook));
+        buttonFindPW.onClick.AddListener(FindPW);
 
         eProvider userProvider = eProvider.none;
         if(PlayerPrefs.HasKey("PROVIDER"))
@@ -49,6 +53,16 @@ public class SignInUI : MonoBehaviour
 
     private void OnClickSigninSNS(eProvider provider) =>
         GameManager.Instance.SignInSNS(provider, SetPlayerprefs);
+
+    private void FindPW()
+    {
+        if (findAccount == null)
+            findAccount = Instantiate(findAccountOrizin, transform.parent);
+        else
+            findAccount.gameObject.SetActive(true);
+
+        findAccount.Init(FindAccount.eTarget.FindPW);
+    }
 
     private void SetPlayerprefs(string id, string pw, eProvider provider, string uid)
     {
