@@ -13,6 +13,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
     public Image quizImage;
     public Button[] buttons;
     protected override int QuestionCount => 5;
+    protected override bool isGuidence => false;
 
     protected override eContents contents => eContents.Book_Words_Quiz;
 

@@ -1428,6 +1428,7 @@ GameObject:
   - component: {fileID: 911076080}
   - component: {fileID: 911076079}
   - component: {fileID: 911076078}
+  - component: {fileID: 911076077}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1435,6 +1436,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &911076077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911076076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ffb591679a9460eaac13c7254dca07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  book_Listening: {fileID: 0}
 --- !u!114 &911076078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,7 +1745,6 @@ GameObject:
   - component: {fileID: 947977555}
   - component: {fileID: 947977554}
   - component: {fileID: 947977553}
-  - component: {fileID: 947977556}
   m_Layer: 5
   m_Name: ButtonListening
   m_TagString: Untagged
@@ -1841,19 +1854,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947977551}
   m_CullTransparentMesh: 1
---- !u!114 &947977556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947977551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8abfd7b10ded654d9765c7088b4da12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popup: {fileID: 5920395338953227192, guid: d3f1175ef184dad479c63941d07b8004, type: 3}
 --- !u!1 &973957122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,7 +3381,7 @@ GameObject:
   - component: {fileID: 1574602695}
   - component: {fileID: 1574602698}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ButtonWriting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3957,7 +3957,7 @@ GameObject:
   - component: {fileID: 1974195564}
   - component: {fileID: 1974195563}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonConveration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

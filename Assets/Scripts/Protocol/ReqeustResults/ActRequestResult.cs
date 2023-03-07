@@ -3,8 +3,8 @@
     public eErrorCode code;
     public string msg;
 }
-public class DataRequestResult<T>
+public class DataRequestResult<T> : ActRequestResult
 {
-    public eErrorCode code;
+    //public eErrorCode code;
     public T data;
 }

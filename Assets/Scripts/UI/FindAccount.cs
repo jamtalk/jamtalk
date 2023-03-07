@@ -142,8 +142,8 @@ public class FindAccount : MonoBehaviour
         {
             title.text = "비밀번호 찾기";
             detail.text = "비밀번호를 찾을 아이디의 정보를 입력해주세요.";
-            firstTitle.text = "아이디";
-            firstInput.placeholder.GetComponent<TextMeshProUGUI>().text = "아이디를 입력해 주세요";
+            firstTitle.text = "이메일";
+            firstInput.placeholder.GetComponent<TextMeshProUGUI>().text = "이메일을 입력해 주세요";
             secondTitle.text = "실명";
             secondInput.placeholder.GetComponent<TextMeshProUGUI>().text = "실명을 입력해 주세요";
         }
