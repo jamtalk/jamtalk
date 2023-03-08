@@ -32,14 +32,12 @@ public class Book_Listening : BaseContents
     {
         base.Awake();
 
-        index = 0;
-        Show();
-
+        screen.sprite = data[index].sprite;
         foreach (var item in btnCtr)
-            item.nextAction += Show;
+            item.action += Show;
     }
 
-    private void Show()
+    private void Show(int index)
     {
         if (textCoroutine != null)
         {
@@ -49,7 +47,7 @@ public class Book_Listening : BaseContents
         }
 
         if (index < 0)
-            return;
+            index = 0;
 
         if(indexCnt > 1)
         {
@@ -64,6 +62,11 @@ public class Book_Listening : BaseContents
             return;
         }
 
+        SetLayout();
+    }
+
+    private void SetLayout()
+    {
         player.Play(data[index].clip);
         screen.sprite = data[index].sprite;
         caption.text = data[index].value;

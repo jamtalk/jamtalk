@@ -19,8 +19,8 @@ public class AC_009 : STTContents<DigraphsWordsData, Text>
         base.Awake();
 
         btnCtr.action += PlaySentance;
-        buttonPlay.onClick.AddListener(PlaySentance);
-        buttonReplay.onClick.AddListener(PlaySentance);
+        buttonPlay.onClick.AddListener(() => PlaySentance());
+        buttonReplay.onClick.AddListener(() => PlaySentance());
     }
     protected override List<Question_STT<DigraphsWordsData>> MakeQuestion()
     {
@@ -36,7 +36,7 @@ public class AC_009 : STTContents<DigraphsWordsData, Text>
         valueViewer.text = question.correct.key;
     }
 
-    private void PlaySentance()
+    private void PlaySentance(int value = 0)
     {
         audioPlayer.Play(questions[currentQuestionIndex].correct.clip);
         //currentQuestionIndex++;

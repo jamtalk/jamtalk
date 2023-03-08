@@ -11,27 +11,21 @@ public class Listening_BtnCtr : MonoBehaviour
     public Button buttonNext;
     public Button buttonPrevious;
 
-    private int index = 0;
-    public Action action;
-    public Action nextAction;
+    private int index = -1;
+    public Action<int> action;
 
     private void Awake()
     {
         buttonReplay.onClick.AddListener(() => ShowPage(index));
         buttonPlay.onClick.AddListener(() => ShowPage(0));
         buttonPrevious.onClick.AddListener(() => ShowPage(index - 1));
-        buttonNext.onClick.AddListener(NextPage);
+        buttonNext.onClick.AddListener(() => ShowPage(index + 1));
     }
 
     public void ShowPage(int index)
     {
         this.index = index;
-        action?.Invoke();
-    }
-
-    public void NextPage()
-    {
-        nextAction?.Invoke();
+        action?.Invoke(index);
     }
 
     public void SetActive(bool isActive)
