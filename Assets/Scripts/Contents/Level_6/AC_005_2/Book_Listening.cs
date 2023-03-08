@@ -19,13 +19,14 @@ public class Book_Listening : BaseContents
     public AudioSinglePlayer player;
     public Image screen;
     public Text caption;
-    public TextMeshPro captionText;
+    public Text typingText;
     public VideoData[] data;
     public Listening_BtnCtr[] btnCtr;
 
     private bool isCnt = true;
     private int index = 0;
     private int indexCnt = 0;
+    private Coroutine textCoroutine = null;
 
     protected override void Awake()
     {
@@ -40,6 +41,13 @@ public class Book_Listening : BaseContents
 
     private void Show()
     {
+        if (textCoroutine != null)
+        {
+            StopCoroutine(textCoroutine);
+            textCoroutine = null;
+            typingText.text = string.Empty;
+        }
+
         if (index < 0)
             return;
 
@@ -81,7 +89,10 @@ public class Book_Listening : BaseContents
             result += valueList[i] + " ";
         }
 
-        StartCoroutine(DoText(result));
+        textCoroutine = StartCoroutine(DoText(result, () =>
+        {
+            typingText.text = string.Empty;
+        }));
     }
 
     private IEnumerator DoText(string value, TweenCallback callback = null)
@@ -91,7 +102,7 @@ public class Book_Listening : BaseContents
         Sequence seq = DOTween.Sequence();
 
         Tween tween;
-        tween = caption.DOText(value, data[index].clip.length);
+        tween = typingText.DOText(value, data[index].clip.length);
 
         seq.Append(tween);
 
