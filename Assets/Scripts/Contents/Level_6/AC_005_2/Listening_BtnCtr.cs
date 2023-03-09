@@ -12,20 +12,20 @@ public class Listening_BtnCtr : MonoBehaviour
     public Button buttonPrevious;
 
     private int index = -1;
-    public Action<int> action;
+    public Action<int, ePageButtonType> action;
 
     private void Awake()
     {
-        buttonReplay.onClick.AddListener(() => ShowPage(index));
-        buttonPlay.onClick.AddListener(() => ShowPage(0));
-        buttonPrevious.onClick.AddListener(() => ShowPage(index - 1));
-        buttonNext.onClick.AddListener(() => ShowPage(index + 1));
+        buttonReplay.onClick.AddListener(() => ShowPage(index, ePageButtonType.replay));
+        buttonPlay.onClick.AddListener(() => ShowPage(0, ePageButtonType.play));
+        buttonPrevious.onClick.AddListener(() => ShowPage(index - 1, ePageButtonType.previous));
+        buttonNext.onClick.AddListener(() => ShowPage(index + 1, ePageButtonType.next));
     }
 
-    public void ShowPage(int index)
+    public void ShowPage(int index, ePageButtonType type)
     {
         this.index = index;
-        action?.Invoke(index);
+        action?.Invoke(index, type);
     }
 
     public void SetActive(bool isActive)

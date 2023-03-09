@@ -18,7 +18,7 @@ public class AC_009 : STTContents<DigraphsWordsData, Text>
     {
         base.Awake();
 
-        btnCtr.action += PlaySentance;
+        //btnCtr.action += PlaySentance;
         buttonPlay.onClick.AddListener(() => PlaySentance());
         buttonReplay.onClick.AddListener(() => PlaySentance());
     }

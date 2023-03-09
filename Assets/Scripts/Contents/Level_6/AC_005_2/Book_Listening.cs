@@ -23,7 +23,6 @@ public class Book_Listening : BaseContents
     public VideoData[] data;
     public Listening_BtnCtr[] btnCtr;
 
-    private bool isCnt = true;
     private int index = 0;
     private int indexCnt = 0;
     private Coroutine textCoroutine = null;
@@ -37,7 +36,7 @@ public class Book_Listening : BaseContents
             item.action += Show;
     }
 
-    private void Show(int index)
+    private void Show(int index, ePageButtonType type)
     {
         if (textCoroutine != null)
         {
@@ -46,35 +45,68 @@ public class Book_Listening : BaseContents
             typingText.text = string.Empty;
         }
 
-        if (index < 0)
-            index = 0;
-
-        if(indexCnt > 1)
+        if (indexCnt >= 2 && type != ePageButtonType.replay)
         {
             indexCnt = 0;
             this.index++;
-        }
-        indexCnt++;
 
-        if (index >= data.Length)
+            if (index >= data.Length)
+            {
+                ShowResult();
+                return;
+            }
+        }
+
+        if (type == ePageButtonType.next)
+            indexCnt++;
+        else if (type == ePageButtonType.play)
         {
-            ShowResult();
-            return;
+            this.index = 0;
+            indexCnt = 0;
+        }
+        else if (type == ePageButtonType.previous)
+        {
+            indexCnt--;
+            if(indexCnt <= 0)
+            {
+                indexCnt = 0;
+
+                if(this.index > 0)
+                    this.index--;
+            }
         }
 
-        SetLayout();
+        Debug.Log("index : " + this.index + ", indexCnt : " +indexCnt );
+        SetLayout(this.index, type, indexCnt);
     }
 
-    private void SetLayout()
+    private void SetLayout(int value, ePageButtonType type, int index)
     {
-        player.Play(data[index].clip);
-        screen.sprite = data[index].sprite;
-        caption.text = data[index].value;
-        SetTextColor(data[index].value);
+        player.Play(data[value].clip);
+        screen.sprite = data[value].sprite;
+        caption.text = data[value].value;
+        SetTextColor(data[value].value);
 
-        btnCtr[0].SetActive(isCnt);
-        btnCtr[1].SetActive(!isCnt);
-        isCnt = !isCnt;
+        var isSubtitle = true;
+        if (index <= 1 && (type == ePageButtonType.next || type == ePageButtonType.play))
+        {
+            btnCtr[0].SetActive(isSubtitle);
+            btnCtr[1].SetActive(!isSubtitle);
+        }
+        else if (index == 2 && type == ePageButtonType.next)
+        {
+            btnCtr[0].SetActive(!isSubtitle);
+            btnCtr[1].SetActive(isSubtitle);
+        }
+
+        if( type == ePageButtonType.previous)
+        {
+            if (value > 0)
+            {
+                btnCtr[0].SetActive(!btnCtr[0].gameObject.activeSelf);
+                btnCtr[1].SetActive(!btnCtr[1].gameObject.activeSelf);
+            }
+        }
     }
 
 
@@ -84,33 +116,34 @@ public class Book_Listening : BaseContents
         var back = "</color>";
         string result = string.Empty;
 
+        var colors = richColor
+            .OrderBy(x => Random.Range(0, 100))
+            .Take(valueList.Length)
+            .ToList();
+
         for (int i = 0; i < valueList.Length; i++)
         {
-            var front = "<color=" + richColor[Random.Range(0, richColor.Length)]+">";
+            //var front = "<color=" + richColor[Random.Range(0, richColor.Length)]+">";
+            var front = "<color=" + colors[i] + ">";
             valueList[i] = front + valueList[i] + back;
 
             result += valueList[i] + " ";
         }
 
-        textCoroutine = StartCoroutine(DoText(result, () =>
-        {
-            typingText.text = string.Empty;
-        }));
+        textCoroutine = StartCoroutine(DoText(valueList));
     }
 
-    private IEnumerator DoText(string value, TweenCallback callback = null)
+    private IEnumerator DoText(string[] values, TweenCallback callback = null)
     {
-        yield return new WaitForSecondsRealtime(3f);
+        var waitTime = 2.5f;
+        yield return new WaitForSecondsRealtime(waitTime);
+        var delay = (data[index].clip.length - waitTime) / values.Length;
 
-        Sequence seq = DOTween.Sequence();
-
-        Tween tween;
-        tween = typingText.DOText(value, data[index].clip.length);
-
-        seq.Append(tween);
-
-        seq.onComplete += callback;
-        seq.Play();
+        foreach (var item in values)
+        {
+            typingText.text += item + " ";
+            yield return new WaitForSecondsRealtime(delay);
+        }
     }
 
     private string[] richColor = {

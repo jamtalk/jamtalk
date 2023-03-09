@@ -528,3 +528,11 @@ public enum eBoardType
     notice,
     qa,
 }
+
+public enum ePageButtonType
+{
+    play,
+    next,
+    previous,
+    replay,
+}
