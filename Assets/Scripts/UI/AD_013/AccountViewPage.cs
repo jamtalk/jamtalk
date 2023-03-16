@@ -21,8 +21,8 @@ public class AccountViewPage : MonoBehaviour
 
     private void Awake()
     {
-        FindeIDButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.FindID));
-        ChangePWButton.onClick.AddListener(() => FindAccountAction(FindAccount.eTarget.ChangePW));
+        FindeIDButton.onClick.AddListener(() => FindAccountAction(FindAccount.ePanelType.FindID));
+        ChangePWButton.onClick.AddListener(() => FindAccountAction(FindAccount.ePanelType.ChangePW));
         fireButton.onClick.AddListener(() => firePopup.gameObject.SetActive(true));
     }
 
@@ -32,7 +32,7 @@ public class AccountViewPage : MonoBehaviour
         textRegData.text = UserDataManager.Instance.CurrentUser.RegistedDate.ToString("yyyy-MM-dd");
     }
 
-    private void FindAccountAction(FindAccount.eTarget target)
+    private void FindAccountAction(FindAccount.ePanelType target)
     {
         if (findAccount == null)
             findAccount = Instantiate(findAccountOrizin, transform.parent);

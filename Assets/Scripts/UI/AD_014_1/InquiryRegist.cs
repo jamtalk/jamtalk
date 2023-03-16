@@ -34,7 +34,7 @@ public class InquiryRegist : MonoBehaviour
 
         var param = new BoardWriteParam(eBoardType.qa, titleInput.text, detailInput.text);
 
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 

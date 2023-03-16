@@ -25,7 +25,7 @@ public class InquiryList : MonoBehaviour
     {
         var param = new BoardParam(eBoardType.notice, 1);
         //var param = new BoardListParam();
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 

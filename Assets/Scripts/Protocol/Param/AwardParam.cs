@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AwardParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.award;
+    public override eAPIAct act => eAPIAct.award;
 
     public string app_token;
     public string type;

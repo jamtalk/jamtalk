@@ -41,7 +41,7 @@ public class AddChild : MonoBehaviour
     {
         var param = new ChildParam(inputName.text, inputBirth.text);
 
-        RequestManager.Instance.RequestAct(param, res =>
+        RequestManager.Instance.Request(param, res =>
         {
             var result = res.GetResult<ActRequestResult>();
 

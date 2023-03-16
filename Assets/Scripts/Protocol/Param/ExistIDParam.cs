@@ -2,7 +2,7 @@
 
 public class ExistIDParam : ActParam
 {
-    protected override eAPIAct act => eAPIAct.exists;
+    public override eAPIAct act => eAPIAct.exists;
     public string user_id;
 
     public ExistIDParam(string user_id)

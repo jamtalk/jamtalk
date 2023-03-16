@@ -20,7 +20,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
     }
     private IEnumerator LoadAll(string id, Action callback)
     {
-        var dic = new Dictionary<IParam, RequestManager.OnResponse>();
+        var dic = new Dictionary<ActParam, RequestManager.OnResponse>();
         var list = new List<bool>();
         dic.Add(new UserInfoParam(id), callback =>
         {
@@ -56,7 +56,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
 
         foreach(var item in dic)
         {
-            RequestManager.Instance.RequestAct(item.Key, item.Value);
+            RequestManager.Instance.Request(item.Key, item.Value);
         }
 
         while (list.Count < dic.Count) { yield return null; }
@@ -67,7 +67,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
     {
         var param = new ChildListParam(CurrentUser.user_id);
 
-        RequestManager.Instance.RequestAct(param, res =>
+        RequestManager.Instance.Request(param, res =>
         {
             var result = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
             if (result)

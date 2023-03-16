@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BoardParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.board;
+    public override eAPIAct act => eAPIAct.board;
 
     public eBoardType boardType;
     public int uid;

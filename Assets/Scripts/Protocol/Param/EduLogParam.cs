@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EduLogParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.edulog;
+    public override eAPIAct act => eAPIAct.edulog;
     public string app_token;
     public DateTime regdate;
     public eContents contents_title;

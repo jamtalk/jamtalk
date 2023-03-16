@@ -23,7 +23,7 @@ public class ProfilePage : UserInfoScene
     private void GetProfileDetail()
     {
         var awardParam = new Award_logParam(UserDataManager.Instance.CurrentUser.user_id);
-        RequestManager.Instance.RequestAct(awardParam, (res) =>
+        RequestManager.Instance.Request(awardParam, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 
@@ -38,7 +38,7 @@ public class ProfilePage : UserInfoScene
         });
 
         //var childinfoParam = new ChildInfoParam();
-        RequestManager.Instance.RequestAct(awardParam, (res) => // param 변경 예정 
+        RequestManager.Instance.Request(awardParam, (res) => // param 변경 예정 
         {
             var result = res.GetResult<ActRequestResult>();
 

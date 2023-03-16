@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CouponListParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.coupon_list;
+    public override eAPIAct act => eAPIAct.coupon_list;
 
     public CouponListParam() { }
 }

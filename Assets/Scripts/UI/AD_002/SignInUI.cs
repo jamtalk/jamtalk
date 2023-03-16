@@ -16,6 +16,7 @@ public class SignInUI : MonoBehaviour
     public Button buttonNaver;
     public Button buttonSignIn;
     public GameObject signUp;
+    public GameObject loading;
 
     public FindAccount findAccountOrizin;
     private FindAccount findAccount;
@@ -51,17 +52,24 @@ public class SignInUI : MonoBehaviour
             email.text = PlayerPrefs.GetString("ID");
     }
 
-    private void OnClickSigninSNS(eProvider provider) =>
+    private void OnClickSigninSNS(eProvider provider)
+    {
+        loading.transform.SetAsLastSibling();
+        loading.SetActive(true);
         GameManager.Instance.SignInSNS(provider, SetPlayerprefs);
+    }
 
     private void FindPW()
     {
         if (findAccount == null)
+        {
             findAccount = Instantiate(findAccountOrizin, transform.parent);
+            findAccount.loading = loading;
+        }
         else
             findAccount.gameObject.SetActive(true);
 
-        findAccount.Init(FindAccount.eTarget.FindPW);
+        findAccount.Init(FindAccount.ePanelType.FindPW);
     }
 
     private void SetPlayerprefs(string id, string pw, eProvider provider, string uid)

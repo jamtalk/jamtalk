@@ -17,8 +17,8 @@ using System.Text;
 public partial class RequestManager : MonoSingleton<RequestManager>
 {
     public delegate void OnResponse(ResponseData data);
-    private const string ACTAPI = @"http://app.jamtalk.live/shop/api/";
-    private const string STTAPI= @"https://api.maum.ai/stt/cnnSttSimple";
+    private const string ROOT = @"https://metafamilylibrary.com/shop/api/";
+    private const string ROOTSTT= @"https://api.maum.ai/stt/cnnSttSimple";
 
     /// <summary>
     /// Google STT 계정 정보
@@ -26,13 +26,13 @@ public partial class RequestManager : MonoSingleton<RequestManager>
     private const string GoogleSTTAPI = @"https://speech.googleapis.com/v1/speech:recognize";
     private const string GoogleSTTKEY = @"AIzaSyCDogfeweKC8GhDo0LVfPrkqp7 - aOA0QrA";
 
-    public void RequestAct<T>(T param, OnResponse onResponse) where T:IParam
+    public void Request<T>(T param, OnResponse onResponse) where T:ActParam
     {
-        StartCoroutine(SendRequest(ACTAPI,param, onResponse));
+        StartCoroutine(SendRequest(ROOT+string.Format("?act={0}",param.act),param, onResponse));
     }
     public void RequestSTT<T>(T param, OnResponse onResponse) where T : IParam
     {
-        StartCoroutine(SendRequest(STTAPI,param, onResponse));
+        StartCoroutine(SendRequest(ROOTSTT,param, onResponse));
     }
 
     public void RequestGoogleSTT(VoiceRecorder param, Action<string> onResponse) 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MemberOutParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.memberout;
+    public override eAPIAct act => eAPIAct.memberout;
 
     public string user_name;
     public string user_hp;

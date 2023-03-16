@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Exists_emailParam : ActParam
 {
-    protected override eAPIAct act => eAPIAct.exists_email;
+    public override eAPIAct act => eAPIAct.exists_email;
 
     public string user_email;
     public Exists_emailParam(string user_email)

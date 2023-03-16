@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChildOutParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.childout;
+    public override eAPIAct act => eAPIAct.childout;
 
     public string name;
     public bool display;

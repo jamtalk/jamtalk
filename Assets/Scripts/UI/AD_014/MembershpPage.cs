@@ -41,7 +41,7 @@ public class MembershpPage : MonoBehaviour
         // 구독관련 Param 추가 시 변경 *_*
         var param = new CouponregParam(string.Empty, DateTime.Now, endDate, price, string.Empty);
 
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 

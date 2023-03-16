@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Award_logParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.award_log;
+    public override eAPIAct act => eAPIAct.award_log;
 
     public Award_logParam(string user_id)
     {

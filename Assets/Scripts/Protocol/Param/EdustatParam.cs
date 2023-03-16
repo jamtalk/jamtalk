@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EdustatParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.edustat;
+    public override eAPIAct act => eAPIAct.edustat;
 
     public string type;
     public string month;

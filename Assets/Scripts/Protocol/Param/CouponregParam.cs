@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CouponregParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.couponreg;
+    public override eAPIAct act => eAPIAct.couponreg;
 
     public string cp_subject;
     public DateTime cp_start;

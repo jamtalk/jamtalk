@@ -13,7 +13,7 @@ public abstract class Param : IParam
 }
 public abstract class ActParam : Param
 {
-    protected abstract eAPIAct act { get; }
+    public abstract eAPIAct act { get; }
     public override WWWForm GetForm()
     {
         var form = new WWWForm();
@@ -25,10 +25,6 @@ public abstract class ActParam : Param
 public abstract class UserParam : ActParam
 {
     protected string user_id;
-
-    protected UserParam()
-    {
-    }
     public override WWWForm GetForm()
     {
         var form = base.GetForm();

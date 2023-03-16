@@ -35,7 +35,7 @@ public abstract class BaseSigner
         var providerID = eProvider.ToString().Substring(0, 2) + uid;
         var param = new ExistIDParam(providerID);
 
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
             if (result.code == eErrorCode.Success)
@@ -49,7 +49,7 @@ public abstract class BaseSigner
     {
         var providerID = eProvider.ToString().Substring(0, 2) + uid;
         var param = new SignUpParam(providerID, providerID, name, email, string.Empty, eProvider, string.Empty, uid, string.Empty, string.Empty);
-        RequestManager.Instance.RequestAct(param, res =>
+        RequestManager.Instance.Request(param, res =>
         {
             var result = res.GetResult<ActRequestResult>();
 

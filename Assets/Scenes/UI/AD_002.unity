@@ -7515,6 +7515,7 @@ MonoBehaviour:
   buttonNaver: {fileID: 1009334023}
   buttonSignIn: {fileID: 1761757331}
   signUp: {fileID: 1845907030}
+  loading: {fileID: 277786685}
   findAccountOrizin: {fileID: 558714664348549728, guid: 4552f1ee0e843412091647879d144a42, type: 3}
 --- !u!1 &1631143315
 GameObject:
@@ -9376,7 +9377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 740, y: -47.0025}
+  m_AnchoredPosition: {x: 740, y: -47.00244}
   m_SizeDelta: {x: 1480, y: 94.005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1999439930

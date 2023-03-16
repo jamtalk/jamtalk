@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BoardWriteParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.board_write;
+    public override eAPIAct act => eAPIAct.board_write;
 
     public eBoardType boardType;
     public string user_name;

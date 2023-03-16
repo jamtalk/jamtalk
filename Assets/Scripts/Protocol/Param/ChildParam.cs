@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChildParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.child;
+    public override eAPIAct act => eAPIAct.child;
 
     public string name;
     public string jumin;

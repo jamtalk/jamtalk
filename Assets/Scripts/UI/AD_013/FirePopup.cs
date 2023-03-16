@@ -18,7 +18,7 @@ public class FirePopup : MonoBehaviour
     {
         var param = new MemberOutParam();
 
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 

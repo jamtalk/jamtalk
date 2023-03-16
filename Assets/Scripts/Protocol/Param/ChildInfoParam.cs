@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChildInfoParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.child_info;
+    public override eAPIAct act => eAPIAct.child_info;
 
     public string user_name;
 

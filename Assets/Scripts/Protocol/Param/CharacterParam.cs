@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.character;
+    public override eAPIAct act => eAPIAct.character;
 
     public string app_token;
     public int type;

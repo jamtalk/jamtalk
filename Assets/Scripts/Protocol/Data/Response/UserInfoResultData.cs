@@ -22,8 +22,8 @@ public class UserInfoData
 {
     public string user_id;
     public string name;
-    public string nick;
     public string email;
+    public string nick;
     public string mobile;
     public string sex;
     public string birth;

@@ -2,7 +2,7 @@
 
 public class SignUpParam : ActParam
 {
-    protected override eAPIAct act => eAPIAct.register;
+    public override eAPIAct act => eAPIAct.register;
     public string user_id;
     public string user_pw;
     public string user_name;

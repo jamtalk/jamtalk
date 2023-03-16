@@ -131,7 +131,7 @@ public class ChildProfileEdit : MonoBehaviour
                 {
                     var param = new ChildParam(addProfile.textBirth.text, addProfile.textBirth.text);
 
-                    RequestManager.Instance.RequestAct(param, (res) =>
+                    RequestManager.Instance.Request(param, (res) =>
                     {
                         var result = res.GetResult<ActRequestResult>();
 

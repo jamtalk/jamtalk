@@ -107,7 +107,7 @@ public class GameManager : MonoSingleton<GameManager>
         else
         {
             var param = new SignInParam(id, pw, provider, uid);
-            RequestManager.Instance.RequestAct(param, (res) =>
+            RequestManager.Instance.Request(param, (res) =>
             {
                 var result = res.GetResult<ActRequestResult>();
                 if (result.code != eErrorCode.Success)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MemberInfoParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.memberinfo;
+    public override eAPIAct act => eAPIAct.memberinfo;
 
     public string user_pw;
     public string user_name;

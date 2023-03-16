@@ -2,7 +2,7 @@
 
 public class SignInParam : ActParam
 {
-    protected override eAPIAct act => eAPIAct.login;
+    public override eAPIAct act => eAPIAct.login;
     public string user_id;
     public string user_pw;
     public eProvider provider;

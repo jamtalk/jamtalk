@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LeveltestParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.leveltest;
+    public override eAPIAct act => eAPIAct.leveltest;
 
     public string app_token;
     public DateTime regdate;

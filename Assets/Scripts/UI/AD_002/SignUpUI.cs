@@ -97,7 +97,7 @@ public class SignUpUI : MonoBehaviour
             // param 에 birth 추가 필요 
             var param = new SignUpParam(email.text, pw.text, nameField.text, email.text, code.text, eProvider.none, string.Empty, string.Empty, string.Empty, string.Empty);
             Debug.LogFormat("{0}/{1}", email.text, param.user_id);
-            RequestManager.Instance.RequestAct(param, callback =>
+            RequestManager.Instance.Request(param, callback =>
             {
                 loading.gameObject.SetActive(false);
                 var res = callback.GetResult<ActRequestResult>();
@@ -125,7 +125,7 @@ public class SignUpUI : MonoBehaviour
             loading.gameObject.SetActive(true);
             var param = new Exists_emailParam(email.text);
 
-            RequestManager.Instance.RequestAct(param, callback =>
+            RequestManager.Instance.Request(param, callback =>
             {
                 loading.gameObject.SetActive(false);
                 var result = callback.GetResult<ActRequestResult>();

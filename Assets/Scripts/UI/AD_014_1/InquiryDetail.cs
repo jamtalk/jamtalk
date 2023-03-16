@@ -24,7 +24,7 @@ public class InquiryDetail : MonoBehaviour
     public void Init(int uid)
     {
         var param = new BoardParam(eBoardType.qa, uid);
-        RequestManager.Instance.RequestAct(param, (res) =>
+        RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Level_logParam : UserParam
 {
-    protected override eAPIAct act => eAPIAct.level_log;
+    public override eAPIAct act => eAPIAct.level_log;
 
     public DateTime regdate;
     public int level;

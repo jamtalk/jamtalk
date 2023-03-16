@@ -83,7 +83,7 @@ public abstract class BaseContents : MonoBehaviour
         });
 
         result.SetResult(GetResult());
-        RequestManager.Instance.RequestAct(param, response =>
+        RequestManager.Instance.Request(param, response =>
         {
             Debug.Log("결과 받기 완료");
         });
