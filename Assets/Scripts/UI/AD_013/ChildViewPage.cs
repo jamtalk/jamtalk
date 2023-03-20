@@ -28,9 +28,9 @@ public class ChildViewPage : MonoBehaviour
         var data = UserDataManager.Instance.childList.Where(x => x.isDislplay).First();
 
         childName.text = data.name;
-        childBirth.text = data.birth;
-        //childGender.text = 
-        //pointText.text = 
+        childBirth.text = data.jumin;
+        childGender.text = data.gender == 'F' ? "여자아이" : "남자아이";
+        pointText.text = data.point.ToString();
     }
 
     private void ChildSetting()

@@ -29,6 +29,8 @@ public class AddChild : MonoBehaviour
             AndroidPluginManager.Instance.Toast("아이 이름을 입력하세요.");
         else if (string.IsNullOrEmpty(inputBirth.text))
             AndroidPluginManager.Instance.Toast("아이 생년월일을 입력하세요.");
+        else if (inputBirth.text.Length<8)
+            AndroidPluginManager.Instance.Toast("아이 생년월일을 정확히 입력하세요.");
         else if (!maleToggle.isOn && !femaleToggle.isOn)
             AndroidPluginManager.Instance.Toast("아이 성별을 선택하세요.");
         else if (!termsToggle.isOn)
@@ -39,17 +41,14 @@ public class AddChild : MonoBehaviour
 
     private void ConfirmAction()
     {
-        var param = new ChildParam(inputName.text, inputBirth.text);
+        var gender = maleToggle.isOn ? 'M' : 'F';
+        var param = new ChildParam(inputName.text, inputBirth.text, true, 1, 1, gender);
 
         RequestManager.Instance.Request(param, res =>
         {
             var result = res.GetResult<ActRequestResult>();
 
-            if(result.code != eErrorCode.Success)
-            {
-
-            }
-            else
+            if(result.code == eErrorCode.Success)
             {
                 AndroidPluginManager.Instance.Toast("아이가 추가되었습니다.");
                 onAdd?.Invoke();
