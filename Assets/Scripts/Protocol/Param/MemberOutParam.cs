@@ -7,11 +7,10 @@ public class MemberOutParam : UserParam
     public string user_name;
     public string user_hp;
 
-    public MemberOutParam()
+    public MemberOutParam():base()
     {
-        this.user_id = UserDataManager.Instance.CurrentUser.user_id;
-        this.user_name = UserDataManager.Instance.CurrentUser.name;
-        this.user_hp = string.Empty;
+        user_name = UserDataManager.Instance.CurrentUser.name;
+        user_hp = string.Empty;
     }
     public override WWWForm GetForm()
     {

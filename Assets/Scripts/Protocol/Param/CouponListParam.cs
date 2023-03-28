@@ -6,5 +6,5 @@ public class CouponListParam : UserParam
 {
     public override eAPIAct act => eAPIAct.coupon_list;
 
-    public CouponListParam() { }
+    public CouponListParam():base() { }
 }

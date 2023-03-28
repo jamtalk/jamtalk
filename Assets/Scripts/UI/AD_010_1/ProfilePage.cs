@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,14 +23,14 @@ public class ProfilePage : UserInfoScene
 
     private void GetProfileDetail()
     {
-        var awardParam = new Award_logParam(UserDataManager.Instance.CurrentUser.user_id);
+        var awardParam = new Award_logParam();
         RequestManager.Instance.Request(awardParam, (res) =>
         {
             var result = res.GetResult<ActRequestResult>();
 
             if(result.code != eErrorCode.Success)
             {
-
+                Debug.LogError("오류");
             }
             else
             {
@@ -37,24 +38,22 @@ public class ProfilePage : UserInfoScene
             }
         });
 
-        //var childinfoParam = new ChildInfoParam();
         RequestManager.Instance.Request(awardParam, (res) => // param 변경 예정 
         {
             var result = res.GetResult<ActRequestResult>();
 
             if (result.code != eErrorCode.Success)
             {
-
+                Debug.LogError("오류");
             }
             else
             {
-                var user = UserDataManager.Instance.CurrentUser;
-
-                textName.text = user.name;
-                //textPoints.text = string.Format("{0}pt", user.point);
-                //imageCurrentLevel.sprite = spritesLevel[user.level+1];
-                //imageNextLevel.sprite = spritesLevel[user.level+2];
-                //textAge.text = string.Format("{0} 세", user.Age);
+                var child = UserDataManager.Instance.CurrentChild;
+                textName.text = child.name;
+                textPoints.text = string.Format("{0}pt", child.point);
+                imageCurrentLevel.sprite = spritesLevel[child.level + 1];
+                imageNextLevel.sprite = spritesLevel[child.level + 2];
+                textAge.text = string.Format("{0} 세", child.age);
             }
         });
     }

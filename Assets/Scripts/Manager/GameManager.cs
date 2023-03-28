@@ -45,14 +45,11 @@ public class GameManager : MonoSingleton<GameManager>
         {
             var schemaLoader = Addressables.LoadAssetAsync<ResourceSchema>("ResourceSchema");
             var bytes = schemaLoader.GetDownloadStatus().TotalBytes;
-            Debug.LogFormat("?????? ???? ???? ({0}MB)", bytes);
             while (!schemaLoader.IsDone)
             {
                 yield return null;
                 var bytesSatus = schemaLoader.GetDownloadStatus();
-                Debug.LogFormat("?????? ({0}/{1})", bytesSatus.DownloadedBytes, bytesSatus.TotalBytes);
             }
-            Debug.LogFormat("?????? ???? ????\n???? : {0}\n???? : {1}\n???? : {2}", schemaLoader.Status, schemaLoader.OperationException, schemaLoader.Result);
             _schema = schemaLoader.Result;
         }
 
@@ -112,7 +109,6 @@ public class GameManager : MonoSingleton<GameManager>
                 var result = res.GetResult<ActRequestResult>();
                 if (result.code != eErrorCode.Success)
                 {
-                    Debug.Log(result.code + " : " + result.msg);
                     AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
                 }
                 else
@@ -128,7 +124,6 @@ public class GameManager : MonoSingleton<GameManager>
                     });
                 }
                 onCompleted?.Invoke();
-                Debug.Log(res.GetLog());
             });
         }
     }

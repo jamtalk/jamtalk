@@ -131,11 +131,10 @@ namespace GJGameLibrary
 
         public override void Initialize()
         {
-
             audioPop.clip = Resources.Load<AudioClip>("Audio/Popup");
-            Debug.LogFormat("팝업 클립 설정 : {0}", audioPop.clip.name);
+            Debug.LogFormat("팝업 클립 설정 : {0}", audioPop.clip==null?"null":audioPop.clip.name);
             audioClick.clip = Resources.Load<AudioClip>("Audio/Click");
-            Debug.LogFormat("클릭 클립 설정 : {0}", audioClick.clip.name);
+            Debug.LogFormat("클릭 클립 설정 : {0}", audioClick.clip == null ? "null" : audioClick.clip.name);
 
             base.Initialize();
         }

@@ -48,7 +48,7 @@ public class MainScene : UserInfoScene
         imageLevel.sprite = levelIcons[level];
         textDay.text = string.Format("Day {0}", UserDataManager.Instance.DashBoard.day.ToString());
 
-        if (UserDataManager.Instance.childList == null)
+        if (UserDataManager.Instance.children == null || UserDataManager.Instance.children.Length == 0)
             SetChild();
     }
 

@@ -9,7 +9,7 @@ public class EdustatParam : UserParam
     public string type;
     public string month;
 
-    public EdustatParam(string type, string month)
+    public EdustatParam(string type, string month):base()
     {
         this.type = type;
         this.month = month;

@@ -11,7 +11,7 @@ public class CouponregParam : UserParam
     public int cp_price;
     public string cp_mem;
 
-    public CouponregParam(string cp_subject, DateTime cp_start, DateTime cp_end, int cp_price, string cp_mem)
+    public CouponregParam(string cp_subject, DateTime cp_start, DateTime cp_end, int cp_price, string cp_mem):base()
     {
         this.cp_subject = cp_subject;
         this.cp_start = cp_start;

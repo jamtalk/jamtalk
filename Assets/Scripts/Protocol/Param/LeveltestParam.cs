@@ -17,7 +17,7 @@ public class LeveltestParam : UserParam
     public int correct_score;
     public float due;
 
-    public LeveltestParam(string app_token, DateTime regdate, eContents contents_title, eAlphabet alphabet, eAlphabetType alphabetType, int level, DateTime end_time, TimeSpan timespan, int total_score, int correct_score, float due)
+    public LeveltestParam(string app_token, DateTime regdate, eContents contents_title, eAlphabet alphabet, eAlphabetType alphabetType, int level, DateTime end_time, TimeSpan timespan, int total_score, int correct_score, float due) : base()
     {
         this.app_token = app_token;
         this.regdate = regdate;

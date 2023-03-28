@@ -6,25 +6,33 @@ using UnityEngine;
 public class ChildOutParam : UserParam
 {
     public override eAPIAct act => eAPIAct.childout;
+    public string key => data.child_key;
+    public string name=>data.name;
+    public string jumin=>data.jumin;
+    public int display => data.display;
+    public int level=>data.level;
+    public int character_pick => data.character_pick;
+    public string gender=>data.gender;
+    public int point=>data.point;
 
-    public string name;
-    public bool display;
-    public string level;
+    public ChildInfoData data { get; private set; }
 
-    public ChildOutParam(string name, bool display, string level)
+    public ChildOutParam(ChildInfoData data):base()
     {
-        this.name = name;
-        this.display = display;
-        this.level = level;
+        this.data = data;
     }
 
     public override WWWForm GetForm()
     {
         var form = base.GetForm();
+        form.AddField("key", key);
         form.AddField("name", name);
-        form.AddField("display", Convert.ToInt16(display));
+        form.AddField("jumin", jumin);
+        form.AddField("display", display);
         form.AddField("level", level);
-
+        form.AddField("character_pick", character_pick);
+        form.AddField("gender", gender);
+        form.AddField("point", point);
         return form;
     }
 }

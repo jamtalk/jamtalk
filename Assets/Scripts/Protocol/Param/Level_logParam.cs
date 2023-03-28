@@ -9,7 +9,7 @@ public class Level_logParam : UserParam
     public int level;
     public int before;
 
-    public Level_logParam(DateTime regdate, int level, int before)
+    public Level_logParam(DateTime regdate, int level, int before):base()
     {
         this.regdate = regdate;
         this.level = level;

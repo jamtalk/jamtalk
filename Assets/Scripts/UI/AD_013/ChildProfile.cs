@@ -21,16 +21,29 @@ public class ChildProfile : MonoBehaviour
         {
             checkImage.gameObject.SetActive(value);
         });
+        InitData(UserDataManager.Instance.CurrentChild);
     }
 
     public void SetEdit(bool value)
     {
+        InitData(UserDataManager.Instance.CurrentChild);
         toggle.gameObject.SetActive(value);
-        //foreach (var item in inputFields)
-        //    item.gameObject.SetActive(value);
+        foreach (var item in inputFields)
+            item.gameObject.SetActive(value);
 
-        //textName.gameObject.SetActive(!value);
-        //textBirth.gameObject.SetActive(!value);
+        inputName.gameObject.SetActive(value);
+        inputBirth.gameObject.SetActive(value);
+        textName.gameObject.SetActive(!value);
+        textBirth.gameObject.SetActive(!value);
+    }
+    public void InitData(ChildInfoData child)
+    {
+        inputName.text = child.name;
+        inputBirth.text = child.jumin;
+        Debug.LogFormat("{0} : {1} 편집 설정", child.name, child.jumin);
+
+        textName.text = child.name;
+        textBirth.text = child.jumin;
     }
 
     

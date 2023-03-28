@@ -50,8 +50,11 @@ public class AddChild : MonoBehaviour
 
             if(result.code == eErrorCode.Success)
             {
-                AndroidPluginManager.Instance.Toast("아이가 추가되었습니다.");
-                onAdd?.Invoke();
+                UserDataManager.Instance.UpdateChildren(() =>
+                {
+                    AndroidPluginManager.Instance.Toast("아이가 추가되었습니다.");
+                    onAdd?.Invoke();
+                });
             }
         });
     }

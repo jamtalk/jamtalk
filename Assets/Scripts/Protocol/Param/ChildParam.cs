@@ -13,9 +13,8 @@ public class ChildParam : UserParam
     public int character=0;
     public char gender;
 
-    public ChildParam(string name, string jumin, bool display, int level, int character, char gender)
+    public ChildParam(string name, string jumin, bool display, int level, int character, char gender):base()
     {
-        user_id = UserDataManager.Instance.CurrentUser.user_id;
         this.name = name;
         this.jumin = jumin;
         this.display = display;

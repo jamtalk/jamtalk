@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ChildSetting : MonoBehaviour
 {
-    public SelectChild selectChild;
+    public ChildSelecterUI selectChild;
     public AddChild addChild;
     public Button exitButton;
 
@@ -19,18 +19,18 @@ public class ChildSetting : MonoBehaviour
 
     private void Awake()
     {
-        selectChild.addAction += () => addChild.gameObject.SetActive(true);
+        selectChild.onClickAdd += () => addChild.gameObject.SetActive(true);
+        selectChild.onSelect += () => gameObject.SetActive(false);
         exitButton.onClick.AddListener(ExitAction);
 
         addChild.onAdd += () =>
         {
+            Debug.Log("Ãß°¡µÊ");
             if (isAdd)
-            {
-                gameObject.SetActive(false);
-                UserDataManager.Instance.LoadChildList();
-            }
+                UserDataManager.Instance.UpdateChildren(()=> gameObject.SetActive(false));
             else
                 addChild.gameObject.SetActive(false);
+            selectChild.Init();
         };
     }
 
@@ -43,8 +43,6 @@ public class ChildSetting : MonoBehaviour
             exitButton.gameObject.SetActive(false);
             addChild.gameObject.SetActive(true);
         }
-        else
-            selectChild.Init();
     }
 
     private void ExitAction()

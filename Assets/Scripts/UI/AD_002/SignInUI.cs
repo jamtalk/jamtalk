@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using GJGameLibrary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,7 +21,6 @@ public class SignInUI : MonoBehaviour
 
     public FindAccount findAccountOrizin;
     private FindAccount findAccount;
-
     private void Awake()
     {
         buttonRegist.onClick.AddListener(() =>
@@ -64,7 +64,6 @@ public class SignInUI : MonoBehaviour
         if (findAccount == null)
         {
             findAccount = Instantiate(findAccountOrizin, transform.parent);
-            findAccount.loading = loading;
         }
         else
             findAccount.gameObject.SetActive(true);

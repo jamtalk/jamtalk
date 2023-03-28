@@ -6,9 +6,5 @@ public class ChildListParam : UserParam
 {
     public override eAPIAct act => eAPIAct.child_list;
 
-    public ChildListParam(string user_id)
-    {
-        this.user_id = user_id;
-        //user_id = UserDataManager.Instance.CurrentUser.user_id;
-    }
+    public ChildListParam(string user_id) : base(user_id) { }
 }

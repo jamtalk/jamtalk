@@ -96,14 +96,16 @@ public partial class RequestManager : MonoSingleton<RequestManager>
     {
         using (UnityWebRequest www = UnityWebRequest.Post(url, param.GetForm()))
         {
+            var loading = PopupManager.Instance.ShowLoading();
             //www.SetRequestHeader("Content-Type", "multipart/form-data; boundary=<calculated when request is sent>");
             yield return www.SendWebRequest();
-            Debug.Log(JObject.Parse(www.downloadHandler.text));
+            loading?.Invoke();
             object data = null;
             bool success = true;
             try
             {
                 data = RemoveEmptyChildren(JObject.Parse(www.downloadHandler.text));
+                //Debug.LogFormat("{0}\n\n{1}", JObject.Parse(www.downloadHandler.text), data);
                 success = true;
             }
             catch (Exception e)
@@ -113,11 +115,13 @@ public partial class RequestManager : MonoSingleton<RequestManager>
             }
             finally
             {
+                Debug.LogFormat("{0} request result : {1}\nURL : {2}\n------------------\nData\n{3}\n------------------\nResult\n{4}"
+                    ,url.Split('/').Last().Split('=').Last()
+                    ,success, url, param.ToString(), JObject.Parse(www.downloadHandler.text));
                 var response = new ResponseData(success, data);
                 if (success)
                 {
-                    Debug.Log(param.ToString() + "\n" + data.ToString());
-                    onResponse.Invoke(response);
+                    onResponse?.Invoke(response);
                 }
             }
         }
@@ -137,7 +141,8 @@ public partial class RequestManager : MonoSingleton<RequestManager>
                 }
                 if (!IsEmpty(child))
                 {
-                    copy.Add(prop.Name, child);
+                    if(!string.IsNullOrEmpty(prop.Value.ToString()) && prop.Value != null)
+                        copy.Add(prop.Name, child);
                 }
             }
             return copy;

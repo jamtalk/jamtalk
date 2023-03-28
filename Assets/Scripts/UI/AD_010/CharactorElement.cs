@@ -9,7 +9,6 @@ using System;
 public class CharactorElement : MonoBehaviour
 {
     public Image plat;
-    [HideInInspector]
     public int index;
     public Action selectedAction;
     public AnimationCharactor aniCharactor;
@@ -21,14 +20,9 @@ public class CharactorElement : MonoBehaviour
 
     public void Init(RectTransform rect, int index)
     {
-        StartCoroutine(InitCoroutine(rect, index));
-    }
-    public IEnumerator InitCoroutine(RectTransform rect, int index)
-    {
         this.index = index;
         transform.DOMove(rect.position, 0f);
-        if(index == 2 ) transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-        yield return new WaitForEndOfFrame();
+        if (index == 2) transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
     public void Move(RectTransform rect, int index, TweenCallback callback = null)

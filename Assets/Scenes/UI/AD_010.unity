@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96133a8d14e2f4c9a965b2bb29d0eb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentIndex: 5
   leftButton: {fileID: 1173385867}
   rightButton: {fileID: 356320161}
   selectButton: {fileID: 492791341}
@@ -1825,7 +1826,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Name
+  m_Text: 
 --- !u!222 &662320440
 CanvasRenderer:
   m_ObjectHideFlags: 0

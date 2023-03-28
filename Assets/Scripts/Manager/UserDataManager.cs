@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using GJGameLibrary.DesignPattern;
 using System;
 using UnityEngine;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 /// <summary>
 /// 사용자 데이터
 /// </summary>
@@ -10,13 +12,48 @@ public class UserDataManager : MonoSingleton<UserDataManager>
 {
     public UserInfoData CurrentUser { get; private set; }
     public DashBoardData DashBoard { get; private set; }
-    public ChildInfoData[] childList { get; private set; }
+    public ChildInfoData[] children { get; private set; } = new ChildInfoData[0];
+    public ChildInfoData CurrentChild
+    {
+        get
+        {
+            if (children.Length == 0)
+            {
+                Debug.LogFormat("자녀목록 비어있음({0})",GetInstanceID());
+                return null;
+            }
+            if (children.Where(x => x.Selected).Count() == 0)
+            {
+                var child = children.OrderByDescending(x => x.RegistedDate).First();
+                Debug.LogFormat("선택된 자녀 없어서 새로 생성 : {0}", child.name);
+                child.Selected = true;
+                return child;
+            }
+            else
+            {
+                Debug.Log("자녀 목록중 선택된 자녀 띄움");
+                return children.ToList().Find(x => x.Selected);
+            }
+        }
+    }
     public bool UserDataLoaded { get; private set; } = false;
     public eProvider UserProvider { get; private set; }
-
     public void LoadUserData(string id, Action callback)
     {
+        Debug.Log("유저 데이터 불러오기");
         StartCoroutine(LoadAll(id, callback));
+    }
+    public void UpdateChildren(Action callback = null)
+    {
+        RequestManager.Instance.Request(new ChildListParam(CurrentUser.user_id), response =>
+        {
+            var successed = response.GetResult<ActRequestResult>().code == eErrorCode.Success;
+            Debug.LogFormat("자녀 목록 업데이트 결과 : {0}", successed);
+            if (successed)
+                children = response.GetResult<DataRequestResult<ChildInfoData[]>>().data.Where(x => x.isDislplay).ToArray();
+            Debug.Log(string.Join("\n", children.Select(x => JObject.FromObject(x))));
+            callback?.Invoke();
+        });
     }
     private IEnumerator LoadAll(string id, Action callback)
     {
@@ -28,8 +65,8 @@ public class UserDataManager : MonoSingleton<UserDataManager>
             if (successed)
             {
                 CurrentUser = callback.GetResult<DataRequestResult<UserInfoData>>().data;
-                var temp = string.IsNullOrEmpty(UserDataManager.Instance.CurrentUser.provider);
-                UserProvider = temp ? eProvider.none : ((eProvider)Enum.Parse(typeof(eProvider), UserDataManager.Instance.CurrentUser.provider));
+                var temp = string.IsNullOrEmpty(Instance.CurrentUser.provider);
+                UserProvider = temp ? eProvider.none : ((eProvider)Enum.Parse(typeof(eProvider), Instance.CurrentUser.provider));
                 Debug.Log("load all userPrvider : " + UserProvider.ToString());
             }
 
@@ -47,11 +84,12 @@ public class UserDataManager : MonoSingleton<UserDataManager>
         });
         dic.Add(new ChildListParam(id), res =>
         {
-            var result = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
-            if (result)
-                childList = res.GetResult<DataRequestResult<ChildInfoData[]>>().data;
-
-            list.Add(result);
+            var successed = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
+            Debug.LogFormat("자녀목록 불러오기 결과 : {0}", successed);
+            if (successed)
+                children = res.GetResult<DataRequestResult<ChildInfoData[]>>().data.Where(x => x.isDislplay).ToArray();
+            Debug.LogFormat("@@@@@@@@@@@@@@@w자녀 목록({0}명)@@@@@@@@@@@@@@@@\n{0}", children.Length, string.Join("\n", children.Select(x => JObject.FromObject(x))));
+            list.Add(successed);
         });
 
         foreach(var item in dic)
@@ -61,6 +99,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
 
         while (list.Count < dic.Count) { yield return null; }
         UserDataLoaded = true;
+        Debug.Log("@@@@@@@유저정보 불러오기 완료@@@@@@@@@");
         callback?.Invoke();
     }
     public void LoadChildList()
@@ -71,7 +110,7 @@ public class UserDataManager : MonoSingleton<UserDataManager>
         {
             var result = res.GetResult<ActRequestResult>().code == eErrorCode.Success;
             if (result)
-                childList = res.GetResult<DataRequestResult<ChildInfoData[]>>().data;
+                children = res.GetResult<DataRequestResult<ChildInfoData[]>>().data.Where(x => x.isDislplay).ToArray();
         });
     }
     public void SignOut()

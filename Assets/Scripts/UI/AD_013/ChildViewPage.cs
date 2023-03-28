@@ -13,23 +13,27 @@ public class ChildViewPage : MonoBehaviour
     public Text childGender;
     public Text pointText;
 
-    public ChildProfileEdit profileEdit;
+    public ChildModifierUI modifier;
     public ChildSetting childSettingOrizin;
     private ChildSetting childSetting;
 
     private void Awake()
     {
-        childEditButton.onClick.AddListener(() => profileEdit.gameObject.SetActive(true));
+        childEditButton.onClick.AddListener(() =>
+        {
+            modifier.gameObject.SetActive(true);
+        });
         childSettingButton.onClick.AddListener(ChildSetting);
+        modifier.onClose.AddListener(Init);
     }
 
     public void Init()
     {
-        var data = UserDataManager.Instance.childList.Where(x => x.isDislplay).First();
+        var data = UserDataManager.Instance.CurrentChild;
 
         childName.text = data.name;
         childBirth.text = data.jumin;
-        childGender.text = data.gender == 'F' ? "여자아이" : "남자아이";
+        childGender.text = data.gender == "F" ? "여자아이" : "남자아이";
         pointText.text = data.point.ToString();
     }
 
@@ -39,7 +43,7 @@ public class ChildViewPage : MonoBehaviour
         {
             childSetting = Instantiate(childSettingOrizin, transform.parent);
             childSetting.Init();
-            childSetting.selectChild.selectAction += () => Init();
+            childSetting.selectChild.onSelect += () => Init();
         }
         else
             childSetting.gameObject.SetActive(true);

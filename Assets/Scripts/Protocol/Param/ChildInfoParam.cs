@@ -8,7 +8,7 @@ public class ChildInfoParam : UserParam
 
     public string user_name;
 
-    public ChildInfoParam(string user_name)
+    public ChildInfoParam(string user_name):base()
     {   // UserDataManager 에 활성화 된 아이 정보 저장 > username 바로 호출 , 매게변수 삭제 예정 
         this.user_name = user_name;
     }

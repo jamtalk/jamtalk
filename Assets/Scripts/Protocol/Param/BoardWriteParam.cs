@@ -9,7 +9,7 @@ public class BoardWriteParam : UserParam
     public string wr_subject;
     public string wr_content;
 
-    public BoardWriteParam(eBoardType boardType, string wr_subject, string wr_content)
+    public BoardWriteParam(eBoardType boardType, string wr_subject, string wr_content):base()
     {
         this.boardType = boardType;
         this.user_name = UserDataManager.Instance.CurrentUser.name;

@@ -30,7 +30,6 @@ public class FindAccount : MonoBehaviour
     private Text exitPopupText => reactionPopup.GetComponentInChildren<Text>();
     private UserInfoData user;
     private bool isValid = false;
-    public GameObject loading;
 
     private void Awake()
     {
@@ -50,15 +49,12 @@ public class FindAccount : MonoBehaviour
     {
         if (firstInput.text == string.Empty) return;
         if (secondInput.text == string.Empty) return;
-        loading.transform.SetAsLastSibling();
-        loading.SetActive(true);
         CheckVolid(SetReactionPopup);
     }
 
 
     private void SetReactionPopup(bool isValid)
     {
-        loading.SetActive(false);
         this.isValid = isValid;
         switch (panelType)
         {
@@ -87,7 +83,6 @@ public class FindAccount : MonoBehaviour
                 if (isValid)
                 {
                     var param = new MemberInfoParam(user, MemberInfoParam.eMemberInfo.user_pw, firstInput.text);
-
                     RequestManager.Instance.Request(param, (res) =>
                     {
                         var result = res.GetResult<ActRequestResult>();
@@ -182,8 +177,10 @@ public class FindAccount : MonoBehaviour
             detail.text = "아이디를 찾을 회원님의 정보를 입력해주세요.";
             firstTitle.text = "실명";
             firstInput.placeholder.GetComponent<TextMeshProUGUI>().text = "실명을 입력해 주세요";
+            firstInput.contentType = TMP_InputField.ContentType.Name;
             secondTitle.text = "생년월일";
             secondInput.placeholder.GetComponent<TextMeshProUGUI>().text = "생년월일을 입력해 주세요";
+            secondInput.contentType = TMP_InputField.ContentType.IntegerNumber;
         }
     }
 }

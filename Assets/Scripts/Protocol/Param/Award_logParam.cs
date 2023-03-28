@@ -5,9 +5,5 @@ using UnityEngine;
 public class Award_logParam : UserParam
 {
     public override eAPIAct act => eAPIAct.award_log;
-
-    public Award_logParam(string user_id)
-    {
-        this.user_id = user_id;
-    }
+    public Award_logParam() : base() { }
 }

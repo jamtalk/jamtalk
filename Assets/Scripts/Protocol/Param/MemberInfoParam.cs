@@ -8,17 +8,16 @@ public class MemberInfoParam : UserParam
 
     public string user_pw;
     public string user_name;
-    public string user_hp;
-    public string user_pic;
+    public string user_hp = "";
+    public string user_pic = "";
     public int on_push;
     public int on_event;
-    public string device;
-    public string device_ver;
-    public string device_token;
+    public string device = "";
+    public string device_ver = "";
+    public string device_token = "";
 
-    public MemberInfoParam(string user_id, string user_pw, string user_name, string user_hp, string user_pic, int on_push, int on_event, string device, string device_ver, string device_token)
+    public MemberInfoParam(string user_id, string user_pw, string user_name, string user_hp, string user_pic, int on_push, int on_event, string device, string device_ver, string device_token):base(user_id)
     {
-        this.user_id = user_id;
         this.user_pw = user_pw;
         this.user_name = user_name;
         this.user_hp = user_hp;
@@ -42,7 +41,7 @@ public class MemberInfoParam : UserParam
         device_ver,
         device_token
     }
-    public MemberInfoParam(UserInfoData data, eMemberInfo eInfo, string value)
+    public MemberInfoParam(UserInfoData data, eMemberInfo eInfo, string value) : base(data.user_id)
     {
         user_id = data.user_id;
         user_pw = string.Empty;
@@ -51,9 +50,9 @@ public class MemberInfoParam : UserParam
         user_pic = string.Empty;
         on_push = data.onPush;
         on_event = data.onEvent;
-        device = data.device;
-        device_ver = data.device_ver;
-        device_token = data.device_token;
+        device = data.device==null?string.Empty:data.device;
+        device_ver = data.device_ver==null?string.Empty:data.device_ver;
+        device_token = data.device_token == null ? string.Empty : data.device_token;
 
         if (eInfo == eMemberInfo.user_id) user_id = value;
         else if (eInfo == eMemberInfo.user_pw) user_pw = value;

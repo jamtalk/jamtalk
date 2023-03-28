@@ -32,11 +32,11 @@ namespace GJGameLibrary
         {
             currentScene = scene;
             var op = SceneManager.LoadSceneAsync(scene.ToString());
-            LoadingPopup loading = null;
+            SceneLoadingPopup loading = null;
             if (withLoading)
             {
-                loading = PopupManager.Instance.Popup<LoadingPopup>
-                    (Resources.Load<GameObject>(PopupManager.PopupLoadingRecourcePath));
+                loading = PopupManager.Instance.Popup<SceneLoadingPopup>
+                    (Resources.Load<GameObject>(PopupManager.PopupSceneLoadingRecourcePath));
 
                 foreach (var item in loading.charactors)
                     item.LoadingRoutine();
@@ -46,10 +46,8 @@ namespace GJGameLibrary
                 var progress = op.progress * 100f;
                 if (loading != null)
                     loading.progressbarCharging(op.progress);
-                Debug.LogFormat("{0} 씬 로딩중.. ({1}%)", scene.ToString(), progress.ToString("N2"));
                 yield return null;
             }
-            Debug.Log("씬 로딩 완료");
             PopupManager.Instance.Clear();
             op.allowSceneActivation = true;
             yield break;

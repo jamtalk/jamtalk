@@ -15,7 +15,7 @@ public class AwardParam : UserParam
     public DateTime end_time;
     public string total_score;
 
-    public AwardParam(string app_token, string type, DateTime regdate, string award, string level, DateTime end_time, string total_score)
+    public AwardParam(string app_token, string type, DateTime regdate, string award, string level, DateTime end_time, string total_score) : base()
     {
         this.app_token = app_token;
         this.type = type;

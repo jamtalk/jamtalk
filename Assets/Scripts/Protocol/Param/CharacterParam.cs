@@ -13,7 +13,7 @@ public class CharacterParam : UserParam
     public bool display;
     public string ruid;
 
-    public CharacterParam(string user_id,string app_token, int type, DateTime regdate, string title, int level, bool display, string ruid)
+    public CharacterParam(string user_id,string app_token, int type, DateTime regdate, string title, int level, bool display, string ruid):base()
     {
         this.user_id = user_id;
         this.app_token = app_token;

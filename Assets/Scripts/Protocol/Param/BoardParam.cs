@@ -7,7 +7,7 @@ public class BoardParam : UserParam
     public eBoardType boardType;
     public int uid;
 
-    public BoardParam(eBoardType boardType, int uid)
+    public BoardParam(eBoardType boardType, int uid) : base()
     {
         this.boardType = boardType;
         this.uid = uid;

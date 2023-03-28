@@ -16,10 +16,12 @@ using UnityEngine.Android;
 public class PopupManager : MonoSingleton<PopupManager>
 {
     public const string PopupGuidenceRecourcePath = "Popup/GuidencePopup";
-    public const string PopupLoadingRecourcePath = "Popup/LoadingPopup";
+    public const string PopupSceneLoadingRecourcePath = "Popup/SeceneLoadingPopup";
+    public const string PopupLoadingResourcePath = "Popup/LoadingPopup";
 
     private GameObject guidance;
     private GameObject loading;
+    private GameObject sceneLoading;//씬 로딩팝업
 
     private Stack<GameObject> popupStack;
     public event Action onEmptyPopup = null;
@@ -60,7 +62,8 @@ public class PopupManager : MonoSingleton<PopupManager>
 
         popupStack = new Stack<GameObject>();
         guidance = Resources.Load<GameObject>(PopupGuidenceRecourcePath);
-        loading = Resources.Load<GameObject>(PopupLoadingRecourcePath);
+        loading = Resources.Load<GameObject>(PopupLoadingResourcePath);
+        sceneLoading = Resources.Load<GameObject>(PopupSceneLoadingRecourcePath);
         base.Initialize();
     }
     public void ShowGuidance(string message, Action onOK = null)
@@ -91,6 +94,10 @@ public class PopupManager : MonoSingleton<PopupManager>
     public Action ShowLoading()
     {
         return Popup<LoadingPopup>(loading).ShowLoading();
+    }
+    public Action ShowSceneLoading()
+    {
+        return Popup<SceneLoadingPopup>(sceneLoading).ShowLoading();
     }
 
     public T Popup<T>(GameObject popupObject) where T:BasePopup
@@ -144,6 +151,30 @@ public class PopupManager : MonoSingleton<PopupManager>
             {
                 popupStack.Peek().gameObject.SetActive(true);
             }
+        }
+    }
+    public void Close(GameObject obj)
+    {
+        var stack = new Stack<GameObject>();
+        while(popupStack.Count>0)
+        {
+            var popup = popupStack.Pop();
+            if (obj != popup)
+            {
+                if (obj == null)
+                    continue;
+                else
+                    stack.Push(popup);
+            }
+            else
+            {
+                Destroy(popup);
+                break;
+            }
+        }
+        while (stack.Count > 0)
+        {
+            popupStack.Push(stack.Pop());
         }
     }
 

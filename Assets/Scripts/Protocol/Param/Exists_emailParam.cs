@@ -9,7 +9,7 @@ public class Exists_emailParam : ActParam
     public string user_email;
     public Exists_emailParam(string user_email)
     {
-        this.user_email = user_email;
+        this.user_email = string.Format("email:{0}",user_email);
     }
 
     public override WWWForm GetForm()

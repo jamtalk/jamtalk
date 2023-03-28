@@ -9,6 +9,7 @@ using System;
 
 public class SelectController : MonoBehaviour
 {
+    public int currentIndex=>UserDataManager.Instance.CurrentChild.character_pick;
     public Button leftButton;
     public Button rightButton;
     public Button selectButton;
@@ -25,12 +26,32 @@ public class SelectController : MonoBehaviour
         selectButton.onClick.AddListener(() => Selected());
         leftButton.onClick.AddListener(() => OnClickListener(true));
         rightButton.onClick.AddListener(() => OnClickListener(false));
+
+        if(currentIndex<2)
+        {
+            for (int i = 0; i < 2 - currentIndex; i++)
+                OnClickListener(true);
+        }
+        else
+        {
+            for (int i = 0; i < currentIndex - 2; i++)
+                OnClickListener(false);
+        }
     }
 
     public void Selected()
     {
         var selectedElement = elements.Where(x => x.index == 2).First();
-
+        int index = elements.ToList().IndexOf(selectedElement);
+        var child = UserDataManager.Instance.CurrentChild;
+        child.character_pick = index;
+        RequestManager.Instance.Request(new ChildOutParam(UserDataManager.Instance.CurrentChild), response =>
+        {
+            UserDataManager.Instance.UpdateChildren(()=>
+            {
+                AndroidPluginManager.Instance.Toast("캐릭터가 변경되었습니다");
+            });
+        });
         selectedElement.selectedAction?.Invoke();
     }
 

@@ -7,7 +7,8 @@ public class ChildInfoData
 {
     public string mem_id;
     public string name;
-    public int key;
+    public string child_key;
+    public string key;
     public string jumin;
     public int level;
     public int display;
@@ -15,10 +16,20 @@ public class ChildInfoData
     public int character_pick = 0;
     public int point;
     public int[] awards = new int[0];
-    public char gender;
+    public string gender;
     public int day;
     public int alphabet;
     public int contents_title;
     public bool isDislplay => Convert.ToBoolean(display);
     public DateTime RegistedDate => DateParser.Parse(created_at);
+    public int age => DateTime.Now.Year - int.Parse(jumin.ToString().Substring(0, 4));
+    public bool Selected
+    {
+        get => PlayerPrefs.HasKey("CHILD") && PlayerPrefs.GetString("CHILD") == child_key;
+        set
+        {
+            PlayerPrefs.SetString("CHILD", child_key);
+            PlayerPrefs.Save();
+        }
+    }
 }

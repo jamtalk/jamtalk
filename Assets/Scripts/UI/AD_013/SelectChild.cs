@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SelectChild : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class SelectChild : MonoBehaviour
 
     public void Init()
     {
-        var dataList = UserDataManager.Instance.childList;
+        var dataList = UserDataManager.Instance.children;
 
         if (dataList.Length < 2)
         {
