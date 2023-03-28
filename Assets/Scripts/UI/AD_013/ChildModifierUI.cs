@@ -2,15 +2,24 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ChildModifierUI : MonoBehaviour
 {
-    [SerializeField] protected Button buttonExit;
-    [SerializeField] protected Button buttonDelete;
-    [SerializeField] protected Button buttonConfirm;
-    [SerializeField] protected Button buttonAdd;
-    [SerializeField] protected TMP_InputField inputName;
-    [SerializeField] protected TMP_InputField inputBirthday;
+    [SerializeField] private Button buttonExit;
+    [SerializeField] private Button buttonDelete;
+    [SerializeField] private Button buttonConfirm;
+    [SerializeField] private TMP_InputField inputName;
+    [SerializeField] private TMP_InputField inputBirthday;
+
+    [SerializeField] private Button buttonAdd;
+    [SerializeField] private Transform parent;
+    [SerializeField] private ChildSummarayUI orizinal;
+    [SerializeField] private ChildSetting popupOrizinal;
+    private ChildSetting popupInstance;
+    private List<ChildSummarayUI> elements = new List<ChildSummarayUI>();
+
     private ChildInfoData child;
     public UnityEvent onClose;
 
@@ -19,6 +28,7 @@ public class ChildModifierUI : MonoBehaviour
         buttonExit.onClick.AddListener(OnExit);
         buttonDelete.onClick.AddListener(OnDelete);
         buttonConfirm.onClick.AddListener(OnConfirm);
+        buttonAdd.onClick.AddListener(OnClickAdd);
     }
 
     private void OnExit()
@@ -29,6 +39,28 @@ public class ChildModifierUI : MonoBehaviour
     private void OnEnable()
     {
         Init();
+    }
+    private void OnClickAdd()
+    {
+        if (popupInstance == null)
+        {
+            popupInstance = Instantiate(popupOrizinal, transform.parent);
+            popupInstance.Init();
+            popupInstance.selectChild.onSelect += () => Init();
+            popupInstance.addChild.onAdd += () =>
+            {
+                UserDataManager.Instance.UpdateChildren(()=>
+                {
+                    Init();
+                    popupInstance.gameObject.SetActive(false);
+                });
+            };
+        }
+        else
+            popupInstance.gameObject.SetActive(true);
+
+        popupInstance.Init(true);
+
     }
     private void OnDelete()
     {
@@ -59,6 +91,8 @@ public class ChildModifierUI : MonoBehaviour
         {
             UserDataManager.Instance.UpdateChildren(() =>
             {
+                UserDataManager.Instance.children.OrderByDescending(x => x.RegistedDate).First().Selected = true;
+                Init();
                 AndroidPluginManager.Instance.Toast("삭제 완료");
             });
         });
@@ -68,5 +102,27 @@ public class ChildModifierUI : MonoBehaviour
         child = UserDataManager.Instance.CurrentChild;
         inputName.text = child.name;
         inputBirthday.text = child.jumin;
+        CreateChildren();
+        buttonDelete.gameObject.SetActive(UserDataManager.Instance.children.Length > 1);
+    }
+
+    private void CreateChildren()
+    {
+        for (int i = 0; i < elements.Count; i++)
+            Destroy(elements[i].gameObject);
+        elements.Clear();
+
+        var children = UserDataManager.Instance.children.OrderBy(x => x.RegistedDate).ToArray();
+        for(int i = 0;i < children.Length; i++)
+        {
+            CreateChild(children[i]);
+        }
+
+    }
+    public void CreateChild(ChildInfoData data)
+    {
+        var child = Instantiate(orizinal, parent);
+        child.Init(data);
+        child.transform.SetSiblingIndex(1);
     }
 }

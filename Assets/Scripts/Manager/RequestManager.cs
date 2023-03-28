@@ -110,7 +110,7 @@ public partial class RequestManager : MonoSingleton<RequestManager>
             }
             catch (Exception e)
             {
-                Debug.LogErrorFormat("ParsingError!\nException : {0}\n-------------\nResult :{1}", e, www.downloadHandler.text);
+                Debug.LogErrorFormat("URL : {0}\nParsingError! Exception : {1}\n-------------\nResult :{2}", url, e, www.downloadHandler.text);
                 success = false;
             }
             finally
