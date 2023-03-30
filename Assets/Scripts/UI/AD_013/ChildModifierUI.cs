@@ -81,6 +81,7 @@ public class ChildModifierUI : MonoBehaviour
             RequestManager.Instance.Request(new ChildOutParam(child), response =>
             {
                 AndroidPluginManager.Instance.Toast("수정 완료");
+                Init();
             });
         }
     }
@@ -94,6 +95,7 @@ public class ChildModifierUI : MonoBehaviour
                 UserDataManager.Instance.children.OrderByDescending(x => x.RegistedDate).First().Selected = true;
                 Init();
                 AndroidPluginManager.Instance.Toast("삭제 완료");
+                PopupManager.Instance.Close();
             });
         });
     }
@@ -110,6 +112,7 @@ public class ChildModifierUI : MonoBehaviour
     {
         for (int i = 0; i < elements.Count; i++)
             Destroy(elements[i].gameObject);
+
         elements.Clear();
 
         var children = UserDataManager.Instance.children.OrderBy(x => x.RegistedDate).ToArray();
@@ -123,6 +126,17 @@ public class ChildModifierUI : MonoBehaviour
     {
         var child = Instantiate(orizinal, parent);
         child.Init(data);
+        child.onClick.AddListener(() =>
+        {
+            for (int i = 0; i < elements.Count; i++)
+                elements[i].Refresh();
+
+            this.child = UserDataManager.Instance.CurrentChild;
+            inputName.text = this.child.name;
+            inputBirthday.text = this.child.jumin;
+        });
         child.transform.SetSiblingIndex(1);
+        child.gameObject.SetActive(true);
+        elements.Add(child);
     }
 }

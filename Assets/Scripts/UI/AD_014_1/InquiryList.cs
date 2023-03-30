@@ -7,14 +7,14 @@ public class InquiryList : MonoBehaviour
 {
     public InquiryElement inquiryOrizin;
     public InquiryDetail inquiryDetail;
-    public RectTransform viewPointRt;
+    public RectTransform elementParent;
 
     private List<InquiryElement> inquiries = new List<InquiryElement>();
 
 
-    private void Awake()
+    private void OnEnable()
     {
-        //GetInquiry();
+        GetInquiry();
     }
 
 
@@ -23,20 +23,14 @@ public class InquiryList : MonoBehaviour
     /// </summary>
     private void GetInquiry()
     {
-        var param = new BoardParam(eBoardType.notice, 1);
-        //var param = new BoardListParam();
+        var param = new BoardParam(eBoardType.qa, 1);
         RequestManager.Instance.Request(param, (res) =>
         {
-            var result = res.GetResult<ActRequestResult>();
+            var result = res.GetResult<BoardReqeustResult>();
 
-            if (result.code != eErrorCode.Success)
+            if (result.code == eErrorCode.Success)
             {
-                Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(result.msg);
-            }
-            else
-            {
-                CreateInquiry();
+                CreateInquiry(result.data);
             }
         });
     }
@@ -45,17 +39,18 @@ public class InquiryList : MonoBehaviour
     /// <summary>
     /// 문의내역 호출하여 생성
     /// </summary>
-    private void CreateInquiry()
+    private void CreateInquiry(BoardData[] data)
     {
-        //for(int i = 0; i < List; i++) 
-        //{ 
-        var element = Instantiate(inquiryOrizin, viewPointRt);
-        element.Init(true);
-        element.transform.parent = viewPointRt.transform;
-        inquiries.Add(element);
-        //}
+        for (int i = 0; i < inquiries.Count; i++)
+            Destroy(inquiries[i].gameObject);
+        inquiries.Clear();
 
-        //foreach (var item in inquiries)
-        //    item.clickAction += () => inquiryDetail.Init(0);
+        for (int i = 0; i < data.Length; i++)
+        {
+            var element = Instantiate(inquiryOrizin, elementParent);
+            element.Init(data[i]);
+            element.onClick.AddListener(inquiryDetail.Init);
+            inquiries.Add(element);
+        }
     }
 }

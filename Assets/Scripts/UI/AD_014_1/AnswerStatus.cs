@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class AnswerStatus : MonoBehaviour
 {
+    public Color colorAnswered;
+    public Color colorWait;
     public Image image;
     public Text text;
 
-    public void ChangeStatus(bool value)
+    public void Init(BoardData data)
     {
-        image.color = value ? Color.blue : Color.gray;
+        image.color = data.isAnswered ? colorAnswered : colorWait;
+        text.text = data.isAnswered ? "답변완료" : "답변대기";
     }
 }

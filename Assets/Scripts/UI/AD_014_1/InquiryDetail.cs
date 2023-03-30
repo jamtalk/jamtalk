@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class InquiryDetail : MonoBehaviour
 {
-    public TMP_InputField titleInput;
-    public TMP_InputField detailInput;
-    public TMP_InputField answerInput;
+    public Text textQuestionTitle;
+    public Text textQuestionDate;
+    public Text textAnswerTitle;
+    public Text textAnswerDate;
+    public Text textAnswerComment;
     public AnswerStatus answerStatus;
     public Button confirmButton;
 
@@ -17,29 +19,14 @@ public class InquiryDetail : MonoBehaviour
         confirmButton.onClick.AddListener(() => gameObject.SetActive(false));
     }
 
-
-    /// <summary>
-    /// 데이터 받아서 상태 변경 / 답변, 제목, 질문 설정
-    /// </summary>
-    public void Init(int uid)
+    public void Init(BoardData data)
     {
-        var param = new BoardParam(eBoardType.qa, uid);
-        RequestManager.Instance.Request(param, (res) =>
-        {
-            var result = res.GetResult<ActRequestResult>();
-
-            if(result.code != eErrorCode.Success)
-            {
-                Debug.Log(result.code);
-                AndroidPluginManager.Instance.Toast(result.msg);
-            }
-            {
-                //titleInput.text = 
-                //detailInput.text =
-                //answerInput.text =
-                //answerStatus.ChangeStatus();
-                gameObject.SetActive(true);
-            }
-        });
+        textQuestionTitle.text = data.wr_subject;
+        textQuestionDate.text = data.wr_datetime;
+        textAnswerTitle.text = data.wr_coment_title;
+        textAnswerDate.text = data.wr_coment_datetime;
+        textAnswerComment.text = data.wr_coment_detail;
+        answerStatus.Init(data);
+        gameObject.SetActive(true);
     }
 }

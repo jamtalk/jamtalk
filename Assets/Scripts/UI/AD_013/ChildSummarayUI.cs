@@ -24,4 +24,5 @@ public class ChildSummarayUI : MonoBehaviour
         data.Selected = true;
         onClick?.Invoke();
     }
+    public void Refresh() => Init(data);
 }
