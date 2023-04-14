@@ -5,9 +5,9 @@ public class BoardParam : UserParam
     public override eAPIAct act => eAPIAct.board;
 
     public eBoardType boardType;
-    public int uid;
+    public string uid;
 
-    public BoardParam(eBoardType boardType, int uid) : base()
+    public BoardParam(eBoardType boardType, string uid) : base()
     {
         this.boardType = boardType;
         this.uid = uid;

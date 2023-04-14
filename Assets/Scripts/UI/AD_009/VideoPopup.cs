@@ -9,7 +9,8 @@ public class VideoPopup : BasePopup
     public Button buttonRePlay;
     public Button buttonPre;
     public Button buttonNext;
-    public VideoPlayer player;
+    public YoutubePlayer.YoutubePlayer youtubePlayer;
+    public VideoPlayer player => youtubePlayer.VideoPlayer;
     protected override void Awake()
     {
         base.Awake();
@@ -32,5 +33,12 @@ public class VideoPopup : BasePopup
     {
         player.clip = clip;
         player.Play();
+    }
+    public async void Play(string url)
+    {
+        if (player.isPlaying)
+            player.Stop();
+        youtubePlayer.youtubeUrl = url;
+        await youtubePlayer.PrepareVideoAsync();
     }
 }

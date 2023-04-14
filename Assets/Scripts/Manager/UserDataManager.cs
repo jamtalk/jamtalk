@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 public class UserDataManager : MonoSingleton<UserDataManager>
 {
     public UserInfoData CurrentUser { get; private set; }
+    public string currentUserUID => CurrentChild.mem_id;
     public DashBoardData DashBoard { get; private set; }
     public ChildInfoData[] children { get; private set; } = new ChildInfoData[0];
     public ChildInfoData CurrentChild
@@ -88,7 +89,6 @@ public class UserDataManager : MonoSingleton<UserDataManager>
             Debug.LogFormat("자녀목록 불러오기 결과 : {0}", successed);
             if (successed)
                 children = res.GetResult<DataRequestResult<ChildInfoData[]>>().data.Where(x => x.isDislplay).ToArray();
-            Debug.LogFormat("@@@@@@@@@@@@@@@w자녀 목록({0}명)@@@@@@@@@@@@@@@@\n{0}", children.Length, string.Join("\n", children.Select(x => JObject.FromObject(x))));
             list.Add(successed);
         });
 
@@ -99,7 +99,6 @@ public class UserDataManager : MonoSingleton<UserDataManager>
 
         while (list.Count < dic.Count) { yield return null; }
         UserDataLoaded = true;
-        Debug.Log("@@@@@@@유저정보 불러오기 완료@@@@@@@@@");
         callback?.Invoke();
     }
     public void LoadChildList()

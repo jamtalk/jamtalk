@@ -23,7 +23,7 @@ public class InquiryList : MonoBehaviour
     /// </summary>
     private void GetInquiry()
     {
-        var param = new BoardParam(eBoardType.qa, 1);
+        var param = new BoardParam(eBoardType.qa, UserDataManager.Instance.currentUserUID);
         RequestManager.Instance.Request(param, (res) =>
         {
             var result = res.GetResult<BoardReqeustResult>();

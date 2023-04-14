@@ -11,17 +11,8 @@ public class DataRequestResult<T> : ActRequestResult
 
 public class BoardReqeustResult
 {
-    public class BoardRequestMessage
-    {
-        public string current_field;
-        public string field_count;
-        public string lengths;
-        public string num_rows;
-        public string type;
-    }
-
     public eErrorCode code;
-    public BoardRequestMessage msg;
+    public string msg;
     public BoardData[] data;
 }
 

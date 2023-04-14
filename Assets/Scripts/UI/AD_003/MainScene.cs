@@ -18,8 +18,8 @@ public class MainScene : UserInfoScene
     public Text textDay;
     public GameObject loading;
     public GameObject videoPopup;
-    public VideoClip clipSong;
-    public VideoClip clipVideo;
+    public string urlSong;
+    public string urlAnimation;
 
     public ChildSetting childSettingOrizin;
     private ChildSetting childSetting;
@@ -33,11 +33,11 @@ public class MainScene : UserInfoScene
         });
         buttonSong.onClick.AddListener(() =>
         {
-            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Init(clipSong);
+            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(urlSong);
         });
         buttonVideo.onClick.AddListener(() =>
         {
-            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Init(clipVideo);
+            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(urlAnimation);
         });
         base.Awake();
     }

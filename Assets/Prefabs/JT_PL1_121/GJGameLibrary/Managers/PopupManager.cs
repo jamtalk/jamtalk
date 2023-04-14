@@ -114,6 +114,7 @@ public class PopupManager : MonoSingleton<PopupManager>
             //item.SetActive(false);
         }
         Transform parent = uiCanvas.transform;
+        Debug.LogFormat("{0}\n{1}", popupObject, parent);
         var popup = Instantiate(popupObject, parent);
         popup.transform.SetAsLastSibling();
 

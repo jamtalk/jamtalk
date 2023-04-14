@@ -6,7 +6,7 @@ public class LoadingPopup : BasePopup
     {
         return () =>
         {
-            if(gameObject != null)
+            if(this != null)
                 PopupManager.Instance.Close(gameObject);
         };
     }

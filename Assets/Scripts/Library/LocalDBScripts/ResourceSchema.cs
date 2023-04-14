@@ -24,6 +24,7 @@ public class ResourceSchema : ScriptableObject
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
+    public YoutubeURL[] GetYoutubeURL(string type) => data.youtubeURL.Where(x => x.type == type).OrderBy(x => x.level).ToArray();
     public string GetSiteWordsClip(string value)
     {
         value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
@@ -279,6 +280,7 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
+    public YoutubeURL[] youtubeURL;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;
@@ -287,5 +289,14 @@ public class ResourceData
     public string[] correctGoodjobClip;
     public string[] correctAmazingClip;
     public string[] correctNiceClip;
+}
+
+public class YoutubeURL
+{
+    public string type;
+    public int level;
+    public string title;
+    public string animationURL;
+    public string songURL;
 }
 

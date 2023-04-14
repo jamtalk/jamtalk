@@ -102,6 +102,10 @@ public partial class RequestManager : MonoSingleton<RequestManager>
             loading?.Invoke();
             object data = null;
             bool success = true;
+            Debug.Log(url);
+            Debug.LogFormat("{0} request result : {1}\nURL : {2}\n------------------\nData\n{3}\n------------------\nResult\n{4}"
+                , url.Split('/').Last().Split('=').Last()
+                , success, url, param.ToString(), JObject.Parse(www.downloadHandler.text));
             try
             {
                 data = RemoveEmptyChildren(JObject.Parse(www.downloadHandler.text));
@@ -115,9 +119,6 @@ public partial class RequestManager : MonoSingleton<RequestManager>
             }
             finally
             {
-                Debug.LogFormat("{0} request result : {1}\nURL : {2}\n------------------\nData\n{3}\n------------------\nResult\n{4}"
-                    ,url.Split('/').Last().Split('=').Last()
-                    ,success, url, param.ToString(), JObject.Parse(www.downloadHandler.text));
                 var response = new ResponseData(success, data);
                 if (success)
                 {
