@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Video;
-
+using GJGameLibrary.Util.Youtube;
 public class VideoPopup : BasePopup
 {
     public Button buttonPlay;
     public Button buttonRePlay;
     public Button buttonPre;
     public Button buttonNext;
-    public YoutubePlayer.YoutubePlayer youtubePlayer;
+    public GJYoutubePlayer youtubePlayer;
     public VideoPlayer player => youtubePlayer.VideoPlayer;
     protected override void Awake()
     {
@@ -22,11 +22,11 @@ public class VideoPopup : BasePopup
         });
         buttonNext.onClick.AddListener(() =>
         {
-            player.time += 10f;
+            youtubePlayer.Skip(10f);
         });
         buttonPre.onClick.AddListener(() =>
         {
-            player.time -= 10f;
+            youtubePlayer.Prev(10f);
         });
     }
     public void Init(VideoClip clip)
@@ -34,11 +34,11 @@ public class VideoPopup : BasePopup
         player.clip = clip;
         player.Play();
     }
-    public async void Play(string url)
+    public void Play(string url)
     {
+        UnityEngine.Debug.Log("플레이 시작");
         if (player.isPlaying)
             player.Stop();
-        youtubePlayer.youtubeUrl = url;
-        await youtubePlayer.PrepareVideoAsync();
+        youtubePlayer.Play(url);
     }
 }

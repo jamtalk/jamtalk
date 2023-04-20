@@ -43,13 +43,7 @@ namespace YoutubePlayer
         /// <summary>
         /// VideoPlayer component associated with the current YoutubePlayer instance
         /// </summary>
-        public VideoPlayer VideoPlayer { get; private set; }
-
-        void Awake()
-        {
-            VideoPlayer = GetComponent<VideoPlayer>();
-        }
-
+        public VideoPlayer VideoPlayer => GetComponent<VideoPlayer>();
         async void OnEnable()
         {
             if (VideoPlayer.playOnAwake)
@@ -95,6 +89,7 @@ namespace YoutubePlayer
         /// <returns>A Task to await</returns>
         public async Task PrepareVideoAsync(string videoUrl = null, YoutubeDlOptions options = null, CancellationToken cancellationToken = default)
         {
+            Debug.LogFormat("비디오 플레이 테스크 시작 : {0}", videoUrl);
             videoUrl = videoUrl ?? youtubeUrl;
             options = options ?? (is360Video ? YoutubeDlOptions.Three60 : YoutubeDlOptions.Default);
             var downloader = GetCli(cli);
