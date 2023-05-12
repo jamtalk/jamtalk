@@ -43,20 +43,34 @@ public class Book_Speaking : BaseContents
     }
     public Dictionary<int, Dictionary<int, BookSentanceData>> MakeQuestion()
     {
-        var data = BookData.Instance.sentances
-            .Where(x => x.Key == GameManager.Instance.currentBook)
-            .Where(x => x.number == GameManager.Instance.currentBookNumber)
-            .ToArray();
+        var bookTitles = GameManager.Instance.GetCurrentBook();
         var dic = new Dictionary<int, Dictionary<int, BookSentanceData>>();
-        for (int i = 0;i < data.Length; i++)
+        foreach (var bookTitle in bookTitles)
         {
-            var page = data[i].page;
-            var priority = data[i].priority;
-            if (!dic.ContainsKey(page))
-                dic.Add(page, new Dictionary<int, BookSentanceData>());
-            if (!dic[page].ContainsKey(priority))
-                dic[page].Add(priority, data[i]);
+            var tmp = bookTitle.book.OrderBy(x => x.priority).ToArray();
+            for(int i = 0;i < tmp.Length; i++)
+            {
+                var page = bookTitle.page;
+                var priority = i;
+                if (!dic.ContainsKey(page))
+                    dic.Add(page, new Dictionary<int, BookSentanceData>());
+                if (!dic[page].ContainsKey(priority))
+                    dic[page].Add(priority, tmp[i]);
+            }
         }
+
+        //var data = GameManager.Instance.GetCurrentBook().SelectMany(x => x.book)
+        //    .ToArray();
+        //var dic = new Dictionary<int, Dictionary<int, BookSentanceData>>();
+        //for (int i = 0;i < data.Length; i++)
+        //{
+        //    var page = data[i].;
+        //    var priority = data[i].priority;
+        //    if (!dic.ContainsKey(page))
+        //        dic.Add(page, new Dictionary<int, BookSentanceData>());
+        //    if (!dic[page].ContainsKey(priority))
+        //        dic[page].Add(priority, data[i]);
+        //}
         return dic;
     }
     public void ShowQuestion()

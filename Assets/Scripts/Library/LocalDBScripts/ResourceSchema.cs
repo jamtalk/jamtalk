@@ -18,13 +18,24 @@ public class ResourceSchema : ScriptableObject
     private TextAsset orizinal;
     public AudioClip correctSound;
     [SerializeField]
-    public ResourceData data => JObject.Parse(orizinal.text).ToObject<ResourceData>();
+    private ResourceData _data = null;
+    public ResourceData data
+    {
+        get
+        {
+            if (_data == null)
+                _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
+            return _data;
+        }
+    }
     public AlphabetAudioData GetAlphabetAudio(eAlphabet alphabet) => data.alphabetAudio.ToList().Find(x => x.Alphabet == alphabet);
     public VowelAudioData GetVowelAudio(eAlphabet vowel) => data.vowelAudio.ToList().Find(x => x.Vowel == vowel);
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
-    public YoutubeURL[] GetYoutubeURL(string type) => data.youtubeURL.Where(x => x.type == type).OrderBy(x => x.level).ToArray();
+    public BookTitleData[] GetBook(eBookType type) => data.bookData.Where(x => type == x.type).ToArray();
+    public BookTitleData[] GetBook(eBookType type, int bookNumber) => GetBook(type).Where(x => x.bookNumber == bookNumber).ToArray();
+    public BookWordData[] GetBookWords(eBookType type) => data.bookWords.Where(x => x.type == type).ToArray();
     public string GetSiteWordsClip(string value)
     {
         value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
@@ -262,6 +273,106 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 }
 #endregion
 
+#region BookData
+
+public class BookDataElement : ResourceElement
+{
+    [JsonIgnore]
+    public eBookType type => (eBookType)Enum.Parse(typeof(eBookType), key);
+}
+public class BookTitleData
+{
+    public string key;
+    //public string type;
+    [JsonIgnore]
+    public eBookType type;
+    public int bookNumber;
+    public int page;
+    public string value_EN;
+    public string value_KR;
+    public BookSentanceData[] book;
+    public BookConversationData[] conversationData;
+    public BookWordData[] words =>
+        GameManager.Instance.schema.data.bookWords
+        .Where(x => x.type == type)
+        .Where(x => x.bookNumber == bookNumber)
+        .OrderBy(x => x)
+        .ToArray();
+}
+//public class BookConversationData : BookDataElement
+//{
+//    public string bookName;
+//    public int number;
+//    public int page;
+//    public int priority;
+//    public string clip;
+//    [JsonIgnore]
+//    public AudioClip Clip => Addressables.LoadAssetAsync<AudioClip>(clip).WaitForCompletion();
+//    public string speaker;
+//    public string value;
+//}
+//public class BookSentanceData : BaseSentanceData<eBookType>
+//{
+//    public string name;
+//    public int number;
+//    public int page;
+//    public int priority;
+//    [JsonIgnore]
+//    public AudioClip Clip => Addressables.LoadAssetAsync<AudioClip>(clip).WaitForCompletion();
+//    public string value_kr;
+//    public string image;
+//    [JsonIgnore]
+//    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
+//}
+public class BookWordData : BookDataElement
+{
+    public string bookName;
+    public int bookNumber;
+    public string word;
+    [JsonIgnore]
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(word).WaitForCompletion();
+}
+
+public class BookConversationData
+{
+    public int priority;
+    public string speaker;
+    public string value;
+}
+public class BookSentanceData : BaseSentanceData
+{
+    public string kr;
+    public string en;
+    public int priority;
+    public string clip_kr;
+    public string clip_en;
+    public string image;
+    [JsonIgnore]
+    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
+
+
+    //public BookMetaData(string kr, string en, int priority)
+    //{
+    //    this.kr = kr;
+    //    this.en = en;
+    //    this.priority = priority;
+    //}
+
+    public void PlayClip_KR(AudioSource source)
+    {
+        //TODO. 음원파일 받았을 경우 source로 플레이
+        if (string.IsNullOrEmpty(clip_kr))
+            AndroidPluginManager.Instance.PlayTTS(kr);
+    }
+    public void PlayClip_EN(AudioSource source)
+    {
+        //TODO. 음원파일 받았을 경우 source로 플레이
+        if (string.IsNullOrEmpty(clip_en))
+            AndroidPluginManager.Instance.PlayTTS(en);
+    }
+}
+#endregion
+
 [Serializable]
 public class SiteWordData : ResourceElement
 {
@@ -280,7 +391,8 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
-    public YoutubeURL[] youtubeURL;
+    public BookTitleData[] bookData;
+    public BookWordData[] bookWords;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;
@@ -289,14 +401,5 @@ public class ResourceData
     public string[] correctGoodjobClip;
     public string[] correctAmazingClip;
     public string[] correctNiceClip;
-}
-
-public class YoutubeURL
-{
-    public string type;
-    public int level;
-    public string title;
-    public string animationURL;
-    public string songURL;
 }
 

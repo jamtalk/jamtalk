@@ -19,15 +19,14 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
 
     protected override List<BookWordQuizeQuestion> MakeQuestion()
     {
-        return BookData.Instance.bookWords
-            .Where(x => x.type == GameManager.Instance.currentBook)
-            .Where(x => x.bookNumber == GameManager.Instance.currentBookNumber)
+        var incorrectsBooks = GameManager.Instance.schema.data.bookWords;
+        return GameManager.Instance.GetBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x =>
             {
-                var incorrects = BookData.Instance.bookWords
-                    .Where(y => y.key != x.key)
+                var incorrects = incorrectsBooks
+                    .Where(y=>y.word != x.word)
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(buttons.Length-1)
                     .ToArray();

@@ -29,9 +29,7 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
     }
     protected override List<Book_Writing_WordQuestion> MakeQuestion()
     {
-        return BookData.Instance.bookWords
-            .Where(x => x.type == GameManager.Instance.currentBook)
-            .Where(x => x.bookNumber == GameManager.Instance.currentBookNumber)
+        return GameManager.Instance.GetBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new Book_Writing_WordQuestion(x))

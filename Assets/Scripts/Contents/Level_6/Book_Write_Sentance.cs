@@ -57,12 +57,16 @@ public class Book_Write_Sentance : BaseMatchSentances<BookSentanceData>
 
     protected override BookSentanceData[] GetSentance()
     {
-        return BookData.Instance.sentances
-            .Where(x => x.Key == GameManager.Instance.currentBook)
-            .Where(x => x.number == GameManager.Instance.currentBookNumber)
+        return GameManager.Instance.GetCurrentBook()
+            .SelectMany(x => x.book)
             .Take(QuestionCount)
-            //.Select(x => new BookWriteSentanceQuestion(x))
             .ToArray();
+        //return BookSentanceData.Instance.sentances
+        //    .Where(x => x.Key == GameManager.Instance.currentBook)
+        //    .Where(x => x.number == GameManager.Instance.currentBookNumber)
+        //    .Take(QuestionCount)
+        //    //.Select(x => new BookWriteSentanceQuestion(x))
+        //    .ToArray();
     }
 }
 public class BookWriteSentanceQuestion : SingleQuestion<BookSentanceData>

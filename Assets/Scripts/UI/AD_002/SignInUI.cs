@@ -50,9 +50,6 @@ public class SignInUI : MonoBehaviour
 
         if (userProvider == eProvider.none && toggleSave.isOn)
             email.text = PlayerPrefs.GetString("ID");
-
-        var url = GameManager.Instance.schema.GetYoutubeURL("jamjam");
-        Debug.LogFormat("@@@@@URL : {0}", url[0].songURL);
     }
 
     private void OnClickSigninSNS(eProvider provider)

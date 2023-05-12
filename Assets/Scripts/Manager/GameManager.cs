@@ -67,11 +67,14 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public DigraphsWordsData[] GetDigraphs(eDigraphs type) => schema.data.digraphsWords.Where(x => x.digraphs == type.ToString()).ToArray();
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
-    /// <summary>
-    /// eDigraphs ���� ��
-    /// </summary>
     public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
     public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
+    public BookTitleData[] GetBooks(eBookType type, int number) => schema.GetBook(type);
+    public BookTitleData[] GetBooks() => schema.data.bookData;
+
+    public BookTitleData[] GetCurrentBook() => GetBooks(currentBook, currentBookNumber);
+    public BookWordData[] GetBookWords(eBookType type, int number) => GetBooks(type, number).SelectMany(x => x.words).ToArray();
+    public BookWordData[] GetBookWords() => GetBookWords(currentBook, currentBookNumber);
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };

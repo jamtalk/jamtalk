@@ -536,3 +536,11 @@ public enum ePageButtonType
     previous,
     replay,
 }
+
+public enum eBookType
+{
+    JE, //잼잼 잉글리쉬
+    SE, //스마트 잉글리쉬
+    LD, //리틀 다빈치
+    SP, //수 놀이터
+}

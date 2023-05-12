@@ -34,9 +34,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
     }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
-        return BookData.Instance.bookWords
-            .Where(x => x.type == GameManager.Instance.currentBook)
-            .Where(x => x.bookNumber == GameManager.Instance.currentBookNumber)
+        return GameManager.Instance.GetBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new BookWordsSpeakQuestion(x, new BookWordData[0]))
