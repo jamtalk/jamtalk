@@ -34,7 +34,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
     }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
-        return GameManager.Instance.GetBookWords()
+        return GameManager.Instance.GetCurrentBook().SelectMany(x=>x.words).Distinct()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new BookWordsSpeakQuestion(x, new BookWordData[0]))
@@ -43,7 +43,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
 
     public void OnSTT(string value)
     {
-        if(value == currentQuestion.correct.key)
+        if(value == currentQuestion.correct.value)
         {
             AddAnswer(currentQuestion.correct);
         }
@@ -53,13 +53,13 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
     {
         button.image.sprite = question.correct.sprite;
         button.image.preserveAspect = true;
-        text.text = question.correct.key;
+        text.text = question.correct.value;
         PlayCorrect(question);
     }
 
     private void PlayCorrect(BookWordsSpeakQuestion question)
     {
-        AndroidPluginManager.Instance.PlayTTS(question.correct.key);
+        AndroidPluginManager.Instance.PlayTTS(question.correct.value);
     }
 }
 public class BookWordsSpeakQuestion : SingleQuestion<BookWordData>

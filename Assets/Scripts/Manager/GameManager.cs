@@ -35,6 +35,45 @@ public class GameManager : MonoSingleton<GameManager>
         currentAlphabet = eAlphabet.A;
         currentContents = eContents.JT_PL1_102;
     }
+
+    public void LoadAddressables(Action<float> callbackProgress, Action onCompleted)
+    {
+        StartCoroutine(LoadResources("", callbackProgress, onCompleted));
+    }
+    private IEnumerator LoadResources(string label, Action<float> progress, Action callback)
+    {
+        var op = Addressables.LoadResourceLocationsAsync(label);
+        while (!op.IsDone)
+        {
+            Debug.Log("로딩 대기중");
+            yield return null;
+        }
+        var locations = op.Result;
+        var cached = Addressables.GetDownloadSizeAsync(locations);
+        Debug.LogFormat("로딩완료\n{0}\n{1}", string.Join("\n", locations.Select(x => string.Format("{0} {1} {2}", x.ResourceType, x.ProviderId, x.InternalId))), cached.Result / 1024f / 1024f);
+        while (!cached.IsDone) { yield return null; }
+        if (cached.Result > 0)
+        {
+            var mb = cached.Result / 1024f / 1024f;
+            mb = Mathf.Round(mb * 100f) / 100f;
+            Debug.LogFormat("추가 다운로드해야할 사이즈 : {0}", mb);
+            bool isChecked = false;
+            while (!isChecked) { yield return null; }
+
+            var download = Addressables.DownloadDependenciesAsync(locations);
+            while (!download.IsDone)
+            {
+                var status = download.GetDownloadStatus();
+                float current = status.DownloadedBytes;
+                float total = status.TotalBytes;
+                float per = current == 0 || total == 0 ? 0 : current / total * 100f;
+                progress?.Invoke(per / 100f);
+                yield return null;
+            }
+        }
+        Debug.Log("완료");
+        callback?.Invoke();
+    }
     public void Initialize(Action callback)
     {
         StartCoroutine(Initializing(callback));
@@ -69,12 +108,12 @@ public class GameManager : MonoSingleton<GameManager>
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
     public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
-    public BookTitleData[] GetBooks(eBookType type, int number) => schema.GetBook(type);
-    public BookTitleData[] GetBooks() => schema.data.bookData;
-
-    public BookTitleData[] GetCurrentBook() => GetBooks(currentBook, currentBookNumber);
-    public BookWordData[] GetBookWords(eBookType type, int number) => GetBooks(type, number).SelectMany(x => x.words).ToArray();
-    public BookWordData[] GetBookWords() => GetBookWords(currentBook, currentBookNumber);
+    public BookMetaData[] GetBookMetaData(eBookType type, int bookNumber) => schema.GetBookData(type, bookNumber);
+    public BookMetaData[] GetCurrentBook() => GetBookMetaData(currentBook, currentBookNumber);
+    public BookMetaData[] GetIncorrectBooks() => schema.bookData.Where(x => x.type != currentBook).ToArray();
+    public BookWordData[] GetBookWords(eBookType type, int bookNumber) => schema.GetBookData(type, bookNumber).SelectMany(x => x.words).Distinct().ToArray();
+    public BookWordData[] GetCurrentBookWords() => GetBookWords(currentBook, currentBookNumber);
+    public BookWordData[] GetIncorrectBookWords() => schema.bookData.Where(x => x.type != currentBook && x.bookNumber != currentBookNumber).SelectMany(x => x.words).ToArray();
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
     public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };

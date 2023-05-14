@@ -73,7 +73,7 @@ MonoBehaviour:
       - m_Id: eb20e04715a11d645ab9da7752c2d675
         m_Value: ServerData/[BuildTarget]
       - m_Id: e136c58083a90244d8c6d3a0828794fb
-        m_Value: http://localhost/[BuildTarget]
+        m_Value: https://storage.googleapis.com/jamtalkresources/[BuildTarget]
     m_ProfileEntryNames:
     - m_Id: 060fc86ae8eb14f40a294073219e5b27
       m_Name: BuildTarget
@@ -92,7 +92,8 @@ MonoBehaviour:
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
-    m_LabelNames: []
+    m_LabelNames:
+    - Remote
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: d8352f1e3d17f714eb78456bc91b0549, type: 2}

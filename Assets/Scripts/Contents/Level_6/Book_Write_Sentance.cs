@@ -57,8 +57,7 @@ public class Book_Write_Sentance : BaseMatchSentances<BookSentanceData>
 
     protected override BookSentanceData[] GetSentance()
     {
-        return GameManager.Instance.GetCurrentBook()
-            .SelectMany(x => x.book)
+        return GameManager.Instance.GetCurrentBook().SelectMany(x => x.sentances)
             .Take(QuestionCount)
             .ToArray();
         //return BookSentanceData.Instance.sentances

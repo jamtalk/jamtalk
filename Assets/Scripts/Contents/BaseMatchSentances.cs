@@ -26,9 +26,9 @@ public abstract class BaseMatchSentances<T> : BaseContents
     public UIThrower110 thrower;
     protected int index = 0;
     [SerializeField]
-    protected T[] words { get; private set; }
+    protected T[] sources { get; private set; }
     public EventSystem eventSystem;
-    protected T currentSentance => words[index];
+    protected T currentSentance => sources[index];
     protected virtual int QuestionCount => 4;
 
     bool isThrow = false;
@@ -75,14 +75,14 @@ public abstract class BaseMatchSentances<T> : BaseContents
     {
         base.EndGuidnce();
         index = 0;
-        words = GetSentance();
+        sources = GetSentance();
         ShowQuestion();
     }
 
     protected override void Awake()
     {
         base.Awake();
-        words = GetSentance();
+        sources = GetSentance();
         ShowQuestion();
     }
     protected virtual void ShowQuestion()

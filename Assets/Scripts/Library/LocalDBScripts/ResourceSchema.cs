@@ -16,6 +16,8 @@ public class ResourceSchema : ScriptableObject
 {
     [SerializeField]
     private TextAsset orizinal;
+    [SerializeField]
+    private TextAsset bookJson;
     public AudioClip correctSound;
     [SerializeField]
     private ResourceData _data = null;
@@ -28,14 +30,26 @@ public class ResourceSchema : ScriptableObject
             return _data;
         }
     }
+    private BookMetaData[] _bookData = null;
+    public BookMetaData[] bookData
+    {
+        get
+        {
+            if (_bookData == null)
+            {
+                _bookData = JArray.Parse(bookJson.text).ToObject<BookMetaData[]>();
+                for (int i = 0; i < _bookData.Length; i++)
+                    _bookData[i].SetBook();
+            }
+            return _bookData;
+        }
+    }
     public AlphabetAudioData GetAlphabetAudio(eAlphabet alphabet) => data.alphabetAudio.ToList().Find(x => x.Alphabet == alphabet);
     public VowelAudioData GetVowelAudio(eAlphabet vowel) => data.vowelAudio.ToList().Find(x => x.Vowel == vowel);
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
-    public BookTitleData[] GetBook(eBookType type) => data.bookData.Where(x => type == x.type).ToArray();
-    public BookTitleData[] GetBook(eBookType type, int bookNumber) => GetBook(type).Where(x => x.bookNumber == bookNumber).ToArray();
-    public BookWordData[] GetBookWords(eBookType type) => data.bookWords.Where(x => x.type == type).ToArray();
+    public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x=>x.page).ToArray();
     public string GetSiteWordsClip(string value)
     {
         value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
@@ -273,32 +287,32 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 }
 #endregion
 
-#region BookData
+#region BookData (Legacy)
 
-public class BookDataElement : ResourceElement
-{
-    [JsonIgnore]
-    public eBookType type => (eBookType)Enum.Parse(typeof(eBookType), key);
-}
-public class BookTitleData
-{
-    public string key;
-    //public string type;
-    [JsonIgnore]
-    public eBookType type;
-    public int bookNumber;
-    public int page;
-    public string value_EN;
-    public string value_KR;
-    public BookSentanceData[] book;
-    public BookConversationData[] conversationData;
-    public BookWordData[] words =>
-        GameManager.Instance.schema.data.bookWords
-        .Where(x => x.type == type)
-        .Where(x => x.bookNumber == bookNumber)
-        .OrderBy(x => x)
-        .ToArray();
-}
+//public class BookDataElement : ResourceElement
+//{
+//    [JsonIgnore]
+//    public eBookType type => (eBookType)Enum.Parse(typeof(eBookType), key);
+//}
+//public class BookTitleData
+//{
+//    public string key;
+//    //public string type;
+//    [JsonIgnore]
+//    public eBookType type;
+//    public int bookNumber;
+//    public int page;
+//    public string value_EN;
+//    public string value_KR;
+//    public BookSentanceData[] book;
+//    public BookConversationData[] conversationData;
+//    public BookWordData[] words =>
+//        GameManager.Instance.schema.data.bookWords
+//        .Where(x => x.type == type)
+//        .Where(x => x.bookNumber == bookNumber)
+//        .OrderBy(x => x)
+//        .ToArray();
+//}
 //public class BookConversationData : BookDataElement
 //{
 //    public string bookName;
@@ -324,52 +338,113 @@ public class BookTitleData
 //    [JsonIgnore]
 //    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
 //}
-public class BookWordData : BookDataElement
-{
-    public string bookName;
-    public int bookNumber;
-    public string word;
-    [JsonIgnore]
-    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(word).WaitForCompletion();
-}
+//public class BookWordData : BookDataElement
+//{
+//    public string bookName;
+//    public int bookNumber;
+//    public string word;
+//    [JsonIgnore]
+//    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(word).WaitForCompletion();
+//}
 
+//public class BookConversationData
+//{
+//    public int priority;
+//    public string speaker;
+//    public string value;
+//}
+//public class BookSentanceData : BaseSentanceData
+//{
+//    public string kr;
+//    public string en;
+//    public int priority;
+//    public string clip_kr;
+//    public string clip_en;
+//    public string image;
+//    [JsonIgnore]
+//    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
+
+
+//    //public BookMetaData(string kr, string en, int priority)
+//    //{
+//    //    this.kr = kr;
+//    //    this.en = en;
+//    //    this.priority = priority;
+//    //}
+
+//    public void PlayClip_KR(AudioSource source)
+//    {
+//        //TODO. 음원파일 받았을 경우 source로 플레이
+//        if (string.IsNullOrEmpty(clip_kr))
+//            AndroidPluginManager.Instance.PlayTTS(kr);
+//    }
+//    public void PlayClip_EN(AudioSource source)
+//    {
+//        //TODO. 음원파일 받았을 경우 source로 플레이
+//        if (string.IsNullOrEmpty(clip_en))
+//            AndroidPluginManager.Instance.PlayTTS(en);
+//    }
+//}
+#endregion
+
+#region BookData
+public class BookMetaData
+{
+    public string key;
+    public eBookType type;
+    public int bookNumber;
+    public int page;
+    public string title_en;
+    public string title_kr;
+    public string titleClip_en;
+    public string titleClip_kr;
+    public BookSentanceData[] sentances;
+    public BookConversationData[] conversations;
+    public BookWordData[] words;
+
+    public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
+    public Sprite GetSprite(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}", type.ToString(), bookNumber, data.value)).WaitForCompletion();
+    public void SetBook()
+    {
+        for (int i = 0; i < sentances.Length; i++)
+            sentances[i].SetBook(this);
+        for (int i = 0; i < conversations.Length; i++)
+            conversations[i].SetBook(this);
+        for (int i = 0; i < words.Length; i++)
+            words[i].SetBook(this);
+    }
+}
 public class BookConversationData
 {
     public int priority;
     public string speaker;
     public string value;
+    public string clip;
+    public BookMetaData currentBook { get; private set; }
+    public void SetBook(BookMetaData book) => currentBook = book;
+    public Sprite sprite => currentBook.GetSprite();
 }
 public class BookSentanceData : BaseSentanceData
 {
+    public new string value => en;
+    public new string clip => clip_en;
     public string kr;
     public string en;
     public int priority;
-    public string clip_kr;
     public string clip_en;
-    public string image;
-    [JsonIgnore]
-    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(image).WaitForCompletion();
-
-
-    //public BookMetaData(string kr, string en, int priority)
-    //{
-    //    this.kr = kr;
-    //    this.en = en;
-    //    this.priority = priority;
-    //}
-
-    public void PlayClip_KR(AudioSource source)
-    {
-        //TODO. 음원파일 받았을 경우 source로 플레이
-        if (string.IsNullOrEmpty(clip_kr))
-            AndroidPluginManager.Instance.PlayTTS(kr);
-    }
-    public void PlayClip_EN(AudioSource source)
-    {
-        //TODO. 음원파일 받았을 경우 source로 플레이
-        if (string.IsNullOrEmpty(clip_en))
-            AndroidPluginManager.Instance.PlayTTS(en);
-    }
+    public string clip_kr;
+    public BookMetaData currentBook { get; private set; }
+    public void SetBook(BookMetaData book) => currentBook = book;
+    public Sprite sprite => currentBook.GetSprite();
+}
+public class BookWordData
+{
+    public string value;
+    public string extension;
+    public string clip;
+    public BookMetaData currentBook { get; private set; }
+    public void SetBook(BookMetaData book) => currentBook = book;
+    public Sprite sprite => currentBook.GetSprite(this);
 }
 #endregion
 
@@ -391,8 +466,6 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
-    public BookTitleData[] bookData;
-    public BookWordData[] bookWords;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;

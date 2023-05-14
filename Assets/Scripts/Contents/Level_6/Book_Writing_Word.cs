@@ -25,11 +25,11 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
     }
     private void PlayCorrect(System.Action onOver = null)
     {
-        AndroidPluginManager.Instance.PlayTTS(currentQuestion.correct.key, onOver);
+        AndroidPluginManager.Instance.PlayTTS(currentQuestion.correct.value, onOver);
     }
     protected override List<Book_Writing_WordQuestion> MakeQuestion()
     {
-        return GameManager.Instance.GetBookWords()
+        return GameManager.Instance.GetCurrentBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new Book_Writing_WordQuestion(x))
@@ -46,8 +46,8 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
         PlayCorrect();
         button.image.sprite = question.correct.sprite;
         button.image.preserveAspect = true;
-        CreateLayout(question.correct.key.Replace(" ","").Length);
-        toggles = creator.Create(question.correct.key);
+        CreateLayout(question.correct.value.Replace(" ","").Length);
+        toggles = creator.Create(question.correct.value);
         for (int i = 0; i < toggles.Length; i++)
         {
             AddToggleListner(toggles[i]);

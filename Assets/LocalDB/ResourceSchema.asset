@@ -13,34 +13,22 @@ MonoBehaviour:
   m_Name: ResourceSchema
   m_EditorClassIdentifier: 
   orizinal: {fileID: 4900000, guid: dbb6cd89c700f9e4ab6e2c88148807d9, type: 3}
-  alphabetSprite: {fileID: 11400000, guid: 2d4f1af9fb123284aa6f4d7f9188ce5e, type: 2}
+  bookJson: {fileID: 4900000, guid: cac2d2019bd21e848b5d1856a9e69da0, type: 3}
   correctSound: {fileID: 8300000, guid: da37d69cfcc583c4cbfd89286eac5241, type: 3}
-  atlas:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 1
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues: 010000000000000002000000
-    _keys: 010000000000000002000000
-    _values:
-    - {fileID: 4343727234628468602, guid: 9537305334b4c334e97b268062555cf3, type: 2}
-    - {fileID: 4343727234628468602, guid: 1e8e2e57f64c9774dba04c6604168fc0, type: 2}
-    - {fileID: 4343727234628468602, guid: 267372da35583e04f987627a6fc39736, type: 2}
+  _data:
+    alphabetWords: []
+    alphabetAudio: []
+    vowelWords: []
+    vowelAudio: []
+    digraphsWords: []
+    digraphsAudio: []
+    alphabetSentaces: []
+    siteWords: []
+    inCorrectClips: []
+    correctPerfectClip: []
+    correctGreatClip: []
+    correctWonderfulClip: []
+    correctExcellentClip: []
+    correctGoodjobClip: []
+    correctAmazingClip: []
+    correctNiceClip: []

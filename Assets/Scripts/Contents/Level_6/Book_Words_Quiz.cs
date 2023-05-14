@@ -19,14 +19,14 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
 
     protected override List<BookWordQuizeQuestion> MakeQuestion()
     {
-        var incorrectsBooks = GameManager.Instance.schema.data.bookWords;
-        return GameManager.Instance.GetBookWords()
+        var incorrectsBooks = GameManager.Instance.GetIncorrectBookWords();
+        return GameManager.Instance.GetCurrentBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x =>
             {
                 var incorrects = incorrectsBooks
-                    .Where(y=>y.word != x.word)
+                    .Where(y=>y.value != x.value)
                     .OrderBy(x => Random.Range(0f, 100f))
                     .Take(buttons.Length-1)
                     .ToArray();
@@ -41,7 +41,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
         buttons = buttons.OrderBy(x => Random.Range(0f, 100f)).ToArray();
         for(int i = 0;i < question.totalQuestion.Length; i++)
         {
-            buttons[i].transform.GetChild(0).GetComponent<Text>().text = question.totalQuestion[i].key;
+            buttons[i].transform.GetChild(0).GetComponent<Text>().text = question.totalQuestion[i].value;
             AddListener(buttons[i], question.totalQuestion[i]);
         }
     }
@@ -51,7 +51,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
         button.onClick.AddListener(() =>
         {
             eventSystem.enabled = false;
-            AndroidPluginManager.Instance.PlayTTS(data.key, () =>
+            AndroidPluginManager.Instance.PlayTTS(data.value, () =>
             {
                 if (data == currentQuestion.correct)
                     AddAnswer(data);

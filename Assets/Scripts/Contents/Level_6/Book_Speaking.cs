@@ -14,10 +14,10 @@ public class Book_Speaking : BaseContents
     /// <summary>
     /// BookSentanceData[페이지][대사순서]
     /// </summary>
-    public Dictionary<int,Dictionary<int,BookSentanceData>> data;
+    public Dictionary<int,Dictionary<int, BookConversationData>> data;
     public int currentPage { get; private set; } = 1;
     public int currentPriority { get; private set; } = 1;
-    public BookSentanceData currentSentance => data[currentPage][currentPriority];
+    public BookConversationData currentSentance => data[currentPage][currentPriority];
 
     protected override eContents contents => eContents.Book_Speaking;
     protected override bool CheckOver() => !data.ContainsKey(currentPage) || !data[currentPage].ContainsKey(currentPriority);
@@ -41,19 +41,19 @@ public class Book_Speaking : BaseContents
             eventSystem.enabled = true;
         }
     }
-    public Dictionary<int, Dictionary<int, BookSentanceData>> MakeQuestion()
+    public Dictionary<int, Dictionary<int, BookConversationData>> MakeQuestion()
     {
-        var bookTitles = GameManager.Instance.GetCurrentBook();
-        var dic = new Dictionary<int, Dictionary<int, BookSentanceData>>();
-        foreach (var bookTitle in bookTitles)
+        var books = GameManager.Instance.GetCurrentBook();
+        var dic = new Dictionary<int, Dictionary<int, BookConversationData>>();
+        foreach (var book in books)
         {
-            var tmp = bookTitle.book.OrderBy(x => x.priority).ToArray();
+            var tmp = book.conversations.OrderBy(x => x.priority).ToArray();
             for(int i = 0;i < tmp.Length; i++)
             {
-                var page = bookTitle.page;
+                var page = book.page;
                 var priority = i;
                 if (!dic.ContainsKey(page))
-                    dic.Add(page, new Dictionary<int, BookSentanceData>());
+                    dic.Add(page, new Dictionary<int, BookConversationData>());
                 if (!dic[page].ContainsKey(priority))
                     dic[page].Add(priority, tmp[i]);
             }
