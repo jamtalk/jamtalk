@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -258,6 +259,7 @@ public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerConte
             
     }
 }
+
 #endregion
 
 #region BaseQuestions
@@ -348,5 +350,26 @@ public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
             }
         }
     }
+}
+#endregion
+
+#region BookContents
+public abstract class BaseBookContentsRunner<TData> : MonoBehaviour
+{
+    public UnityEvent<bool> onSolved;
+    public abstract void ShowQuestions(TData data);
+    protected virtual void OnSolved(bool result) => onSolved?.Invoke(result);
+}
+public abstract class BaseBookContents<TRunner, TData> : BaseContents
+    where TRunner : BaseBookContentsRunner<TData>
+{
+    public TRunner[] runner;
+    protected override void Awake()
+    {
+        base.Awake();
+        for (int i = 0; i < runner.Length; i++)
+            runner[i].onSolved.AddListener(OnSolved);
+    }
+    protected abstract void OnSolved(bool result);
 }
 #endregion

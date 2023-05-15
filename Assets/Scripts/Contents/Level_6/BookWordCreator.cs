@@ -4,27 +4,18 @@ using UnityEngine;
 public class BookWordCreator : MonoBehaviour
 {
     public GameObject element;
-    public GameObject empty;
     public RectTransform parent => GetComponent<RectTransform>();
 
-    public AlphabetToggle110[] Create(string data)
+    public AlphabetToggle110[] Create(string value)
     {
-        Clear();
-        var words = data.Contains(" ") ? data.Split(' ') : new string[] { data };
+        var word = value.Contains(" ") ? value.Split(' ') : new string[] { value };
         var elements = new List<AlphabetToggle110>();
-        for(int i = 0;i < words.Length; i++)
+        for (int i = 0; i < word.Length; i++)
         {
-            if (i > 0)
-                Instantiate(empty, parent);
-
-            var word = words[i];
-            for (int j = 0; j < word.Length; j++)
-            {
-                var alphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word[j].ToString().ToUpper());
-                var component = Instantiate(element, parent).GetComponent<AlphabetToggle110>();
-                component.Init(alphabet);
-                elements.Add(component);
-            }
+            var alphabet = (eAlphabet)System.Enum.Parse(typeof(eAlphabet), word[i][0].ToString().ToUpper());
+            var component = Instantiate(element, parent).GetComponent<AlphabetToggle110>();
+            component.Init(alphabet);
+            elements.Add(component);
         }
         return elements.ToArray();
     }

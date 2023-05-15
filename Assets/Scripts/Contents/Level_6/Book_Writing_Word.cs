@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,BookWordData>
 {
-    public override eSceneName NextScene => eSceneName.Book_Writing_Sentance;
+    public override eSceneName NextScene => eSceneName.AC_004;
     protected override eContents contents => eContents.Book_Writing_Word;
     public Transform layout;
     public Button button;
@@ -51,7 +51,7 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
         for (int i = 0; i < toggles.Length; i++)
         {
             AddToggleListner(toggles[i]);
-            AddDragListener(toggles[i].drag);
+            //AddDragListener(toggles[i].drag);
         }
         thrower.Init(toggles.Select(x => x.throwElement).ToArray());
         eventSystem.enabled = false;

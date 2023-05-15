@@ -91,7 +91,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         moverControler.Init();
     }
 
-    private void AddToggleListner(AlphabetToggle110 toggle)
+    private void AddToggleListner(BaseDragableToggle<eAlphabet> toggle)
     {
         toggle.onOn += () =>
         {
@@ -101,7 +101,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
                 audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };
     }
-    private void AddDragListener(Dragable110 drag)
+    private void AddDragListener(BaseDragable<eAlphabet> drag)
     {
         drag.onBegin += (eventData) =>
         {

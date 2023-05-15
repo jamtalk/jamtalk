@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, BookWordData>
 {
-    public override eSceneName NextScene => eSceneName.Book_Words_Quiz;
+    public override eSceneName NextScene => eSceneName.AC_004;
     public EventSystem eventSystem;
     public Button button;
     public Text text;
