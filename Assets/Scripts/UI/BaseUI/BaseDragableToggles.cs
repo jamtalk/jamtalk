@@ -100,16 +100,15 @@ public abstract class BaseDragableToggle<TValue> : MonoBehaviour
     }
     public virtual void Init(TValue value)
     {
-        var index = parent.GetSiblingIndex();
-        var type = index == 0 ? eAlphabetType.Upper : eAlphabetType.Lower;
-        var sprite = GetSprite();
         this.value = value;
+        var sprite = GetSprite();
 
         for (int i = 0; i < images.Length; i++)
         {
             images[i].sprite = sprite;
             images[i].preserveAspect = true;
         }
+        Debug.Log(value);
         background.sprite = GetBackground();
         drag.Init(value, this);
         drop.Init(value, this);

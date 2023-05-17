@@ -13,6 +13,17 @@ public class UIThrower110 : MonoBehaviour
     {
         this.targets = targets;
     }
+    public void ClearPaths()
+    {
+        for (int i = 0; i < paths.Length; i++)
+            Destroy(paths[i].gameObject);
+        paths = new RectTransform[0];
+    }
+    public void SetPaths(RectTransform[] paths)
+    {
+        this.paths = paths;
+    }
+    
     public virtual void Throwing(float duration=1f,float delay = 0, bool rotating=true, TweenCallback onTrowed=null)
     {
         StartCoroutine(Throw(duration, delay, rotating, onTrowed));

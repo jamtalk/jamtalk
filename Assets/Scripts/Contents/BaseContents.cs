@@ -175,6 +175,7 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
 
         Debug.Log(GameManager.Instance.currentAlphabet);
         questions = MakeQuestion();
+
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
         base.Awake();

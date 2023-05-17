@@ -62,11 +62,6 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
     protected override void ShowQuestion(Question_ThrowerAlphabet<T> question)
     {
         creator.Clear();
