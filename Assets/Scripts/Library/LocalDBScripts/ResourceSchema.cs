@@ -28,6 +28,7 @@ public class ResourceSchema : ScriptableObject
             //if (_data == null)
             //    _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
             //return _data;
+            Debug.LogFormat(orizinal.text);
             return JObject.Parse(orizinal.text).ToObject<ResourceData>();
         }
     }
@@ -187,6 +188,7 @@ public class AlphabetAudioData : ResourceElement
     public string act1;
     public string act2;
     public string phanics;
+    public string songURL;
     public eAlphabet Alphabet => (eAlphabet)Enum.Parse(typeof(eAlphabet), key);
 }
 [Serializable]
@@ -390,6 +392,14 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 #endregion
 
 #region BookData
+public class BookURLData
+{
+    public eBookType type;
+    public int bookNumber;
+    public string BookTitle;
+    public string youtubeURL;
+    public string songURL;
+}
 public class BookMetaData
 {
     public string key;
@@ -474,6 +484,7 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
+    public BookURLData[] bookURL;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;
