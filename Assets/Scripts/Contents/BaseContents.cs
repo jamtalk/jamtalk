@@ -20,8 +20,8 @@ public abstract class BaseContents : MonoBehaviour
     protected eAlphabetType type = eAlphabetType.Upper;
     protected virtual eGameResult GetResult() => eGameResult.Success;
     private float time;
-    private DateTime startTime;
-    private DateTime endTime;
+    public DateTime startTime { get; private set; }
+    public DateTime endTime { get; private set; }
     public AudioSinglePlayer audioPlayer;
     public GuidePopup guide;
     public ExitButton exitButton;
@@ -31,7 +31,11 @@ public abstract class BaseContents : MonoBehaviour
     protected Coroutine guideRoutine;
     protected bool isGuide = true;
     protected bool isNext = false;
+    public Action onEndGame;
+    protected virtual bool showQuestionOnAwake => true;
+    protected virtual bool showPopupOnEnd => true;
     protected virtual bool isGuidence => true;
+    protected virtual bool includeExitButton => true;
 
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
@@ -47,7 +51,6 @@ public abstract class BaseContents : MonoBehaviour
             }
         }
     }
-
     protected virtual void ShowQeustionAction()
     {
         SetCharactorAnimation();
@@ -64,6 +67,13 @@ public abstract class BaseContents : MonoBehaviour
         eventSystem.enabled = true;
         GC.Collect();
         endTime = DateTime.Now;
+        if (showPopupOnEnd)
+            ShowResultPopup();
+        onEndGame?.Invoke();
+    }
+
+    protected virtual void ShowResultPopup()
+    {
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
         result.Init(() =>
         {
@@ -89,7 +99,7 @@ public abstract class BaseContents : MonoBehaviour
             Debug.Log("결과 받기 완료");
         });
     }
-    protected virtual EduLogParam param => new EduLogParam(
+    public virtual EduLogParam param => new EduLogParam(
         "",
         DateTime.Now,
         contents,
@@ -108,8 +118,8 @@ public abstract class BaseContents : MonoBehaviour
         GameManager.Instance.currentAlphabet = targetAlphabet;
 #endif
         startTime = DateTime.Now;
-
-        Instantiate(exitButton, transform);
+        if (includeExitButton)
+            Instantiate(exitButton, transform);
 
         if(isGuidence)
             ShowGuidnce();
@@ -147,7 +157,7 @@ public abstract class BaseContents : MonoBehaviour
 public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     where TQuestion : Question<TAnswer>
 {
-    public List<TQuestion> questions;
+    public List<TQuestion> questions = null;
     protected abstract int QuestionCount { get; }
     protected int currentQuestionIndex = 0;
     protected TQuestion currentQuestion => questions[currentQuestionIndex];
@@ -170,15 +180,20 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
         //currentQuestionIndex = 0;
         //ShowQuestion(questions[currentQuestionIndex]);
     }
+
     protected override void Awake()
     {
+        if (showQuestionOnAwake)
+            StartQuestion();
 
-        Debug.Log(GameManager.Instance.currentAlphabet);
+        base.Awake();
+    }
+    public void StartQuestion()
+    {
+        Debug.Log("문제 시작");
         questions = MakeQuestion();
-
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
-        base.Awake();
     }
     protected virtual void AddAnswer(TAnswer answer)
     {
@@ -355,22 +370,66 @@ public abstract class MultiQuestion<TAnswer> : Question<TAnswer>
 #endregion
 
 #region BookContents
-public abstract class BaseBookContentsRunner<TData> : MonoBehaviour
+public interface IBookContentsRunner
 {
-    public UnityEvent<bool> onSolved;
-    public abstract void ShowQuestions(TData data);
-    protected virtual void OnSolved(bool result) => onSolved?.Invoke(result);
+    public void StartQuestion();
 }
-public abstract class BaseBookContents<TRunner, TData> : BaseContents
-    where TRunner : BaseBookContentsRunner<TData>
+public abstract class BaseBookContents : BaseContents
 {
-    public TRunner[] runner;
+    public BookContentsRunner[] contentsRunners;
+    protected override sealed bool includeExitButton => false;
+    protected override sealed bool isGuidence => false;
+    protected sealed override bool showPopupOnEnd => base.showPopupOnEnd;
+    protected sealed override bool showQuestionOnAwake => base.showQuestionOnAwake;
+
     protected override void Awake()
     {
         base.Awake();
-        for (int i = 0; i < runner.Length; i++)
-            runner[i].onSolved.AddListener(OnSolved);
+        for(int i= 0;i < contentsRunners.Length-1; i++)
+            contentsRunners[i].SetNext(contentsRunners[i + 1]);
+        contentsRunners.Last().SetLast(ShowResult);
     }
-    protected abstract void OnSolved(bool result);
+
+    protected override bool CheckOver() => true;
+
+    protected override int GetTotalScore() => contentsRunners.Sum(x => x.contents.param.total_score);
+    public sealed override EduLogParam param => new EduLogParam(
+        base.param.app_token,
+        base.param.regdate,
+        contents,
+        base.param.alphabet,
+        base.param.alphabetType,
+        base.param.level,
+        contentsRunners.Last().contents.endTime,
+        contentsRunners.First().contents.startTime - contentsRunners.Last().contents.endTime,
+        GetTotalScore(),
+        contentsRunners.Sum(x => x.contents.param.correct_score),
+        contentsRunners.Sum(x => x.contents.param.due));
+}
+[System.Serializable]
+public class BookContentsRunner
+{
+    public BaseContents contents;
+    private BookContentsRunner nextContents = null;
+    public IBookContentsRunner runner => (IBookContentsRunner)contents;
+    public void SetNext(BookContentsRunner nextContents)
+    {
+        contents.onEndGame += OnEndGame;
+        this.nextContents = nextContents;
+    }
+    public void SetLast(Action onEndGame)
+    {
+        contents.onEndGame += onEndGame;
+    }
+
+    private void OnEndGame()
+    {
+        if (nextContents != null)
+        {
+            contents.gameObject.SetActive(false);
+            nextContents.contents.gameObject.SetActive(true);
+            nextContents.runner.StartQuestion();
+        }
+    }
 }
 #endregion

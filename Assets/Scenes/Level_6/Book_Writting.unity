@@ -353,7 +353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ff69812828854a84ca0974916ed023bd, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 226720603}
-  - component: {fileID: 226720604}
+  - component: {fileID: 226720605}
   m_Layer: 5
   m_Name: Word
   m_TagString: Untagged
@@ -456,7 +456,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &226720604
+--- !u!114 &226720605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -465,17 +465,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 226720602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617d8627d36bb3f47afbde1e02ea0a16, type: 3}
+  m_Script: {fileID: 11500000, guid: 6152f7c83ba39a347bd5f7470ffb629f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSolved:
-    m_PersistentCalls:
-      m_Calls: []
+  targetAlphabet: 0
+  popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 590856610}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+  exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
+  layout: {fileID: 1490080790}
+  button: {fileID: 175042999}
   thrower: {fileID: 650387927}
   creator: {fileID: 650387926}
-  throwParent: {fileID: 1490080790}
-  questionImage: {fileID: 175042997}
-  audioPlayer: {fileID: 590856610}
+  eventSystem: {fileID: 460046982}
+  empty: {fileID: 2146962699}
+  toggles: []
   caster: {fileID: 483075780}
 --- !u!1 &231147141
 GameObject:
@@ -934,6 +939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 459887844}
+  - component: {fileID: 459887845}
   m_Layer: 5
   m_Name: Sentance
   m_TagString: Untagged
@@ -967,6 +973,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &459887845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459887843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c36c73767455d4f9d9544023932998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAlphabet: 0
+  popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 590856610}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+  exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
+  stampClip: {fileID: 8300000, guid: 560212e2679b4b34ca413c4a49949942, type: 3}
+  sentanceParent: {fileID: 650094260}
+  throwingParent: {fileID: 54102763}
+  prefabWordElement: {fileID: 8080054674698359951, guid: a0969958c30358f409d05125af382c05, type: 3}
+  prefabDragWordElement: {fileID: 8080054674698359951, guid: 4a89ef3a8b338294da2d9d3b91aad7b6, type: 3}
+  elements: []
+  thrower: {fileID: 1742546372}
+  eventSystem: {fileID: 460046982}
+  button: {fileID: 315932509}
+  empty: {fileID: 2146962699}
 --- !u!1 &460046980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1079,7 @@ GameObject:
   - component: {fileID: 483075782}
   - component: {fileID: 483075781}
   - component: {fileID: 483075780}
+  - component: {fileID: 483075784}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1135,6 +1170,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &483075784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483075779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1078dcca5d49f184fbe909a82dda7c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAlphabet: 0
+  popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
+  audioPlayer: {fileID: 590856610}
+  guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
+  exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
+  contentsRunners:
+  - contents: {fileID: 226720605}
+  - contents: {fileID: 459887845}
 --- !u!1 &590856607
 GameObject:
   m_ObjectHideFlags: 0

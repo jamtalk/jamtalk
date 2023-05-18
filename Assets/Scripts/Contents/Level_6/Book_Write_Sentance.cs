@@ -6,18 +6,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Write_Sentance : BaseMatchSentances<BookSentanceData>
+public class Book_Write_Sentance : BaseMatchSentances<BookSentanceData>, IBookContentsRunner
 {
-    protected override int QuestionCount => 5;
+    protected override int QuestionCount => 2;
     public override eSceneName NextScene => eSceneName.AC_004;
-    protected override eContents contents => eContents.Book_Writing_Sentance;
+    protected override eContents contents => eContents.Book_Writting;
     public Button button;
     public GameObject empty;
+    protected override bool includeExitButton => false;
+    protected override bool isGuidence => false;
+    protected override bool showPopupOnEnd => false;
+    protected override bool showQuestionOnAwake => false;
     protected override void Awake()
     {
+        isGuide = false;
         base.Awake();
         button.onClick.AddListener(() => PlayCurrentSentance());
     }
+    public void StartQuestion() => ShowQuestion();
     protected override void ShowQuestion()
     {
         PlayCurrentSentance();

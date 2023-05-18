@@ -15,7 +15,7 @@ public class Book_Words_Quiz : SingleAnswerContents<BookWordQuizeQuestion, BookW
     protected override int QuestionCount => 5;
     protected override bool isGuidence => false;
 
-    protected override eContents contents => eContents.Book_Words_Quiz;
+    protected override eContents contents => eContents.Book_Words;
 
     protected override List<BookWordQuizeQuestion> MakeQuestion()
     {

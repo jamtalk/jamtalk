@@ -19,28 +19,29 @@ public class ResourceSchema : ScriptableObject
     [SerializeField]
     private TextAsset bookJson;
     public AudioClip correctSound;
-    [SerializeField]
-    private ResourceData _data = null;
+    //private ResourceData _data = null;
     public ResourceData data
     {
         get
         {
-            if (_data == null)
-                _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
-            return _data;
+            //Debug.Log(_data);
+            //if (_data == null)
+            //    _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
+            //return _data;
+            return JObject.Parse(orizinal.text).ToObject<ResourceData>();
         }
     }
-    private BookMetaData[] _bookData = null;
+    //private BookMetaData[] _bookData = null;
     public BookMetaData[] bookData
     {
         get
         {
-            if (_bookData == null)
-            {
-                _bookData = JArray.Parse(bookJson.text).ToObject<BookMetaData[]>();
+            //if (_bookData == null)
+            //{
+                var _bookData = JArray.Parse(bookJson.text).ToObject<BookMetaData[]>();
                 for (int i = 0; i < _bookData.Length; i++)
                     _bookData[i].SetBook();
-            }
+            //}
             return _bookData;
         }
     }
@@ -108,6 +109,7 @@ public class ResourceSchema : ScriptableObject
         var type =  (eSuccessType)values.GetValue(new System.Random().Next(0, values.Length));
 
         string[] clips;
+        Debug.Log(type);
         switch (type)
         {
             case eSuccessType.Amazing:
@@ -403,7 +405,7 @@ public class BookMetaData
     public BookWordData[] words;
 
     public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
-    public Sprite GetSprite(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}", type.ToString(), bookNumber, data.value)).WaitForCompletion();
+    public Sprite GetSprite(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}.{3}", type.ToString(), bookNumber, data.value,data.extension)).WaitForCompletion();
     public void SetBook()
     {
         for (int i = 0; i < sentances.Length; i++)
@@ -426,12 +428,18 @@ public class BookConversationData
 }
 public class BookSentanceData : BaseSentanceData
 {
-    public new string value => en;
-    public new string clip => clip_en;
     public string kr;
-    public string en;
+    public string en
+    {
+        get => value;
+        set => this.value = value;
+    }
     public int priority;
-    public string clip_en;
+    public string clip_en
+    {
+        get => clip;
+        set => clip = value;
+    }
     public string clip_kr;
     public BookMetaData currentBook { get; private set; }
     public void SetBook(BookMetaData book) => currentBook = book;

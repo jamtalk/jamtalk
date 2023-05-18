@@ -14,7 +14,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, Boo
     public STTButton sttButton;
     protected override int QuestionCount => 10;
 
-    protected override eContents contents => eContents.Book_Words_Speak;
+    protected override eContents contents => eContents.Book_Words;
     protected override void Awake()
     {
         base.Awake();

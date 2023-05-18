@@ -108,7 +108,6 @@ public abstract class BaseDragableToggle<TValue> : MonoBehaviour
             images[i].sprite = sprite;
             images[i].preserveAspect = true;
         }
-        Debug.Log(value);
         background.sprite = GetBackground();
         drag.Init(value, this);
         drop.Init(value, this);

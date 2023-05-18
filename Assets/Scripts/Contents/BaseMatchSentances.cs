@@ -83,7 +83,8 @@ public abstract class BaseMatchSentances<T> : BaseContents
     {
         base.Awake();
         sources = GetSentance();
-        ShowQuestion();
+        if(showQuestionOnAwake)
+            ShowQuestion();
     }
     protected virtual void ShowQuestion()
     {
@@ -96,6 +97,7 @@ public abstract class BaseMatchSentances<T> : BaseContents
         Clear();
         elements.Clear();
         var list = new List<RectTransform>();
+        Debug.Log(string.Join(" ", data.words));
         for (int i = 0; i < data.words.Length; i++)
         {
             var element = Instantiate(prefabWordElement, sentanceParent).GetComponent<WordElement121>();

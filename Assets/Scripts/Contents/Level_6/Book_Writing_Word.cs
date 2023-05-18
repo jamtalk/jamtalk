@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,BookWordData>
+public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,BookWordData>, IBookContentsRunner
 {
     public override eSceneName NextScene => eSceneName.AC_004;
-    protected override eContents contents => eContents.Book_Writing_Word;
+    protected override eContents contents => eContents.Book_Writting;
     public Transform layout;
     public Button button;
     public UIThrower110 thrower;
@@ -17,10 +17,16 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
     public GameObject empty;
     public AlphabetToggle110[] toggles;
     public GraphicRaycaster caster;
-    protected override int QuestionCount => 5;
+    protected override int QuestionCount => 2;
+    protected override bool isGuidence => false;
+    protected override bool showQuestionOnAwake => false;
+    protected override bool showPopupOnEnd => false;
+    protected override bool includeExitButton => false;
     protected override void Awake()
     {
+        isGuide = false;
         base.Awake();
+        StartQuestion();
         button.onClick.AddListener(()=>PlayCorrect());
     }
     private void PlayCorrect(System.Action onOver = null)
@@ -44,6 +50,7 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
     protected override void ShowQuestion(Book_Writing_WordQuestion question)
     {
         PlayCorrect();
+        creator.Clear();
         button.image.sprite = question.correct.sprite;
         button.image.preserveAspect = true;
         CreateLayout(question.correct.value.Replace(" ","").Length);
@@ -51,7 +58,7 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
         for (int i = 0; i < toggles.Length; i++)
         {
             AddToggleListner(toggles[i]);
-            //AddDragListener(toggles[i].drag);
+            AddDragListener(toggles[i].drag);
         }
         thrower.Init(toggles.Select(x => x.throwElement).ToArray());
         eventSystem.enabled = false;
@@ -85,15 +92,15 @@ public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,
         {
             if (!toggles.Select(x => x.isOn).Contains(false))
                 PlayCorrect(() => AddAnswer(currentQuestion.correct));
-            else
-                audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
+            //else
+                //audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };
     }
-    private void AddDragListener(Dragable110 drag)
+    private void AddDragListener(BaseDragable<eAlphabet> drag)
     {
         drag.onBegin += (eventData) =>
         {
-            audioPlayer.Play(GameManager.Instance.GetResources(drag.value).AudioData.phanics);
+            //audioPlayer.Play(GameManager.Instance.GetResources(drag.value).AudioData.phanics);
         };
 
         drag.onDrag += (eventData) =>

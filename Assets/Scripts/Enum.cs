@@ -159,12 +159,10 @@ public enum eContents
     JT_PL5_111 = 510,
     Book_Animation = 600,
     Book_Listening = 601,
-    Book_Words_Speak = 602,
-    Book_Words_Quiz = 603,
-    Book_Speaking = 604,
-    Book_Writing_Word = 605,
-    Book_Writing_Sentance = 606,
-    Book_Conversation = 607,
+    Book_Words = 602,
+    Book_Speaking = 603,
+    Book_Writting = 604,
+    Book_Conversation = 605,
 }
 
 public enum eAlphabet
