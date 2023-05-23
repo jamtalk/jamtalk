@@ -24,11 +24,6 @@ public class ResourceSchema : ScriptableObject
     {
         get
         {
-            //Debug.Log(_data);
-            //if (_data == null)
-            //    _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
-            //return _data;
-            Debug.LogFormat(orizinal.text);
             return JObject.Parse(orizinal.text).ToObject<ResourceData>();
         }
     }

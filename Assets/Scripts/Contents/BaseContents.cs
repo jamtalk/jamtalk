@@ -199,19 +199,17 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     {
         CorrectAction();
         Debug.Log("AddAnswer");
-        Debug.Log(CheckOver());
         var question = questions[currentQuestionIndex];
         question.SetAnswer(answer);
+        Debug.LogFormat("isOVer : {0}", CheckOver());
         if (CheckOver())
             ShowResult();
         else
         {
-            Debug.Log(isGuide);
             if (isGuide)
                 EndGuidnce();
             else
             {
-                Debug.Log(question.isCorrect);
                 currentQuestionIndex += 1;
                 if (question.isCorrect)
                     audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>

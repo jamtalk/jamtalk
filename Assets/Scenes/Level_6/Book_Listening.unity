@@ -1167,13 +1167,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 680664c8c86c66d4c867c454e8b7a330, type: 3}
     m_FontSize: 14
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 3
+    m_MaxSize: 100
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1459,31 +1459,10 @@ MonoBehaviour:
   screen: {fileID: 1836648979570436559}
   caption: {fileID: 1836648981367519296}
   typingText: {fileID: 2137982626}
-  data:
-  - sprite: {fileID: 21300000, guid: 5ff3db584415bf248a21100e00bd0fbb, type: 3}
-    clip: {fileID: 8300000, guid: f8aa18fb31a9caa4491725a490ff88c7, type: 3}
-    value: 'This is for my father. '
-  - sprite: {fileID: 21300000, guid: db845a9c2a7c57942ad439b42e684be2, type: 3}
-    clip: {fileID: 8300000, guid: 85609da472d0dca4197f3697bf9f720a, type: 3}
-    value: 'This is for my mother. '
-  - sprite: {fileID: 21300000, guid: 64982659237cb6c4ebf42bd90cc5da79, type: 3}
-    clip: {fileID: 8300000, guid: be061b8e9e3410a41b8dc1d49d2c2282, type: 3}
-    value: 'This is for my sister. '
-  - sprite: {fileID: 21300000, guid: 26ddd0c8656f21e438702b4bf9c39e10, type: 3}
-    clip: {fileID: 8300000, guid: 128b759205c375c40934f5aa9d4f1f61, type: 3}
-    value: This is for my brother.
-  - sprite: {fileID: 21300000, guid: c36a2b656cbba634fbfc2330de60faab, type: 3}
-    clip: {fileID: 8300000, guid: f4eff02fdc5be67458fc270f59f18784, type: 3}
-    value: 'This is for my grandfather. '
-  - sprite: {fileID: 21300000, guid: e3443c66a43cdab47b7353a66e0cda1f, type: 3}
-    clip: {fileID: 8300000, guid: 8d0e0929a1a4b9344997429e626e1b7a, type: 3}
-    value: 'This is for my grandmother. '
-  - sprite: {fileID: 21300000, guid: a7a81c9c5d51d1c4184960d50ff32ae0, type: 3}
-    clip: {fileID: 8300000, guid: f99ead7e555b11f4f94a1d95cb56d35e, type: 3}
-    value: 'My family has dinner together. '
-  btnCtr:
-  - {fileID: 1836648980822347132}
-  - {fileID: 585433209}
+  buttonNext: {fileID: 8105928582011618625}
+  buttonPrevious: {fileID: 8105928582781672124}
+  buttonReplay: {fileID: 8105928581386514983}
+  buttonPlay: {fileID: 8105928582767052593}
 --- !u!114 &6018471740866351412
 MonoBehaviour:
   m_ObjectHideFlags: 0
