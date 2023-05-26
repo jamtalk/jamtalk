@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL4_108 : BaseContents
+public class JT_PL4_108 : BaseContents<DigraphsContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL4_108;
     protected override bool CheckOver() => questionCount == index;

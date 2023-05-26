@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Write_Sentance : BaseMatchSentances<BookSentanceData>, IBookContentsRunner
+public class Book_Write_Sentance : BaseMatchSentances<BookContentsSetting,BookSentanceData>, IBookContentsRunner
 {
     protected override int QuestionCount => 2;
     public override eSceneName NextScene => eSceneName.AC_004;

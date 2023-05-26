@@ -8,7 +8,7 @@ using TMPro;
 using DG.Tweening;
 using static UnityEngine.Networking.UnityWebRequest;
 
-public class Book_Listening : BaseContents
+public class Book_Listening : BaseContents<BookContentsSetting>
 {
     protected override eContents contents => eContents.Book_Listening;
     protected override bool CheckOver() => GetTotalScore() == GetCorrectScore();

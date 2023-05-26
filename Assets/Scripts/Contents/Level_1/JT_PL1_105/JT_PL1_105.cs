@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL1_105 : STTContents<AlphabetWordsData, Image[]>
+public class JT_PL1_105 : STTContents<AlphabetContentsSetting, AlphabetWordsData, Image[]>
 {
     protected override int QuestionCount => 3;
 

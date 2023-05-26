@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL2_111 : BaseContents
+public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
 {
     [Header("UI")]
     public Image imageValue;

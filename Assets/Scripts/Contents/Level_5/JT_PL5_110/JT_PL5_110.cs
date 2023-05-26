@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL5_110 : MultiAnswerContents<Question5_110, DigraphsWordsData>
+public class JT_PL5_110 : MultiAnswerContents<DigraphsContentsSetting,Question5_110, DigraphsWordsData>
 {
     protected override int QuestionCount => 2;
     public GameObject finger;

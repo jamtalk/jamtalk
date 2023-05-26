@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL4_107 : SingleAnswerContents<Question4_107, DigraphsWordsData>
+public class JT_PL4_107 : SingleAnswerContents<AlphabetContentsSetting, Question4_107, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL4_107;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;

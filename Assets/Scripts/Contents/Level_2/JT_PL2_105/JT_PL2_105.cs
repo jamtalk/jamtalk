@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using System;
 using Random = UnityEngine.Random;
 
-public class JT_PL2_105 : SingleAnswerContents<Question2_105, VowelWordsData>
+public class JT_PL2_105 : SingleAnswerContents<AlphabetContentsSetting, Question2_105, VowelWordsData>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_105;

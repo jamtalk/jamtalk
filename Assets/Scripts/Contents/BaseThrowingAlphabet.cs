@@ -5,7 +5,9 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_ThrowerAlphabet<T>,T> where T : ResourceWordsElement
+public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswerContents<TTestSetting,Question_ThrowerAlphabet<TElement>,TElement> 
+    where TTestSetting : ContentsTestSetting
+    where TElement : ResourceWordsElement
 {
     public GraphicRaycaster caster;
     private AlphabetToggle110[] toggles;
@@ -62,7 +64,7 @@ public abstract class BaseThrowingAlphabet<T> : SingleAnswerContents<Question_Th
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }
-    protected override void ShowQuestion(Question_ThrowerAlphabet<T> question)
+    protected override void ShowQuestion(Question_ThrowerAlphabet<TElement> question)
     {
         creator.Clear();
         toggles = creator.Create(question.correct);

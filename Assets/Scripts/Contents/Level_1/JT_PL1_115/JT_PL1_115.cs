@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_115 : BaseContents
+public class JT_PL1_115 : BaseContents<AlphabetContentsSetting>
 {
     public EventSystem eventSystem;
     public Card114[] cards;

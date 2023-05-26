@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using Random = UnityEngine.Random;
 
-public class JT_PL2_108 : BaseWitch<VowelWordsData>
+public class JT_PL2_108 : BaseWitch<VowelContentsSetting,VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_108;
     protected override eCharactorDetail currectMotion => eCharactorDetail.mia_wizard_magic;

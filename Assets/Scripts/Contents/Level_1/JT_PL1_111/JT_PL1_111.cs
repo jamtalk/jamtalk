@@ -7,7 +7,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_111 : MultiAnswerContents<Question111, AlphabetWordsData>
+public class JT_PL1_111 : MultiAnswerContents<AlphabetContentsSetting, Question111, AlphabetWordsData>
 {
     protected override int QuestionCount => 2;
     public GameObject finger;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Words_Speak : SingleAnswerContents<BookWordsSpeakQuestion, BookWordData>, IBookContentsRunner
+public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWordsSpeakQuestion, BookWordData>, IBookContentsRunner
 {
     public override eSceneName NextScene => eSceneName.AC_004;
     public EventSystem eventSystem;

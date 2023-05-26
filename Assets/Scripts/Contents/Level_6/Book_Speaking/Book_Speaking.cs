@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Speaking : BaseContents
+public class Book_Speaking : BaseContents<BookContentsSetting>
 {
     public override eSceneName NextScene => eSceneName.AC_004;
     public EventSystem eventSystem;

@@ -6,7 +6,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL2_106 : BaseContents
+public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL2_106;

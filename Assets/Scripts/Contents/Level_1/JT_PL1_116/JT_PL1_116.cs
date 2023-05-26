@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_116 : BaseContents
+public class JT_PL1_116 : BaseContents<AlphabetContentsSetting>
 {
     public EventSystem eventSystem;
     public AnswerImage116 answerImage;

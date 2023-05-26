@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class JT_PL1_114 : SingleAnswerContents<Question114, AlphabetWordsData>
+public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question114, AlphabetWordsData>
 {
     public DropSapceShip_114 ship;
     public DragObject_114[] drags;

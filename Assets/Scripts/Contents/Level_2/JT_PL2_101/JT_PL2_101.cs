@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL2_101 : BaseContents
+public class JT_PL2_101 : BaseContents<AlphabetContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL2_101;
 

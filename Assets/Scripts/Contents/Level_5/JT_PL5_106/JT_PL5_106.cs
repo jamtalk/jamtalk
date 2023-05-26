@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class JT_PL5_106 : SingleAnswerContents<Question_PL5_106, DigraphsWordsData>
+public class JT_PL5_106 : SingleAnswerContents<AlphabetContentsSetting, Question_PL5_106, DigraphsWordsData>
 {
     public float duration;
     protected override int QuestionCount => 3;

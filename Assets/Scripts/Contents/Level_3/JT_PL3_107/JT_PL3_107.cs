@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL3_107 : BaseMatchImage<DigraphsWordsData>
+public class JT_PL3_107 : BaseMatchImage<DigraphsContentsSetting,DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_107;
 

@@ -7,7 +7,8 @@ using System.Collections;
 using System;
 using Random = UnityEngine.Random;
 
-public abstract class BingoContents<TValue, TButton, TViewer, TBoard> : BaseContents
+public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoard> : BaseContents<TTestSetting>
+    where TTestSetting : ContentsTestSetting
     where TBoard : BaseBingoBoard<TValue, TViewer, TButton>
     where TButton : BaseBingoButton<TValue, TViewer>
     where TViewer : MonoBehaviour

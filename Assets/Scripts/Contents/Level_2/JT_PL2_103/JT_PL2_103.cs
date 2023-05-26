@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class JT_PL2_103 : BaseContents
+public class JT_PL2_103 : BaseContents<AlphabetContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL2_103;
     protected override bool CheckOver() => index == questionCount;

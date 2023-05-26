@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL5_105 : BaseContents
+public class JT_PL5_105 : BaseContents<VowelContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL5_105;
     protected override bool CheckOver() => index == questionCount && !toggles.Select(x => x.toggle.isOn).Contains(true);

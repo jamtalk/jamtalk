@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class JT_PL3_106 : SingleAnswerContents<Question_PL3_106,DigraphsWordsData>
+public class JT_PL3_106 : SingleAnswerContents<AlphabetContentsSetting, Question_PL3_106, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_106;
     //protected override bool CheckOver() => index == QuestionCount;

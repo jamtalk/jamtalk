@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL2_107 : BaseMatchImage<VowelWordsData>
+public class JT_PL2_107 : BaseMatchImage<VowelContentsSetting,VowelWordsData>
 {
     protected override eContents contents => eContents.JT_PL2_107;
 

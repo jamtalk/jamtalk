@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_121 : BaseMatchSentances<AlphabetSentanceData>
+public class JT_PL1_121 : BaseMatchSentances<AlphabetContentsSetting,AlphabetSentanceData>
 {
     protected override eContents contents => eContents.JT_PL1_121;
     protected override AlphabetSentanceData[] GetSentance()

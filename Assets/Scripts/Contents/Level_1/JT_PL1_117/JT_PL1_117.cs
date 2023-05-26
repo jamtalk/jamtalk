@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-public class JT_PL1_117 : BingoContents<AlphabetData, BingoButton, Image, BingoBoard>
+public class JT_PL1_117 : BingoContents<AlphabetContentsSetting,AlphabetData, BingoButton, Image, BingoBoard>
 {
     protected override eContents contents => eContents.JT_PL1_117;
     public override int BingoCount => 2;

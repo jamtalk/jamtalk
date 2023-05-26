@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL2_110 : BingoContents<AlphabetWordsData, WordBingoButton, Text, WordBingoBoard>
+public class JT_PL2_110 : BingoContents<AlphabetContentsSetting, AlphabetWordsData, WordBingoButton, Text, WordBingoBoard>
 {
     protected override eContents contents => eContents.JT_PL2_110;
 

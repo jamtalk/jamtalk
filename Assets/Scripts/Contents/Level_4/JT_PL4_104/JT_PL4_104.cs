@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL4_104 : BaseContents
+public class JT_PL4_104 : BaseContents<DigraphsContentsSetting>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL4_104;

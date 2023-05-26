@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL1_110 : BaseThrowingAlphabet<AlphabetWordsData>
+public class JT_PL1_110 : BaseThrowingAlphabet<AlphabetContentsSetting,AlphabetWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_110;
 

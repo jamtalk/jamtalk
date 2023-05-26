@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class JT_PL3_108 : BaseWitch<DigraphsWordsData>
+public class JT_PL3_108 : BaseWitch<DigraphsContentsSetting,DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_108;
     protected override eCharactorDetail currectMotion => eCharactorDetail.eric_wizard_magic;

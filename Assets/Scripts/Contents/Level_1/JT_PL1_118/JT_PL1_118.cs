@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_118 : SingleAnswerContents<Question118, AlphabetWordsData>
+public class JT_PL1_118 : SingleAnswerContents<AlphabetContentsSetting, Question118, AlphabetWordsData>
 {
     public EventSystem eventSystem;
     public Text textQuestion;

@@ -7,23 +7,24 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
-    where T : ResourceWordsElement
+public abstract class BaseWitch<TContentsSetting,TElement> : SingleAnswerContents<TContentsSetting,Question_Witch<TElement>, TElement>
+    where TContentsSetting : ContentsTestSetting
+    where TElement : ResourceWordsElement
 {
     protected override int QuestionCount => 6;
     protected override eContents contents => eContents.JT_PL2_108;
     protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
     protected override int GetTotalScore() => QuestionCount;
 
-    protected T[] words;
+    protected TElement[] words;
 
     [SerializeField]
-    protected PotionElement<T>[] elements;
+    protected PotionElement<TElement>[] elements;
 
     public GameObject prefabPotionElement;
     public PotElement prefabPot;
     public GameObject prefabMark;
-    public MagicWand<T> magicWand;
+    public MagicWand<TElement> magicWand;
     public WitchResult result;
     public AudioClip potSound;
     public AudioClip potionSound;
@@ -77,7 +78,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         }
     }
 
-    protected override void ShowQuestion(Question_Witch<T> question)
+    protected override void ShowQuestion(Question_Witch<TElement> question)
     {
         result.gameObject.SetActive(false);
         Debug.Log(question.totalQuestion.Length);
@@ -93,7 +94,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         isNext = true;
     }
 
-    private void DropMotion(PotionElement<T> target)
+    private void DropMotion(PotionElement<TElement> target)
     {
         eventSystem.enabled = false;
 
@@ -105,7 +106,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         });
     }
 
-    protected virtual void OnDrop(PotionElement<T> target, bool isPot)
+    protected virtual void OnDrop(PotionElement<TElement> target, bool isPot)
     {
         if(isPot)
         {
@@ -126,7 +127,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
             audioPlayer.PlayIncorrect();
         }
     }
-    protected virtual void OnDrag(PotionElement<T> target)
+    protected virtual void OnDrag(PotionElement<TElement> target)
     {
         target.image.gameObject.SetActive(false);
         target.textValue.gameObject.SetActive(false);
@@ -141,7 +142,7 @@ public abstract class BaseWitch<T> : SingleAnswerContents<Question_Witch<T>, T>
         //currentQuestion.correct.PlayClip();
     }
 
-    protected override void AddAnswer(T answer)
+    protected override void AddAnswer(TElement answer)
     {
         base.AddAnswer(answer);
         for (int i = 0; i < elements.Length; i++)

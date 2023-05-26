@@ -4,7 +4,7 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine.UI;
 
-public class JT_PL1_102 : BaseContents
+public class JT_PL1_102 : BaseContents<AlphabetContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL1_102;
     public int ClickCount => 3;

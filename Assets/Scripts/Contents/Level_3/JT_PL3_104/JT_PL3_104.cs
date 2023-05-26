@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using System;
 using Random = UnityEngine.Random;
 
-public class JT_PL3_104 : SingleAnswerContents<Question3_104, DigraphsWordsData>
+public class JT_PL3_104 : SingleAnswerContents<AlphabetContentsSetting, Question3_104, DigraphsWordsData>
 {
     public EventSystem eventSystem;
     protected override eContents contents => eContents.JT_PL3_104;

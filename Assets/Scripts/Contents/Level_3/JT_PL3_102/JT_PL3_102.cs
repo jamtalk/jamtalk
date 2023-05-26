@@ -7,7 +7,7 @@ using DG.Tweening;
 using System;
 using Random = UnityEngine.Random;
 
-public class JT_PL3_102 : MultiAnswerContents<Question3_102, DigraphsWordsData>
+public class JT_PL3_102 : MultiAnswerContents<AlphabetContentsSetting, Question3_102, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_102;
     protected override int QuestionCount => 3;

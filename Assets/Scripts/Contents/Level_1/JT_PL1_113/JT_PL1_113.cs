@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class JT_PL1_113 : SingleAnswerContents<Question113, eAlphabet>
+public class JT_PL1_113 : SingleAnswerContents<AlphabetContentsSetting, Question113, eAlphabet>
 {
     public EventSystem eventSystem;
     public Thrower113 thrower;

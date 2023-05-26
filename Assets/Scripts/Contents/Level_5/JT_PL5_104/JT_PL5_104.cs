@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
+public class JT_PL5_104 : MultiAnswerContents<AlphabetContentsSetting, Question5_104, DigraphsWordsData>
 {
     protected override int QuestionCount => 3;
     public GameObject finger;
@@ -57,7 +57,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
             }
         }
     }
-    
+
 
     protected override void Awake()
     {
@@ -129,7 +129,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
     {
         button.onClickFirst.AddListener(() =>
         {
-            if(button.data.Digraphs == currentQuestion.currentCorrect.Digraphs)
+            if (button.data.Digraphs == currentQuestion.currentCorrect.Digraphs)
                 audioPlayer.Play(button.data.audio.phanics);
             else
                 audioPlayer.PlayIncorrect(button.data.audio.phanics);
@@ -175,7 +175,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
             audioPlayer.PlayIncorrect(button.data.audio.phanics);
     }
     private void DoMove(RectTransform window, RectTransform rt, TweenCallback callback)
-    { 
+    {
         var seq = DOTween.Sequence();
 
         var moveTween = rt.DOMove(window.position, 1f);
@@ -205,7 +205,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
         if (finger != null)
             finger.gameObject.SetActive(false);
 
-        rocket.Call(() => 
+        rocket.Call(() =>
         {
             for (int i = 0; i < buttons.Length; i++)
                 buttons[i].button.interactable = true;
@@ -222,6 +222,7 @@ public class JT_PL5_104 : MultiAnswerContents<Question5_104, DigraphsWordsData>
         base.EndGuidnce();
     }
 }
+
 public class Question5_104 : MultiQuestion<DigraphsWordsData>
 {
     public int currentIndex { get; private set; } = 0;

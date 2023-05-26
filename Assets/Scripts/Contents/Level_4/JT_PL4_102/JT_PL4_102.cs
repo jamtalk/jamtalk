@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL4_102 : MultiAnswerContents<Question4_102, DigraphsWordsData>
+public class JT_PL4_102 : MultiAnswerContents<AlphabetContentsSetting, Question4_102, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL4_102;
     protected override int QuestionCount => 1;

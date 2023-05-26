@@ -6,7 +6,7 @@ using DG.Tweening;
 using System;
 using System.Linq;
 
-public class JT_PL1_103 : BaseContents
+public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
 {
     public Image currentImage;
     public Button button;

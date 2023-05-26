@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
-public class JT_PL1_112 : BaseContents
+public class JT_PL1_112 : BaseContents<AlphabetContentsSetting>
 {
     public DropToggle[] toggles;
     public DragAlphabet[] drags;

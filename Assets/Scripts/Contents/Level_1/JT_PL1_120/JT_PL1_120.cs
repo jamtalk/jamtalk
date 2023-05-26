@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_120 : MultiAnswerContents<Question120,AlphabetWordsData>
+public class JT_PL1_120 : MultiAnswerContents<AlphabetContentsSetting, Question120, AlphabetWordsData>
 {
     public EventSystem eventSystem;
     public Button buttonRocket;

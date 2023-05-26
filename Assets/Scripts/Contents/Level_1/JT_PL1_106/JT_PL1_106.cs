@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class JT_PL1_106 : SingleAnswerContents<Question106, AlphabetWordsData>
+public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question106, AlphabetWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_106;
 

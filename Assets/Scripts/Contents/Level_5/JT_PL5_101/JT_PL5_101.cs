@@ -9,7 +9,7 @@ using Bezier = GJGameLibrary.Util.Bezier.DoTween.BezierTween;
 using Random = UnityEngine.Random;
 using UnityEngine.EventSystems;
 
-public class JT_PL5_101 : BaseContents
+public class JT_PL5_101 : BaseContents<DigraphsContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL5_101;
     protected override bool CheckOver() => index == questionCount;

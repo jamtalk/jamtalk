@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class BaseMatchSentances<T> : BaseContents 
-    where T : BaseSentanceData
+public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<TTestSetting> 
+    where TTestSetting : ContentsTestSetting
+    where TSentance : BaseSentanceData
 {
     protected override eContents contents => throw new System.NotImplementedException();
     protected override bool CheckOver() => index == QuestionCount;
@@ -26,9 +27,9 @@ public abstract class BaseMatchSentances<T> : BaseContents
     public UIThrower110 thrower;
     protected int index = 0;
     [SerializeField]
-    protected T[] sources { get; private set; }
+    protected TSentance[] sources { get; private set; }
     public EventSystem eventSystem;
-    protected T currentSentance => sources[index];
+    protected TSentance currentSentance => sources[index];
     protected virtual int QuestionCount => 4;
 
     bool isThrow = false;
@@ -90,9 +91,9 @@ public abstract class BaseMatchSentances<T> : BaseContents
     {
         StartCoroutine(Init(currentSentance));
     }
-    protected abstract T[] GetSentance();
+    protected abstract TSentance[] GetSentance();
 
-    private IEnumerator Init(T data)
+    private IEnumerator Init(TSentance data)
     {
         Clear();
         elements.Clear();

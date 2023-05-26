@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_108 : MultiAnswerContents<Question108, AlphabetWordsData>
+public class JT_PL1_108 : MultiAnswerContents<AlphabetContentsSetting,Question108, AlphabetWordsData>
 {
     public Card_108[] cards;
     public GameObject finger;

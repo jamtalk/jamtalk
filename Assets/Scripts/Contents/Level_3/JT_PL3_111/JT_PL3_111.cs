@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL3_111 : BaseMatchSentances<DigraphsSentanceData>
+public class JT_PL3_111 : BaseMatchSentances<DigraphsContentsSetting, DigraphsSentanceData>
 {
     protected override eContents contents => eContents.JT_PL3_111;
     protected override DigraphsSentanceData[] GetSentance()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JT_PL2_112 : BaseMatchSentances<AlphabetSentanceData>
+public class JT_PL2_112 : BaseMatchSentances<AlphabetContentsSetting,AlphabetSentanceData>
 {
     protected override eContents contents => eContents.JT_PL2_112;
     protected override AlphabetSentanceData[] GetSentance()

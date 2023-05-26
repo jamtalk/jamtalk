@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL1_119 : SingleAnswerContents<Question119, AlphabetWordsData>
+public class JT_PL1_119 : SingleAnswerContents<AlphabetContentsSetting, Question119, AlphabetWordsData>
 {
     public EventSystem eventSystem;
     public ButtonExitnction[] buttons;

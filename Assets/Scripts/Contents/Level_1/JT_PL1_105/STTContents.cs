@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class STTContents<TData,TValueViewer> : SingleAnswerContents<Question_STT<TData>, TData> 
+public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswerContents<TTestSetting,Question_STT<TData>, TData> 
+    where TTestSetting:ContentsTestSetting
     where TData:ResourceWordsElement
 {
     protected virtual bool PlayClipOnShow => true;

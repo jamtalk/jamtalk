@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class JT_PL5_108 : SingleAnswerContents<Question5_108, DigraphsWordsData>
+public class JT_PL5_108 : SingleAnswerContents<AlphabetContentsSetting, Question5_108, DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL5_108;
 

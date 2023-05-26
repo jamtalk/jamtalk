@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class JT_PL4_101 : BaseContents
+public class JT_PL4_101 : BaseContents<DigraphsContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL4_101;
     protected override bool CheckOver() => questionCount == index;

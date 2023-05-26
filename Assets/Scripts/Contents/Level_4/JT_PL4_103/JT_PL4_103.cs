@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL4_103 : STTContents<DigraphsWordsData, Text>
+public class JT_PL4_103 : STTContents<DigraphsContentsSetting, DigraphsWordsData, Text>
 {
     protected override int QuestionCount => 3;
 

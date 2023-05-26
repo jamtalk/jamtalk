@@ -10,12 +10,17 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 #region Contents
-public abstract class BaseContents : MonoBehaviour
+public abstract class BaseContents<TTestSetting> : MonoBehaviour
+    where TTestSetting:ContentsTestSetting
 {
+    [Space(20)]
+#if UNITY_EDITOR
+    [SerializeField] private TTestSetting testSetting;
+#endif
+    [Space(20)]
+    [SerializeField] private GameObject popupResult;
+
     public virtual eSceneName NextScene => eSceneName.AD_003;
-    public eAlphabet targetAlphabet;
-    [SerializeField]
-    private GameObject popupResult;
     protected abstract eContents contents { get; }
     protected eAlphabetType type = eAlphabetType.Upper;
     protected virtual eGameResult GetResult() => eGameResult.Success;
@@ -115,7 +120,7 @@ public abstract class BaseContents : MonoBehaviour
     protected virtual void Awake()
     {
 #if UNITY_EDITOR
-        GameManager.Instance.currentAlphabet = targetAlphabet;
+        testSetting.Apply();
 #endif
         startTime = DateTime.Now;
         if (includeExitButton)
@@ -154,7 +159,8 @@ public abstract class BaseContents : MonoBehaviour
     protected virtual int GetCorrectScore()=>GetTotalScore();
     protected virtual float GetDuration()=>100f;
 }
-public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
+public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : BaseContents<TTestSetting>
+    where TTestSetting : ContentsTestSetting
     where TQuestion : Question<TAnswer>
 {
     public List<TQuestion> questions = null;
@@ -242,7 +248,8 @@ public abstract class SingleAnswerContents<TQuestion,TAnswer> : BaseContents
     protected override int GetCorrectScore() => questions.Where(x => x.isCorrect).Count();
     protected override float GetDuration() => (float)questions.Where(x => x.isCompleted).Count() / (float)QuestionCount;
 }
-public abstract class MultiAnswerContents<TQuestion,TAnswer> : SingleAnswerContents<TQuestion,TAnswer>
+public abstract class MultiAnswerContents<TTestSetting,TQuestion, TAnswer> : SingleAnswerContents<TTestSetting,TQuestion, TAnswer>
+    where TTestSetting:ContentsTestSetting
     where TQuestion:MultiQuestion<TAnswer>
 {
     protected override bool CheckOver() => !questions.Select(x => x.isCompleted).Contains(false);
@@ -372,7 +379,7 @@ public interface IBookContentsRunner
 {
     public void StartQuestion();
 }
-public abstract class BaseBookContents : BaseContents
+public abstract class BaseBookContents : BaseContents<BookContentsSetting>
 {
     public BookContentsRunner[] contentsRunners;
     protected override sealed bool includeExitButton => false;
@@ -407,7 +414,7 @@ public abstract class BaseBookContents : BaseContents
 [System.Serializable]
 public class BookContentsRunner
 {
-    public BaseContents contents;
+    public BaseContents<BookContentsSetting> contents;
     private BookContentsRunner nextContents = null;
     public IBookContentsRunner runner => (IBookContentsRunner)contents;
     public void SetNext(BookContentsRunner nextContents)

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class JT_PL1_107 : BaseMatchImage<AlphabetWordsData>
+public class JT_PL1_107 : BaseMatchImage<AlphabetContentsSetting,AlphabetWordsData>
 {
     protected override eContents contents => eContents.JT_PL1_107;
     protected override int GetTotalScore() => drops.Length;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
-public class JT_PL3_105 : BaseContents
+public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
 {
     public EventSystem eventSystem;
     public Button buttonBox;

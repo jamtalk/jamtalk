@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL1_109 : BaseContents
+public class JT_PL1_109 : BaseContents<AlphabetContentsSetting>
 {
     private int questionCount => 4;
     public AlphabetDragToggle109[] toggles;

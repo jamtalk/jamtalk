@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Random = UnityEngine.Random;
 
-public class JT_PL3_101 : BaseContents
+public class JT_PL3_101 : BaseContents<DigraphsContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL3_101;
 

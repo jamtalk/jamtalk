@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JT_PL3_109 : BaseThrowingAlphabet<DigraphsWordsData>
+public class JT_PL3_109 : BaseThrowingAlphabet<DigraphsContentsSetting,DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_109;
 

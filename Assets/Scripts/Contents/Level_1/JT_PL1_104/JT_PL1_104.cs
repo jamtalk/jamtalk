@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Spine.Unity;
 
-public class JT_PL1_104 : BaseContents
+public class JT_PL1_104 : BaseContents<AlphabetContentsSetting>
 {
     public DrawAlphabet drawAlphabet;
     public GameObject mask;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Book_Writing_Word : SingleAnswerContents<Book_Writing_WordQuestion,BookWordData>, IBookContentsRunner
+public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_Writing_WordQuestion,BookWordData>, IBookContentsRunner
 {
     public override eSceneName NextScene => eSceneName.AC_004;
     protected override eContents contents => eContents.Book_Writting;

@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public abstract class BaseMatchImage<T> : BaseContents
-    where T : ResourceWordsElement
+public abstract class BaseMatchImage<TTestSetting,TElement> : BaseContents<TTestSetting>
+    where TTestSetting:ContentsTestSetting
+    where TElement : ResourceWordsElement
 {
     protected abstract void GetWords();
     protected abstract void PlayAudio(ResourceWordsElement word);
@@ -22,7 +23,7 @@ public abstract class BaseMatchImage<T> : BaseContents
     public CanvasScaler scaler;
     public DropSpaceShip_107[] drops;
     public DragKnob_107[] drags;
-    protected T[] words;
+    protected TElement[] words;
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -58,7 +59,7 @@ public abstract class BaseMatchImage<T> : BaseContents
         GetWords();
     }
 
-    protected virtual void SetElement(T[] item)
+    protected virtual void SetElement(TElement[] item)
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
 

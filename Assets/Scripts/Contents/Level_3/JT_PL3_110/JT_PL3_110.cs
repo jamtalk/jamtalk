@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL3_110 : BingoContents<DigraphsWordsData, DigraphsBingoButton, Text, DigraphsBingoBoard>
+public class JT_PL3_110 : BingoContents<DigraphsContentsSetting, DigraphsWordsData, DigraphsBingoButton, Text, DigraphsBingoBoard>
 {
     protected override eContents contents => eContents.JT_PL3_110;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JT_PL2_102 : STTContents<VowelWordsData, Image>
+public class JT_PL2_102 : STTContents<VowelContentsSetting,VowelWordsData, Image>
 {
     protected override int QuestionCount => 3;
     protected override eContents contents => eContents.JT_PL2_102;
