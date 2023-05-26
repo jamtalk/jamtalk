@@ -409,6 +409,14 @@ public class BookMetaData
     public BookConversationData[] conversations;
     public BookWordData[] words;
 
+    public BookURLData GetURLData()
+    {
+        return GameManager.Instance.schema.data.bookURL
+            .Where(x => x.bookNumber == bookNumber)
+            .Where(x => x.type == type)
+            .First();
+    }
+
     public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
     public Sprite GetSprite(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}.{3}", type.ToString(), bookNumber, data.value,data.extension)).WaitForCompletion();
     public void SetBook()
