@@ -21,7 +21,6 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     protected override eContents contents => eContents.Book_Words;
     protected override void Awake()
     {
-        StartQuestion();
         isGuide = false;
         base.Awake();
         sttButton.onSTT += OnSTT;
@@ -32,7 +31,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             eventSystem.enabled = true;
             AddAnswer(currentQuestion.correct);
@@ -40,7 +39,8 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
-        return GameManager.Instance.GetCurrentBook().words
+
+        return GameManager.Instance.GetCurrentBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new BookWordsSpeakQuestion(x, new BookWordData[0]))

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 [Serializable]
 public abstract class ContentsTestSetting
@@ -41,6 +42,7 @@ public class BookContentsSetting : ContentsTestSetting
     public int page;
     public override void Apply()
     {
+        Debug.Log("테스트 적용");
         GameManager.Instance.currentBook = book;
         GameManager.Instance.currentBookNumber = bookNumber;
         GameManager.Instance.currentPage = page;

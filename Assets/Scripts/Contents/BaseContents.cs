@@ -393,6 +393,7 @@ public abstract class BaseBookContents : BaseContents<BookContentsSetting>
         for(int i= 0;i < contentsRunners.Length-1; i++)
             contentsRunners[i].SetNext(contentsRunners[i + 1]);
         contentsRunners.Last().SetLast(ShowResult);
+        contentsRunners.First().runner.StartQuestion();
     }
 
     protected override bool CheckOver() => true;
