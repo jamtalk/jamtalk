@@ -38,7 +38,7 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Space))
         {
             OnSTT(currentSentance.value);
             eventSystem.enabled = true;

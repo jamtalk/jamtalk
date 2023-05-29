@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce14ecb39c187364884b26d868482629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceName: 
 --- !u!82 &321545097
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1255,9 +1256,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0b08eaf69253e49860e7465349f48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
+  testSetting:
+    book: 0
+    bookNumber: 1
+    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 14172608}
+  guide: {fileID: 0}
+  exitButton: {fileID: 0}
+  animationCharactors: []
   eventSystem: {fileID: 489481848}
   button: {fileID: 1178615657}
   sttButton: {fileID: 321545095}
