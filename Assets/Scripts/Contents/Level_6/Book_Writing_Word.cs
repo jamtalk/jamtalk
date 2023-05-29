@@ -17,7 +17,7 @@ public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_
     public GameObject empty;
     public AlphabetToggle110[] toggles;
     public GraphicRaycaster caster;
-    protected override int QuestionCount => 2;
+    protected override int QuestionCount => 5;
     protected override bool isGuidence => false;
     protected override bool showQuestionOnAwake => false;
     protected override bool showPopupOnEnd => false;

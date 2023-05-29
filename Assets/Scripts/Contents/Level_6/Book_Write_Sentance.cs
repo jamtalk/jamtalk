@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Book_Write_Sentance : BaseMatchSentances<BookContentsSetting,BookSentanceData>, IBookContentsRunner
 {
-    protected override int QuestionCount => 2;
+    protected override int QuestionCount => 5;
     public override eSceneName NextScene => eSceneName.AC_004;
     protected override eContents contents => eContents.Book_Writting;
     public Button button;

@@ -468,7 +468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6152f7c83ba39a347bd5f7470ffb629f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
+  testSetting:
+    book: 0
+    bookNumber: 1
+    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
@@ -985,7 +988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c36c73767455d4f9d9544023932998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
+  testSetting:
+    book: 0
+    bookNumber: 1
+    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
@@ -1182,7 +1188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1078dcca5d49f184fbe909a82dda7c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
+  testSetting:
+    book: 0
+    bookNumber: 1
+    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}

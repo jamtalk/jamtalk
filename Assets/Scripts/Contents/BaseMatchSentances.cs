@@ -10,7 +10,7 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
     where TSentance : BaseSentanceData
 {
     protected override eContents contents => throw new System.NotImplementedException();
-    protected override bool CheckOver() => index == QuestionCount;
+    protected override bool CheckOver() => index == sources.Length;
     protected override int GetTotalScore() => QuestionCount;
 
     public AudioClip stampClip;
@@ -71,6 +71,20 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
 
         EndGuidnce();
     }
+    protected virtual void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+            {
+                index += 1;
+                if (CheckOver())
+                    ShowResult();
+                else
+                    ShowQuestion();
+            });
+        }
+    }
 
     protected override void EndGuidnce()
     {
@@ -89,6 +103,7 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
     }
     protected virtual void ShowQuestion()
     {
+        Debug.LogFormat("{0}/{1} 문제 시작", index+1, sources.Length);
         StartCoroutine(Init(currentSentance));
     }
     protected abstract TSentance[] GetSentance();
