@@ -10,14 +10,14 @@ public class AC_004 : MonoBehaviour
     public Image image;
     private void Awake()
     {
-        GameManager.Instance.LoadAddressables((progress) => Debug.LogFormat("{0}% 진행중..", progress), () =>
-        {
-            image.sprite = GameManager.Instance.GetCurrentBook()
-                .OrderBy(x => x.type)
-                .OrderBy(x => x.bookNumber)
-                .OrderBy(x => x.page)
-                .First()
-                .GetSprite();
-        });
+        //GameManager.Instance.LoadAddressables((progress) => Debug.LogFormat("{0}% 진행중..", progress), () =>
+        //{
+        //    image.sprite = GameManager.Instance.GetCurrentBook()
+        //        .OrderBy(x => x.type)
+        //        .OrderBy(x => x.bookNumber)
+        //        .OrderBy(x => x.page)
+        //        .First()
+        //        .GetSprite();
+        //});
     }
 }

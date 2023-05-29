@@ -1449,7 +1449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382f5b8759cda4e48bb3d7748e5d46ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
+  testSetting:
+    book: 0
+    bookNumber: 1
+    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 8105928582803601123}
   guide: {fileID: 0}

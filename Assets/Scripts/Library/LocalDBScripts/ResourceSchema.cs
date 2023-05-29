@@ -46,7 +46,9 @@ public class ResourceSchema : ScriptableObject
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
-    public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x=>x.page).ToArray();
+
+    public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x => x.page).ToArray();
+    public BookMetaData GetBookData(eBookType type, int bookNumber, int page) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).Where(x => x.page == page).First();
     public string GetSiteWordsClip(string value)
     {
         value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
@@ -389,11 +391,17 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 #region BookData
 public class BookURLData
 {
-    public eBookType type;
-    public int bookNumber;
-    public string BookTitle;
-    public string youtubeURL;
+    public eBookType key;
+    public int number;
+    public string title;
+    public string animationURL;
     public string songURL;
+    public string resourceRootURL;
+    public string GetLog()
+    {
+        return string.Join("\n", GetType().GetFields()
+            .Select(x => string.Format("{0} : {1}", x.Name, x.GetValue(this))));
+    }
 }
 public class BookMetaData
 {
@@ -411,9 +419,18 @@ public class BookMetaData
 
     public BookURLData GetURLData()
     {
-        return GameManager.Instance.schema.data.bookURL
-            .Where(x => x.bookNumber == bookNumber)
-            .Where(x => x.type == type)
+        Debug.LogFormat("{0} 책 {1}권 <b>{2}</b>의URL 찾기", type, bookNumber, title_en);
+        Debug.LogFormat(type+"책 URL 데이터 : {0}권\n{1}", GameManager.Instance.schema.data.bookData
+            .Where(x => x.key == type).Count(),
+            string.Join("\n", GameManager.Instance.schema.data.bookData
+            .Where(x => x.key == type).Select(x => x.number + "권")));
+        Debug.LogFormat("{0}권 찾기 결과 : {1}권 찾음", bookNumber,
+            GameManager.Instance.schema.data.bookData
+            .Where(x => x.key == type)
+            .Where(x => x.number == bookNumber).Count());
+        return GameManager.Instance.schema.data.bookData
+            .Where(x => x.key == type)
+            .Where(x => x.number == bookNumber)
             .First();
     }
 
@@ -487,7 +504,7 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
-    public BookURLData[] bookURL;
+    public BookURLData[] bookData;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;

@@ -39,7 +39,11 @@ public class Book_Animation : MonoBehaviour
         {
             youtubePlayer.Prev(10f);
         });
-        Play(GameManager.Instance.GetCurrentBook().First().GetURLData().youtubeURL);
+        var url = GameManager.Instance.GetCurrentBook().GetURLData();
+        if (string.IsNullOrEmpty(url.animationURL))
+            Debug.LogWarning("등록되지 않은 유투브 링크 입니다");
+        else
+            Play(url.animationURL);
     }
     public void Play(string url)
     {

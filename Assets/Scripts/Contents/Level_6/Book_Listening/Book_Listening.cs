@@ -31,7 +31,7 @@ public class Book_Listening : BaseContents<BookContentsSetting>
     protected override void Awake()
     {
         base.Awake();
-        data = GameManager.Instance.GetCurrentBook().OrderBy(x => x.page).First().sentances;
+        data = GameManager.Instance.GetCurrentBooks().SelectMany(x=>x.sentances).OrderBy(x=>x.priority).ToArray();
         screen.sprite = data[index].sprite;
         buttonNext.onClick.AddListener(() => Show(index + 1));
         buttonPrevious.onClick.AddListener(() => Show(index - 1));

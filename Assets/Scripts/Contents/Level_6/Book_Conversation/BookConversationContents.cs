@@ -26,7 +26,7 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
     protected override void Awake()
     {
         base.Awake();
-        datas = GameManager.Instance.GetCurrentBook().First().conversations.OrderBy(x => x.priority).ToArray();
+        datas = GameManager.Instance.GetCurrentBook().conversations.OrderBy(x => x.priority).ToArray();
         ShowQuestion(0);
         buttonSTT.onClick.AddListener(RecordAction);
         recorder.onSTTResult += (success,value) =>

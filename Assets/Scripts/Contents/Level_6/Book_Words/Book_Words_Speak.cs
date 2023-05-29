@@ -40,7 +40,7 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
-        return GameManager.Instance.GetCurrentBook().SelectMany(x=>x.words).Distinct()
+        return GameManager.Instance.GetCurrentBook().words
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
             .Select(x => new BookWordsSpeakQuestion(x, new BookWordData[0]))

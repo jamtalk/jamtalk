@@ -46,7 +46,7 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     }
     public Dictionary<int, Dictionary<int, BookConversationData>> MakeQuestion()
     {
-        var books = GameManager.Instance.GetCurrentBook();
+        var books = GameManager.Instance.GetCurrentBooks();
         var dic = new Dictionary<int, Dictionary<int, BookConversationData>>();
         foreach (var book in books)
         {
