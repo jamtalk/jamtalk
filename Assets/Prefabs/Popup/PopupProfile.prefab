@@ -308,7 +308,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB2E8\uBAA8\uC74C/\uC7A5\uBAA8\uC74C\uC744\n\uD559\uC2B5\uD560 \uC608\uC815\uC774\uC608\uC694"
+  m_Text: 
 --- !u!1 &2110318598178397050
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +682,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC54C\uD30C\uBCB3\uC744 \uD559\uC2B5\uD558\uACE0 \uC788\uC5B4\uC694"
+  m_Text: 
 --- !u!1 &2110318598360267084
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,6 +5345,25 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ff3691caa5d363a4cbe460ffa653ce37, type: 3}
   imageCurrentLevel: {fileID: 2110318599439692485}
   imageNextLevel: {fileID: 2110318599680997464}
+  messages:
+  - level: 1
+    currentMessage: "1\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "1\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
+  - level: 2
+    currentMessage: "2\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "2\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
+  - level: 3
+    currentMessage: "3\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "3\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
+  - level: 4
+    currentMessage: "4\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "4\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
+  - level: 5
+    currentMessage: "5\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "5\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
+  - level: 6
+    currentMessage: "6\uB2E8\uACC4 \uD559\uC2B5\uC9C4\uD589 \uBA54\uC138\uC9C0"
+    nextMessage: "6\uB2E8\uACC4 \uD559\uC2B5 \uC608\uC815 \uBA54\uC2DC\uC9C0"
 --- !u!1 &2110318599962725465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5690,7 +5709,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0pt
+  m_Text: 
 --- !u!1 &7567713509786026458
 GameObject:
   m_ObjectHideFlags: 0

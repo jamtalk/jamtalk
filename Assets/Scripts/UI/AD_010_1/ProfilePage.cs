@@ -14,6 +14,7 @@ public class ProfilePage : UserInfoScene
     public Sprite[] spritesLevel;
     public Image imageCurrentLevel;
     public Image imageNextLevel;
+    public LevelMessageData[] messages;
     public override void Init()
     {
         base.Init();
@@ -54,7 +55,17 @@ public class ProfilePage : UserInfoScene
                 imageCurrentLevel.sprite = spritesLevel[child.level + 1];
                 imageNextLevel.sprite = spritesLevel[child.level + 2];
                 textAge.text = string.Format("{0} 세", child.age);
+                var currentLevelMessage = messages.ToList().Find(x => x.level == child.level);
+                textCurrentLevel.text = messages.ToList().Find(x => x.level == child.level).currentMessage;
+                textNextLevel.text = messages.ToList().Find(x => x.level == child.level + 1).nextMessage;
             }
         });
     }
+}
+[System.Serializable]
+public class LevelMessageData
+{
+    public int level;
+    public string currentMessage;
+    public string nextMessage;
 }
