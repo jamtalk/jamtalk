@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class PopupParents : BasePopup
 {
     public Button buttonSingOut;
+    public Parent_TimeLabel timeLabel;
     protected override void Awake()
     {
         buttonExit.onClick.AddListener(PopupManager.Instance.Clear);
