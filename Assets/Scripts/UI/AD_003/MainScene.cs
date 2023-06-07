@@ -33,11 +33,11 @@ public class MainScene : UserInfoScene
         });
         buttonSong.onClick.AddListener(() =>
         {
-            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(urlSong);
+            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(GameManager.Instance.GetResources().AudioData.songURL);
         });
         buttonVideo.onClick.AddListener(() =>
         {
-            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(urlAnimation);
+            PopupManager.Instance.Popup<VideoPopup>(videoPopup).Play(GameManager.Instance.GetResources().AudioData.songURL);
         });
         base.Awake();
     }

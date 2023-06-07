@@ -851,6 +851,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2620027121471792034}
     m_Modifications:
+    - target: {fileID: 5463961021490050068, guid: 90b764f0f0b06bb419a053451edfb927, type: 3}
+      propertyPath: cli
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5463961021490050069, guid: 90b764f0f0b06bb419a053451edfb927, type: 3}
       propertyPath: m_Name
       value: GJYoutubePlayer

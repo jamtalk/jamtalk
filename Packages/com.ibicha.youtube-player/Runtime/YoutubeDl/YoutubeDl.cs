@@ -60,25 +60,26 @@ namespace YoutubePlayer
         public static async Task<T> GetVideoMetaDataAsync<T>(string youtubeUrl, YoutubeDlOptions options,
             IEnumerable<string> schema, YoutubeDlCli cli, CancellationToken cancellationToken = default)
         {
-#if CAN_USE_LOCAL_INSTANCE
-            if (UseLocalInstance)
-            {
-                try
-                {
-                    return await s_LocalYoutubeDl.GetVideoMetaDataAsync<T>(youtubeUrl, options, schema, cli, cancellationToken);
-                }
-                catch (FileNotFoundException e) when (Path.GetFileNameWithoutExtension(e.FileName) == "youtube-dl")
-                {
-                    Debug.LogException(e);
-                    Debug.LogWarning("local youtube-dl does not exist, trying remote server...");
-                }
-                catch (FileNotFoundException e) when (Path.GetFileNameWithoutExtension(e.FileName) == "yt-dlp")
-                {
-                    Debug.LogException(e);
-                    Debug.LogWarning("local yt-dlp does not exist, trying remote server...");
-                }
-            }
-#endif
+//#if CAN_USE_LOCAL_INSTANCE
+//            Debug.LogFormat("로컬 인스턴스 사용 : {0}", UseLocalInstance);
+//            if (UseLocalInstance)
+//            {
+//                try
+//                {
+//                    return await s_LocalYoutubeDl.GetVideoMetaDataAsync<T>(youtubeUrl, options, schema, cli, cancellationToken);
+//                }
+//                catch (FileNotFoundException e) when (Path.GetFileNameWithoutExtension(e.FileName) == "youtube-dl")
+//                {
+//                    Debug.LogException(e);
+//                    Debug.LogWarning("local youtube-dl does not exist, trying remote server...");
+//                }
+//                catch (FileNotFoundException e) when (Path.GetFileNameWithoutExtension(e.FileName) == "yt-dlp")
+//                {
+//                    Debug.LogException(e);
+//                    Debug.LogWarning("local yt-dlp does not exist, trying remote server...");
+//                }
+//            }
+//#endif
             return await s_RemoteYoutubeDl.GetVideoMetaDataAsync<T>(youtubeUrl, options, schema, cli, cancellationToken);
         }
 

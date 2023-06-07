@@ -46,7 +46,7 @@ namespace YoutubePlayer
                     requestUrl += $"&schema={schemaKey}";
                 }
             }
-
+            UnityEngine.Debug.LogFormat("REQUEST : {0}", requestUrl);
             return requestUrl;
         }
     }

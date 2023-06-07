@@ -91,9 +91,15 @@ namespace YoutubePlayer
         {
             Debug.LogFormat("비디오 플레이 테스크 시작 : {0}", videoUrl);
             videoUrl = videoUrl ?? youtubeUrl;
+
+            Debug.LogFormat("URL 검증 : {0}", videoUrl);
             options = options ?? (is360Video ? YoutubeDlOptions.Three60 : YoutubeDlOptions.Default);
             var downloader = GetCli(cli);
+
+            Debug.Log("다운 시작");
             var rawUrl = await GetRawVideoUrlAsync(videoUrl, downloader, options, cancellationToken);
+
+            Debug.Log("다운 완료");
 
             VideoPlayer.source = VideoSource.Url;
 
@@ -101,9 +107,13 @@ namespace YoutubePlayer
             if (VideoPlayer.url != rawUrl)
                 VideoPlayer.url = rawUrl;
 
-            youtubeUrl = videoUrl;
+            Debug.LogFormat("URL 설정 완료 : {0}", rawUrl);
 
+            youtubeUrl = videoUrl;
+            Debug.Log("대기 시작");
             await VideoPlayer.PrepareAsync(cancellationToken);
+
+            Debug.Log("대기 완료");
         }
 
         /// <summary>
