@@ -8,9 +8,9 @@ using UnityEngine.Video;
 
 public class Book_Animation : MonoBehaviour
 {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
     public BookContentsSetting testSetting;
-#endif
+//#endif
     public Button buttonHome;
     public Button buttonPlay;
     public Button buttonRePlay;
@@ -19,11 +19,11 @@ public class Book_Animation : MonoBehaviour
     public GJYoutubePlayer youtubePlayer;
     public VideoPlayer player => youtubePlayer.VideoPlayer;
 
-    protected void Awake()
+    protected void Start()
     {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         testSetting.Apply();
-#endif
+//#endif
         buttonHome.onClick.AddListener(() => GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.AC_004));
         buttonPlay.onClick.AddListener(player.Play);
         buttonRePlay.onClick.AddListener(() =>
@@ -39,6 +39,13 @@ public class Book_Animation : MonoBehaviour
         {
             youtubePlayer.Prev(10f);
         });
+
+        StartCoroutine(WaitFrame());
+    }
+    private IEnumerator WaitFrame()
+    {
+        yield return new WaitForEndOfFrame();
+
         var url = GameManager.Instance.GetCurrentBook().GetURLData();
         if (string.IsNullOrEmpty(url.animationURL))
             Debug.LogWarning("등록되지 않은 유투브 링크 입니다");
@@ -47,8 +54,18 @@ public class Book_Animation : MonoBehaviour
     }
     public void Play(string url)
     {
+        Debug.LogFormat("@@@@@@@@@@@@@URL : {0}", url);
         if (player.isPlaying)
             player.Stop();
-        youtubePlayer.Play(url);
+        StartCoroutine(Wait(() => youtubePlayer.Play(url)));
+    }
+    IEnumerator Wait(System.Action callback)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Debug.LogFormat("시작 {0}초전..", 3 - i);
+            yield return new WaitForSeconds(1f);
+        }
+        callback?.Invoke();
     }
 }

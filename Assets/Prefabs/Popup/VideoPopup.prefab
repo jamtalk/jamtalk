@@ -403,7 +403,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 49b0f6a0cbd0a844d9d86bebadfed1d4, type: 2}
+  m_Texture: {fileID: 8400000, guid: d044847f451ea864da964c8053cb6ad9, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -947,6 +947,14 @@ PrefabInstance:
       propertyPath: screen
       value: 
       objectReference: {fileID: 2620027122147167669}
+    - target: {fileID: 7918555535236244960, guid: 90b764f0f0b06bb419a053451edfb927, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429425340572091741, guid: 90b764f0f0b06bb419a053451edfb927, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90b764f0f0b06bb419a053451edfb927, type: 3}
 --- !u!224 &2117722471255720778 stripped

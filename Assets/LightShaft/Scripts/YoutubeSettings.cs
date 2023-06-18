@@ -602,35 +602,35 @@ namespace LightShaft.Scripts
             //Temporary fix... 
             //is360 = false;
             //Define render texture size
-            if(videoPlayer != null)
-            {
-                if (videoPlayer.targetTexture != null)
-                {
-                    switch (videoQuality)
-                    {
-                        case YoutubeVideoQuality.STANDARD:
-                            videoPlayer.targetTexture.width = 640;
-                            videoPlayer.targetTexture.height = 360;
-                            break;
-                        case YoutubeVideoQuality.HD:
-                            videoPlayer.targetTexture.width = 1280;
-                            videoPlayer.targetTexture.height = 720;
-                            break;
-                        case YoutubeVideoQuality.FULLHD:
-                            videoPlayer.targetTexture.width = 1920;
-                            videoPlayer.targetTexture.height = 1080;
-                            break;
-                        case YoutubeVideoQuality.UHD1440:
-                            videoPlayer.targetTexture.width = 2560;
-                            videoPlayer.targetTexture.height = 1440;
-                            break;
-                        case YoutubeVideoQuality.UHD2160:
-                            videoPlayer.targetTexture.width = 3840;
-                            videoPlayer.targetTexture.height = 2160;
-                            break;
-                    }
-                }
-            }
+            //if(videoPlayer != null)
+            //{
+            //    if (videoPlayer.targetTexture != null)
+            //    {
+            //        switch (videoQuality)
+            //        {
+            //            case YoutubeVideoQuality.STANDARD:
+            //                videoPlayer.targetTexture.width = 640;
+            //                videoPlayer.targetTexture.height = 360;
+            //                break;
+            //            case YoutubeVideoQuality.HD:
+            //                videoPlayer.targetTexture.width = 1280;
+            //                videoPlayer.targetTexture.height = 720;
+            //                break;
+            //            case YoutubeVideoQuality.FULLHD:
+            //                videoPlayer.targetTexture.width = 1920;
+            //                videoPlayer.targetTexture.height = 1080;
+            //                break;
+            //            case YoutubeVideoQuality.UHD1440:
+            //                videoPlayer.targetTexture.width = 2560;
+            //                videoPlayer.targetTexture.height = 1440;
+            //                break;
+            //            case YoutubeVideoQuality.UHD2160:
+            //                videoPlayer.targetTexture.width = 3840;
+            //                videoPlayer.targetTexture.height = 2160;
+            //                break;
+            //        }
+            //    }
+            //}
             
 
             if (playUsingInternalDevicePlayer)
@@ -1722,11 +1722,11 @@ namespace LightShaft.Scripts
             HideLoading();
 
             waitAudioSeek = true;
-            if (is360 || videoPlayer.targetTexture != null)
-            {
-                videoPlayer.targetTexture.width = (int)videoPlayer.width;
-                videoPlayer.targetTexture.height = (int)videoPlayer.height;
-            }
+            //if (is360 || videoPlayer.targetTexture != null)
+            //{
+            //    videoPlayer.targetTexture.width = (int)videoPlayer.width;
+            //    videoPlayer.targetTexture.height = (int)videoPlayer.height;
+            //}
            
 
             if (videoQuality != YoutubeVideoQuality.STANDARD)
