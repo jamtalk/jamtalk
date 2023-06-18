@@ -1,24 +1,36 @@
+using LightShaft.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using YoutubeLight;
 
 namespace GJGameLibrary.Util.Youtube
 {
     public class GJYoutubePlayer : MonoBehaviour
     {
+        private Action loading;
         [SerializeField] private RawImage screen;
-        public YoutubePlayer.YoutubePlayer player;
-        public VideoPlayer VideoPlayer => player.VideoPlayer;
+        public YoutubePlayer player;
+        public YoutubeVideoEvents events;
+        public VideoPlayer VideoPlayer => player.videoPlayer;
 
-        public async void Play(string url)
+        public void Play(string url)
         {
             screen.color = Color.black;
-            var loading = PopupManager.Instance.ShowLoading();
-            await player.PlayVideoAsync(url);
+            player.Play(url);
+            loading = PopupManager.Instance.ShowLoading();
+            events.OnVideoReadyToStart.AddListener(OnStartVideo);
+        }
+        private void OnStartVideo()
+        {
             screen.color = Color.white;
             loading?.Invoke();
+            events.OnVideoReadyToStart.RemoveListener(OnStartVideo);
         }
         public void Stop()
         {
