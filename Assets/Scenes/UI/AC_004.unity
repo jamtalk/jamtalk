@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 3
+  withLoading: 0
 --- !u!222 &113167293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1070,6 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 78
+  withLoading: 1
 --- !u!1 &727182254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 79
+  withLoading: 1
 --- !u!1 &973957122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,6 +3020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 80
+  withLoading: 1
 --- !u!1 &1458548703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3230,6 +3234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 81
+  withLoading: 1
 --- !u!1 &1524441894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,6 +3520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 82
+  withLoading: 1
 --- !u!1 &1627420697
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,6 +4098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 83
+  withLoading: 1
 --- !u!1 &1988889613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4418,3 +4425,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 3
+  withLoading: 0

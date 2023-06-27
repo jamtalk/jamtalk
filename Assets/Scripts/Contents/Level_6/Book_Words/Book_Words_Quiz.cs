@@ -20,10 +20,10 @@ public class Book_Words_Quiz : SingleAnswerContents<BookContentsSetting, BookWor
     protected override bool isGuidence => false;
 
     protected override eContents contents => eContents.Book_Words;
-    protected override void Awake()
+    protected override void OnAwake()
     {
         isGuide = false;
-        base.Awake();
+        base.OnAwake();
         buttonQuestionAudio.onClick.AddListener(() =>
         {
             audioPlayer.Play(currentQuestion.correct.value);

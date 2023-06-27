@@ -94,9 +94,9 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
         ShowQuestion();
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         sources = GetSentance();
         if(showQuestionOnAwake)
             ShowQuestion();

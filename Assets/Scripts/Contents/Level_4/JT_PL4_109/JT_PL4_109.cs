@@ -95,9 +95,9 @@ public class JT_PL4_109 : BaseContents<DigraphsContentsSetting>
         }
         MakeQuestion();
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         MakeQuestion();
     }

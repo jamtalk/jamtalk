@@ -31,6 +31,8 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
     protected TValue[] _correctsTarget = null;
     protected abstract TValue[] correctsTarget { get; }
 
+    protected bool isFailed { get; private set; } = false;
+
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
@@ -60,13 +62,17 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
         }
     }
     protected abstract string GetValue();
-    protected override void Awake()
+    protected override void OnAwake()
     {
         board.ResizeBoard(()=>
         {
-            base.Awake();
+            base.OnAwake();
             buttonSound.onClick.AddListener(PlaySound);
-            scoreBoard.onFailed += ShowResult;
+            scoreBoard.onFailed += () =>
+            {
+                isFailed = true;
+                ShowResult();
+            };
 
             questions = GetQuestion();
 
@@ -105,14 +111,15 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
         if(correctsTarget.Length <board.size)
         {
             for (int i = 0; i < board.size; i++)
-                corrects.Add(correctsTarget[i%board.size]);
+            {
+                corrects.Add(correctsTarget[i%correctsTarget.Length]);
+            }
         }
         else
         {
             corrects = correctsTarget.OrderBy(x => Random.Range(0f, 100f)).Take(board.size).ToList();
         }
         this.corrects = corrects.OrderBy(x => Random.Range(0f, 100f)).ToArray();
-        //???? ?????? ????
         var startPosX = Random.Range(0, board.size);
         var startPosY = Random.Range(0, board.size);
         var correctpos = new List<int>();
@@ -123,23 +130,23 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
                 var type = Random.Range(0, 3);
                 switch (type)
                 {
-                    case 0: //??????
+                    case 0: 
                         var _startPos = startPosX;
                         for (int i = 0; i < board.size; i++)
                         {
                             correctpos.Add(board.size * i + _startPos);
 
                             if (startPosX == 0)
-                                _startPos += 1;     //?????? ??????
+                                _startPos += 1;     
                             else
-                                _startPos -= 1;     //?????? ??????
+                                _startPos -= 1;     
                         }
                         break;
-                    case 1: //????
+                    case 1: 
                         for (int i = 0; i < board.size; i++)
                             correctpos.Add(board.size * i + startPosX);
                         break;
-                    case 2: //????
+                    case 2: 
                         for (int i = 0; i < board.size; i++)
                             correctpos.Add(i);
                         break;
@@ -175,8 +182,9 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
     {
         if (currentIndex == 0)
             return eGameResult.Fail;
-        //else if (board.GetBingoCount() < BingoCount)
-        else if( bingoCount < BingoCount)
+        else if (isFailed)
+            return eGameResult.Fail;
+        else if (bingoCount < BingoCount)
             return eGameResult.Success;
         else
             return eGameResult.Success;
@@ -236,13 +244,11 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
 
     protected override void ShowResult()
     {
-        Debug.Log("showResult");
         ShowBingo(() =>
         {
             if (isGuide)
             {
-                EndGuidnce();
-                
+                EndGuidnce();   
             }
             else
             {

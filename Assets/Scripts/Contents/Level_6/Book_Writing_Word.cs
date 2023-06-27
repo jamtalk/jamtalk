@@ -22,10 +22,10 @@ public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_
     protected override bool showQuestionOnAwake => false;
     protected override bool showPopupOnEnd => false;
     protected override bool includeExitButton => false;
-    protected override void Awake()
+    protected override void OnAwake()
     {
         isGuide = false;
-        base.Awake();
+        base.OnAwake();
         StartQuestion();
         button.onClick.AddListener(()=>PlayCorrect());
     }

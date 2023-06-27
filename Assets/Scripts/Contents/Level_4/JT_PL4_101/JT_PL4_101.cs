@@ -46,9 +46,9 @@ public class JT_PL4_101 : BaseContents<DigraphsContentsSetting>
             isNext = false;
         }
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         for (int i = 0; i < anis.Length; i++)
             anis[i].SetBool("pacMan", true);

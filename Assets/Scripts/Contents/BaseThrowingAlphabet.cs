@@ -60,7 +60,6 @@ public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswer
         audioPlayer.Stop();
         base.EndGuidnce();
 
-        questions = MakeQuestion();
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }

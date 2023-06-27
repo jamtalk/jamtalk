@@ -53,9 +53,9 @@ public abstract class BaseMatchImage<TTestSetting,TElement> : BaseContents<TTest
         while (!isNext) yield return null;
         isNext = false;
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         GetWords();
     }
 

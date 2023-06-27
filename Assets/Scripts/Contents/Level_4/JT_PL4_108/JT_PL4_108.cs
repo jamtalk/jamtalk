@@ -67,7 +67,7 @@ public class JT_PL4_108 : BaseContents<DigraphsContentsSetting>
         MakeQuestions();
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         MakeQuestions();
     }
@@ -78,7 +78,7 @@ public class JT_PL4_108 : BaseContents<DigraphsContentsSetting>
         {
             currentImage.gameObject.SetActive(true);
             Resize();
-            base.Awake();
+            base.OnAwake();
             questions = GameManager.Instance.GetDigraphs()
                 .OrderBy(x => Random.Range(0f, 100f))
                 .Take(questionCount)

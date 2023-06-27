@@ -61,9 +61,9 @@ public class JT_PL1_108 : MultiAnswerContents<AlphabetContentsSetting,Question10
         base.AddAnswer(answer);
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         buttonAudio.onClick.AddListener(() =>
         {
             finger.SetActive(false);

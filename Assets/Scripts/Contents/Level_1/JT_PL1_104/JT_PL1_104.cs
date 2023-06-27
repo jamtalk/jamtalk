@@ -28,10 +28,10 @@ public class JT_PL1_104 : BaseContents<AlphabetContentsSetting>
         EndGuidnce();
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
-        base.Awake();
+        base.OnAwake();
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         drawAlphabet.onCompleted += ()=>
         {

@@ -95,9 +95,9 @@ public class JT_PL1_115 : BaseContents<AlphabetContentsSetting>
         StartCoroutine(StartContent());
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         if(GameManager.Instance.currentAlphabet > eAlphabet.B)
         {

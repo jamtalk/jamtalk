@@ -26,9 +26,9 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     protected override bool includeExitButton => false;
     protected override bool isGuidence => false;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         button.onClick.AddListener(PlayCorrect);
         sttButton.onSTT += OnSTT;
         currentPage = 1;

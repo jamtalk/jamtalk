@@ -66,9 +66,9 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
         progressBar.transform.localScale = new Vector3(0f, 1f, 1f);
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         MakeQuestion();
     }
 

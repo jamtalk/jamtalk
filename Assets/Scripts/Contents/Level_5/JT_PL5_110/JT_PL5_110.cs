@@ -51,9 +51,9 @@ public class JT_PL5_110 : MultiAnswerContents<DigraphsContentsSetting,Question5_
         }
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         //buttonRocket.onClick.AddListener(PlayCurrentWord);
         buttonRocket.onClick.AddListener(() =>

@@ -33,10 +33,15 @@ public class JT_PL1_117 : BingoContents<AlphabetContentsSetting,AlphabetData, Bi
                 //    .ToArray();
 
                 var privious = GameManager.Instance.alphabets
-                    .Where(x => x != target[0]).Where(x => x != target[1])
+                    .Where(x=>x< GameManager.Instance.currentAlphabet)
                     .OrderBy(x => Random.Range(0, 100))
                     .Take(board.size - 2);
                 target = target.Union(privious).ToArray();
+                if (target.Length < board.size)
+                    target = target.Union(target
+                        .OrderBy(x => Random.Range(0, 100))
+                        .Take(board.size - target.Length))
+                        .ToArray();
 
                 _correctsTarget = target
                     .Select(x => GameManager.Instance.GetResources(x))

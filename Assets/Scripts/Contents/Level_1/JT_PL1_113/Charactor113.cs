@@ -61,6 +61,7 @@ public class Charactor113 : MonoBehaviour
         product.gameObject.SetActive(false);
         eventSystem.enabled = false;
         SetStartPosition();
+        anim.Play();
         var tween = rt.DOAnchorPosX(middlePosition, 1f);
         tween.SetEase(Ease.OutCubic);
         tween.onComplete += () =>
@@ -80,6 +81,7 @@ public class Charactor113 : MonoBehaviour
     {
         finger.SetActive(false);
         eventSystem.enabled = false;
+        anim.Play();
         var tween = rt.DOAnchorPosX(endPosition, 4f);
         tween.onComplete += () =>
         {

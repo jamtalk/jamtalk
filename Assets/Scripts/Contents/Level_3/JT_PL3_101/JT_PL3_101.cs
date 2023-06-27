@@ -75,9 +75,9 @@ public class JT_PL3_101 : BaseContents<DigraphsContentsSetting>
         resultColorImage.color = color;
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         SetColors(GameManager.Instance.currentDigrpahs);
         dragElement.onDrop += OnDrop;
     }

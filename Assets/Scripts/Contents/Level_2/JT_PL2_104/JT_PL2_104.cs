@@ -89,9 +89,9 @@ public class JT_PL2_104 : SingleAnswerContents<AlphabetContentsSetting, Question
     }
 
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         textPot.text = GameManager.Instance.currentAlphabet.ToString().ToLower();
         SetButtonAddListener(charactorButtons);

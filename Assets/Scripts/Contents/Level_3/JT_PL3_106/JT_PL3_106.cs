@@ -56,9 +56,9 @@ public class JT_PL3_106 : SingleAnswerContents<AlphabetContentsSetting, Question
         isNext = false;
 
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         currentButton.onClick.AddListener(() =>
         {
             bag.MouseSpeak();

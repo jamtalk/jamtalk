@@ -57,9 +57,9 @@ public class JT_PL4_107 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         buttonCharactor.onClick.AddListener(() => OnClickCharactor());
     }

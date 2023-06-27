@@ -95,9 +95,9 @@ public class JT_PL2_103 : BaseContents<AlphabetContentsSetting>
         StartContents();
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         buttonCurrent.onClick.AddListener(OnClickCurrent);
         shortButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_short));
         longButton.onClick.AddListener(() => audioPlayer.Play(GameManager.Instance.schema.GetVowelAudio(questions[index].Vowel).phanics_long));

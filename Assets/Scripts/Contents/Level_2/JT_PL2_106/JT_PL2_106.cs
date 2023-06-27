@@ -96,9 +96,9 @@ public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
             item.isOn = false;
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {          
-        base.Awake();
+        base.OnAwake();
         Init();
         rouletteEffect.gameObject.SetActive(false);
         shortButton.interactable = false;

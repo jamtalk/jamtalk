@@ -31,6 +31,7 @@ public class WordElement404 : MonoBehaviour
         isOpen = true;
         closeImage.gameObject.SetActive(false);
         openImage.gameObject.SetActive(true);
+        textImage.gameObject.SetActive(true);
     }
     public void Close()
     {

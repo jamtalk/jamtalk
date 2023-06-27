@@ -23,9 +23,9 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
 
     protected override bool includeExitButton => false;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         datas = GameManager.Instance.GetCurrentBook().conversations.OrderBy(x => x.priority).ToArray();
         ShowQuestion(0);
         buttonSTT.onClick.AddListener(RecordAction);

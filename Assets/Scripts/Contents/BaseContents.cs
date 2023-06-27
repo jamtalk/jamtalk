@@ -13,10 +13,10 @@ using Random = UnityEngine.Random;
 public abstract class BaseContents<TTestSetting> : MonoBehaviour
     where TTestSetting:ContentsTestSetting
 {
-    [Space(20)]
-#if UNITY_EDITOR
-    [SerializeField] private TTestSetting testSetting;
-#endif
+//#if UNITY_EDITOR
+//    [Space(20)]
+//    [SerializeField] private TTestSetting testSetting;
+//#endif
     [Space(20)]
     [SerializeField] private GameObject popupResult;
 
@@ -75,6 +75,8 @@ public abstract class BaseContents<TTestSetting> : MonoBehaviour
         if (showPopupOnEnd)
             ShowResultPopup();
         onEndGame?.Invoke();
+
+        ResourceWordsElement.ClearSprites();
     }
 
     protected virtual void ShowResultPopup()
@@ -97,7 +99,7 @@ public abstract class BaseContents<TTestSetting> : MonoBehaviour
             GJSceneLoader.Instance.LoadScene(GJSceneLoader.Instance.currentScene + 1);
             GJSceneLoader.Instance.LoadScene(NextScene);
         });
-
+        Debug.Log(GetResult());
         result.SetResult(GetResult());
         RequestManager.Instance.Request(param, response =>
         {
@@ -117,16 +119,24 @@ public abstract class BaseContents<TTestSetting> : MonoBehaviour
         GetCorrectScore(),
         GetDuration()
         );
+
     protected virtual void Awake()
     {
+        Debug.LogFormat("[::{0}::] <b>Awake</b>", GetType().Name);
 #if UNITY_EDITOR
-        testSetting.Apply();
+        Invoke("OnAwake", 1f);
+#else
+        SceneLoadingPopup.onLoaded += OnAwake;
 #endif
+    }
+    protected virtual void OnAwake()
+    {
+        Debug.LogFormat("[::{0}::] <b>OnAwake</b>", GetType().Name);
         startTime = DateTime.Now;
         if (includeExitButton)
             Instantiate(exitButton, transform);
 
-        if(isGuidence)
+        if (isGuidence)
             ShowGuidnce();
     }
     protected virtual void ShowGuidnce()
@@ -177,27 +187,22 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }
-    protected override void ShowGuidnce()
-    {
-        base.ShowGuidnce();
-
-        //Debug.Log(GameManager.Instance.currentAlphabet);
-        //questions = MakeQuestion();
-        //currentQuestionIndex = 0;
-        //ShowQuestion(questions[currentQuestionIndex]);
-    }
-
     protected override void Awake()
+    {
+        base.Awake();
+        questions = MakeQuestion();
+
+    }
+    protected override void OnAwake()
     {
         if (showQuestionOnAwake)
             StartQuestion();
 
-        base.Awake();
+        base.OnAwake();
     }
     public void StartQuestion()
     {
         Debug.Log("문제 시작");
-        questions = MakeQuestion();
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }
@@ -387,9 +392,9 @@ public abstract class BaseBookContents : BaseContents<BookContentsSetting>
     protected sealed override bool showPopupOnEnd => base.showPopupOnEnd;
     protected sealed override bool showQuestionOnAwake => base.showQuestionOnAwake;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         for(int i= 0;i < contentsRunners.Length-1; i++)
             contentsRunners[i].SetNext(contentsRunners[i + 1]);
         contentsRunners.Last().SetLast(ShowResult);

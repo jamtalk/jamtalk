@@ -193,9 +193,29 @@ public class AlphabetData
 {
     public eAlphabet Alphabet { get; private set; }
     public bool IsVowel => Vowels == null || Vowels.Length == 0;
-    public AlphabetSentanceData[] AlphabetSentances => GameManager.Instance.schema.data.alphabetSentaces.Where(x => x.Key == Alphabet).ToArray();
-    public AlphabetWordsData[] Words => GameManager.Instance.schema.data.alphabetWords.Where(x => x.Key == Alphabet).ToArray();
-    public VowelWordsData[] Vowels => GameManager.Instance.schema.data.vowelWords.Where(x => x.Vowel == Alphabet).ToArray();
+    public AlphabetSentanceData[] AlphabetSentances
+    {
+        get
+        {
+            var data = GameManager.Instance.schema.data;
+            return data.alphabetSentaces.Where(x => x.Key == Alphabet).ToArray();
+        }
+    }
+    public AlphabetWordsData[] Words {
+        get
+        {
+            var data = GameManager.Instance.schema.data;
+            return data.alphabetWords.Where(x => x.Key == Alphabet).ToArray();
+        }
+}
+    public VowelWordsData[] Vowels
+    {
+        get
+        {
+            var data = GameManager.Instance.schema.data;
+            return data.vowelWords.Where(x => x.Vowel == Alphabet).ToArray();
+        }
+    }
 
     public AlphabetAudioData AudioData => GameManager.Instance.schema.GetAlphabetAudio(Alphabet);
     public VowelAudioData VowelAudioData => GameManager.Instance.schema.GetVowelAudio(Alphabet);

@@ -30,9 +30,9 @@ public class JT_PL5_101 : BaseContents<DigraphsContentsSetting>
 
     
     private eAlphabet[] eAlphabets = { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         foreach (var item in anotherButtons)
             item.button.onClick.AddListener(() => AddListener(item));
         foreach (var item in alphabetImages)

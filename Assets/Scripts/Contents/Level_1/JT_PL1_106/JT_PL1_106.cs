@@ -59,16 +59,13 @@ public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question
                 });
             });
 
-            while (!isNext) yield return null;
+        while (!isNext) yield return null;
         //}
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
     protected override List<Question106> MakeQuestion()
     {
+        var time = DateTime.Now;
         var questions = new List<Question106>();
         var targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         var correctWord = targets
@@ -79,17 +76,30 @@ public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question
             .OrderBy(x => Random.Range(0f,100f))
             .Take(QuestionCount)
             .ToArray();
+
+        Debug.LogFormat("정답지 뽑기 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
+        time = DateTime.Now;
+
+        var tmp = GameManager.Instance.alphabets
+            .Where(x => x != GameManager.Instance.currentAlphabet)
+            .Where(x => x != GameManager.Instance.currentAlphabet + 1)
+            .OrderBy(x => Random.Range(0f, 100f)).ToArray()
+            .Take(2)
+            .SelectMany(x => GameManager.Instance.GetResources(x).Words)
+            .OrderBy(x => Random.Range(0f, 100f)).ToArray()
+            .ToArray();
+
+        Debug.LogFormat("오답지 뽑기 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
+        time = DateTime.Now;
         for (int i = 0; i < QuestionCount; i++)
         {
-            var tmp = GameManager.Instance.alphabets
-                .Where(x=>x!=GameManager.Instance.currentAlphabet)
-                .Where(x => x != GameManager.Instance.currentAlphabet+1)
-                .SelectMany(x=>GameManager.Instance.GetResources(x).Words)
+            var incorrects = tmp
                 .OrderBy(x => Random.Range(0f, 100f)).ToArray()
                 .Take(4)
                 .ToArray();
-            questions.Add(new Question106(correctWord[i], tmp));
+            questions.Add(new Question106(correctWord[i], incorrects));
         }
+        Debug.LogFormat("문제 출제 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
         return questions;
     }
 
@@ -183,8 +193,8 @@ public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question
 [Serializable]
 public class Question106 : SingleQuestion<AlphabetWordsData>
 {
-    private Sprite spriteCorrect;
-    private Sprite[] spriteQuestions;
+    private Sprite spriteCorrect=>correct.sprite;
+    private Sprite[] spriteQuestions => questions.Select(x => x.sprite).ToArray();
     public Sprite[] SpriteQuestions
     {
         get
@@ -196,7 +206,8 @@ public class Question106 : SingleQuestion<AlphabetWordsData>
     }
     public Question106(AlphabetWordsData correct, AlphabetWordsData[] questions) : base(correct, questions)
     {
-        spriteCorrect = correct.sprite;
-        spriteQuestions = questions.Select(x=>x.sprite).ToArray();
+        SceneLoadingPopup.SpriteLoader.Add(correct.SpriteAsync);
+        for(int i = 0;i < questions.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(questions[i].SpriteAsync);
     }
 }

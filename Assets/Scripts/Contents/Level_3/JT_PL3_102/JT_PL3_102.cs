@@ -67,9 +67,9 @@ public class JT_PL3_102 : MultiAnswerContents<AlphabetContentsSetting, Question3
         spatulaImage.gameObject.SetActive(false);
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         foreach (var item in pancakes)
         {
             item.onFirst += () => audioPlayer.Play(item.data.audio.phanics);

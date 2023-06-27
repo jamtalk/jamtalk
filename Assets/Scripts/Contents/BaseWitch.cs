@@ -63,9 +63,9 @@ public abstract class BaseWitch<TContentsSetting,TElement> : SingleAnswerContent
         //}
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         var button = prefabMark.GetComponent<Button>();
         button.onClick.AddListener(() => Speak());

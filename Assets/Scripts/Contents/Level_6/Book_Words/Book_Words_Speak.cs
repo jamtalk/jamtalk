@@ -19,10 +19,10 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     protected override bool showPopupOnEnd => false;
     protected override bool showQuestionOnAwake => false;
     protected override eContents contents => eContents.Book_Words;
-    protected override void Awake()
+    protected override void OnAwake()
     {
         isGuide = false;
-        base.Awake();
+        base.OnAwake();
         sttButton.onSTT += OnSTT;
         button.onClick.AddListener(() =>
         {

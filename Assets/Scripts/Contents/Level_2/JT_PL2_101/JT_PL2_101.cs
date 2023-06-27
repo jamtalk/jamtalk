@@ -71,9 +71,9 @@ public class JT_PL2_101 : BaseContents<AlphabetContentsSetting>
         guideFinger.gameObject.SetActive(false);
 
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         Init();
     }
 

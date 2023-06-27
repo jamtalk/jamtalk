@@ -58,9 +58,9 @@ public class JT_PL2_105 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {   
-        base.Awake();
+        base.OnAwake();
 
         var charButton = astronaut.GetComponent<Button>();
         charButton.onClick.AddListener(() => Speak());

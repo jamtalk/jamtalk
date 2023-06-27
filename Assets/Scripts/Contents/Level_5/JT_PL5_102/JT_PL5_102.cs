@@ -37,9 +37,9 @@ public class JT_PL5_102 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         buttonSloting.onClick.AddListener(OnClickSloting);
     }
 

@@ -39,9 +39,9 @@ public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
         ShowQuestion(0f);
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         value = question;
         buttonSTT.onClick.AddListener(RecordAction);

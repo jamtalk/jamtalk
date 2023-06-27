@@ -65,9 +65,9 @@ public class JT_PL1_109 : BaseContents<AlphabetContentsSetting>
 
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         MakeQuestion();
 

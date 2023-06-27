@@ -96,9 +96,9 @@ public class JT_PL3_104 : SingleAnswerContents<AlphabetContentsSetting, Question
         while (!isNext) yield return null;
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         textPot.text = GameManager.Instance.currentDigrpahs.ToString().ToLower();
         SetButtonAddListener(charactors);

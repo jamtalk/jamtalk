@@ -50,9 +50,9 @@ public class JT_PL4_106 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         charactorButton.button.onClick.AddListener(() =>
         {
             audioPlayer.Play(currentQuestion.correct.clip);

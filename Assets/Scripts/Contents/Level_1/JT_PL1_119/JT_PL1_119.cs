@@ -52,9 +52,9 @@ public class JT_PL1_119 : SingleAnswerContents<AlphabetContentsSetting, Question
     }
 
     protected override eContents contents => eContents.JT_PL1_119;
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         for (int i = 0; i < buttonSound.Length; i++)
             buttonSound[i].onClick.AddListener(() =>
             {

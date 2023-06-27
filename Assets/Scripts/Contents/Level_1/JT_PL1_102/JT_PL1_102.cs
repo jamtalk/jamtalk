@@ -10,7 +10,22 @@ public class JT_PL1_102 : BaseContents<AlphabetContentsSetting>
     public int ClickCount => 3;
     public int currentClickCount = 0;
     protected override bool CheckOver() => currentClickCount == ClickCount;
-    private int currentIndex;
+    private int _index;
+    private int currentIndex
+    {
+        get => _index;
+        set
+        {
+            _index = value;
+            if (value < targets.Length)
+            {
+                act = GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2;
+                phanics = GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics;
+            }
+        }
+    }
+    private string act;
+    private string phanics;
     protected override int GetTotalScore() => 1;
     public Image imageAlphabet;
     public Button buttonEgg;
@@ -40,15 +55,15 @@ public class JT_PL1_102 : BaseContents<AlphabetContentsSetting>
             });
         });
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         //ShowGuidnce();
+        targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         currentIndex = 0;
         egg.onBroken += OnBorken;
         egg.onbreaking += () => imageAlphabet.gameObject.SetActive(true);
         buttonEgg.onClick.AddListener(OnClickEgg);
-        targets = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };
         Init(targets[currentIndex]);
     }
     protected void Init(eAlphabet value)
@@ -65,7 +80,7 @@ public class JT_PL1_102 : BaseContents<AlphabetContentsSetting>
     private void OnBorken()
     {
         imageAlphabet.gameObject.SetActive(true);
-        audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).act2,()=>
+        audioPlayer.Play(act,()=>
         {
             guidePopup.gameObject.SetActive(false);
 
@@ -82,7 +97,7 @@ public class JT_PL1_102 : BaseContents<AlphabetContentsSetting>
     }
     private void OnClickEgg()
     {
-        audioPlayer.Play(GameManager.Instance.schema.GetAlphabetAudio(targets[currentIndex]).phanics);
+        audioPlayer.Play(phanics);
 
         currentClickCount += 1;
         if (CheckOver())

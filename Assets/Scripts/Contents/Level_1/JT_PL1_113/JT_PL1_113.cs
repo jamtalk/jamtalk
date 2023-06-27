@@ -43,9 +43,9 @@ public class JT_PL1_113 : SingleAnswerContents<AlphabetContentsSetting, Question
             isGuideStart = false;
         //}
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         for(int i = 0;i < charactors.Length; i++)
         {
             AddCharactorListener(charactors[i]);

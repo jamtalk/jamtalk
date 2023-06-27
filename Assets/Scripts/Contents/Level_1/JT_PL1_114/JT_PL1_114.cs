@@ -43,9 +43,9 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
         });
 
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         ship.button.onClick.AddListener(() =>
         {
             if (finger != null)

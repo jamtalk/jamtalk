@@ -31,7 +31,12 @@ public class AudioClipManager : MonoSingleton<AudioClipManager>
     private IEnumerator LoadClip(string key, Action<AudioClip> callback)
     {
         var op = Addressables.LoadAssetAsync<AudioClip>(key);
-        while (!op.IsDone) { yield return null; }
+
+        while (!op.IsDone)
+        {
+            yield return op;
+        }
+
         if (op.Status==UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
         {
             Debug.LogFormat("{0} : {1} (NEW)", key, op.Result);

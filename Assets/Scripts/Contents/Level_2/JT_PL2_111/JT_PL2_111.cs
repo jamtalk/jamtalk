@@ -35,9 +35,9 @@ public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
     protected override int GetTotalScore() => QuestionCount;
     protected override bool isGuidence => false;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         //recorder.OnRecord += (value) =>
         //{

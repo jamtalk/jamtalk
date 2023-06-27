@@ -10,6 +10,7 @@ using GJGameLibrary.DesignPattern;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 [CreateAssetMenu(fileName = "ResourceSchema.asset", menuName = "Create DB/ResourceSchema")]
 public class ResourceSchema : ScriptableObject
@@ -19,15 +20,17 @@ public class ResourceSchema : ScriptableObject
     [SerializeField]
     private TextAsset bookJson;
     public AudioClip correctSound;
-    //private ResourceData _data = null;
+    private ResourceData _data = null;
     public ResourceData data
     {
         get
         {
-            return JObject.Parse(orizinal.text).ToObject<ResourceData>();
+            if (_data == null)
+                _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
+            return _data;
         }
     }
-    //private BookMetaData[] _bookData = null;
+    private BookMetaData[] _bookData = null;
     public BookMetaData[] bookData
     {
         get
@@ -150,10 +153,28 @@ public abstract class ResourceElement
 }
 public abstract class ResourceWordsElement : ResourceElement
 {
+    private static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
     public string act;
     public string clip;
     protected abstract eAtlasType atalsType { get; }
-    public Sprite sprite => Addressables.LoadAssetAsync<Sprite>(key).WaitForCompletion();
+    public Sprite sprite
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(key))
+                return null;
+
+            if (!sprites.ContainsKey(key))
+                sprites.Add(key, SpriteAsync.WaitForCompletion());
+            return sprites[key];
+        }
+    }
+    public AsyncOperationHandle<Sprite> SpriteAsync => Addressables.LoadAssetAsync<Sprite>(key);
+    public static void ClearSprites()
+    {
+        sprites.Clear();
+        GC.Collect();
+    }
 }
 #endregion
 

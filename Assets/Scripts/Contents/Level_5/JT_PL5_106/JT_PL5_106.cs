@@ -47,11 +47,11 @@ public class JT_PL5_106 : SingleAnswerContents<AlphabetContentsSetting, Question
         OnDrop(currentQuestion.correct.key.ToLower());
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);
         new Question_PL5_106(GameManager.Instance.schema.data.digraphsWords.ToList().Find(x => x.key.ToLower() == "church"));
-        base.Awake();
+        base.OnAwake();
     }
     protected override List<Question_PL5_106> MakeQuestion()
     {

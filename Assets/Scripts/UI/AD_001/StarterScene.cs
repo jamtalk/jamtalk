@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Collections;
 using GJGameLibrary;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class StarterScene : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class StarterScene : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         buttonStart.onClick.AddListener(() =>
         {
             if (PlayerPrefs.HasKey("PW"))
@@ -37,8 +40,10 @@ public class StarterScene : MonoBehaviour
                 {
                     //SignInUI.SignIn(id, pw, provider, uid);
                     GameManager.Instance.SignIn(id, pw, provider, uid);
-                    
-                    GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
+                    var time = DateTime.Now;
+                    var data = GameManager.Instance.schema.data;
+                    Debug.LogFormat("로딩 시간 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
+                    GJSceneLoader.Instance.LoadScene(eSceneName.AD_003,true);
                 });
                 
             }

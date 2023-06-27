@@ -6,9 +6,9 @@ public class JT_PL5_109 : JT_PL4_109
 {
     protected override eContents contents => eContents.JT_PL5_109;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         index = 1;
-        base.Awake();
+        base.OnAwake();
     }
 }

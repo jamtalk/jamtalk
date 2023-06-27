@@ -17,10 +17,10 @@ public class Book_Write_Sentance : BaseMatchSentances<BookContentsSetting,BookSe
     protected override bool isGuidence => false;
     protected override bool showPopupOnEnd => false;
     protected override bool showQuestionOnAwake => false;
-    protected override void Awake()
+    protected override void OnAwake()
     {
         isGuide = false;
-        base.Awake();
+        base.OnAwake();
         button.onClick.AddListener(() => PlayCurrentSentance());
     }
     public void StartQuestion() => ShowQuestion();

@@ -67,9 +67,9 @@ public class JT_PL5_105 : BaseContents<VowelContentsSetting>
         StartCoroutine(ResetElement());
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         MakeQuestion();
     }

@@ -65,9 +65,9 @@ public class JT_PL1_112 : BaseContents<AlphabetContentsSetting>
         MakeQuestion();
     }
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         foreach (var item in drags)
         {

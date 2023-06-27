@@ -58,10 +58,10 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
     }
 
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         ani.SetBool("Eat", true);
-        base.Awake();
+        base.OnAwake();
         currentButton.onClick.AddListener(() =>
         {
             ani.SetBool("Eat", true);

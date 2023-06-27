@@ -49,9 +49,9 @@ public class JT_PL1_111 : MultiAnswerContents<AlphabetContentsSetting, Question1
     }
 
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         buttonRocket.onClick.AddListener(() =>
         {

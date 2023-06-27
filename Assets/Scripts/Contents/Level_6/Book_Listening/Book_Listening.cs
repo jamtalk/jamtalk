@@ -28,10 +28,10 @@ public class Book_Listening : BaseContents<BookContentsSetting>
 
     private int index = 0;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
         Debug.Log("로딩 완료");
-        base.Awake();
+        base.OnAwake();
         Debug.Log("테스트값 설정 완료");
         data = GameManager.Instance.GetCurrentBooks().SelectMany(x=>x.sentances).OrderBy(x=>x.priority).ToArray();
         Debug.Log("데이터 로딩 완료");

@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioSinglePlayer : MonoBehaviour
 {
+    private string clip;
     private AudioSource player => GetComponent<AudioSource>();
     private Coroutine stopRoutine = null;
     private Coroutine overRoutine = null;
@@ -38,13 +39,6 @@ public class AudioSinglePlayer : MonoBehaviour
         }
     }
 
-    void GetClip(string clip)
-    {
-        //clip = "asd";
-        //var temp = GameManager.Instance.GetResources(clip).Alphabet
-
-
-    }
     /// <summary>
     /// invoke로만 delay 호출
     /// </summary>
@@ -53,11 +47,12 @@ public class AudioSinglePlayer : MonoBehaviour
         player.Play();
         //AndroidPluginManager.Instance.PlayTTS("sta");
     }
+
     public void Play(AudioClip clip, float delay)
     {
         if (player.isPlaying)
             Stop();
-        if (clip != null)
+        if(clip != player.clip)
             player.clip = clip;
         //Invoke("Play", delay);
         delayRoutine =  StartCoroutine(DelayRoutine(delay));
@@ -66,44 +61,60 @@ public class AudioSinglePlayer : MonoBehaviour
     
     public void Play(string clip, float delay)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if (clip != this.clip || player.clip ==null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip);
-            }
-            else
-                Play(value, delay);
-        });
+                {
+                    this.clip = clip;
+                    Play(value, delay);
+                }
+            });
+        }
+        else
+            player.Play();
     }
 
     public void Play(AudioClip clip = null)
     {
         if (player.isPlaying)
             Stop();
-        if (clip != null)
+        if (clip != player.clip)
             player.clip = clip;
         player.Play();
     }
     public void Play(string clip)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if (this.clip != clip || player.clip == null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip);
-            }
-            else
-                Play(value);
-        });
+                {
+                    this.clip = clip;
+                    Play(value);
+                }
+            });
+        }
+        else
+            Play(player.clip);
     }
 
     public void Play(AudioClip clip, Action onOver)
@@ -113,19 +124,27 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void Play(string clip, Action onOver)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if (this.clip != clip || player.clip == null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip], onOver);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip], onOver);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip, onOver);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip,onOver);
-            }
-            else
-                Play(value, onOver);
-        });
+                {
+                    this.clip = clip;
+                    Play(value, onOver);
+                }
+            });
+        }
+        else
+            Play(player.clip, onOver);
     }
 
 
@@ -136,19 +155,27 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void Play(float duration, string clip)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if (this.clip != clip || player.clip == null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip);
-            }
-            else
-                Play(duration, value);
-        });
+                {
+                    this.clip = clip;
+                    Play(duration, value);
+                }
+            });
+        }
+        else
+            Play(duration, player.clip);
     }
 
     public void Play(float duration, float delay, AudioClip clip = null)
@@ -158,19 +185,25 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void Play(float duration, float delay, string clip = null)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if(this.clip != clip || player.clip == null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip);
-            }
-            else
-                Play(delay, value);
-        });
+                {
+                    this.clip = clip;
+                    Play(delay, value);
+                }
+            });
+        }
     }
 
     public void Play(float duration, AudioClip clip, Action onOver)
@@ -180,19 +213,25 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void Play(float duration, string clip, Action onOver)
     {
-        AudioClipManager.Instance.GetClip(clip, value =>
+        if(this.clip != clip || player.clip == null)
         {
-            if (value == null)
+            AudioClipManager.Instance.GetClip(clip, value =>
             {
-                var clips = GameManager.Instance.GetClips();
-                if (clips.ContainsKey(clip))
-                    AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                if (value == null)
+                {
+                    var clips = GameManager.Instance.GetClips();
+                    if (clips.ContainsKey(clip))
+                        AndroidPluginManager.Instance.PlayTTS(clips[clip]);
+                    else
+                        AndroidPluginManager.Instance.PlayTTS(clip);
+                }
                 else
-                    AndroidPluginManager.Instance.PlayTTS(clip);
-            }
-            else
-                Play(duration ,value, onOver);
-        });
+                {
+                    this.clip = clip;
+                    Play(duration, value, onOver);
+                }
+            });
+        }
     }
 
     public void PlayIncorrect()
@@ -218,11 +257,8 @@ public class AudioSinglePlayer : MonoBehaviour
     private IEnumerator PlayIncorrectRoutine()
     {
         yield return new WaitForEndOfFrame();
-        Debug.Log(player.isPlaying);
         while(player.isPlaying)
             yield return null;
-        Debug.Log("end while");
-
         var clip = ResourceSchema.GetInCorrectClip();
         Play(clip);
     }

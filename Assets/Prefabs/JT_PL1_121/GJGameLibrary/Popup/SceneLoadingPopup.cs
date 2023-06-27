@@ -2,16 +2,21 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Collections;
+
 public class SceneLoadingPopup : LoadingPopup
 {
     public Image progress;
     public AnimationCharactor[] charactors;
+    public static List<IEnumerator> SpriteLoader = new List<IEnumerator>();
+    public static System.Action onLoaded;
 
-    public void progressbarCharging(float percent)
+    public void progressbarCharging(float progress)
     {
-        if (!progress.gameObject.activeSelf)
-            progress.gameObject.SetActive(true);
+        if (!this.progress.gameObject.activeSelf)
+            this.progress.gameObject.SetActive(true);
 
-        progress.transform.localScale = new Vector3(percent, 1f, 1f);
+        this.progress.fillAmount = progress;
     }
 }

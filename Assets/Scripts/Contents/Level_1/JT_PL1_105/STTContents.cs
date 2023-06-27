@@ -21,9 +21,9 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
     protected override float GetDuration() => (float)(currentQuestionIndex + 1f) / (float)QuestionCount;
     protected override bool isGuidence => false;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         currentQuestionIndex = 0;
 
         for (int i = 0; i < buttonAudio.Length; i++)

@@ -82,9 +82,9 @@ public class JT_PL1_116 : BaseContents<AlphabetContentsSetting>
         selected.Clear();
         PlayWord();
     }
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         for (int i = 0; i < buttonPlayer.Length; i++)
             buttonPlayer[i].onClick.AddListener(() => PlayWord());
         var current = new eAlphabet[] { GameManager.Instance.currentAlphabet, GameManager.Instance.currentAlphabet + 1 };

@@ -59,9 +59,9 @@ public class JT_PL5_104 : MultiAnswerContents<AlphabetContentsSetting, Question5
     }
 
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         buttonRocket.onClick.AddListener(() => PlayCurrentWord());
         buttonRocket.onClick.AddListener(() =>
         {
