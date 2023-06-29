@@ -18,17 +18,40 @@ public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
     protected override eContents contents => eContents.JT_PL1_105;
     private eAlphabet question => GameManager.Instance.currentAlphabet;
     private eAlphabet value;
+    //protected override bool isGuidence => false;
 
     protected override bool CheckOver() => index >= GetTotalScore();
     protected override int GetTotalScore() => Enum.GetNames(typeof(eAlphabet)).ToList().Count;
-    protected override bool isGuidence => false;
     protected int index = 0;
     private eAlphabetType capsLock = eAlphabetType.Upper;
-
+    private System.Action loading;
     protected override IEnumerator ShowGuidnceRoutine()
     {
+        currentImage.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, capsLock, value);
+        PlayAudio();
         yield return base.ShowGuidnceRoutine();
-
+        while (audioPlayer.length == 0) { yield return null; }
+        yield return new WaitForSeconds(audioPlayer.length);
+        guideFinger.gameObject.SetActive(true);
+        bool isOVer = false;
+        guideFinger.DoMove(buttonSTT.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                PlayButtonTween();
+                guideFinger.gameObject.SetActive(false);
+                PlayAudio();
+                isOVer = true;
+            });
+        });
+        while (!isOVer) { yield return null; }
+        Debug.LogFormat("클릭 완료, 대기 {0}초", audioPlayer.length + 1f);
+        yield return new WaitForSeconds(audioPlayer.length + 1f);
+        isOVer = false;
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoClick(() => isOVer = true);
+        while (!isOVer) { yield return null; }
+        StopButtonTween();
         EndGuidnce();
     }
 
@@ -45,17 +68,26 @@ public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
 
         value = question;
         buttonSTT.onClick.AddListener(RecordAction);
-        recorder.onDecibelResult += AddAnswer;
+        recorder.onSTTResult += OnSTTResult;
+        //recorder.onDecibelResult += AddAnswer;
         recorder.onStopRecord += () =>
         {
             StopButtonTween();
             sttButtonBG.gameObject.SetActive(false);
-            AddAnswer(true);
+            loading = PopupManager.Instance.ShowLoading();
+            //AddAnswer(true);
         };
         button.onClick.AddListener(() => PlayAudio());
     }
 
-    
+
+    protected virtual void OnSTTResult(bool success, string result)
+    {
+        AddAnswer(success);
+        loading?.Invoke();
+    }
+
+
 
     private void ShowQuestion(float delay = 3f)
     {
@@ -67,9 +99,8 @@ public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
 
     private void RecordAction()
     {
-        recorder.RecordOrSendSTT(false);
-        var isRecord = !sttButtonBG.gameObject.activeSelf;
-        sttButtonBG.gameObject.SetActive(isRecord);
+        recorder.RecordOrSendSTT();
+        var isRecord = Microphone.IsRecording(recorder.deviceName);
 
         if (isRecord)
             PlayButtonTween();

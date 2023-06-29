@@ -99,6 +99,7 @@ public class VoiceRecorder : MonoBehaviour
         {
             //Debug.Log(response.GetLog());
             var isSTTResult = !string.IsNullOrEmpty(response);
+            Debug.Log("콜백 호출!");
             onSTTResult?.Invoke(isSTTResult, response);
         });
     }   
@@ -122,7 +123,7 @@ public class VoiceRecorder : MonoBehaviour
         onDecibelResult?.Invoke(true);
     }
 
-    private IEnumerator DecibelRoutine()
+    public IEnumerator DecibelRoutine(Action<float> callback = null)
     {
         while (!(Microphone.GetPosition(null) > 0)) { }
 
@@ -135,7 +136,7 @@ public class VoiceRecorder : MonoBehaviour
                 Debug.Log(GetAveragedVolume());
 
                 yield return new WaitForSecondsRealtime(1f);
-
+                callback?.Invoke(GetAveragedVolume());
                 DecibelMeasurement();
                 Stop();
                 break;

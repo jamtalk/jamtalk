@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -16,11 +17,11 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
     private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
     public Text sttResultViewer;
     private Tween buttonTween;
-    protected override bool CheckOver() => currentQuestionIndex == questions.Count - 1;
+    protected override bool CheckOver() => currentQuestionIndex == questions.Count-1;
     protected override int GetTotalScore() => QuestionCount;
     protected override float GetDuration() => (float)(currentQuestionIndex + 1f) / (float)QuestionCount;
-    protected override bool isGuidence => false;
-
+    protected override bool isGuidence => true;
+    private Action loading;
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -39,8 +40,36 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
         recorder.onStopRecord += () =>
         {
             StopButtonTween();
-            recorder.SendSTT();
+            loading = PopupManager.Instance.ShowLoading();
+            //recorder.SendSTT();
         };
+    }
+    protected override IEnumerator ShowGuidnceRoutine()
+    {
+        yield return base.ShowGuidnceRoutine();
+        while (audioPlayer.length == 0) { yield return null; }
+        yield return new WaitForSeconds(audioPlayer.length);
+        guideFinger.gameObject.SetActive(true);
+        bool isOVer = false;
+        guideFinger.DoMove(buttonSTT.transform.position, () =>
+        {
+            guideFinger.DoClick(() =>
+            {
+                PlayButtonTween();
+                guideFinger.gameObject.SetActive(false);
+                audioPlayer.Play(currentQuestion.correct.clip);
+                isOVer = true;
+            });
+        });
+        while (!isOVer) { yield return null; }
+        Debug.LogFormat("클릭 완료, 대기 {0}초", audioPlayer.length + 1f);
+        yield return new WaitForSeconds(audioPlayer.length+1f);
+        isOVer = false;
+        guideFinger.gameObject.SetActive(true);
+        guideFinger.DoClick(() => isOVer = true);
+        while (!isOVer) { yield return null; }
+        StopButtonTween();
+        EndGuidnce();
     }
 
     private void RecordAction()
@@ -69,9 +98,10 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
 
     protected virtual void OnSTTResult(bool success, string result)
     {
+        Debug.Log("콜백 리시브");
+        loading?.Invoke();
         Debug.LogFormat("question lenth : {0}\n currentQuestionIndex : {1}", questions.Count, currentQuestionIndex);
         sttResultViewer.text = result;
-        //if ("hey".Contains(result))
         if (CheckCorrect(result))
         {
             AddAnswer(currentQuestion.correct);

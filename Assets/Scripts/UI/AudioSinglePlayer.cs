@@ -13,7 +13,7 @@ public class AudioSinglePlayer : MonoBehaviour
     private Coroutine overRoutine = null;
     private Coroutine delayRoutine = null;
     private Coroutine incorrectRoutine = null;
-
+    public float length => player.clip == null ? 0f : player.clip.length;
     private void Awake()
     {
         if (player.clip != null && player.playOnAwake)
