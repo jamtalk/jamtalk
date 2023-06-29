@@ -31,7 +31,32 @@ public class JT_PL5_102 : SingleAnswerContents<AlphabetContentsSetting, Question
         isNext = false;
 
 
-        guideFinger.DoClick(() => OnClickSloting());
+        guideFinger.DoClick(() =>
+        {
+            guideFinger.gameObject.SetActive(false);
+            buttonSloting.interactable = false;
+            //eventSystem.enabled = false;
+            image.gameObject.SetActive(false);
+            targetSlot.Sloting(currentQuestion.values, () =>
+            {
+                if (isGuide)
+                {
+                    image.sprite = currentQuestion.correct.sprite;
+                    image.preserveAspect = true;
+                    image.gameObject.SetActive(true);
+                    audioPlayer.Play(currentQuestion.correct.clip, () =>
+                    {
+                        if (isGuide)
+                        {
+                            image.gameObject.SetActive(false);
+                            AddAnswer(currentQuestion.correct);
+                            isNext = true;
+                            buttonSloting.interactable = true;
+                        }
+                    });
+                }
+            });
+        });
         while (!isNext) yield return null;
         isNext = false;
 
@@ -42,7 +67,12 @@ public class JT_PL5_102 : SingleAnswerContents<AlphabetContentsSetting, Question
         base.OnAwake();
         buttonSloting.onClick.AddListener(OnClickSloting);
     }
-
+    protected override void EndGuidnce()
+    {
+        base.EndGuidnce();
+        targetSlot.Kill();
+        buttonSloting.interactable = true;
+    }
     protected override void ShowQuestion(Question5_102 question)
     {
         Clear();
@@ -101,9 +131,9 @@ public class JT_PL5_102 : SingleAnswerContents<AlphabetContentsSetting, Question
     }
     protected void OnClickSloting()
     {
-        Debug.Log("onClick");
         guideFinger.gameObject.SetActive(false);
-        eventSystem.enabled = false;
+        buttonSloting.interactable = false;
+        //eventSystem.enabled = false;
         image.gameObject.SetActive(false);
         targetSlot.Sloting(currentQuestion.values, () =>
         {
@@ -115,6 +145,7 @@ public class JT_PL5_102 : SingleAnswerContents<AlphabetContentsSetting, Question
                 image.gameObject.SetActive(false);
                 AddAnswer(currentQuestion.correct);
                 isNext = true;
+                buttonSloting.interactable = true;
             });
         });
     }

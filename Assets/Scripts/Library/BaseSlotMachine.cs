@@ -10,11 +10,24 @@ public class BaseSlotMachine<TData,TElement> : MonoBehaviour where TElement:Slot
 {
     public GameObject original;
     public RectTransform content;
+    private TweenCallback onDone;
     protected virtual float duration => 5;
     private List<RectTransform> elements = new List<RectTransform>();
+    private Sequence seq=null;
     public virtual void Sloting(TData[] datas, TweenCallback onDone)
     {
-        StartCoroutine(PlaySloting(datas, onDone));
+        this.onDone = onDone;
+        StartCoroutine(PlaySloting(datas));
+    }
+    public void Kill()
+    {
+        Debug.Log("Seq Kill!!");
+        if (seq != null)
+        {
+            seq.Kill();
+            seq = null;
+        }
+        Debug.LogFormat("Seq Kill Result : {0}",seq==null);
     }
     private void CreateElements(int count)
     {
@@ -49,11 +62,12 @@ public class BaseSlotMachine<TData,TElement> : MonoBehaviour where TElement:Slot
         element.sizeDelta = new Vector2(0f, content.rect.height / 2f);
         element.anchoredPosition = Vector2.zero;
     }
-    private IEnumerator PlaySloting(TData[] datas, TweenCallback onDone)
+    private IEnumerator PlaySloting(TData[] datas)
     {
         yield return new WaitForEndOfFrame();
         CreateElements(3);
-        var seq = GetSlotingSequnce(datas);
+        Kill();
+        seq = GetSlotingSequnce(datas);
         seq.SetEase(Ease.InOutCubic);
 
         seq.onComplete += onDone;

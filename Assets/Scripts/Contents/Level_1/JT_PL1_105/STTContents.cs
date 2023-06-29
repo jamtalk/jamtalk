@@ -69,7 +69,6 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
 
     protected virtual void OnSTTResult(bool success, string result)
     {
-
         Debug.LogFormat("question lenth : {0}\n currentQuestionIndex : {1}", questions.Count, currentQuestionIndex);
         sttResultViewer.text = result;
         //if ("hey".Contains(result))
@@ -79,7 +78,7 @@ public abstract class STTContents<TTestSetting,TData,TValueViewer> : SingleAnswe
         }
     }
 
-    protected virtual bool CheckCorrect(string value) => currentQuestion.correct.key.ToLower() == value.ToLower();
+    protected virtual bool CheckCorrect(string value) => true;//currentQuestion.correct.key.ToLower() == value.ToLower();
 
     private void PlayButtonTween()
     {

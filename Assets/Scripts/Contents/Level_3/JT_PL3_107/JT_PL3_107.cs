@@ -6,7 +6,6 @@ using UnityEngine;
 public class JT_PL3_107 : BaseMatchImage<DigraphsContentsSetting,DigraphsWordsData>
 {
     protected override eContents contents => eContents.JT_PL3_107;
-
     protected override void GetWords()
     {
         words = GameManager.Instance.digrpahs
@@ -21,11 +20,12 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsContentsSetting,DigraphsWordsDa
     protected override void PlayAudio(ResourceWordsElement word)
     {
         var data = (DigraphsWordsData)word;
+        Debug.Log(data.clip);
         audioPlayer.Play(data.clip);
     }
 
     protected override void ShowResult()
     {
-        audioPlayer.Play(GameManager.Instance.currentDigrpahs.ToString(), base.ShowResult);
+        audioPlayer.Play(GameManager.Instance.GetDigraphs().First().audio.phanics, base.ShowResult);
     }
 }

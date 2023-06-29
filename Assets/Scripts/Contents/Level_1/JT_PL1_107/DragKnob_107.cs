@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Events;
+
 public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPointerDownHandler
 {
     public DragKnobPoint107 pointKnob;
@@ -15,9 +17,9 @@ public class DragKnob_107 : MonoBehaviour , IDragHandler, IEndDragHandler,IPoint
     public Image line;
     public RectTransform line_rt => line.GetComponent<RectTransform>();
     public RectTransform cover;
-    public event Action onDrop;
-    public Action onIncorrectDrop;
-    public event Action<ResourceWordsElement> onClick;
+    public UnityEvent onDrop;
+    public UnityEvent onIncorrectDrop;
+    public UnityEvent<ResourceWordsElement> onClick;
     public bool intractable = true;
     public bool isConnected = false;
     public ResourceWordsElement data { get; private set; }

@@ -236,6 +236,8 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void PlayIncorrect()
     {
+        clip = null;
+        Debug.Log("사운드 재생 : <color=\"green\">오답!</color>");
         if (incorrectRoutine != null)
         {
             StopCoroutine(incorrectRoutine);
@@ -246,6 +248,8 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void PlayIncorrect(string beforeClip)
     {
+        clip = null;
+        Debug.Log("사운드 재생 : <color=\"red\">오답!</color>");
         if (incorrectRoutine != null)
         {
             StopCoroutine(incorrectRoutine);

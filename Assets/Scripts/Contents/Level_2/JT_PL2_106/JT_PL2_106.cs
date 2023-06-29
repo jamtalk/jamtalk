@@ -94,6 +94,10 @@ public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
         index = 0;
         foreach (var item in currentCount)
             item.isOn = false;
+
+        shortButton.interactable = false;
+        longButton.interactable = false;
+        spinButton.interactable = true;
     }
 
     protected override void OnAwake()
@@ -174,6 +178,7 @@ public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
             });
             shortButton.interactable = false;
             longButton.interactable = false;
+            spinButton.interactable = true;
         }
         else
             audioPlayer.PlayIncorrect();
@@ -182,12 +187,11 @@ public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
 
     private void Spin(TweenCallback callback = null)
     {
+        spinButton.interactable = false;
         if (pointer.activeSelf)
             pointer.SetActive(false);
 
         rouletteEffect.gameObject.SetActive(true);
-        shortButton.interactable = true;
-        longButton.interactable = true;
 
         if (seq != null)
         {
@@ -219,6 +223,8 @@ public class JT_PL2_106 : BaseContents<AlphabetContentsSetting>
             rouletteEffect.gameObject.SetActive(false);
             audioPlayer.Play(textList[currentIndex].data.clip, () =>
             {
+                shortButton.interactable = true;
+                longButton.interactable = true;
                 eventSystem.enabled = true;
             });
         };

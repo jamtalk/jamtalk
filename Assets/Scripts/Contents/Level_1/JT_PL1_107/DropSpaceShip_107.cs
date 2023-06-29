@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,9 +20,9 @@ public class DropSpaceShip_107 : MonoBehaviour, IDragHandler, IEndDragHandler, I
     public RectTransform point;
     public RectTransform line_rt;
     public Image lineImage => line_rt.GetComponent<Image>();
-    public Action<ResourceWordsElement> onClick;
-    public event Action onDrop;
-    public Action onIncorrectDrop;
+    public UnityEvent<ResourceWordsElement> onClick;
+    public UnityEvent onDrop;
+    public UnityEvent onIncorrectDrop;
     public ResourceWordsElement data { get; private set; }
     private void Awake()
     {

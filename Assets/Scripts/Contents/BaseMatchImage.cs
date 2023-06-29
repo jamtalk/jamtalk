@@ -14,7 +14,11 @@ public abstract class BaseMatchImage<TTestSetting,TElement> : BaseContents<TTest
     protected abstract void PlayAudio(ResourceWordsElement word);
     protected override eContents contents => throw new System.NotImplementedException();
     protected override int GetTotalScore() => drops.Length;
-    protected override bool CheckOver() => questionCounts == index;
+    protected override bool CheckOver()
+    {
+        Debug.LogFormat("{0}/{1} 문제 진행 완료", index, questionCounts);
+        return questionCounts == index;
+    }
     protected virtual bool DropCompleted() => !drops.Select(x => x.isConnected).Contains(false);
     protected virtual int questionCounts => 4;
     protected int index = 0;
@@ -71,13 +75,20 @@ public abstract class BaseMatchImage<TTestSetting,TElement> : BaseContents<TTest
             drops[i].Init(words[i]);
             drags[i].Init(words[i]);
 
-            drops[i].onClick += PlayAudio;
-            drags[i].onClick += PlayAudio;
+            drops[i].onClick.RemoveAllListeners();
+            drags[i].onClick.RemoveAllListeners();
+            drops[i].onClick.AddListener(PlayAudio);
+            drags[i].onClick.AddListener(PlayAudio);
 
-            drags[i].onDrop += () => onDrop();
-            drops[i].onDrop += () => onDrop();
-            drags[i].onIncorrectDrop += () => audioPlayer.PlayIncorrect();
-            drops[i].onIncorrectDrop += () => audioPlayer.PlayIncorrect();
+            drops[i].onDrop.RemoveAllListeners();
+            drags[i].onDrop.RemoveAllListeners();
+            drags[i].onDrop.AddListener(onDrop);
+            drops[i].onDrop.AddListener(onDrop);
+
+            drops[i].onIncorrectDrop.RemoveAllListeners();
+            drags[i].onIncorrectDrop.RemoveAllListeners();
+            drags[i].onIncorrectDrop.AddListener(audioPlayer.PlayIncorrect);
+            drops[i].onIncorrectDrop.AddListener(audioPlayer.PlayIncorrect);
         }
     }
 

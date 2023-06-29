@@ -46,8 +46,8 @@ namespace GJGameLibrary
             StartCoroutine(WaitAddressables(() => isAddressabelsInitialized = true));
             loading.progressbarCharging(0f);
             var time = 0f;
-            var maxTime = 3f;
-            var targetTime = withLoading ? maxTime / -1 : maxTime;
+            var maxTime = 1.5f;
+            var targetTime = withLoading ? maxTime / 2f : maxTime;
             while (!op.isDone || time< targetTime  || !isAddressabelsInitialized)
             {
                 yield return new WaitForFixedUpdate();
@@ -95,7 +95,7 @@ namespace GJGameLibrary
 
             if (withLoading)
                 Destroy(loading.gameObject);
-
+            Debug.LogFormat("[::{0}::] 씬 로딩 완료\n로딩화면 여부 : {1}", SceneManager.GetActiveScene().name, withLoading);
             PopupManager.Instance.Clear();
             yield break;
         }

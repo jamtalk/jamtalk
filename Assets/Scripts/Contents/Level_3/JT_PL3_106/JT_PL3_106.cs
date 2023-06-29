@@ -118,7 +118,8 @@ public class JT_PL3_106 : SingleAnswerContents<AlphabetContentsSetting, Question
 
         element.onClickFirst.AddListener(() =>
         {
-            audioPlayer.PlayIncorrect(data.audio.phanics);
+            audioPlayer.Play(data.audio.phanics);
+            //audioPlayer.PlayIncorrect(data.audio.phanics);
         });
 
         element.onClick.AddListener(() =>

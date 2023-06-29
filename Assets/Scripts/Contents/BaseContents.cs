@@ -42,6 +42,8 @@ public abstract class BaseContents<TTestSetting> : MonoBehaviour
     protected virtual bool isGuidence => true;
     protected virtual bool includeExitButton => true;
 
+    private bool isOver = false;
+
     private EventSystem eventSystem => FindObjectOfType<EventSystem>();
 
     private void SetCharactorAnimation(bool isQuestion = true, bool isLoop = false)
@@ -81,6 +83,10 @@ public abstract class BaseContents<TTestSetting> : MonoBehaviour
 
     protected virtual void ShowResultPopup()
     {
+        if (isOver)
+            return;
+
+        isOver = true;
         var result = PopupManager.Instance.Popup<PopupResult>(popupResult);
         result.Init(() =>
         {

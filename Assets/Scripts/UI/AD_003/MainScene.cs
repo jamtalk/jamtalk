@@ -1,6 +1,7 @@
 using GJGameLibrary;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -24,8 +25,12 @@ public class MainScene : UserInfoScene
     public ChildSetting childSettingOrizin;
     private ChildSetting childSetting;
 
+    //테스트용
+    public Dropdown drop;
     protected override void Awake()
     {
+        drop.options = GameManager.Instance.alphabets.Select(x => new Dropdown.OptionData(x.ToString())).ToList();
+        drop.onValueChanged.AddListener(value => GameManager.Instance.currentAlphabet = (eAlphabet)value);
         buttonActivity.onClick.AddListener(() =>
         {
             loading.gameObject.SetActive(true);

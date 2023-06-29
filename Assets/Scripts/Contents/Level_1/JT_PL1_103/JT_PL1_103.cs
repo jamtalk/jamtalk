@@ -50,6 +50,7 @@ public class JT_PL1_103 : BaseContents<AlphabetContentsSetting>
         {
             StopButtonTween();
             sttButtonBG.gameObject.SetActive(false);
+            AddAnswer(true);
         };
         button.onClick.AddListener(() => PlayAudio());
     }
