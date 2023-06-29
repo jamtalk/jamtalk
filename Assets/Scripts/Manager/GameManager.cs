@@ -108,6 +108,8 @@ public class GameManager : MonoSingleton<GameManager>
     public DigraphsWordsData[] GetDigraphs() => GetDigraphs(currentDigrpahs);
     public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
     public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
+    public int[] GetBookNumbers(eBookType type) => schema.GetBookNumbers(type);
+    public int[] GetBookNumbers(eBookType type, int page) => schema.GetBookNumbers(type);
     public BookMetaData GetBookMetaData(eBookType type, int bookNumber,int page) => schema.GetBookData(type, bookNumber,page);
     public BookMetaData[] GetBookMetaDatas(eBookType type, int bookNumber) => schema.GetBookData(type, bookNumber);
     public BookMetaData GetCurrentBook() => GetBookMetaData(currentBook, currentBookNumber,currentPage);
@@ -117,7 +119,9 @@ public class GameManager : MonoSingleton<GameManager>
     public BookWordData[] GetCurrentBookWords() => GetBookWords(currentBook, currentBookNumber, currentPage);
     public BookWordData[] GetIncorrectBookWords() => schema.bookData.Where(x => x.type != currentBook && x.bookNumber != currentBookNumber).SelectMany(x => x.words).ToArray();
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
-    public eAlphabet[] alphabets => Enum.GetNames(typeof(eAlphabet)).Select(x => (eAlphabet)Enum.Parse(typeof(eAlphabet), x)).ToArray();
+    public eAlphabet[] alphabets => GetEnums<eAlphabet>();
+    public T[] GetEnums<T>()  where T:Enum
+        => Enum.GetNames(typeof(T)).Select(x => (T)Enum.Parse(typeof(T), x)).ToArray();
     public eAlphabet[] vowels => new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
     public eDigraphs[] digrpahs => Enum.GetNames(typeof(eDigraphs))
         .Select(x => (eDigraphs)Enum.Parse(typeof(eDigraphs), x))

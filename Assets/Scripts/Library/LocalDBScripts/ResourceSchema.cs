@@ -49,7 +49,8 @@ public class ResourceSchema : ScriptableObject
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
-
+    public int[] GetBookNumbers(eBookType type) => bookData.Where(x => x.type == type).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
+    public int[] GetBookPages(eBookType type, int number) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == number).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
     public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x => x.page).ToArray();
     public BookMetaData GetBookData(eBookType type, int bookNumber, int page) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).Where(x => x.page == page).First();
     public string GetSiteWordsClip(string value)
