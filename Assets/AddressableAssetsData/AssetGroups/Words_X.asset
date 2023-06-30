@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Words_X
+  m_EditorClassIdentifier: 
+  m_GroupName: Words_X
+  m_Data:
+    m_SerializedData: []
+  m_GUID: fe0592a9dff01bc40a1ae69fa8834c4c
+  m_SerializeEntries:
+  - m_GUID: 3f914f1bcc5d37a4d8e2651a44149d5a
+    m_Address: x-ray
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b93bf0127f832924996e69dee6d4d638
+    m_Address: xylophone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2cd931ee71f46f948853bdf062480b5c, type: 2}
+    - {fileID: 11400000, guid: e7ed3a22e845ac74693008212b06f8e5, type: 2}

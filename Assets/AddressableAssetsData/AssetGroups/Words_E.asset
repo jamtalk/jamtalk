@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Words_E
+  m_EditorClassIdentifier: 
+  m_GroupName: Words_E
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3a71cb09e6d93fb4aad0b20858c8a927
+  m_SerializeEntries:
+  - m_GUID: ffb78916f3fa2e04fa62ae1c70f612d4
+    m_Address: exit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95f0dec97719f1443b492e4c8dd987b7
+    m_Address: europe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b873b96315521ea4094c9c42916340c1
+    m_Address: eraser
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c22e5a1df34b13c4b9641dabd2030d39
+    m_Address: envelope
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93ec21bb2e570bd4484b4008a69db613
+    m_Address: elk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fd16aa73cd16a9349b936f3ee7ef642f
+    m_Address: elf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 47ee1e2e6e1fdc5409298039ec7a3839
+    m_Address: elevator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cde934505a5ec264c94e2fb1e37d80de
+    m_Address: elephant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 901c45d8f98204544b7b4bd8f0741d0c
+    m_Address: elbow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 42087a27d2806eb4e8beb41c0f618b16
+    m_Address: eggplant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2639f291ef2db0a42b7041fcdd38ff75
+    m_Address: egg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 977607bfda13e194ab935cdb9c021296
+    m_Address: earth
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 259eef80ee22b8e4b893a8c3c2f6d9b9, type: 2}
+    - {fileID: 11400000, guid: ff55c6c4b14a6b24cadd3ab2131d3d4e, type: 2}
