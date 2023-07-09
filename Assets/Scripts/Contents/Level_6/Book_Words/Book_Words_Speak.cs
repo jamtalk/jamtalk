@@ -39,7 +39,6 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     }
     protected override List<BookWordsSpeakQuestion> MakeQuestion()
     {
-
         return GameManager.Instance.GetCurrentBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)
@@ -72,5 +71,6 @@ public class BookWordsSpeakQuestion : SingleQuestion<BookWordData>
 {
     public BookWordsSpeakQuestion(BookWordData correct, BookWordData[] questions) : base(correct, questions)
     {
+        SceneLoadingPopup.SpriteLoader.Add(correct.spriteAsync);
     }
 }

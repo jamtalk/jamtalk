@@ -508,7 +508,8 @@ public class BookMetaData
     }
 
     public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
-    public Sprite GetSprite(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}.{3}", type.ToString(), bookNumber, data.value,data.extension)).WaitForCompletion();
+    public Sprite GetSprite(BookWordData data) => GetSpriteAsync(data).WaitForCompletion();
+    public AsyncOperationHandle<Sprite> GetSpriteAsync(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}.{3}", type.ToString(), bookNumber, data.value, data.extension));
     public void SetBook()
     {
         for (int i = 0; i < sentances.Length; i++)
@@ -562,6 +563,8 @@ public class BookWordData
     public void SetBook(BookMetaData book) => currentBook = book;
     [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite(this);
+    [JsonIgnore]
+    public AsyncOperationHandle<Sprite> spriteAsync => currentBook.GetSpriteAsync(this);
 }
 public class BookCommentData
 {

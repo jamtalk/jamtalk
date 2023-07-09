@@ -91,5 +91,6 @@ public class BookWordQuizeQuestion : SingleQuestion<BookWordData>
 {
     public BookWordQuizeQuestion(BookWordData correct, BookWordData[] questions) : base(correct, questions)
     {
+        SceneLoadingPopup.SpriteLoader.Add(correct.spriteAsync);
     }
 }
