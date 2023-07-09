@@ -38,21 +38,19 @@ public class Parent_StudyLabel : MonoBehaviour
 
     }
     private string GetNextLevelMessage(int level)
-    {
+    {        
         switch (level)
         {
-            case 1:
-                return "1단계 컨텐츠 설명 메세지";
             case 2:
-                return "2단계 컨텐츠 설명 메세지";
+                return "단모음 / 장모음을 학습할 예정이에요.";
             case 3:
-                return "3단계 컨텐츠 설명 메세지";
+                return "자음 2개가 만나 어떤 소리를 내는지 학습할 예정이에요.";
             case 4:
-                return "4단계 컨텐츠 설명 메세지";
+                return "모음 2개가 만나 어떤 소리를 내는지 학습할 예정이에요.";
             case 5:
-                return "5단계 컨텐츠 설명 메세지";
+                return "모음과 r이 만나 어떤 소리를 내는지 학습할 예정이에요.";
             case 6:
-                return "6단계 컨텐츠 설명 메세지";
+                return "영어 도서를 읽을 예정이에요.";
             default:
                 return string.Empty;
         }

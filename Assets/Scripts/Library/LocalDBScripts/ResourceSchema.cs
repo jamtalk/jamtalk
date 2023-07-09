@@ -21,38 +21,76 @@ public class ResourceSchema : ScriptableObject
     private TextAsset bookJson;
     public AudioClip correctSound;
     private ResourceData _data = null;
-    public ResourceData data
+    public ResourceData data=> JObject.Parse(orizinal.text).ToObject<ResourceData>();
+    //{
+    //    get
+    //    {
+    //        if (_data == null)
+    //        {
+    //            _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
+    //            Debug.Log("데이터 신규 로딩");
+    //        }
+    //        return _data;
+    //    }
+    //}
+    public Dictionary<eBookType, Dictionary<int, int[]>> _bookPageData;
+    public Dictionary<eBookType, Dictionary<int, int[]>> bookPageData
     {
         get
         {
-            if (_data == null)
-                _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
-            return _data;
+            if (_bookPageData == null)
+            {
+                _bookPageData = JArray.Parse(Resources.Load<TextAsset>("BookData/BookMetaData").text).ToObject<BookPageData[]>()
+                    .ToDictionary(x => x.type, x => x.numbers.ToDictionary(y => y.number, y => y.pages));
+            }
+            return _bookPageData;
         }
     }
-    private BookMetaData[] _bookData = null;
-    public BookMetaData[] bookData
-    {
-        get
-        {
-            //if (_bookData == null)
-            //{
-                var _bookData = JArray.Parse(bookJson.text).ToObject<BookMetaData[]>();
-                for (int i = 0; i < _bookData.Length; i++)
-                    _bookData[i].SetBook();
-            //}
-            return _bookData;
-        }
-    }
+    //public BookMetaData[] bookData
+    //{
+    //    get
+    //    {
+    //        //if (_bookData == null)
+    //        //{
+    //            var _bookData = JArray.Parse(bookJson.text).ToObject<BookMetaData[]>();
+    //            for (int i = 0; i < _bookData.Length; i++)
+    //                _bookData[i].SetBook();
+
+    //            return _bookData;
+    //        //}
+    //        //GC.Collect();
+    //        //return _bookData;
+    //    }
+    //}
     public AlphabetAudioData GetAlphabetAudio(eAlphabet alphabet) => data.alphabetAudio.ToList().Find(x => x.Alphabet == alphabet);
     public VowelAudioData GetVowelAudio(eAlphabet vowel) => data.vowelAudio.ToList().Find(x => x.Vowel == vowel);
     public DigraphsAudioData GetDigrpahsAudio(string digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs);
     public DigraphsAudioData GetDigrpahsAudio(eDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
     public DigraphsAudioData GetDigrpahsAudio(ePairDigraphs digraphs) => data.digraphsAudio.ToList().Find(x => x.key == digraphs.ToString());
-    public int[] GetBookNumbers(eBookType type) => bookData.Where(x => x.type == type).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
-    public int[] GetBookPages(eBookType type, int number) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == number).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
-    public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x => x.page).ToArray();
-    public BookMetaData GetBookData(eBookType type, int bookNumber, int page) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).Where(x => x.page == page).First();
+    //public int[] GetBookNumbers(eBookType type) => bookData.Where(x => x.type == type).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
+    //public int[] GetBookPages(eBookType type, int number) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == number).Select(x => x.bookNumber).Distinct().OrderBy(x => x).ToArray();
+    //public BookMetaData[] GetBookData(eBookType type, int bookNumber) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).OrderBy(x => x.page).ToArray();
+    //public BookMetaData GetBookData(eBookType type, int bookNumber, int page) => bookData.Where(x => x.type == type).Where(x => x.bookNumber == bookNumber).Where(x => x.page == page).First();
+
+    public int[] GetBookNumbers(eBookType type) => bookPageData[type].Keys.ToArray();
+
+    public int[] GetBookPages(eBookType type, int number) => bookPageData[type][number];
+
+    private Dictionary<eBookType, Dictionary<int, BookMetaData[]>> bookDic = new Dictionary<eBookType, Dictionary<int, BookMetaData[]>>();
+    public BookMetaData[] GetBookData(eBookType type, int bookNumber)
+    {
+        if (!bookDic.ContainsKey(type))
+            bookDic.Add(type, new Dictionary<int, BookMetaData[]>());
+        if (!bookDic[type].ContainsKey(bookNumber))
+        {
+            var data = JsonConvert.DeserializeObject<BookMetaData[]>(Resources.Load<TextAsset>(string.Format("BookData/{0}/{1}", type, bookNumber)).text);
+            for (int i = 0; i < data.Length; i++)
+                data[i].SetBook();
+            bookDic[type].Add(bookNumber, data);
+        }
+        return bookDic[type][bookNumber];
+    }
+    public BookMetaData GetBookData(eBookType type, int bookNumber, int page) => GetBookData(type, bookNumber).Where(x => x.page == page).First();
     public string GetSiteWordsClip(string value)
     {
         value = GJGameLibrary.GJStringFormatter.OnlyEnglish(value).ToLower();
@@ -411,6 +449,17 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 #endregion
 
 #region BookData
+
+public class BookPageData
+{
+    public class BookPageNumber
+    {
+        public int number;
+        public int[] pages;
+    }
+    public eBookType type;
+    public BookPageNumber[] numbers;
+}
 public class BookURLData
 {
     public eBookType key;
@@ -441,19 +490,21 @@ public class BookMetaData
 
     public BookURLData GetURLData()
     {
-        Debug.LogFormat("{0} 책 {1}권 <b>{2}</b>의URL 찾기", type, bookNumber, title_en);
-        Debug.LogFormat(type+"책 URL 데이터 : {0}권\n{1}", GameManager.Instance.schema.data.bookData
-            .Where(x => x.key == type).Count(),
-            string.Join("\n", GameManager.Instance.schema.data.bookData
-            .Where(x => x.key == type).Select(x => x.number + "권")));
-        Debug.LogFormat("{0}권 찾기 결과 : {1}권 찾음", bookNumber,
-            GameManager.Instance.schema.data.bookData
-            .Where(x => x.key == type)
-            .Where(x => x.number == bookNumber).Count());
-        return GameManager.Instance.schema.data.bookData
-            .Where(x => x.key == type)
-            .Where(x => x.number == bookNumber)
-            .First();
+        var path = string.Format("BookData/URL/{0}/{1}", type, bookNumber);
+        return JsonConvert.DeserializeObject<BookURLData>(Resources.Load<TextAsset>(path).text);
+        //Debug.LogFormat("{0} 책 {1}권 <b>{2}</b>의URL 찾기", type, bookNumber, title_en);
+        //Debug.LogFormat(type+"책 URL 데이터 : {0}권\n{1}", GameManager.Instance.schema.data.bookData
+        //    .Where(x => x.key == type).Count(),
+        //    string.Join("\n", GameManager.Instance.schema.data.bookData
+        //    .Where(x => x.key == type).Select(x => x.number + "권")));
+        //Debug.LogFormat("{0}권 찾기 결과 : {1}권 찾음", bookNumber,
+        //    GameManager.Instance.schema.data.bookData
+        //    .Where(x => x.key == type)
+        //    .Where(x => x.number == bookNumber).Count());
+        //return GameManager.Instance.schema.data.bookData
+        //    .Where(x => x.key == type)
+        //    .Where(x => x.number == bookNumber)
+        //    .First();
     }
 
     public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
@@ -474,8 +525,10 @@ public class BookConversationData
     public string speaker;
     public string value;
     public string clip;
+    [JsonIgnore]
     public BookMetaData currentBook { get; private set; }
     public void SetBook(BookMetaData book) => currentBook = book;
+    [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite();
 }
 public class BookSentanceData : BaseSentanceData
@@ -493,8 +546,10 @@ public class BookSentanceData : BaseSentanceData
         set => clip = value;
     }
     public string clip_kr;
+    [JsonIgnore]
     public BookMetaData currentBook { get; private set; }
     public void SetBook(BookMetaData book) => currentBook = book;
+    [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite();
 }
 public class BookWordData
@@ -502,9 +557,24 @@ public class BookWordData
     public string value;
     public string extension;
     public string clip;
+    [JsonIgnore]
     public BookMetaData currentBook { get; private set; }
     public void SetBook(BookMetaData book) => currentBook = book;
+    [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite(this);
+}
+public class BookCommentData
+{
+    public eBookLevel level;
+    public eContents contents;
+    public float correctRate;
+    public string comment;
+}
+public class BookLevelData
+{
+    public eBookType type;
+    public int bookNumber;
+    public eBookLevel level;
 }
 #endregion
 
@@ -512,6 +582,22 @@ public class BookWordData
 public class SiteWordData : ResourceElement
 {
     public string clip;
+}
+
+[Serializable]
+public class CommentData
+{
+    public eContents id;
+    public string[] comments;
+    public string GetComment(int failCount)
+    {
+        if (failCount == 0 || comments.Length == 1)
+            return comments[0];
+        else if (failCount < 4)
+            return comments[1];
+        else
+            return comments[2];
+    }
 }
 
 [Serializable]
@@ -526,7 +612,9 @@ public class ResourceData
     public AlphabetSentanceData[] alphabetSentaces;
     public DigraphsSentanceData[] digraphsSentances;
     public SiteWordData[] siteWords;
-    public BookURLData[] bookData;
+    public CommentData[] commentData;
+    public BookCommentData[] bookComments;
+    public BookLevelData[] bookLevels;
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;

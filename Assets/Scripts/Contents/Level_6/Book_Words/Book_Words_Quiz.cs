@@ -32,7 +32,21 @@ public class Book_Words_Quiz : SingleAnswerContents<BookContentsSetting, BookWor
 
     protected override List<BookWordQuizeQuestion> MakeQuestion()
     {
-        var incorrectsBooks = GameManager.Instance.GetIncorrectBookWords();
+        //현재 진행중이지 않은 책 종류 선별
+        var targetBook = Enum.GetNames(typeof(eBookType))
+            .Select(x => (eBookType)Enum.Parse(typeof(eBookType), x))
+            .Where(x => x != GameManager.Instance.currentBook)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .First();
+
+        //진행중이지 않은 책의 랜덤한 3권을 선택하여 책 단어 데이터 받아옴
+        var incorrectsBooks = GameManager.Instance.GetBookNumbers(targetBook)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .Take(3)
+            .SelectMany(x => GameManager.Instance.GetBookMetaDatas(targetBook, x))
+            .SelectMany(x => x.words)
+            .Distinct();
+
         return GameManager.Instance.GetCurrentBookWords()
             .OrderBy(x => Random.Range(0f, 100f))
             .Take(QuestionCount)

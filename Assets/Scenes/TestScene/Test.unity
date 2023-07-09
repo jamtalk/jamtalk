@@ -1217,8 +1217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8423753b410bc7479b30f580cfac58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: 
-  player: {fileID: 273271648}
   scrollRect: {fileID: 1984172249}
   textProgress: {fileID: 1709677159}
   dropContents: {fileID: 1528061464}
@@ -1229,6 +1227,7 @@ MonoBehaviour:
   loading: {fileID: 1162846154}
   loadingBar: {fileID: 37958308}
   ignoreScenes: 
+  root: "C:\\Users\\xx958\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\BookMetaDatas"
 --- !u!114 &683091384
 MonoBehaviour:
   m_ObjectHideFlags: 0

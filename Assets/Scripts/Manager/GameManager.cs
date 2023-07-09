@@ -109,16 +109,30 @@ public class GameManager : MonoSingleton<GameManager>
     public DigraphsSentanceData[] GetDigraphsSentance(eDigraphs type) => schema.data.digraphsSentances.Where(x => x.Key == type).ToArray();
     public DigraphsSentanceData[] GetDigraphsSentance() => schema.data.digraphsSentances.Where(x => x.Key == currentDigrpahs).ToArray();
     public int[] GetBookNumbers(eBookType type) => schema.GetBookNumbers(type);
-    public int[] GetBookNumbers(eBookType type, int page) => schema.GetBookNumbers(type);
+    public int[] GetBookNumbers(eBookType type, int bookNumber) => schema.GetBookPages(type, bookNumber);
     public BookMetaData GetBookMetaData(eBookType type, int bookNumber,int page) => schema.GetBookData(type, bookNumber,page);
     public BookMetaData[] GetBookMetaDatas(eBookType type, int bookNumber) => schema.GetBookData(type, bookNumber);
     public BookMetaData GetCurrentBook() => GetBookMetaData(currentBook, currentBookNumber,currentPage);
     public BookMetaData[] GetCurrentBooks() => GetBookMetaDatas(currentBook, currentBookNumber);
-    public BookMetaData[] GetIncorrectBooks() => schema.bookData.Where(x => x.type != currentBook).ToArray();
     public BookWordData[] GetBookWords(eBookType type, int bookNumber, int page) => schema.GetBookData(type, bookNumber, page).words;
     public BookWordData[] GetCurrentBookWords() => GetBookWords(currentBook, currentBookNumber, currentPage);
-    public BookWordData[] GetIncorrectBookWords() => schema.bookData.Where(x => x.type != currentBook && x.bookNumber != currentBookNumber).SelectMany(x => x.words).ToArray();
     public Sprite GetAlphbetSprite(eAlphabetStyle style, eAlphabetType type, eAlphabet alphabet) => Addressables.LoadAssetAsync<Sprite>(string.Format(AlhpabetSpritePath, style, type, alphabet)).WaitForCompletion();
+    public eBookLevel GetBookLevel(eBookType type, int bookNumber)
+        => schema.data.bookLevels
+            .Where(x => x.type == type)
+            .Where(x => x.bookNumber == bookNumber)
+            .First().level;
+    public BookCommentData GetBookComment(eContents bookContents ,eBookType type, int bookNumber, float correctRate)
+    {
+        var level = GetBookLevel(type, bookNumber);
+        return schema.data.bookComments
+            .Where(x => x.contents == bookContents)
+            .Where(x => x.level == level)
+            .Where(x => x.correctRate >= correctRate)
+            .OrderBy(x => x.correctRate)
+            .First();
+    }
+    public CommentData GetCommentData(eContents contents) => schema.data.commentData.Where(x => x.id == contents).First();
     public eAlphabet[] alphabets => GetEnums<eAlphabet>();
     public T[] GetEnums<T>()  where T:Enum
         => Enum.GetNames(typeof(T)).Select(x => (T)Enum.Parse(typeof(T), x)).ToArray();
@@ -168,7 +182,7 @@ public class GameManager : MonoSingleton<GameManager>
                     }
                     UserDataManager.Instance.LoadUserData(id, () =>
                     {
-                        GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);;
+                        GJSceneLoader.Instance.LoadScene(eSceneName.AD_003, true);
                     });
                 }
                 onCompleted?.Invoke();

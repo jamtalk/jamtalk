@@ -1,0 +1,821 @@
+﻿[
+  {
+    "key": "SP_8_1",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 1,
+    "title_en": "Wow, it looks delicious!",
+    "title_kr": "와, 맛있겠다. 나도 줄래?",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "난 사과파이가 정말 좋아.",
+        "priority": 3,
+        "clip_kr": "",
+        "value": "I love apple pie!",
+        "clip": "",
+        "key": null,
+        "en": "I love apple pie!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "love",
+          "apple",
+          "pie!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 3,
+        "speaker": "A",
+        "value": "Oh, do you like apple pie?",
+        "clip": ""
+      },
+      {
+        "priority": 4,
+        "speaker": "B",
+        "value": "Yes, I do.",
+        "clip": ""
+      },
+      {
+        "priority": 5,
+        "speaker": "B",
+        "value": "It's my favorite food!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_2",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 2,
+    "title_en": "Can I have some apple pie?",
+    "title_kr": "나도 같이 먹자.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "와, 맛있겠다. 나도 줄래?",
+        "priority": 6,
+        "clip_kr": "",
+        "value": "Wow, it looks delicious!",
+        "clip": "",
+        "key": null,
+        "en": "Wow, it looks delicious!",
+        "clip_en": "",
+        "words": [
+          "Wow,",
+          "it",
+          "looks",
+          "delicious!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 7,
+        "clip_kr": "",
+        "value": "Can you give me some pie?",
+        "clip": "",
+        "key": null,
+        "en": "Can you give me some pie?",
+        "clip_en": "",
+        "words": [
+          "Can",
+          "you",
+          "give",
+          "me",
+          "some",
+          "pie?"
+        ]
+      },
+      {
+        "kr": "그래 그래.",
+        "priority": 8,
+        "clip_kr": "",
+        "value": "Yes, here you are.",
+        "clip": "",
+        "key": null,
+        "en": "Yes, here you are.",
+        "clip_en": "",
+        "words": [
+          "Yes,",
+          "here",
+          "you",
+          "are."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 6,
+        "speaker": "A",
+        "value": "Wow, it looks delicious!",
+        "clip": ""
+      },
+      {
+        "priority": 7,
+        "speaker": "A",
+        "value": "Can you give me some pie?",
+        "clip": ""
+      },
+      {
+        "priority": 8,
+        "speaker": "B",
+        "value": "Yes, you can.",
+        "clip": ""
+      },
+      {
+        "priority": 9,
+        "speaker": "B",
+        "value": "I'll share my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 10,
+        "speaker": "B",
+        "value": "I'll give you a piece of my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 11,
+        "speaker": "A",
+        "value": "Thank you!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_3",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 3,
+    "title_en": "I want to have some apple pie.",
+    "title_kr": "나도 먹을래.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "나도 같이 먹자.",
+        "priority": 12,
+        "clip_kr": "",
+        "value": "Can I have some apple pie?",
+        "clip": "",
+        "key": null,
+        "en": "Can I have some apple pie?",
+        "clip_en": "",
+        "words": [
+          "Can",
+          "I",
+          "have",
+          "some",
+          "apple",
+          "pie?"
+        ]
+      },
+      {
+        "kr": "그래 그래.",
+        "priority": 13,
+        "clip_kr": "",
+        "value": "Yes, here you are.",
+        "clip": "",
+        "key": null,
+        "en": "Yes, here you are.",
+        "clip_en": "",
+        "words": [
+          "Yes,",
+          "here",
+          "you",
+          "are."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 12,
+        "speaker": "C",
+        "value": "Can I have some apple pie?",
+        "clip": ""
+      },
+      {
+        "priority": 13,
+        "speaker": "B",
+        "value": "Yes, you can.",
+        "clip": ""
+      },
+      {
+        "priority": 14,
+        "speaker": "B",
+        "value": "I'll share my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 15,
+        "speaker": "B",
+        "value": "I'll give you a piece of my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 16,
+        "speaker": "C",
+        "value": "Thank you!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_4",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 4,
+    "title_en": "I want to have some apple pie, too.",
+    "title_kr": "나도 먹고싶어.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "나도 먹을래.",
+        "priority": 17,
+        "clip_kr": "",
+        "value": "I want to have some apple pie.",
+        "clip": "",
+        "key": null,
+        "en": "I want to have some apple pie.",
+        "clip_en": "",
+        "words": [
+          "I",
+          "want",
+          "to",
+          "have",
+          "some",
+          "apple",
+          "pie."
+        ]
+      },
+      {
+        "kr": "그래 그래.",
+        "priority": 18,
+        "clip_kr": "",
+        "value": "Yes, here you are.",
+        "clip": "",
+        "key": null,
+        "en": "Yes, here you are.",
+        "clip_en": "",
+        "words": [
+          "Yes,",
+          "here",
+          "you",
+          "are."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 17,
+        "speaker": "D",
+        "value": "I want to have some apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 18,
+        "speaker": "B",
+        "value": "I'll share my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 19,
+        "speaker": "B",
+        "value": "I'll give you a piece of my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 20,
+        "speaker": "D",
+        "value": "Wow, thank you!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_5",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 5,
+    "title_en": "I want to eat two pieces of apple pie!",
+    "title_kr": "나는 두개 먹을래.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "나도 먹고싶어.",
+        "priority": 21,
+        "clip_kr": "",
+        "value": "I want to have some apple pie, too.",
+        "clip": "",
+        "key": null,
+        "en": "I want to have some apple pie, too.",
+        "clip_en": "",
+        "words": [
+          "I",
+          "want",
+          "to",
+          "have",
+          "some",
+          "apple",
+          "pie,",
+          "too."
+        ]
+      },
+      {
+        "kr": "그래 그래.",
+        "priority": 22,
+        "clip_kr": "",
+        "value": "Yes, here you are.",
+        "clip": "",
+        "key": null,
+        "en": "Yes, here you are.",
+        "clip_en": "",
+        "words": [
+          "Yes,",
+          "here",
+          "you",
+          "are."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 21,
+        "speaker": "E",
+        "value": "I want to have some apple pie,too.",
+        "clip": ""
+      },
+      {
+        "priority": 22,
+        "speaker": "E",
+        "value": "Would you share your apple pie?",
+        "clip": ""
+      },
+      {
+        "priority": 23,
+        "speaker": "B",
+        "value": "Yes, I would.",
+        "clip": ""
+      },
+      {
+        "priority": 24,
+        "speaker": "B",
+        "value": "I'll share my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 25,
+        "speaker": "B",
+        "value": "I'll give you a piece of my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 26,
+        "speaker": "E",
+        "value": "Wow, thank you very much!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_6",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 6,
+    "title_en": "Where is my apple pie?",
+    "title_kr": "으앙 내 사과파이.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "나는 두개 먹을래.",
+        "priority": 27,
+        "clip_kr": "",
+        "value": "I want to eat two pieces of apple pie!",
+        "clip": "",
+        "key": null,
+        "en": "I want to eat two pieces of apple pie!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "want",
+          "to",
+          "eat",
+          "two",
+          "pieces",
+          "of",
+          "apple",
+          "pie!"
+        ]
+      },
+      {
+        "kr": "그래 그래.",
+        "priority": 28,
+        "clip_kr": "",
+        "value": "Yes, here you are.",
+        "clip": "",
+        "key": null,
+        "en": "Yes, here you are.",
+        "clip_en": "",
+        "words": [
+          "Yes,",
+          "here",
+          "you",
+          "are."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 27,
+        "speaker": "F",
+        "value": "I want to eat two pieces of apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 28,
+        "speaker": "F",
+        "value": "Can you share your apple pie?",
+        "clip": ""
+      },
+      {
+        "priority": 29,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 30,
+        "speaker": "B",
+        "value": "I'll share my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 31,
+        "speaker": "B",
+        "value": "I'll give you a piece of my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 32,
+        "speaker": "F",
+        "value": "Thank you very much!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_7",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 7,
+    "title_en": "We eat apple pie, together!",
+    "title_kr": "모두 맛있게 냠냠냠.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "으앙 내 사과파이.",
+        "priority": 33,
+        "clip_kr": "",
+        "value": "Where is my apple pie?",
+        "clip": "",
+        "key": null,
+        "en": "Where is my apple pie?",
+        "clip_en": "",
+        "words": [
+          "Where",
+          "is",
+          "my",
+          "apple",
+          "pie?"
+        ]
+      },
+      {
+        "kr": "여기 하나 있잖아.",
+        "priority": 34,
+        "clip_kr": "",
+        "value": "Here!",
+        "clip": "",
+        "key": null,
+        "en": "Here!",
+        "clip_en": "",
+        "words": [
+          "Here!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 35,
+        "clip_kr": "",
+        "value": "There is one piece of apple pie.",
+        "clip": "",
+        "key": null,
+        "en": "There is one piece of apple pie.",
+        "clip_en": "",
+        "words": [
+          "There",
+          "is",
+          "one",
+          "piece",
+          "of",
+          "apple",
+          "pie."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 36,
+        "clip_kr": "",
+        "value": " It's yours.",
+        "clip": "",
+        "key": null,
+        "en": " It's yours.",
+        "clip_en": "",
+        "words": [
+          "",
+          "It's",
+          "yours."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 33,
+        "speaker": "B",
+        "value": "Umm…where is my apple pie?",
+        "clip": ""
+      },
+      {
+        "priority": 34,
+        "speaker": "B",
+        "value": "I'm so sad because there isn't my apple pie.",
+        "clip": ""
+      },
+      {
+        "priority": 35,
+        "speaker": "F",
+        "value": "Oh, we are sorry.",
+        "clip": ""
+      },
+      {
+        "priority": 36,
+        "speaker": "F",
+        "value": "Here you are.",
+        "clip": ""
+      },
+      {
+        "priority": 37,
+        "speaker": "F",
+        "value": "It's yours.",
+        "clip": ""
+      },
+      {
+        "priority": 38,
+        "speaker": "B",
+        "value": "Thank you.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_8_8",
+    "type": "SP",
+    "bookNumber": 8,
+    "page": 8,
+    "title_en": "Yummy! Yummy!",
+    "title_kr": "",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "모두 맛있게 냠냠냠.",
+        "priority": 39,
+        "clip_kr": "",
+        "value": "We eat apple pie, together!",
+        "clip": "",
+        "key": null,
+        "en": "We eat apple pie, together!",
+        "clip_en": "",
+        "words": [
+          "We",
+          "eat",
+          "apple",
+          "pie,",
+          "together!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 40,
+        "clip_kr": "",
+        "value": "Yummy! Yummy!",
+        "clip": "",
+        "key": null,
+        "en": "Yummy! Yummy!",
+        "clip_en": "",
+        "words": [
+          "Yummy!",
+          "Yummy!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 39,
+        "speaker": "B",
+        "value": "We eat apple pie, together!",
+        "clip": ""
+      },
+      {
+        "priority": 40,
+        "speaker": "B",
+        "value": "Yum-Yum!",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "apple pie",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "one piece",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "try",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "two piece",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  }
+]

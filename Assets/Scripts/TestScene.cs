@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using OptionData = UnityEngine.UI.Dropdown.OptionData;
 using UnityEngine.U2D;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 public class TestScene : MonoBehaviour
 {
@@ -24,6 +26,104 @@ public class TestScene : MonoBehaviour
     public eSceneName[] ignoreScenes;
 
     private Coroutine loadingRoutine;
+    public string root;
+    public TextAsset ta;
+    public class BookPageData
+    {
+        public class BookPageNumber
+        {
+            public int number;
+            public int[] pages;
+
+            public BookPageNumber(int number, int[] pages)
+            {
+                this.number = number;
+                this.pages = pages;
+            }
+        }
+        public string type;
+        public BookPageNumber[] numbers;
+
+        public BookPageData(string type, BookPageNumber[] numbers)
+        {
+            this.type = type;
+            this.numbers = numbers;
+        }
+    }
+    private void BookPages()
+    {
+        var dic = new Dictionary<eBookType, Dictionary<int, List<BookMetaData>>>();
+        var books = JsonConvert.DeserializeObject<BookMetaData[]>(ta.text);
+        foreach (var book in books)
+        {
+            var type = book.type;
+            var number = book.bookNumber;
+
+            if (!dic.ContainsKey(type))
+                dic.Add(type, new Dictionary<int, List<BookMetaData>>());
+            if (!dic[type].ContainsKey(book.bookNumber))
+                dic[type].Add(book.bookNumber, new List<BookMetaData>());
+            dic[type][number].Add(book);
+        }
+
+        var meta = new List<BookPageData>();
+        foreach (var t in dic)
+        {
+            var type = t.Key;
+            var numbers = t.Value.Keys.Select(x => new BookPageData.BookPageNumber(x, t.Value[x].Select(y => y.page).ToArray())).ToArray();
+            var bookPageData = new BookPageData(type.ToString(), numbers);
+            meta.Add(bookPageData);
+            foreach (var n in t.Value)
+            {
+                var number = n.Key;
+                var json = JArray.Parse(JsonConvert.SerializeObject(n.Value));
+                foreach (var data in json)
+                {
+                    var value = (eBookType)data["type"].Value<int>();
+                    data["type"] = value.ToString();
+                }
+                var di = new DirectoryInfo(string.Format("{0}/{1}", root, type));
+                if (!di.Exists)
+                    di.Create();
+                var path = string.Format("{0}/{1}.json", di.FullName, n.Key);
+                File.WriteAllText(path, json.ToString(), System.Text.Encoding.UTF8);
+            }
+        }
+
+        File.WriteAllText(string.Format("{0}/meta.json", root), JArray.Parse(JsonConvert.SerializeObject(meta)).ToString(), System.Text.Encoding.UTF8);
+    }
+    private void Awake()
+    {
+        //var urls = GameManager.Instance.schema.data.bookData;
+        //var dic = new Dictionary<eBookType, List<BookURLData>>();
+        //for(int i= 0;i < urls.Length; i++)
+        //{
+        //    var data = urls[i];
+        //    if (!dic.ContainsKey(data.key))
+        //        dic.Add(data.key, new List<BookURLData>());
+
+        //    dic[data.key].Add(data);
+        //}
+
+        //foreach(var bookType in dic)
+        //{
+        //    var type = bookType.Key;
+        //    var list = bookType.Value.OrderBy(x=>x.number).ToArray();
+        //    for (int i = 0; i < list.Length; i++)
+        //    {
+        //        var obj = JObject.Parse(JsonConvert.SerializeObject(list[i]));
+        //        var key = (eBookType)obj["key"].Value<int>();
+        //        obj["key"] = key.ToString();
+
+        //        var path = string.Format("{0}/{1}/{2}", root, "URL",type.ToString());
+        //        if (!Directory.Exists(path))
+        //            Directory.CreateDirectory(path);
+
+        //        path += string.Format("/{0}.json", list[i].number);
+        //        File.WriteAllText(path, obj.ToString(),System.Text.Encoding.UTF8);
+        //    }
+        //}
+    }
     private void Start()
     {
         Application.targetFrameRate = 60;

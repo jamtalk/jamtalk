@@ -1,0 +1,1111 @@
+﻿[
+  {
+    "key": "SP_20_1",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 1,
+    "title_en": "[Fish Shop]",
+    "title_kr": "싱싱한 생선을 사요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "예쁜 꽃을 사요,",
+        "priority": 3,
+        "clip_kr": "",
+        "value": "[Flower Shop]",
+        "clip": "",
+        "key": null,
+        "en": "[Flower Shop]",
+        "clip_en": "",
+        "words": [
+          "[Flower",
+          "Shop]"
+        ]
+      },
+      {
+        "kr": "좋은 향기가 폴폴!",
+        "priority": 4,
+        "clip_kr": "",
+        "value": "Buy some beautiful flowers.",
+        "clip": "",
+        "key": null,
+        "en": "Buy some beautiful flowers.",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "some",
+          "beautiful",
+          "flowers."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 5,
+        "clip_kr": "",
+        "value": "Flowers has good smell!",
+        "clip": "",
+        "key": null,
+        "en": "Flowers has good smell!",
+        "clip_en": "",
+        "words": [
+          "Flowers",
+          "has",
+          "good",
+          "smell!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 3,
+        "speaker": "A",
+        "value": "I need some flowers.",
+        "clip": ""
+      },
+      {
+        "priority": 4,
+        "speaker": "A",
+        "value": "Can you buy some flowers for me?",
+        "clip": ""
+      },
+      {
+        "priority": 5,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 6,
+        "speaker": "B",
+        "value": "How many flowers do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 7,
+        "speaker": "A",
+        "value": "I need two roses and three tulips.",
+        "clip": ""
+      },
+      {
+        "priority": 8,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 9,
+        "speaker": "B",
+        "value": "Where is the flower shop?",
+        "clip": ""
+      },
+      {
+        "priority": 10,
+        "speaker": "A",
+        "value": "The flower shop is next to the fish shop.",
+        "clip": ""
+      },
+      {
+        "priority": 11,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 12,
+        "speaker": "B",
+        "value": "I'll buy them for you.",
+        "clip": ""
+      },
+      {
+        "priority": 13,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_2",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 2,
+    "title_en": "[Vegetable Shop]",
+    "title_kr": "신선한 당근을 사요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "싱싱한 생선을 사요.",
+        "priority": 14,
+        "clip_kr": "",
+        "value": "[Fish Shop]",
+        "clip": "",
+        "key": null,
+        "en": "[Fish Shop]",
+        "clip_en": "",
+        "words": [
+          "[Fish",
+          "Shop]"
+        ]
+      },
+      {
+        "kr": "맛있게 구워 냠냠냠.",
+        "priority": 15,
+        "clip_kr": "",
+        "value": "Buy some fresh fish.",
+        "clip": "",
+        "key": null,
+        "en": "Buy some fresh fish.",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "some",
+          "fresh",
+          "fish."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 16,
+        "clip_kr": "",
+        "value": "I will grill fish and have it. Yum-Yum!",
+        "clip": "",
+        "key": null,
+        "en": "I will grill fish and have it. Yum-Yum!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "grill",
+          "fish",
+          "and",
+          "have",
+          "it.",
+          "Yum-Yum!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 14,
+        "speaker": "A",
+        "value": "I need some fish for dinner.",
+        "clip": ""
+      },
+      {
+        "priority": 15,
+        "speaker": "A",
+        "value": "Can you buy some fish for me?",
+        "clip": ""
+      },
+      {
+        "priority": 16,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 17,
+        "speaker": "B",
+        "value": "How many fish do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 18,
+        "speaker": "A",
+        "value": "I need two fish.",
+        "clip": ""
+      },
+      {
+        "priority": 19,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 20,
+        "speaker": "B",
+        "value": "Where is the fish shop?",
+        "clip": ""
+      },
+      {
+        "priority": 21,
+        "speaker": "A",
+        "value": "The fish shop is in front of the toy store.",
+        "clip": ""
+      },
+      {
+        "priority": 22,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 23,
+        "speaker": "B",
+        "value": "I'll buy them for you.",
+        "clip": ""
+      },
+      {
+        "priority": 24,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_3",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 3,
+    "title_en": "[Toy Store]",
+    "title_kr": "장난감 배를 사요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "신선한 당근을 사요.",
+        "priority": 25,
+        "clip_kr": "",
+        "value": "[Vegetable Shop]",
+        "clip": "",
+        "key": null,
+        "en": "[Vegetable Shop]",
+        "clip_en": "",
+        "words": [
+          "[Vegetable",
+          "Shop]"
+        ]
+      },
+      {
+        "kr": "상큼한 샐러드가 아삭아삭!",
+        "priority": 26,
+        "clip_kr": "",
+        "value": "Buy some fresh carrots.",
+        "clip": "",
+        "key": null,
+        "en": "Buy some fresh carrots.",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "some",
+          "fresh",
+          "carrots."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 27,
+        "clip_kr": "",
+        "value": "I will have fresh salad. Munch-Munch!",
+        "clip": "",
+        "key": null,
+        "en": "I will have fresh salad. Munch-Munch!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "have",
+          "fresh",
+          "salad.",
+          "Munch-Munch!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 25,
+        "speaker": "A",
+        "value": "I need some vegetables for salad.",
+        "clip": ""
+      },
+      {
+        "priority": 26,
+        "speaker": "A",
+        "value": "Can you buy some vegetables for me?",
+        "clip": ""
+      },
+      {
+        "priority": 27,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 28,
+        "speaker": "B",
+        "value": "How many vegetables do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 29,
+        "speaker": "A",
+        "value": "I need two carrots and three cucumbers.",
+        "clip": ""
+      },
+      {
+        "priority": 30,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 31,
+        "speaker": "B",
+        "value": "Where is the vegetable shop?",
+        "clip": ""
+      },
+      {
+        "priority": 32,
+        "speaker": "A",
+        "value": "The vegetable shop is across from the flower shop.",
+        "clip": ""
+      },
+      {
+        "priority": 33,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 34,
+        "speaker": "B",
+        "value": "I'll buy them for you.",
+        "clip": ""
+      },
+      {
+        "priority": 35,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_4",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 4,
+    "title_en": "[Clothes Store]",
+    "title_kr": "깜찍한 원피스를 사요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "장난감 배를 사요.",
+        "priority": 36,
+        "clip_kr": "",
+        "value": "[Toy Store]",
+        "clip": "",
+        "key": null,
+        "en": "[Toy Store]",
+        "clip_en": "",
+        "words": [
+          "[Toy",
+          "Store]"
+        ]
+      },
+      {
+        "kr": "물에 띄워 통통통!",
+        "priority": 37,
+        "clip_kr": "",
+        "value": "Buy a new toy boat.",
+        "clip": "",
+        "key": null,
+        "en": "Buy a new toy boat.",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "a",
+          "new",
+          "toy",
+          "boat."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 38,
+        "clip_kr": "",
+        "value": "I will float the boat on the water. Chug! Chug!",
+        "clip": "",
+        "key": null,
+        "en": "I will float the boat on the water. Chug! Chug!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "float",
+          "the",
+          "boat",
+          "on",
+          "the",
+          "water.",
+          "Chug!",
+          "Chug!"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 36,
+        "speaker": "A",
+        "value": "I need a toy for gift.",
+        "clip": ""
+      },
+      {
+        "priority": 37,
+        "speaker": "A",
+        "value": "Can you buy a toy for me?",
+        "clip": ""
+      },
+      {
+        "priority": 38,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 39,
+        "speaker": "B",
+        "value": "What kind of toy do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 40,
+        "speaker": "A",
+        "value": "I need a new toy boat.",
+        "clip": ""
+      },
+      {
+        "priority": 41,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 42,
+        "speaker": "B",
+        "value": "Where is the toy store?",
+        "clip": ""
+      },
+      {
+        "priority": 43,
+        "speaker": "A",
+        "value": "The toy store is next to the vegetable shop.",
+        "clip": ""
+      },
+      {
+        "priority": 44,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 45,
+        "speaker": "B",
+        "value": "I'll buy it for you.",
+        "clip": ""
+      },
+      {
+        "priority": 46,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_5",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 5,
+    "title_en": "[Shoes Store]",
+    "title_kr": "빨간 구두를 사요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "깜찍한 원피스를 사요.",
+        "priority": 47,
+        "clip_kr": "",
+        "value": "[Clothes Store]",
+        "clip": "",
+        "key": null,
+        "en": "[Clothes Store]",
+        "clip_en": "",
+        "words": [
+          "[Clothes",
+          "Store]"
+        ]
+      },
+      {
+        "kr": "예쁘게 입고 나풀나풀.",
+        "priority": 48,
+        "clip_kr": "",
+        "value": "Buy a cute dress!",
+        "clip": "",
+        "key": null,
+        "en": "Buy a cute dress!",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "a",
+          "cute",
+          "dress!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 49,
+        "clip_kr": "",
+        "value": "I will wear the new dress!",
+        "clip": "",
+        "key": null,
+        "en": "I will wear the new dress!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "wear",
+          "the",
+          "new",
+          "dress!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 50,
+        "clip_kr": "",
+        "value": "Do I look pretty?",
+        "clip": "",
+        "key": null,
+        "en": "Do I look pretty?",
+        "clip_en": "",
+        "words": [
+          "Do",
+          "I",
+          "look",
+          "pretty?"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 47,
+        "speaker": "A",
+        "value": "I need a new dress for a gift.",
+        "clip": ""
+      },
+      {
+        "priority": 48,
+        "speaker": "A",
+        "value": "Can you buy a new dress for me?",
+        "clip": ""
+      },
+      {
+        "priority": 49,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 50,
+        "speaker": "B",
+        "value": "What kind of dress do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 51,
+        "speaker": "A",
+        "value": "I need a pink flower patterned dress.",
+        "clip": ""
+      },
+      {
+        "priority": 52,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 53,
+        "speaker": "B",
+        "value": "Where is the clothes store?",
+        "clip": ""
+      },
+      {
+        "priority": 54,
+        "speaker": "A",
+        "value": "The clothes store is across from the toy store.",
+        "clip": ""
+      },
+      {
+        "priority": 55,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 56,
+        "speaker": "B",
+        "value": "I'll buy it for you.",
+        "clip": ""
+      },
+      {
+        "priority": 57,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_6",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 6,
+    "title_en": "I will clean up all the stuff and place them on the right place.",
+    "title_kr": "모두 제자리에 정리해요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "빨간 구두를 사요.",
+        "priority": 58,
+        "clip_kr": "",
+        "value": "[Shoes Store]",
+        "clip": "",
+        "key": null,
+        "en": "[Shoes Store]",
+        "clip_en": "",
+        "words": [
+          "[Shoes",
+          "Store]"
+        ]
+      },
+      {
+        "kr": "예쁘게 신고 폴짝폴짝.",
+        "priority": 59,
+        "clip_kr": "",
+        "value": "Buy a red shoes.",
+        "clip": "",
+        "key": null,
+        "en": "Buy a red shoes.",
+        "clip_en": "",
+        "words": [
+          "Buy",
+          "a",
+          "red",
+          "shoes."
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 60,
+        "clip_kr": "",
+        "value": "I will put on this shoes and try to hop!",
+        "clip": "",
+        "key": null,
+        "en": "I will put on this shoes and try to hop!",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "put",
+          "on",
+          "this",
+          "shoes",
+          "and",
+          "try",
+          "to",
+          "hop!"
+        ]
+      },
+      {
+        "kr": "",
+        "priority": 61,
+        "clip_kr": "",
+        "value": "Do I look pretty?",
+        "clip": "",
+        "key": null,
+        "en": "Do I look pretty?",
+        "clip_en": "",
+        "words": [
+          "Do",
+          "I",
+          "look",
+          "pretty?"
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 58,
+        "speaker": "A",
+        "value": "I need a new shoes for a gift.",
+        "clip": ""
+      },
+      {
+        "priority": 59,
+        "speaker": "A",
+        "value": "Can you buy it for me?",
+        "clip": ""
+      },
+      {
+        "priority": 60,
+        "speaker": "B",
+        "value": "Yes, I can.",
+        "clip": ""
+      },
+      {
+        "priority": 61,
+        "speaker": "B",
+        "value": "What kind of shoes do you need?",
+        "clip": ""
+      },
+      {
+        "priority": 62,
+        "speaker": "A",
+        "value": "I need a new red shoes.",
+        "clip": ""
+      },
+      {
+        "priority": 63,
+        "speaker": "B",
+        "value": "All right.",
+        "clip": ""
+      },
+      {
+        "priority": 64,
+        "speaker": "B",
+        "value": "Where is the shoes store?",
+        "clip": ""
+      },
+      {
+        "priority": 65,
+        "speaker": "A",
+        "value": "The shoes store is next to the clothes store.",
+        "clip": ""
+      },
+      {
+        "priority": 66,
+        "speaker": "B",
+        "value": "Okay.",
+        "clip": ""
+      },
+      {
+        "priority": 67,
+        "speaker": "B",
+        "value": "I'll buy it for you.",
+        "clip": ""
+      },
+      {
+        "priority": 68,
+        "speaker": "A",
+        "value": "Thank you for your help.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "SP_20_7",
+    "type": "SP",
+    "bookNumber": 20,
+    "page": 7,
+    "title_en": "",
+    "title_kr": "",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "모두 제자리에 정리해요.",
+        "priority": 69,
+        "clip_kr": "",
+        "value": "I will clean up all the stuff and place them on the right place.",
+        "clip": "",
+        "key": null,
+        "en": "I will clean up all the stuff and place them on the right place.",
+        "clip_en": "",
+        "words": [
+          "I",
+          "will",
+          "clean",
+          "up",
+          "all",
+          "the",
+          "stuff",
+          "and",
+          "place",
+          "them",
+          "on",
+          "the",
+          "right",
+          "place."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 69,
+        "speaker": "B",
+        "value": "I bought some stuff for you!",
+        "clip": ""
+      },
+      {
+        "priority": 70,
+        "speaker": "A",
+        "value": "Did you buy all of them ?!",
+        "clip": ""
+      },
+      {
+        "priority": 71,
+        "speaker": "B",
+        "value": "Yes, I did.",
+        "clip": ""
+      },
+      {
+        "priority": 72,
+        "speaker": "B",
+        "value": "Here is your flowers, fish, vegetables, a toy, a dress and shoes!",
+        "clip": ""
+      },
+      {
+        "priority": 73,
+        "speaker": "A",
+        "value": "Thank you so much!",
+        "clip": ""
+      },
+      {
+        "priority": 74,
+        "speaker": "A",
+        "value": "I'll clean up all of them.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "clothes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "fish",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "flowers",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "shoes",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "toy",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "vegetable",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  }
+]

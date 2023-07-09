@@ -9,7 +9,7 @@ using UnityEngine.Video;
 public class Book_Animation : MonoBehaviour
 {
 //#if UNITY_EDITOR
-    public BookContentsSetting testSetting;
+    //public BookContentsSetting testSetting;
 //#endif
     public Button buttonHome;
     public Button buttonPlay;
@@ -21,9 +21,9 @@ public class Book_Animation : MonoBehaviour
 
     protected void Start()
     {
-#if UNITY_EDITOR
-        testSetting.Apply();
-#endif
+//#if UNITY_EDITOR
+//        testSetting.Apply();
+//#endif
         buttonHome.onClick.AddListener(() => GJGameLibrary.GJSceneLoader.Instance.LoadScene(eSceneName.AC_004));
         buttonPlay.onClick.AddListener(player.Play);
         buttonRePlay.onClick.AddListener(() =>

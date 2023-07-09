@@ -1,0 +1,410 @@
+﻿[
+  {
+    "key": "JE_29_1",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 1,
+    "title_en": "You have a fever.",
+    "title_kr": "열이 있군요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "나는 의사.",
+        "priority": 2,
+        "clip_kr": "",
+        "value": "I'm a doctor.",
+        "clip": "",
+        "key": null,
+        "en": "I'm a doctor.",
+        "clip_en": "",
+        "words": [
+          "I'm",
+          "a",
+          "doctor."
+        ]
+      },
+      {
+        "kr": "나는 간호사.",
+        "priority": 3,
+        "clip_kr": "",
+        "value": "I'm a nurse.",
+        "clip": "",
+        "key": null,
+        "en": "I'm a nurse.",
+        "clip_en": "",
+        "words": [
+          "I'm",
+          "a",
+          "nurse."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 2,
+        "speaker": "A",
+        "value": " Will you play doctor with me?",
+        "clip": ""
+      },
+      {
+        "priority": 3,
+        "speaker": "B",
+        "value": " I will!",
+        "clip": ""
+      },
+      {
+        "priority": 4,
+        "speaker": "A",
+        "value": " Okay. I'm a doctor.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "JE_29_2",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 2,
+    "title_en": "Take this medicine.",
+    "title_kr": "이 약을 먹어요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "열이 있군요.",
+        "priority": 5,
+        "clip_kr": "",
+        "value": "You have a fever.",
+        "clip": "",
+        "key": null,
+        "en": "You have a fever.",
+        "clip_en": "",
+        "words": [
+          "You",
+          "have",
+          "a",
+          "fever."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 5,
+        "speaker": "B",
+        "value": " I'm a nurse.",
+        "clip": ""
+      },
+      {
+        "priority": 6,
+        "speaker": "C",
+        "value": " I'm sick, doctor.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "JE_29_3",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 3,
+    "title_en": "You need surgery.",
+    "title_kr": "수술을 해야겠어요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "이 약을 먹어요.",
+        "priority": 7,
+        "clip_kr": "",
+        "value": "Take this medicine.",
+        "clip": "",
+        "key": null,
+        "en": "Take this medicine.",
+        "clip_en": "",
+        "words": [
+          "Take",
+          "this",
+          "medicine."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 7,
+        "speaker": "A",
+        "value": " You have a fever, mom.",
+        "clip": ""
+      },
+      {
+        "priority": 8,
+        "speaker": "B",
+        "value": " Take this medicine and take a rest, mom.",
+        "clip": ""
+      },
+      {
+        "priority": 10,
+        "speaker": "A",
+        "value": " Oh, you ate too much, dad.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "JE_29_4",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 4,
+    "title_en": "You are fine now.",
+    "title_kr": "",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "수술을 해야겠어요.",
+        "priority": 11,
+        "clip_kr": "",
+        "value": "You need surgery.",
+        "clip": "",
+        "key": null,
+        "en": "You need surgery.",
+        "clip_en": "",
+        "words": [
+          "You",
+          "need",
+          "surgery."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 11,
+        "speaker": "A",
+        "value": " You need surgery.",
+        "clip": ""
+      },
+      {
+        "priority": 12,
+        "speaker": "B",
+        "value": " Also, you should take this medicine.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "JE_29_5",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 5,
+    "title_en": "Let's play doctor together.",
+    "title_kr": "이제 다 나았어요.",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "",
+        "priority": 13,
+        "clip_kr": "",
+        "value": "You are fine now.",
+        "clip": "",
+        "key": null,
+        "en": "You are fine now.",
+        "clip_en": "",
+        "words": [
+          "You",
+          "are",
+          "fine",
+          "now."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 13,
+        "speaker": "A",
+        "value": "You are fine now.",
+        "clip": ""
+      },
+      {
+        "priority": 14,
+        "speaker": "A",
+        "value": "Don't work too hard, today.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  },
+  {
+    "key": "JE_29_6",
+    "type": "JE",
+    "bookNumber": 29,
+    "page": 6,
+    "title_en": "",
+    "title_kr": "",
+    "titleClip_en": "",
+    "titleClip_kr": "",
+    "sentances": [
+      {
+        "kr": "이제 다 나았어요.",
+        "priority": 15,
+        "clip_kr": "",
+        "value": "Let's play doctor together.",
+        "clip": "",
+        "key": null,
+        "en": "Let's play doctor together.",
+        "clip_en": "",
+        "words": [
+          "Let's",
+          "play",
+          "doctor",
+          "together."
+        ]
+      }
+    ],
+    "conversations": [
+      {
+        "priority": 15,
+        "speaker": "B",
+        "value": "It's so fun!",
+        "clip": ""
+      },
+      {
+        "priority": 16,
+        "speaker": "A",
+        "value": "Let's play doctor together.",
+        "clip": ""
+      }
+    ],
+    "words": [
+      {
+        "value": "fever",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine chest",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "medicine",
+        "extension": "jpg",
+        "clip": ""
+      },
+      {
+        "value": "surgery",
+        "extension": "jpg",
+        "clip": ""
+      }
+    ]
+  }
+]

@@ -17,10 +17,9 @@ public class StarterScene : MonoBehaviour
         Application.targetFrameRate = 60;
         buttonStart.onClick.AddListener(() =>
         {
+            loading.gameObject.SetActive(true);
             if (PlayerPrefs.HasKey("PW"))
             {
-                loading.gameObject.SetActive(true);
-
                 var id = PlayerPrefs.GetString("ID");
                 var pw = PlayerPrefs.GetString("PW");
                 var uid = string.Empty;
@@ -36,19 +35,21 @@ public class StarterScene : MonoBehaviour
 
                 Debug.LogFormat("id : {0}, pw : {1} uid : {2}, provider : {3}", id, pw, uid, provider);
 
-                UserDataManager.Instance.LoadUserData(id,() =>
-                {
-                    //SignInUI.SignIn(id, pw, provider, uid);
-                    GameManager.Instance.SignIn(id, pw, provider, uid);
-                    var time = DateTime.Now;
-                    var data = GameManager.Instance.schema.data;
-                    Debug.LogFormat("로딩 시간 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
-                    GJSceneLoader.Instance.LoadScene(eSceneName.AD_003,true);
-                });
-                
+                UserDataManager.Instance.LoadUserData(id, () =>
+                 {
+                     //SignInUI.SignIn(id, pw, provider, uid);
+
+                     loading.gameObject.SetActive(false);
+                     GameManager.Instance.SignIn(id, pw, provider, uid);
+                     var time = DateTime.Now;
+                     var data = GameManager.Instance.schema.data;
+                     Debug.LogFormat("로딩 시간 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
+                     //GJSceneLoader.Instance.LoadScene(eSceneName.AD_003, true);
+                 });
+
             }
             else
-                GJSceneLoader.Instance.LoadScene(eSceneName.AD_002);
+                GJSceneLoader.Instance.LoadScene(eSceneName.AD_002, true);
         });
 
         foreach (var item in charactors)

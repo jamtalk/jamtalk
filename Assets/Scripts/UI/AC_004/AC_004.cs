@@ -12,10 +12,15 @@ public class AC_004 : MonoBehaviour
     public Dropdown bookNumber;
     public Dropdown bookPage;
     public Text textLog;
-    private void Awake()
+
+    private void Start()
     {
+        book.onValueChanged.AddListener(OnBookChanged);
+        bookNumber.onValueChanged.AddListener(OnBookNumberChanged);
+        bookPage.onValueChanged.AddListener(OnBookPageChanged);
+
         book.options = GameManager.Instance.GetEnums<eBookType>()
-            .OrderBy(x=>(int)x)
+            .OrderBy(x => (int)x)
             .Select(x =>
             {
                 switch (x)
@@ -41,10 +46,12 @@ public class AC_004 : MonoBehaviour
     private void OnBookChanged(int value)
     {
         GameManager.Instance.currentBook = (eBookType)value;
-        GameManager.Instance.currentBookNumber = 1;
-        GameManager.Instance.currentPage = 1;
+        //GameManager.Instance.currentBookNumber = 1;
+        //GameManager.Instance.currentPage = 1;
+        var now = System.DateTime.Now;
         bookNumber.options = GameManager.Instance.GetBookNumbers(GameManager.Instance.currentBook).Select(x => new Dropdown.OptionData(x + "권")).ToList();
-        OnBookNumberChanged(0);
+        bookNumber.value = 0;
+        bookPage.value = 0;
         textLog.text = string.Empty;
     }
 
@@ -53,7 +60,8 @@ public class AC_004 : MonoBehaviour
         GameManager.Instance.currentBookNumber = value+1;
         GameManager.Instance.currentPage = 1;
         bookPage.options = GameManager.Instance.GetBookNumbers(GameManager.Instance.currentBook, value + 1).Select(x => new Dropdown.OptionData(x + "페이지")).ToList();
-        OnBookPageChanged(0);
+        bookPage.value = value;
+        bookPage.value = 0;
 
         textLog.text = string.Empty;
     }

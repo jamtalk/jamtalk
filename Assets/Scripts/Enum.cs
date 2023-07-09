@@ -540,3 +540,10 @@ public enum eBookType
     LD, //리틀 다빈치
     SP, //수 놀이터
 }
+
+public enum eBookLevel
+{
+    Low,
+    Middle,
+    Top
+}

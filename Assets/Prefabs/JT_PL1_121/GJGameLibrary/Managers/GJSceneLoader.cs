@@ -32,6 +32,7 @@ namespace GJGameLibrary
         public void LoadScene(eSceneName nextScene, bool withLoading = false) => StartCoroutine(LoadSceneAsync(nextScene, withLoading));
         IEnumerator LoadSceneAsync(eSceneName scene, bool withLoading = false)
         {
+            Debug.LogFormat("{0}씬 로딩 {1}", scene.ToString(), withLoading);
             currentScene = scene;
             var op = SceneManager.LoadSceneAsync(scene.ToString());
             SceneLoadingPopup loading = null;
@@ -95,6 +96,7 @@ namespace GJGameLibrary
 
             if (withLoading)
                 Destroy(loading.gameObject);
+
             Debug.LogFormat("[::{0}::] 씬 로딩 완료\n로딩화면 여부 : {1}", SceneManager.GetActiveScene().name, withLoading);
             PopupManager.Instance.Clear();
             yield break;

@@ -96,7 +96,9 @@ public partial class RequestManager : MonoSingleton<RequestManager>
     {
         using (UnityWebRequest www = UnityWebRequest.Post(url, param.GetForm()))
         {
-            var loading = PopupManager.Instance.ShowLoading();
+            Action loading = null;
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != eSceneName.AD_001.ToString())
+                loading = PopupManager.Instance.ShowLoading();
             //www.SetRequestHeader("Content-Type", "multipart/form-data; boundary=<calculated when request is sent>");
             yield return www.SendWebRequest();
             loading?.Invoke();

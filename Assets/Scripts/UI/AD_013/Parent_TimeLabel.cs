@@ -11,6 +11,12 @@ public class Parent_TimeLabel : MonoBehaviour
     private void Awake()
     {
         var child = UserDataManager.Instance.CurrentChild;
+        RequestManager.Instance.Request(new EduLogViewParam(), response =>
+        {
+            var result = response.GetResult<DataRequestResult<EduLogViewResultData>>();
+            var data = result.data;
+
+        });
     }
 }
 
@@ -20,4 +26,7 @@ public class Parent_TimeLabel_Card
     public Text textPeriod;
     public Text textTime;
     public Text textBooks;
+    public void Init(EduLogViewResultData data)
+    {
+    }
 }
