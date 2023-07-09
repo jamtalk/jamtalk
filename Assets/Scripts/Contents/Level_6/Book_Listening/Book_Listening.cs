@@ -27,16 +27,16 @@ public class Book_Listening : BaseContents<BookContentsSetting>
     public Button buttonPlay;
 
     private int index = 0;
-
+    protected override void Awake()
+    {
+        base.Awake();
+        base.OnAwake();
+        data = GameManager.Instance.GetCurrentBooks().SelectMany(x => x.sentances).OrderBy(x => x.priority).ToArray();
+        for (int i = 0; i < data.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(data[i].spriteAsync);
+    }
     protected override void OnAwake()
     {
-        Debug.Log("로딩 완료");
-        base.OnAwake();
-        Debug.Log("테스트값 설정 완료");
-        data = GameManager.Instance.GetCurrentBooks().SelectMany(x=>x.sentances).OrderBy(x=>x.priority).ToArray();
-        Debug.Log("데이터 로딩 완료");
-        screen.sprite = data[index].sprite;
-        Debug.Log("이미지 불러오기 완료");
         buttonNext.onClick.AddListener(() => Show(index + 1));
         buttonPrevious.onClick.AddListener(() => Show(index - 1));
         buttonPlay.onClick.AddListener(() => Show(index));

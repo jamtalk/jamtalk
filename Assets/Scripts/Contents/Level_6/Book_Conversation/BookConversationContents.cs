@@ -22,20 +22,26 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
     private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
 
     protected override bool includeExitButton => false;
-
-    protected override void OnAwake()
+    protected override void Awake()
     {
-        base.OnAwake();
-        datas = GameManager.Instance.GetCurrentBook().conversations.OrderBy(x => x.priority).ToArray();
-        ShowQuestion(0);
+        base.Awake();
+
         buttonSTT.onClick.AddListener(RecordAction);
-        recorder.onSTTResult += (success,value) =>
+        recorder.onSTTResult += (success, value) =>
         {
             if (success)
                 AddAnswer(value);
         };
         buttonPlay.onClick.AddListener(PlayAudio);
         buttonReplay.onClick.AddListener(PlayAudio);
+        datas = GameManager.Instance.GetCurrentBook().conversations.OrderBy(x => x.priority).ToArray();
+        for (int i = 0; i < datas.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(datas[i].spriteAsync);
+    }
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        ShowQuestion(0);
     }
     private void Update()
     {

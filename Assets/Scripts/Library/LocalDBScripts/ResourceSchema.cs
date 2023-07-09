@@ -507,7 +507,8 @@ public class BookMetaData
         //    .First();
     }
 
-    public Sprite GetSprite() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}",type.ToString(),bookNumber,page)).WaitForCompletion();
+    public Sprite GetSprite() => GetSpriteAsync().WaitForCompletion();
+    public AsyncOperationHandle<Sprite> GetSpriteAsync() => Addressables.LoadAssetAsync<Sprite>(string.Format("Sentance/{0}/{1}/{2}", type.ToString(), bookNumber, page));
     public Sprite GetSprite(BookWordData data) => GetSpriteAsync(data).WaitForCompletion();
     public AsyncOperationHandle<Sprite> GetSpriteAsync(BookWordData data) => Addressables.LoadAssetAsync<Sprite>(string.Format("Words/{0}/{1}/{2}.{3}", type.ToString(), bookNumber, data.value, data.extension));
     public void SetBook()
@@ -531,6 +532,7 @@ public class BookConversationData
     public void SetBook(BookMetaData book) => currentBook = book;
     [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite();
+    public AsyncOperationHandle<Sprite> spriteAsync => currentBook.GetSpriteAsync();
 }
 public class BookSentanceData : BaseSentanceData
 {
@@ -552,6 +554,7 @@ public class BookSentanceData : BaseSentanceData
     public void SetBook(BookMetaData book) => currentBook = book;
     [JsonIgnore]
     public Sprite sprite => currentBook.GetSprite();
+    public AsyncOperationHandle<Sprite> spriteAsync => currentBook.GetSpriteAsync();
 }
 public class BookWordData
 {
