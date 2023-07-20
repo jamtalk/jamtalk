@@ -29,8 +29,9 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
         //SettingTTS(1f, .8f);
         //AndroidPlugin.StartTextToSpeech(message, receiveObject.name, "OnStatus", "OnStart", "OnDone", "OnStop");
         AndroidPlugin.InitTextToSpeech(name, "OnStatus"); //Check the initialize status
-        base.Initialize();
+        tts.Locale = "en";
         tts = gameObject.AddComponent<TextToSpeechController>();
+        base.Initialize();
         tts.OnDone.AddListener(() => onDoneCallback?.Invoke());
         tts.OnStart.AddListener(() => onStartCallBack?.Invoke());
     }
