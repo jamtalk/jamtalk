@@ -13,38 +13,62 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     public Button button;
     public Image targetImage;
     public Text text;
-    public STTButton sttButton;
+
+    public Button buttonSTT;
+    private Tween buttonTween;
+    private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
     protected override int QuestionCount => 5;
     protected override bool includeExitButton => false;
     protected override bool isGuidence => false;
     protected override bool showPopupOnEnd => false;
     protected override bool showQuestionOnAwake => false;
     protected override eContents contents => eContents.Book_Words;
-    Tween sttTween;
+
     protected override void OnAwake()
     {
         isGuide = false;
         base.OnAwake();
-        sttButton.onRecord += OnRecord;
-        sttButton.onSTT += OnSTT;
-        button.onClick.AddListener(() =>
+        buttonSTT.onClick.AddListener(RecordAction);
+        recorder.onSTTResult += (success, value) =>
         {
-            PlayCorrect(currentQuestion);
-        });
+            PopupManager.Instance.Close();
+            if (success)
+                AddAnswer(currentQuestion.correct);
+        };
     }
-    private void OnRecord(bool isRecording)
+    private void RecordAction()
     {
-        if (isRecording)
-        {
-            sttTween = sttButton.transform.DOScale(1.5f, .5f);
-            sttTween.SetEase(Ease.Linear);
-            sttTween.SetLoops(-1, LoopType.Yoyo);
-            sttTween.onKill += () => sttButton.transform.localScale = Vector3.one;
-        }
+        recorder.RecordOrSendSTT();
+        var isRecord = Microphone.IsRecording(recorder.deviceName);
+        if (isRecord)
+            PlayButtonTween();
         else
+            StopButtonTween();
+    }
+
+    private void PlayButtonTween()
+    {
+        if (buttonTween != null)
         {
-            sttTween.Kill();
+            buttonTween.Kill();
+            buttonTween = null;
         }
+        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+        buttonTween.SetEase(Ease.Linear);
+        buttonTween.SetLoops(-1, LoopType.Yoyo);
+        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+        buttonTween.Play();
+    }
+    private void StopButtonTween()
+    {
+        PopupManager.Instance.ShowLoading();
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+
+        buttonSTT.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f);
     }
     private void Update()
     {
@@ -61,16 +85,6 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
             .Take(QuestionCount)
             .Select(x => new BookWordsSpeakQuestion(x, new BookWordData[0]))
             .ToList();
-    }
-
-    public void OnSTT(string value)
-    {
-        OnRecord(false);
-        AddAnswer(currentQuestion.correct);
-        //if(value == currentQuestion.correct.value)
-        //{
-        //    AddAnswer(currentQuestion.correct);
-        //}
     }
 
     protected override void ShowQuestion(BookWordsSpeakQuestion question)

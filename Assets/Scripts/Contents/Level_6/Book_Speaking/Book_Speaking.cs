@@ -11,8 +11,9 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     public override eSceneName NextScene => eSceneName.AC_004;
     public EventSystem eventSystem;
     public Button button;
-    public STTButton sttButton;
-    private Tween sttTween;
+    public Button buttonSTT;
+    private Tween buttonTween;
+    private VoiceRecorder recorder => buttonSTT.GetComponent<VoiceRecorder>();
     /// <summary>
     /// BookSentanceData[페이지][대사순서]
     /// </summary>
@@ -32,23 +33,27 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
         base.Awake();
         data = MakeQuestion();
         button.onClick.AddListener(PlayCorrect);
-        sttButton.onSTT += OnSTT;
-        sttButton.onRecord += OnRecord;
         currentPage = 1;
         currentPriority = 0;
+        buttonSTT.onClick.AddListener(RecordAction);
+        recorder.onSTTResult += (success, value) =>
+        {
+            PopupManager.Instance.Close();
+            if (success)
+            {
+                currentPriority += 1;
+                if (!data[currentPage].ContainsKey(currentPriority))
+                    ShowResult();
+                else
+                    ShowQuestion();
+            }
+        };
     }
 
     protected override void OnAwake()
     {
         base.OnAwake();
         ShowQuestion();
-    }
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            OnSTT(currentSentance.value);
-        }
     }
     public Dictionary<int, Dictionary<int, BookConversationData>> MakeQuestion()
     {
@@ -92,48 +97,43 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
         button.image.preserveAspect = true;
         AndroidPluginManager.Instance.PlayTTS(currentSentance.value);
     }
-    public void OnSTT(string value)
-    {
-        Debug.Log("결과 도착 : " + value);
-        OnRecord(false);
-        //if (currentSentance.value == value)
-        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-         {
-             currentPriority += 1;
-
-             if (!data[currentPage].ContainsKey(currentPriority))
-             {
-                 ShowResult();
-                 //currentPage += 1;
-                 //if (data.ContainsKey(currentPage))
-                 //    currentPriority = data[currentPage].Keys.Min();
-             }
-
-             //if (CheckOver())
-             //    ShowResult();
-             else
-                 ShowQuestion();
-         });
-    }
-
 
     private void PlayCorrect()
     {
         AndroidPluginManager.Instance.PlayTTS(currentSentance.value);
     }
-    private void OnRecord(bool isRecording)
+    private void RecordAction()
     {
-        if (isRecording)
-        {
-            sttTween = sttButton.transform.DOScale(1.5f, .5f);
-            sttTween.SetEase(Ease.Linear);
-            sttTween.SetLoops(-1, LoopType.Yoyo);
-            sttTween.onKill += () => sttButton.transform.localScale = Vector3.one;
-        }
+        recorder.RecordOrSendSTT();
+        var isRecord = Microphone.IsRecording(recorder.deviceName);
+        if (isRecord)
+            PlayButtonTween();
         else
+            StopButtonTween();
+    }
+
+    private void PlayButtonTween()
+    {
+        if (buttonTween != null)
         {
-            sttTween.Kill();
-            eventSystem.enabled = true;
+            buttonTween.Kill();
+            buttonTween = null;
         }
+        buttonTween = buttonSTT.GetComponent<RectTransform>().DOScale(1.5f, 1f);
+        buttonTween.SetEase(Ease.Linear);
+        buttonTween.SetLoops(-1, LoopType.Yoyo);
+        buttonTween.onKill += () => buttonSTT.GetComponent<RectTransform>().localScale = Vector3.one;
+        buttonTween.Play();
+    }
+    private void StopButtonTween()
+    {
+        PopupManager.Instance.ShowLoading();
+        if (buttonTween != null)
+        {
+            buttonTween.Kill();
+            buttonTween = null;
+        }
+
+        buttonSTT.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f);
     }
 }

@@ -29,6 +29,7 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
         buttonSTT.onClick.AddListener(RecordAction);
         recorder.onSTTResult += (success, value) =>
         {
+            PopupManager.Instance.Close();
             if (success)
                 AddAnswer(CurrentData.value);
         };
@@ -75,7 +76,6 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
     {
         recorder.RecordOrSendSTT();
         var isRecord = Microphone.IsRecording(recorder.deviceName);
-
         if (isRecord)
             PlayButtonTween();
         else
@@ -97,6 +97,7 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
     }
     private void StopButtonTween()
     {
+        PopupManager.Instance.ShowLoading();
         if (buttonTween != null)
         {
             buttonTween.Kill();

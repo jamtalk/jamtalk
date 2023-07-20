@@ -28,9 +28,11 @@ public class ContentsViewer : MonoBehaviour
         for (int i = 0; i < toggles.Length; i++)
             AddToggleListener(toggles[i], i);
         var level = UserDataManager.Instance.CurrentChild.level;
+#if DEPLOY
         for (int i = 0;i< levelToggles.Length; i++)
             levelToggles[i].interactable = i < level;
         buttonLevel6.interactable = level == 6;
+#endif
 
         if (UserDataManager.Instance.CurrentChild.level == 6)
             Show(Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x)).ToArray());
@@ -171,8 +173,10 @@ public class ContentsViewer : MonoBehaviour
         {
             button.Init(contents, sprite.Result);
             button.gameObject.SetActive(true);
+#if DEPLOY
             if (UserDataManager.Instance.CurrentChild.GetContents() < contents)
                 button.Disable();
+#endif
         };
     }
     private void CloseAll()
