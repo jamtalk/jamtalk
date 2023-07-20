@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GJGameLibrary.DesignPattern;
+using FantomLib;
 //using System.Runtime.InteropServices;
 
 public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
@@ -15,6 +16,8 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
     public Action onStartCallBack;
     public Action onDoneCallback;
     public Action<string> onSpeakRangeCallback;
+
+    public TextToSpeechController tts;
     [Range(0.5f, 2)]
     public float pitch = 1f; //[0.5 - 2] Default 1
     [Range(0.5f, 2)]
@@ -23,22 +26,28 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
     {
         pluginClass = new AndroidJavaClass(string.Format("{0}.{1}", package, "UnityPlugin"));
         pluginInstance = pluginClass.CallStatic<AndroidJavaObject>("Instance",gameObject.name);
-        SettingTTS(1f, .8f);
+        //SettingTTS(1f, .8f);
+        //AndroidPlugin.StartTextToSpeech(message, receiveObject.name, "OnStatus", "OnStart", "OnDone", "OnStop");
+        AndroidPlugin.InitTextToSpeech(name, "OnStatus"); //Check the initialize status
         base.Initialize();
+        tts = gameObject.AddComponent<TextToSpeechController>();
+        tts.OnDone.AddListener(() => onDoneCallback?.Invoke());
+        tts.OnStart.AddListener(() => onStartCallBack?.Invoke());
     }
-    public void SettingTTS(float _pitch, float _rate)
-    {
-        pitch = _pitch;
-        rate = _rate;
-#if UNITY_EDITOR
-#elif UNITY_IPHONE
-        //_TAG_SettingSpeak("kr", pitch, rate / 2);
-#elif UNITY_ANDROID
-        pluginInstance.Call("OnSettingSpeak", pitch, rate);
-#endif
-    }
+//    public void SettingTTS(float _pitch, float _rate)
+//    {
+//        pitch = _pitch;
+//        rate = _rate;
+//#if UNITY_EDITOR
+//#elif UNITY_IPHONE
+//        //_TAG_SettingSpeak("kr", pitch, rate / 2);
+//#elif UNITY_ANDROID
+//        pluginInstance.Call("OnSettingSpeak", pitch, rate);
+//#endif
+//    }
     public void PlayTTS(string _message, Action onCompleted = null)
     {
+        AndroidPlugin.StartTextToSpeech(_message, "en", "", "onStart", "onDone", "onStop");
         onDoneCallback = onCompleted;
 #if UNITY_EDITOR
         Debug.Log("TTS : "+_message);
@@ -56,8 +65,13 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
 #elif UNITY_IPHONE
         //_TAG_StopSpeak();
 #elif UNITY_ANDROID
-        pluginInstance.Call("OnStopSpeak");
+        AndroidPlugin.StopTextToSpeech();
+        //pluginInstance.Call("OnStopSpeak");
 #endif
+    }
+    private void onStop(string message)
+    {
+        Debug.LogFormat("[::TTS::] {0}", message);
     }
 
     public void onSpeechRange(string _message)
