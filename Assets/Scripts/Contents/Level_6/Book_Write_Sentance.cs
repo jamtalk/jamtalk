@@ -17,11 +17,17 @@ public class Book_Write_Sentance : BaseMatchSentances<BookContentsSetting,BookSe
     protected override bool isGuidence => false;
     protected override bool showPopupOnEnd => false;
     protected override bool showQuestionOnAwake => false;
+    protected override void Awake()
+    {
+        base.Awake();
+        isGuide = false;
+        button.onClick.AddListener(() => PlayCurrentSentance());
+        for (int i = 0; i < sources.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(sources[i].spriteAsync);
+    }
     protected override void OnAwake()
     {
-        isGuide = false;
         base.OnAwake();
-        button.onClick.AddListener(() => PlayCurrentSentance());
     }
     public void StartQuestion() => ShowQuestion();
     protected override void ShowQuestion()

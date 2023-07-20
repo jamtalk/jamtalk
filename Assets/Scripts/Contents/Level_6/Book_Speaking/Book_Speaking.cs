@@ -1,3 +1,4 @@
+Ôªøusing DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     public EventSystem eventSystem;
     public Button button;
     public STTButton sttButton;
+    private Tween sttTween;
     /// <summary>
-    /// BookSentanceData[∆‰¿Ã¡ˆ][¥ÎªÁº¯º≠]
+    /// BookSentanceData[ÌéòÏù¥ÏßÄ][ÎåÄÏÇ¨ÏàúÏÑú]
     /// </summary>
     public Dictionary<int,Dictionary<int, BookConversationData>> data;
     public int currentPage { get; private set; } = 1;
@@ -25,15 +27,20 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
 
     protected override bool includeExitButton => false;
     protected override bool isGuidence => false;
+    protected override void Awake()
+    {
+        base.Awake();
+        data = MakeQuestion();
+        button.onClick.AddListener(PlayCorrect);
+        sttButton.onSTT += OnSTT;
+        sttButton.onRecord += OnRecord;
+        currentPage = 1;
+        currentPriority = 0;
+    }
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        button.onClick.AddListener(PlayCorrect);
-        sttButton.onSTT += OnSTT;
-        currentPage = 1;
-        currentPriority = 0;
-        data = MakeQuestion();
         ShowQuestion();
     }
     private void Update()
@@ -41,7 +48,6 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
         if (Input.GetKey(KeyCode.Space))
         {
             OnSTT(currentSentance.value);
-            eventSystem.enabled = true;
         }
     }
     public Dictionary<int, Dictionary<int, BookConversationData>> MakeQuestion()
@@ -59,6 +65,10 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
                     dic.Add(page, new Dictionary<int, BookConversationData>());
                 if (!dic[page].ContainsKey(priority))
                     dic[page].Add(priority, tmp[i]);
+            }
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                SceneLoadingPopup.SpriteLoader.Add(tmp[i].spriteAsync);
             }
         }
 
@@ -84,28 +94,46 @@ public class Book_Speaking : BaseContents<BookContentsSetting>
     }
     public void OnSTT(string value)
     {
-        if (currentSentance.value == value)
-            audioPlayer.Play(1f,GameManager.Instance.GetClipCorrectEffect(), () =>
-            {
-                currentPriority += 1;
+        Debug.Log("Í≤∞Í≥º ÎèÑÏ∞© : " + value);
+        OnRecord(false);
+        //if (currentSentance.value == value)
+        audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
+         {
+             currentPriority += 1;
 
-                if (!data[currentPage].ContainsKey(currentPriority))
-                {
-                    currentPage += 1;
-                    if (data.ContainsKey(currentPage))
-                        currentPriority = data[currentPage].Keys.Min();
-                }
+             if (!data[currentPage].ContainsKey(currentPriority))
+             {
+                 ShowResult();
+                 //currentPage += 1;
+                 //if (data.ContainsKey(currentPage))
+                 //    currentPriority = data[currentPage].Keys.Min();
+             }
 
-                if (CheckOver())
-                    ShowResult();
-                else
-                    ShowQuestion();
-            });
+             //if (CheckOver())
+             //    ShowResult();
+             else
+                 ShowQuestion();
+         });
     }
 
 
     private void PlayCorrect()
     {
         AndroidPluginManager.Instance.PlayTTS(currentSentance.value);
+    }
+    private void OnRecord(bool isRecording)
+    {
+        if (isRecording)
+        {
+            sttTween = sttButton.transform.DOScale(1.5f, .5f);
+            sttTween.SetEase(Ease.Linear);
+            sttTween.SetLoops(-1, LoopType.Yoyo);
+            sttTween.onKill += () => sttButton.transform.localScale = Vector3.one;
+        }
+        else
+        {
+            sttTween.Kill();
+            eventSystem.enabled = true;
+        }
     }
 }

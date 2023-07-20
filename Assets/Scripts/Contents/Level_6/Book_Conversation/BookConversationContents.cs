@@ -30,7 +30,7 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
         recorder.onSTTResult += (success, value) =>
         {
             if (success)
-                AddAnswer(value);
+                AddAnswer(CurrentData.value);
         };
         buttonPlay.onClick.AddListener(PlayAudio);
         buttonReplay.onClick.AddListener(PlayAudio);

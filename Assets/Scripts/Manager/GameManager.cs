@@ -16,7 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     public eVowelType currentVowel { get; set; } = eVowelType.Short;
     public eBookType currentBook { get; set; } = eBookType.LD;
     public int currentBookNumber { get; set; } = 1;
-    public int currentPage { get; set; } = 0;
+    public int currentPage { get; set; } = 1;
     private ResourceSchema _schema = null;
     public ResourceSchema schema
     {
@@ -157,7 +157,7 @@ public class GameManager : MonoSingleton<GameManager>
             new FacebookSigner().SignInSNS(callback);
     }
 
-    public void SignIn(string id, string pw, eProvider provider, string uid, Action onCompleted = null)
+    public void SignIn(string id, string pw, eProvider provider, string uid, Action<bool> onCompleted = null)
     {
         if (string.IsNullOrEmpty(id))
             AndroidPluginManager.Instance.Toast("아이디를 입력하세요.");
@@ -172,6 +172,7 @@ public class GameManager : MonoSingleton<GameManager>
                 if (result.code != eErrorCode.Success)
                 {
                     AndroidPluginManager.Instance.Toast(res.GetResult<ActRequestResult>().msg);
+                    onCompleted?.Invoke(false);
                 }
                 else
                 {
@@ -180,12 +181,8 @@ public class GameManager : MonoSingleton<GameManager>
                         var isEmail = id.Contains("email:");
                         if (!isEmail) id = "email:" + id;
                     }
-                    UserDataManager.Instance.LoadUserData(id, () =>
-                    {
-                        GJSceneLoader.Instance.LoadScene(eSceneName.AD_003, true);
-                    });
-                }
-                onCompleted?.Invoke();
+
+                    onCompleted?.Invoke(true);}
             });
         }
     }

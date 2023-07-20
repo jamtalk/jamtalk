@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using TMPro;
 using DG.Tweening;
 using static UnityEngine.Networking.UnityWebRequest;
+using UnityEngine.AddressableAssets;
 
 public class Book_Listening : BaseContents<BookContentsSetting>
 {
@@ -33,7 +34,10 @@ public class Book_Listening : BaseContents<BookContentsSetting>
         base.OnAwake();
         data = GameManager.Instance.GetCurrentBooks().SelectMany(x => x.sentances).OrderBy(x => x.priority).ToArray();
         for (int i = 0; i < data.Length; i++)
+        {
             SceneLoadingPopup.SpriteLoader.Add(data[i].spriteAsync);
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data[i].clip));
+        }
     }
     protected override void OnAwake()
     {
@@ -57,11 +61,12 @@ public class Book_Listening : BaseContents<BookContentsSetting>
         }
 
         var currentData = this.data[index];
-
-        player.Play(currentData.clip);
+        if (string.IsNullOrEmpty(currentData.clip))
+            AndroidPluginManager.Instance.PlayTTS(currentData.en);
+        else
+            player.Play(currentData.clip);
         screen.sprite = currentData.sprite;
         caption.text = currentData.en;
-        Debug.Log(currentData.en);
     }
 
     private string[] richColor = {

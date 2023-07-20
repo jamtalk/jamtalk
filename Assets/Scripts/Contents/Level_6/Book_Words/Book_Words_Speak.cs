@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,31 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
     protected override bool showPopupOnEnd => false;
     protected override bool showQuestionOnAwake => false;
     protected override eContents contents => eContents.Book_Words;
+    Tween sttTween;
     protected override void OnAwake()
     {
         isGuide = false;
         base.OnAwake();
+        sttButton.onRecord += OnRecord;
         sttButton.onSTT += OnSTT;
         button.onClick.AddListener(() =>
         {
             PlayCorrect(currentQuestion);
         });
+    }
+    private void OnRecord(bool isRecording)
+    {
+        if (isRecording)
+        {
+            sttTween = sttButton.transform.DOScale(1.5f, .5f);
+            sttTween.SetEase(Ease.Linear);
+            sttTween.SetLoops(-1, LoopType.Yoyo);
+            sttTween.onKill += () => sttButton.transform.localScale = Vector3.one;
+        }
+        else
+        {
+            sttTween.Kill();
+        }
     }
     private void Update()
     {
@@ -48,10 +65,12 @@ public class Book_Words_Speak : SingleAnswerContents<BookContentsSetting, BookWo
 
     public void OnSTT(string value)
     {
-        if(value == currentQuestion.correct.value)
-        {
-            AddAnswer(currentQuestion.correct);
-        }
+        OnRecord(false);
+        AddAnswer(currentQuestion.correct);
+        //if(value == currentQuestion.correct.value)
+        //{
+        //    AddAnswer(currentQuestion.correct);
+        //}
     }
 
     protected override void ShowQuestion(BookWordsSpeakQuestion question)

@@ -33,7 +33,11 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
     protected virtual int QuestionCount => 4;
 
     bool isThrow = false;
-
+    protected override void Awake()
+    {
+        base.Awake();
+        sources = GetSentance();
+    }
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
@@ -97,7 +101,6 @@ public abstract class BaseMatchSentances<TTestSetting,TSentance> : BaseContents<
     protected override void OnAwake()
     {
         base.OnAwake();
-        sources = GetSentance();
         if(showQuestionOnAwake)
             ShowQuestion();
     }

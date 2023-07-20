@@ -36,16 +36,28 @@ public class StarterScene : MonoBehaviour
                 Debug.LogFormat("id : {0}, pw : {1} uid : {2}, provider : {3}", id, pw, uid, provider);
 
                 UserDataManager.Instance.LoadUserData(id, () =>
-                 {
+                {
                      //SignInUI.SignIn(id, pw, provider, uid);
 
-                     loading.gameObject.SetActive(false);
-                     GameManager.Instance.SignIn(id, pw, provider, uid);
-                     var time = DateTime.Now;
-                     var data = GameManager.Instance.schema.data;
-                     Debug.LogFormat("로딩 시간 {0}초 걸림", (DateTime.Now - time).TotalSeconds);
+                     GameManager.Instance.SignIn(id, pw, provider, uid,(result)=>
+                     {
+                         loading.gameObject.SetActive(false);
+                         if (result)
+                         {
+                             var time = DateTime.Now;
+                             var data = GameManager.Instance.schema.data;
+                             if(UserDataManager.Instance.CurrentChild.level<6)
+                                GJSceneLoader.Instance.LoadScene(eSceneName.AD_003, true);
+                             else
+                                 GJSceneLoader.Instance.LoadScene(eSceneName.AC_004, true);
+                         }
+                         else
+                         {
+                             GJSceneLoader.Instance.LoadScene(eSceneName.AD_002, true);
+                         }
+                     });
                      //GJSceneLoader.Instance.LoadScene(eSceneName.AD_003, true);
-                 });
+                });
 
             }
             else

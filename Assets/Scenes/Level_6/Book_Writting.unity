@@ -449,7 +449,7 @@ RectTransform:
   - {fileID: 650387925}
   - {fileID: 1490080790}
   m_Father: {fileID: 483075783}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -468,10 +468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6152f7c83ba39a347bd5f7470ffb629f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testSetting:
-    book: 0
-    bookNumber: 1
-    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
@@ -702,6 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 8
+  withLoading: 0
 --- !u!1 &256338570
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &459887844
 RectTransform:
   m_ObjectHideFlags: 0
@@ -969,7 +966,7 @@ RectTransform:
   - {fileID: 1742546371}
   - {fileID: 999617471}
   m_Father: {fileID: 483075783}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -988,10 +985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c36c73767455d4f9d9544023932998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testSetting:
-    book: 0
-    bookNumber: 1
-    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
@@ -1165,8 +1158,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 226720603}
   - {fileID: 459887844}
+  - {fileID: 226720603}
   - {fileID: 2146962700}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1188,10 +1181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1078dcca5d49f184fbe909a82dda7c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testSetting:
-    book: 0
-    bookNumber: 1
-    page: 1
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 590856610}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
@@ -1566,6 +1555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 8
+  withLoading: 0
 --- !u!114 &818539783
 MonoBehaviour:
   m_ObjectHideFlags: 0

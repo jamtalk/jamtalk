@@ -9,6 +9,8 @@ using OptionData = UnityEngine.UI.Dropdown.OptionData;
 
 public class ContentsViewer : MonoBehaviour
 {
+    public Toggle[] levelToggles;
+    public Button buttonLevel6;
     public GameObject orizinal;
     public List<ContentsButton> items;
     public GridLayoutGroup layout;
@@ -21,10 +23,28 @@ public class ContentsViewer : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(SetLayout());
-        Show(Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x)).ToArray());
+        //Show(Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x)).ToArray());
 
         for (int i = 0; i < toggles.Length; i++)
             AddToggleListener(toggles[i], i);
+        var level = UserDataManager.Instance.CurrentChild.level;
+        for (int i = 0;i< levelToggles.Length; i++)
+            levelToggles[i].interactable = i < level;
+        buttonLevel6.interactable = level == 6;
+
+        if (UserDataManager.Instance.CurrentChild.level == 6)
+            Show(Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x)).ToArray());
+        else
+        {
+            var enums = Enum.GetNames(typeof(eContents)).Select(x => (eContents)Enum.Parse(typeof(eContents), x));
+            var min = (UserDataManager.Instance.CurrentChild.level - 1) * 100;
+            Debug.LogFormat("현재 컨텐츠 : {0}/{1}", UserDataManager.Instance.CurrentChild.contents_title, UserDataManager.Instance.CurrentChild.GetContents());
+            //var max = (int)UserDataManager.Instance.CurrentChild.GetContents();
+            //enums = enums.Where(x => (int)x >= min && (int)x <= max);
+
+
+            Show(enums.OrderBy(x => x).ToArray());
+        }
     }
 
     private void AddToggleListener(Toggle toggle,int num)
@@ -40,11 +60,12 @@ public class ContentsViewer : MonoBehaviour
                 if(num != 0)
                 {
                     var min = num * 100;
-                    var max = (num + 1) * 100;
-                    enums = enums.Where(x => (int)x >= min && (int)x < max);
+                    Debug.LogFormat("현재 컨텐츠 : {0}/{1}", UserDataManager.Instance.CurrentChild.contents_title, UserDataManager.Instance.CurrentChild.GetContents());
+                    var max = (int)UserDataManager.Instance.CurrentChild.GetContents();
+                    enums = enums.Where(x => (int)x >= min && (int)x <= max);
                 }
             }
-            Debug.LogFormat("{0} -> {1}", ori, enums.Count());
+
             Show(enums.OrderBy(x => x).ToArray());
 
             if (0 < num && num < 6)
@@ -150,12 +171,14 @@ public class ContentsViewer : MonoBehaviour
         {
             button.Init(contents, sprite.Result);
             button.gameObject.SetActive(true);
+            if (UserDataManager.Instance.CurrentChild.GetContents() < contents)
+                button.Disable();
         };
     }
     private void CloseAll()
     {
         for (int i = 0; i < items.Count; i++)
-            items[i].gameObject.SetActive(false);
+            items[i].Disable();
     }
     IEnumerator SetLayout()
     {

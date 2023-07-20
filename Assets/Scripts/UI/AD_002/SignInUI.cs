@@ -32,9 +32,10 @@ public class SignInUI : MonoBehaviour
 
         buttonSignIn.onClick.AddListener(() =>
         {
-            GameManager.Instance.SignIn(email.text, this.pw.text, eProvider.none, string.Empty,() =>
+            GameManager.Instance.SignIn(email.text, this.pw.text, eProvider.none, string.Empty,(result) =>
             {
-                SetPlayerprefs(email.text, pw.text, eProvider.none, string.Empty);
+                if(result)
+                    SetPlayerprefs(email.text, pw.text, eProvider.none, string.Empty);
             });
         });
         buttonKakao.onClick.AddListener(() => OnClickSigninSNS(eProvider.kakao));
@@ -104,6 +105,18 @@ public class SignInUI : MonoBehaviour
         }
 
         PlayerPrefs.Save();
-        GameManager.Instance.SignIn(id, pw, provider, uid);
+        GameManager.Instance.SignIn(id, pw, provider, uid,(result)=>
+        {
+            if (result)
+            {
+                UserDataManager.Instance.LoadUserData(id, () =>
+                {
+                    if (UserDataManager.Instance.CurrentChild.level < 6)
+                        GJSceneLoader.Instance.LoadScene(eSceneName.AD_003);
+                    else
+                        GJSceneLoader.Instance.LoadScene(eSceneName.AC_004);
+                });
+            }
+        });
     }
 }   

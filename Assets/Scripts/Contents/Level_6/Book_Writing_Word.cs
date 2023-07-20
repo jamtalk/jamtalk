@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,7 +31,17 @@ public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_
     }
     private void PlayCorrect(System.Action onOver = null)
     {
-        AndroidPluginManager.Instance.PlayTTS(currentQuestion.correct.value, onOver);
+        onOver?.Invoke();
+        //try
+        //{
+        //    AndroidPluginManager.Instance.PlayTTS(currentQuestion.correct.value, onOver);
+        //}
+        //catch(System.Exception e) 
+        //{
+        //    Debug.Log("STT 에러 발생!!");
+        //    onOver?.Invoke();
+        //    Debug.LogException(e);
+        //}
     }
     protected override List<Book_Writing_WordQuestion> MakeQuestion()
     {
@@ -53,7 +63,10 @@ public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_
         creator.Clear();
         button.image.sprite = question.correct.sprite;
         button.image.preserveAspect = true;
-        CreateLayout(question.correct.value.Replace(" ","").Length);
+        var count = question.correct.value.Replace(" ", "").Length;
+        if (thrower.paths.Length < count)
+            count -= thrower.paths.Length;
+        CreateLayout(count);
         toggles = creator.Create(question.correct.value);
         for (int i = 0; i < toggles.Length; i++)
         {
@@ -83,7 +96,7 @@ public class Book_Writing_Word : SingleAnswerContents<BookContentsSetting, Book_
             if (i < length)
                 list.Add(child.GetComponent<RectTransform>());
         }
-        thrower.paths = list.ToArray();
+        thrower.paths = thrower.paths.Union(list).OrderBy(x => Random.Range(0f, 100f)).ToArray();
     }
 
     private void AddToggleListner(AlphabetToggle110 toggle)

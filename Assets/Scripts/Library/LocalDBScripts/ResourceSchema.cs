@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -28,7 +28,7 @@ public class ResourceSchema : ScriptableObject
     //        if (_data == null)
     //        {
     //            _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
-    //            Debug.Log("µ¥ÀÌÅÍ ½Å±Ô ·Îµù");
+    //            Debug.Log("ë°ì´í„° ì‹ ê·œ ë¡œë”©");
     //        }
     //        return _data;
     //    }
@@ -81,8 +81,10 @@ public class ResourceSchema : ScriptableObject
     {
         if (!bookDic.ContainsKey(type))
             bookDic.Add(type, new Dictionary<int, BookMetaData[]>());
+
         if (!bookDic[type].ContainsKey(bookNumber))
         {
+            Debug.LogFormat("{0}ì±… {1}ê¶Œ ë°ì´í„° ì½ì–´ì˜¤ê¸°\n{2}", type, bookNumber, Resources.Load<TextAsset>(string.Format("BookData/{0}/{1}", type, bookNumber)));
             var data = JsonConvert.DeserializeObject<BookMetaData[]>(Resources.Load<TextAsset>(string.Format("BookData/{0}/{1}", type, bookNumber)).text);
             for (int i = 0; i < data.Length; i++)
                 data[i].SetBook();
@@ -435,13 +437,13 @@ public class DigraphsSentanceData : BaseSentanceData<eDigraphs>
 
 //    public void PlayClip_KR(AudioSource source)
 //    {
-//        //TODO. À½¿øÆÄÀÏ ¹Ş¾ÒÀ» °æ¿ì source·Î ÇÃ·¹ÀÌ
+//        //TODO. ìŒì›íŒŒì¼ ë°›ì•˜ì„ ê²½ìš° sourceë¡œ í”Œë ˆì´
 //        if (string.IsNullOrEmpty(clip_kr))
 //            AndroidPluginManager.Instance.PlayTTS(kr);
 //    }
 //    public void PlayClip_EN(AudioSource source)
 //    {
-//        //TODO. À½¿øÆÄÀÏ ¹Ş¾ÒÀ» °æ¿ì source·Î ÇÃ·¹ÀÌ
+//        //TODO. ìŒì›íŒŒì¼ ë°›ì•˜ì„ ê²½ìš° sourceë¡œ í”Œë ˆì´
 //        if (string.IsNullOrEmpty(clip_en))
 //            AndroidPluginManager.Instance.PlayTTS(en);
 //    }
@@ -492,12 +494,12 @@ public class BookMetaData
     {
         var path = string.Format("BookData/URL/{0}/{1}", type, bookNumber);
         return JsonConvert.DeserializeObject<BookURLData>(Resources.Load<TextAsset>(path).text);
-        //Debug.LogFormat("{0} Ã¥ {1}±Ç <b>{2}</b>ÀÇURL Ã£±â", type, bookNumber, title_en);
-        //Debug.LogFormat(type+"Ã¥ URL µ¥ÀÌÅÍ : {0}±Ç\n{1}", GameManager.Instance.schema.data.bookData
+        //Debug.LogFormat("{0} ì±… {1}ê¶Œ <b>{2}</b>ì˜URL ì°¾ê¸°", type, bookNumber, title_en);
+        //Debug.LogFormat(type+"ì±… URL ë°ì´í„° : {0}ê¶Œ\n{1}", GameManager.Instance.schema.data.bookData
         //    .Where(x => x.key == type).Count(),
         //    string.Join("\n", GameManager.Instance.schema.data.bookData
-        //    .Where(x => x.key == type).Select(x => x.number + "±Ç")));
-        //Debug.LogFormat("{0}±Ç Ã£±â °á°ú : {1}±Ç Ã£À½", bookNumber,
+        //    .Where(x => x.key == type).Select(x => x.number + "ê¶Œ")));
+        //Debug.LogFormat("{0}ê¶Œ ì°¾ê¸° ê²°ê³¼ : {1}ê¶Œ ì°¾ìŒ", bookNumber,
         //    GameManager.Instance.schema.data.bookData
         //    .Where(x => x.key == type)
         //    .Where(x => x.number == bookNumber).Count());

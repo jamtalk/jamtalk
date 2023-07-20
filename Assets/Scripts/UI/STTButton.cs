@@ -22,7 +22,11 @@ public class STTButton : MonoBehaviour
             onRecord?.Invoke(false);
             eventSystem.enabled = true;
         };
-        STTManager.Instance.onError += (error) => AndroidPluginManager.Instance.Toast("???? ???? : " + error);
+        STTManager.Instance.onError += (error) =>
+        {
+            eventSystem.enabled = true;
+            AndroidPluginManager.Instance.Toast("STT ¿À·ù : " + error);
+        };
         STTManager.Instance.onResult += (value) => onSTT(value);
         button.onClick.AddListener(() =>
         {
@@ -33,6 +37,15 @@ public class STTButton : MonoBehaviour
             STTManager.Instance.StartSTT("en-US");
 #endif
         });
+    }
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            onSTT?.Invoke("??");
+        }
+#endif
     }
     private void OnDisable()
     {

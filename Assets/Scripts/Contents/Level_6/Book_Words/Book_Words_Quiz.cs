@@ -77,13 +77,15 @@ public class Book_Words_Quiz : SingleAnswerContents<BookContentsSetting, BookWor
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            eventSystem.enabled = false;
-            AndroidPluginManager.Instance.PlayTTS(data.value, () =>
-            {
-                if (data == currentQuestion.correct)
-                    AddAnswer(data);
-                eventSystem.enabled = true;
-            });
+            //eventSystem.enabled = false;
+            if (data == currentQuestion.correct)
+                AddAnswer(data);
+            //AndroidPluginManager.Instance.PlayTTS(data.value, () =>
+            //{
+            //    if (data == currentQuestion.correct)
+            //        AddAnswer(data);
+            //    eventSystem.enabled = true;
+            //});
         });
     }
 }

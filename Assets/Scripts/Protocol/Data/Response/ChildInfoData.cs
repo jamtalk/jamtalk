@@ -19,7 +19,14 @@ public class ChildInfoData
     public string gender;
     public int day;
     public int alphabet;
-    public int contents_title;
+    public string contents_title;
+    public eContents GetContents()
+    {
+        if (string.IsNullOrEmpty(contents_title))
+            return eContents.JT_PL1_102;
+
+        return (eContents)Enum.Parse(typeof(eContents), contents_title);
+    }
     public bool isDislplay => Convert.ToBoolean(display);
     public DateTime RegistedDate => DateParser.Parse(created_at);
     public int age => DateTime.Now.Year - int.Parse(jumin.ToString().Substring(0, 4));
