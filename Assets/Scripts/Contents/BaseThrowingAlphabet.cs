@@ -19,24 +19,40 @@ public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswer
     protected override int QuestionCount => 2;
     protected override eGameResult GetResult() => eGameResult.Success;
 
+    private Dictionary<eAlphabet, AudioClip> clip = new Dictionary<eAlphabet, AudioClip>();
+    private Dictionary<string, AudioClip> wordClip = new Dictionary<string, AudioClip>();
+
     //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     private bool isMove = false;
     protected override void Awake()
     {
         base.Awake();
         for(int i=0;i < questions.Count; i++)
-            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(questions[i].correct.clip));
+            SceneLoadingPopup.SpriteLoader.Add(wordClipLoader(questions[i].correct.clip));
 
-        var alphabets = questions
+        var audioDatas = questions
             .SelectMany(x => x.correct.key.Replace(" ", "").ToUpper())
             .Select(x => (eAlphabet)System.Enum.Parse(typeof(eAlphabet), x.ToString()))
             .Distinct()
-            .Select(x=> GameManager.Instance.GetResources(x).AudioData.phanics)
+            .Select(x=> GameManager.Instance.GetResources(x).AudioData)
             .ToArray();
 
-        for (int i = 0; i < alphabets.Length; i++)
-            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(alphabets[i]));
+        for (int i = 0; i < audioDatas.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(clipLoader(audioDatas[i]));
     }
+    private IEnumerator clipLoader(AlphabetAudioData data)
+    {
+        var task = Addressables.LoadAssetAsync<AudioClip>(data.phanics);
+        yield return task;
+        clip.Add(data.Alphabet, task.Result);
+    }
+    private IEnumerator wordClipLoader(string clip)
+    {
+        var task = Addressables.LoadAssetAsync<AudioClip>(clip);
+        yield return task;
+        wordClip.Add(clip, task.Result);
+    }
+    
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForSecondsRealtime(10f);
@@ -109,7 +125,7 @@ public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswer
         toggle.onOn += () =>
         {
             if (!toggles.Select(x => x.isOn).Contains(false))
-                audioPlayer.Play(currentQuestion.correct.clip, () => AddAnswer(currentQuestion.correct));
+                audioPlayer.Play(wordClip[currentQuestion.correct.clip], () => AddAnswer(currentQuestion.correct));
             else
                 audioPlayer.Play(GameManager.Instance.GetResources(toggle.value).AudioData.clip);
         };
@@ -118,7 +134,7 @@ public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswer
     {
         drag.onBegin += (eventData) =>
         {
-            audioPlayer.Play(GameManager.Instance.GetResources(drag.value).AudioData.phanics);
+            audioPlayer.Play(clip[drag.value]);
         };
 
         drag.onDrag += (eventData) =>
