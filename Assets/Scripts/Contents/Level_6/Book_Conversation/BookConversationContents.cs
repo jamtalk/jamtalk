@@ -53,7 +53,7 @@ public class BookConversationContents : BaseContents<BookContentsSetting>
     }
     private void PlayAudio()
     {
-        audioPlayer.Play(CurrentData.value);
+        AndroidPluginManager.Instance.PlayTTS(CurrentData.value);
     }
     private void AddAnswer(string value)
     {

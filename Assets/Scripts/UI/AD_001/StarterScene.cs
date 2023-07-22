@@ -41,6 +41,7 @@ public class StarterScene : MonoBehaviour
 
                      GameManager.Instance.SignIn(id, pw, provider, uid,(result)=>
                      {
+                         var instance = AndroidPluginManager.Instance;
                          loading.gameObject.SetActive(false);
                          if (result)
                          {

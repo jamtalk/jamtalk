@@ -16,24 +16,23 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
     public Action onStartCallBack;
     public Action onDoneCallback;
     public Action<string> onSpeakRangeCallback;
-
-    public TextToSpeechController tts;
     [Range(0.5f, 2)]
     public float pitch = 1f; //[0.5 - 2] Default 1
     [Range(0.5f, 2)]
     public float rate = 1f; //[min - max] android:[0.5 - 2] iOS:[0 - 1]
     public override void Initialize()
     {
+        Debug.Log("안드로이드 플러그인 이니셜라이징 시작");
         pluginClass = new AndroidJavaClass(string.Format("{0}.{1}", package, "UnityPlugin"));
+        Debug.Log("1");
         pluginInstance = pluginClass.CallStatic<AndroidJavaObject>("Instance",gameObject.name);
+        Debug.Log("2");
         //SettingTTS(1f, .8f);
         //AndroidPlugin.StartTextToSpeech(message, receiveObject.name, "OnStatus", "OnStart", "OnDone", "OnStop");
-        AndroidPlugin.InitTextToSpeech(name, "OnStatus"); //Check the initialize status
-        tts.Locale = "en";
-        tts = gameObject.AddComponent<TextToSpeechController>();
+        //AndroidPlugin.InitTextToSpeech(name, "OnStatus"); //Check the initialize status
+        Debug.Log("5");
         base.Initialize();
-        tts.OnDone.AddListener(() => onDoneCallback?.Invoke());
-        tts.OnStart.AddListener(() => onStartCallBack?.Invoke());
+        Debug.Log("안드로이드 플러그인 이니셜라이징 종료");
     }
 //    public void SettingTTS(float _pitch, float _rate)
 //    {
@@ -48,6 +47,7 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
 //    }
     public void PlayTTS(string _message, Action onCompleted = null)
     {
+        Debug.LogFormat("TTS 호출! : {0}", _message);
         AndroidPlugin.StartTextToSpeech(_message, "en", "", "onStart", "onDone", "onStop");
         onDoneCallback = onCompleted;
 #if UNITY_EDITOR
@@ -85,14 +85,15 @@ public class AndroidPluginManager : MonoSingleton<AndroidPluginManager>
     }
     public void onStart(string _message)
     {
-        if (onStartCallBack != null)
-            onStartCallBack();
+        //if (onStartCallBack != null)
+        //    onStartCallBack();
         Debug.Log("TTS 시작 : " + _message);
     }
     public void onDone(string _message)
     {
         onDoneCallback?.Invoke();
         Debug.Log("TTS 끝남 : " + _message);
+        AndroidPlugin.StopTextToSpeech();
     }
     public void onError(string _message)
     {

@@ -62,7 +62,9 @@ public class Book_Listening : BaseContents<BookContentsSetting>
 
         var currentData = this.data[index];
         if (string.IsNullOrEmpty(currentData.clip))
+        {
             AndroidPluginManager.Instance.PlayTTS(currentData.en);
+        }
         else
             player.Play(currentData.clip);
         screen.sprite = currentData.sprite;
