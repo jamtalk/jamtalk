@@ -113,8 +113,11 @@ public class JT_PL1_113 : SingleAnswerContents<AlphabetContentsSetting, Question
                 ItemClickMotion(item);
             };
         }
+        ch.Call(() =>
+        {
+            isGuideStart = true;
+        });
 
-        ch.Call(() => isGuideStart = true);
     }
 
     private void ItemClickMotion(Item113 item)

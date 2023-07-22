@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL3_104 : SingleAnswerContents<AlphabetContentsSetting, Question3_104, DigraphsWordsData>
 {
@@ -95,7 +96,16 @@ public class JT_PL3_104 : SingleAnswerContents<AlphabetContentsSetting, Question
 
         while (!isNext) yield return null;
     }
-
+    protected override void Awake()
+    {
+        base.Awake();
+        for(int i= 0;i < questions.Count; i++)
+        {
+            var data = questions[i].correct;
+            SceneLoadingPopup.SpriteLoader.Add(data.SpriteAsync);
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data.clip));
+        }
+    }
     protected override void OnAwake()
     {
         base.OnAwake();

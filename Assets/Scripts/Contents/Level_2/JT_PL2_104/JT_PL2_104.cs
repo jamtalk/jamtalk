@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL2_104 : SingleAnswerContents<AlphabetContentsSetting, Question2_104, VowelWordsData>
 {
@@ -42,6 +43,13 @@ public class JT_PL2_104 : SingleAnswerContents<AlphabetContentsSetting, Question
     public AudioClip errorClip;
 
     bool isSmall = false;
+    protected override void Awake()
+    {
+        base.Awake();
+        var sounds = questions.Select(x => x.correct.clip).ToArray();
+        for (int i = 0; i < sounds.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(sounds[i]));
+    }
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();

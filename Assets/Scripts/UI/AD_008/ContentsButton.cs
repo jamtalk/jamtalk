@@ -16,8 +16,10 @@ public class ContentsButton : BaseContentsButton
     }
     public void Disable()
     {
+#if DEPLOY
         button.interactable = false;
         imageLock.gameObject.SetActive(true);
+#endif
     }
     protected override void LoadScene()=> GJSceneLoader.Instance.LoadScene((eSceneName)System.Enum.Parse(typeof(eSceneName), contents.ToString()), true);
 }

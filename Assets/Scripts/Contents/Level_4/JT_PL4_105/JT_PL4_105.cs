@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
 {
@@ -13,7 +14,8 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;
-    private DigraphsWordsData current;
+    private DigraphsWordsData[] datas;
+    private DigraphsWordsData current => datas[index];
     private string digraphsValue;
     private Vector3 defaultPosition;
 
@@ -56,7 +58,13 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
         base.EndGuidnce();
         index = 0;
     }
-
+    protected override void Awake()
+    {
+        base.Awake();
+        MakeQuestion();
+        for (int i = 0; i < datas.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(datas[i].clip));
+    }
 
     protected override void OnAwake()
     {
@@ -68,18 +76,17 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
             audioPlayer.Play(current.clip);
         });
         defaultPosition = currentButton.transform.position;
-        MakeQuestion();
+        ShowQuestion();
     }
 
     private void MakeQuestion()
     {
-        current = GameManager.Instance.digrpahs
+        datas = GameManager.Instance.digrpahs
             .SelectMany(x => GameManager.Instance.GetDigraphs(x))
             .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
             .OrderBy(x => Random.Range(0f, 100f))
-            .First();
-
-        ShowQuestion();
+            .Take(questionCount)
+            .ToArray();
     }
 
     private void ShowQuestion()
@@ -134,7 +141,6 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
     {
         if (digraphsValue.Contains(text.text))
         {
-            index += 1;
             audioPlayer.Play(current.clip);
             StartCoroutine(Eat());
             DoMove(() =>
@@ -143,8 +149,16 @@ public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
                     ShowResult();
                 else
                 {
-                    if (isGuide) EndGuidnce();
-                    MakeQuestion();
+                    if (isGuide)
+                    {
+                        EndGuidnce();
+                        index = 0;
+                    }
+                    else
+                    {
+                        index += 1;
+                    }
+                    ShowQuestion();
                 }
             });
         }

@@ -35,7 +35,8 @@ public class DevPage : MonoBehaviour
         //STTManager.Instance.onResult += (value) => Debug.LogFormat("결과 : {0}", value);
         buttonRecord.onClick.AddListener(() =>
         {
-            recorder.Record();
+            AndroidPluginManager.Instance.PlayTTS("Test for TTS", () => Debug.Log("TTS 재생 끝"));
+            //recorder.Record();
             //STTManager.Instance.StartSTT("en-US");
 
             //if (recording)

@@ -12,7 +12,7 @@ public class Charactor113 : MonoBehaviour
     private IStopalbeAnimation anim => rt.GetComponent<IStopalbeAnimation>();
     public RectTransform rt;
     public float startPosition => (Screen.width - rt.sizeDelta.x / 2f) * (direction == eCharactorDirection.ToLeft ? 1f : -1f);
-    public float middlePosition => (Screen.width/2f) * (direction == eCharactorDirection.ToLeft ? 1f : -1f);
+    public float middlePosition => (Screen.width / 2f * .85f) * (direction == eCharactorDirection.ToLeft ? 1f : -1f);
     public float endPosition => (Screen.width) * (direction == eCharactorDirection.ToLeft ? -1f : 1f);
     public eAlphabet value { get; private set; }
     public AudioSinglePlayer movePlayer;
@@ -68,12 +68,13 @@ public class Charactor113 : MonoBehaviour
         {
             anim.Stop();
             movePlayer.Stop();
+            Debug.Log(GameManager.Instance.GetResources(value).AudioData.phanics + "재생!");
             clapPlayer.Play(GameManager.Instance.GetResources(value).AudioData.phanics);
             eventSystem.enabled = true;
 
             finger.SetActive(true);
+            callback?.Invoke();
         };
-        tween.onComplete += callback;
         movePlayer.Play();
         tween.Play();
     }

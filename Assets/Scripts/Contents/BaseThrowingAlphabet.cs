@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswerContents<TTestSetting,Question_ThrowerAlphabet<TElement>,TElement> 
     where TTestSetting : ContentsTestSetting
@@ -20,6 +21,22 @@ public abstract class BaseThrowingAlphabet<TTestSetting,TElement> : SingleAnswer
 
     //protected override bool CheckOver() => !toggles.Select(x => x.isOn).Contains(false);
     private bool isMove = false;
+    protected override void Awake()
+    {
+        base.Awake();
+        for(int i=0;i < questions.Count; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(questions[i].correct.clip));
+
+        var alphabets = questions
+            .SelectMany(x => x.correct.key.Replace(" ", "").ToUpper())
+            .Select(x => (eAlphabet)System.Enum.Parse(typeof(eAlphabet), x.ToString()))
+            .Distinct()
+            .Select(x=> GameManager.Instance.GetResources(x).AudioData.phanics)
+            .ToArray();
+
+        for (int i = 0; i < alphabets.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(alphabets[i]));
+    }
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForSecondsRealtime(10f);

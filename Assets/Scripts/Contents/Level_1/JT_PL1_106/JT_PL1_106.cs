@@ -6,6 +6,7 @@ using System;
 using Random = UnityEngine.Random;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question106, AlphabetWordsData>
 {
@@ -18,8 +19,16 @@ public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question
     public ImageButton buttonPhanics;
     public Sprite spritePop;
     public AudioClip clipPop;
-
-    
+    private AudioClip[] resultClips;
+    protected override void Awake()
+    {
+        base.Awake();
+        var value = GameManager.Instance.GetResources().AudioData.act2;
+        var nextAlphabet = (GameManager.Instance.currentAlphabet) + 1;
+        var nextAudio = GameManager.Instance.GetResources(nextAlphabet).AudioData.act2;
+        SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(value));
+        SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(nextAudio));
+    }
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return new WaitForEndOfFrame();
@@ -74,7 +83,6 @@ public class JT_PL1_106 : SingleAnswerContents<AlphabetContentsSetting, Question
                 .OrderBy(y=>Random.Range(0f,100f))
                 .Take(QuestionCount/2))
             .OrderBy(x => Random.Range(0f,100f))
-            .Take(QuestionCount)
             .ToArray();
 
         Debug.LogFormat("정답지 뽑기 {0}초 걸림", (DateTime.Now - time).TotalSeconds);

@@ -57,12 +57,13 @@ public abstract class BaseMatchImage<TTestSetting,TElement> : BaseContents<TTest
         while (!isNext) yield return null;
         isNext = false;
     }
-    protected override void OnAwake()
+    protected override void Awake()
     {
-        base.OnAwake();
+        base.Awake();
         GetWords();
+        for(int i = 0;i < words.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(words[i].SpriteAsync);
     }
-
     protected virtual void SetElement(TElement[] item)
     {
         scaler.referenceResolution = new Vector2(Screen.width, Screen.height);

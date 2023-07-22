@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
 {
@@ -15,8 +16,8 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
     protected override int GetTotalScore() => QuestionCount;
     protected int QuestionCount => 5;
     private int index = 0;
-    
-    private DigraphsWordsData currentDigraphs;
+    private DigraphsWordsData[] questions;
+    private DigraphsWordsData currentDigraphs=>questions[index];
     private string digraphs;
 
     public Text currentText;
@@ -30,15 +31,23 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
     public AudioClip effectClip;
 
 
+    protected override void Awake()
+    {
+        MakeQuestion();
+        for(int i = 0;i < questions.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(questions[i].clip));
+
+        buttonBox.onClick.AddListener(() => audioPlayer.Play(currentDigraphs.clip));
+        base.Awake();
+    }
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
         yield return base.ShowGuidnceRoutine();
-
-
+        ShowQuestion();
         var target = elements
-            .Where(x => x.text.text == currentDigraphs.digraphs.ToLower()
-            || x.text.text == currentDigraphs.PairDigrpahs.ToString().ToLower()).First();
+            .Where(x => x.text.text == currentDigraphs.digraphs.ToLower() || x.text.text == currentDigraphs.PairDigrpahs.ToString().ToLower())
+            .First();
 
         while (!isNext) yield return null;
         isNext = false;
@@ -62,25 +71,11 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
         base.EndGuidnce();
 
         index = 0;
-        MakeQuestion();
-        progressBar.transform.localScale = new Vector3(0f, 1f, 1f);
+        ShowQuestion();
     }
-
-    protected override void OnAwake()
+    public void ShowQuestion()
     {
-        base.OnAwake();
-        MakeQuestion();
-    }
-
-
-    protected void MakeQuestion()
-    {
-        currentDigraphs = GameManager.Instance.digrpahs
-            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
-            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
-            .Distinct()
-            .OrderBy(x => Random.Range(0f, 100f))
-            .First();
+        Debug.Log("문제지 출제");
         audioPlayer.Play(currentDigraphs.clip, () => isNext = true);
         if (currentDigraphs.key.IndexOf(currentDigraphs.digraphs.ToLower()) < 0)
             digraphs = currentDigraphs.PairDigrpahs.ToString().ToLower();
@@ -91,8 +86,16 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
         currentText.text = value.Replace(digraphs, "__");
 
         SetMolesPosition();
-        buttonBox.onClick.RemoveAllListeners();
-        buttonBox.onClick.AddListener(() => audioPlayer.Play(currentDigraphs.clip));
+    }
+    protected void MakeQuestion()
+    {
+        questions = GameManager.Instance.digrpahs
+            .SelectMany(x => GameManager.Instance.GetDigraphs(x))
+            .Where(x => x.Digraphs == GameManager.Instance.currentDigrpahs)
+            .Distinct()
+            .Take(QuestionCount)
+            .OrderBy(x => Random.Range(0f, 100f))
+            .ToArray();
     }
 
     protected void SetMolesPosition()
@@ -156,18 +159,18 @@ public class JT_PL3_105 : BaseContents<DigraphsContentsSetting>
                 {
                     index += 1;
                     currentText.text = currentDigraphs.key;
-                    ProgressBarDoMove();
-                    audioPlayer.Play(currentDigraphs.clip, () =>
+                    if (CheckOver())
+                        ShowResult();
+                    else if (isGuide)
+                        EndGuidnce();
+                    else
                     {
+                        ProgressBarDoMove();
+
                         isNext = true;
                         eventSystem.enabled = true;
-                        if (CheckOver())
-                            ShowResult();
-                        else if (isGuide)
-                            EndGuidnce();
-                        else
-                            MakeQuestion();
-                    });
+                        ShowQuestion();
+                    }
                 }
                 else
                 {

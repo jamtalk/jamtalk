@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -25,6 +26,17 @@ public class JT_PL2_101 : BaseContents<AlphabetContentsSetting>
     public AudioClip tabClip;
     public AudioClip dropClip;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        var alphabets = new eAlphabet[] { eAlphabet.A, eAlphabet.E, eAlphabet.I, eAlphabet.O, eAlphabet.U };
+        for(int i = 0;i < alphabets.Length; i++)
+        {
+            var data = GameManager.Instance.schema.GetVowelAudio(alphabets[i]);
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data.act_short));
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data.act_long));
+        }
+    }
 
     protected override IEnumerator ShowGuidnceRoutine()
     {
@@ -139,13 +151,13 @@ public class JT_PL2_101 : BaseContents<AlphabetContentsSetting>
 
     private void OnDrag(DragElement201 target)
     {
-        var value = target.name.ToUpper();
-        if(index < 5)
-            ShortSpeak(value);
-        else
-            LongSpeak(value);
+        //var value = target.name.ToUpper();
+        //if(index < 5)
+        //    ShortSpeak(value);
+        //else
+        //    LongSpeak(value);
 
-        audioPlayer.Play(1f, tabClip);
+        //audioPlayer.Play(1f, tabClip);
     }
 
     private void ShortSpeak(string value, Action action = null)

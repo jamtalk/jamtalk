@@ -34,19 +34,11 @@ public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
 
     protected override int GetTotalScore() => QuestionCount;
     protected override bool isGuidence => false;
-
-    protected override void OnAwake()
+    private bool isRecording = false;
+    protected override void Awake()
     {
-        base.OnAwake();
-
-        //recorder.OnRecord += (value) =>
-        //{
-        //    buttonRecord.image.sprite = value ? spriteRecordOn : spriteRecordOff;
-        //    AllButtonsIntractable(!value);
-        //};
-        STTManager.Instance.onEnded += OnEndRecording;
-        STTManager.Instance.onResult += OnEndRecording;
-
+        base.Awake();
+        questions = MakeQuestion();
         buttonPlay.onClick.AddListener(recorder.source.Play);
         buttonPause.onClick.AddListener(recorder.source.Pause);
         buttonStop.onClick.AddListener(recorder.source.Stop);
@@ -57,23 +49,29 @@ public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
             audioPlayer.Play(CurrentQuestion.clip, () => AllButtonsIntractable(true));
         });
         buttonRecord.onClick.AddListener(StartRecording);
+    }
 
-        questions = MakeQuestion();
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        //STTManager.Instance.onEnded += OnEndRecording;
+        //STTManager.Instance.onResult += OnEndRecording;
+
         currentIndex = 0;
         ShowQuestion(CurrentQuestion);
     }
     private void OnDisable()
     {
-        STTManager.Instance.onEnded -= OnEndRecording;
-        STTManager.Instance.onResult -= OnEndRecording;
+        //STTManager.Instance.onEnded -= OnEndRecording;
+        //STTManager.Instance.onResult -= OnEndRecording;
     }
     private void ShowQuestion(VowelWordsData data)
     {
-        ShowResult(eResult.None);
         imageValue.sprite = data.sprite;
         imageValue.preserveAspect = true;
         textValue.text = data.key;
-        AllButtonsIntractable(false);
+        //AllButtonsIntractable(false);
         audioPlayer.Play(data.clip, StartRecording);
     }
     private void ShowNext()
@@ -93,14 +91,27 @@ public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
     }
     private void StartRecording()
     {
-        AllButtonsIntractable(false);
-        recorder.Record();
-        STTManager.Instance.StartSTT("en-US");
+        if (!isRecording)
+        {
+            buttonRecord.image.sprite = spriteRecordOn;
+            AllButtonsIntractable(false);
+            buttonRecord.interactable = true;
+            recorder.Record();
+            //STTManager.Instance.StartSTT("en-US");
+        }
+        else
+        {
+            recorder.Stop();
+            buttonRecord.image.sprite = spriteRecordOff;
+            AllButtonsIntractable(true);
+        }
+        isRecording = !isRecording;
     }
     private void OnEndRecording(string value)
     {
         var result = value == CurrentQuestion.key ? eResult.Success : eResult.Fail;
-
+        buttonRecord.image.sprite = spriteRecordOff;
+        AllButtonsIntractable(true);
     }
     private void OnEndRecording()
     {
@@ -113,6 +124,7 @@ public class JT_PL2_111 : BaseContents<AlphabetContentsSetting>
         buttonPlay.interactable = value;
         buttonPause.interactable = value;
         buttonStop.interactable = value;
+        buttonNext.interactable = value;
     }
     protected void ShowResult(eResult result)
     {

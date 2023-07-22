@@ -13,6 +13,8 @@ public class AudioSinglePlayer : MonoBehaviour
     private Coroutine overRoutine = null;
     private Coroutine delayRoutine = null;
     private Coroutine incorrectRoutine = null;
+
+    private Action playerCallback;
     public float length => player.clip == null ? 0f : player.clip.length;
     private void Awake()
     {
@@ -37,6 +39,12 @@ public class AudioSinglePlayer : MonoBehaviour
             StopCoroutine(delayRoutine);
             delayRoutine = null;
         }
+        if (incorrectRoutine != null)
+        {
+            StopCoroutine(incorrectRoutine);
+            incorrectRoutine = null;
+        }
+        playerCallback = null;
     }
 
     /// <summary>
@@ -44,12 +52,14 @@ public class AudioSinglePlayer : MonoBehaviour
     /// </summary>
     private void Play()
     {
+        Stop();
         player.Play();
         //AndroidPluginManager.Instance.PlayTTS("sta");
     }
 
     public void Play(AudioClip clip, float delay)
     {
+        Stop();
         if (player.isPlaying)
             Stop();
         if(clip != player.clip)
@@ -61,6 +71,7 @@ public class AudioSinglePlayer : MonoBehaviour
     
     public void Play(string clip, float delay)
     {
+        Stop();
         if (clip != this.clip || player.clip ==null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
@@ -86,6 +97,7 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void Play(AudioClip clip = null)
     {
+        Stop();
         if (player.isPlaying)
             Stop();
         if (clip != player.clip)
@@ -94,6 +106,7 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void Play(string clip)
     {
+        Stop();
         if (this.clip != clip || player.clip == null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
@@ -119,11 +132,13 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void Play(AudioClip clip, Action onOver)
     {
+        Stop();
         Play(clip);
         StartCoroutine(OnOverRoutine(onOver));
     }
     public void Play(string clip, Action onOver)
     {
+        Stop();
         if (this.clip != clip || player.clip == null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
@@ -150,11 +165,13 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void Play(float duration, AudioClip clip = null)
     {
+        Stop();
         Play(clip);
         stopRoutine = StartCoroutine(StopRoutine(duration));
     }
     public void Play(float duration, string clip)
     {
+        Stop();
         if (this.clip != clip || player.clip == null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
@@ -180,12 +197,14 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void Play(float duration, float delay, AudioClip clip = null)
     {
+        Stop();
         Play(clip, delay);
         stopRoutine = StartCoroutine(StopRoutine(duration));
     }
     public void Play(float duration, float delay, string clip = null)
     {
-        if(this.clip != clip || player.clip == null)
+        Stop();
+        if (this.clip != clip || player.clip == null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
             {
@@ -208,12 +227,14 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void Play(float duration, AudioClip clip, Action onOver)
     {
+        Stop();
         Play(clip);
         stopRoutine = StartCoroutine(OnOverRoutine(duration, onOver));
     }
     public void Play(float duration, string clip, Action onOver)
     {
-        if(this.clip != clip || player.clip == null)
+        Stop();
+        if (this.clip != clip || player.clip == null)
         {
             AudioClipManager.Instance.GetClip(clip, value =>
             {
@@ -236,6 +257,7 @@ public class AudioSinglePlayer : MonoBehaviour
 
     public void PlayIncorrect()
     {
+        Stop();
         clip = null;
         Debug.Log("사운드 재생 : <color=\"green\">오답!</color>");
         if (incorrectRoutine != null)
@@ -248,6 +270,7 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     public void PlayIncorrect(string beforeClip)
     {
+        Stop();
         clip = null;
         Debug.Log("사운드 재생 : <color=\"red\">오답!</color>");
         if (incorrectRoutine != null)
@@ -274,15 +297,17 @@ public class AudioSinglePlayer : MonoBehaviour
     }
     IEnumerator OnOverRoutine(Action onOver)
     {
+        playerCallback = onOver;
         var len = player.clip == null ? 0 : player.clip.length;
         yield return new WaitForSeconds(len);
-        onOver?.Invoke();
+        playerCallback?.Invoke();
     }
     IEnumerator OnOverRoutine(float duration,Action onOver)
     {
+        playerCallback = onOver;
         yield return new WaitForSeconds(duration);
+        playerCallback?.Invoke();
         Stop();
-        onOver?.Invoke();
     }
     IEnumerator DelayRoutine(float delay)
     {

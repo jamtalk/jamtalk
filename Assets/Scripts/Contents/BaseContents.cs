@@ -189,7 +189,7 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
     {
         base.EndGuidnce();
 
-        questions = MakeQuestion();
+        //questions = MakeQuestion();
         currentQuestionIndex = 0;
         ShowQuestion(questions[currentQuestionIndex]);
     }

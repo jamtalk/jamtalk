@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class JT_PL3_107 : BaseMatchImage<DigraphsContentsSetting,DigraphsWordsData>
 {
@@ -15,6 +16,12 @@ public class JT_PL3_107 : BaseMatchImage<DigraphsContentsSetting,DigraphsWordsDa
             .Take(drops.Length)
             .ToArray();
         SetElement(words);
+    }
+    protected override void Awake()
+    {
+        base.Awake();
+        for (int i = 0; i < words.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(words[i].clip));
     }
 
     protected override void PlayAudio(ResourceWordsElement word)
