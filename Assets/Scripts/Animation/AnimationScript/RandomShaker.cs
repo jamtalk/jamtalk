@@ -11,6 +11,12 @@ public class RandomShaker : AnimationScript
     [Range(1f, 90f)]
     private float angle;
     Coroutine shaking;
+    private Quaternion current;
+    protected override void Awake()
+    {
+        base.Awake();
+        current = transform.rotation;
+    }
     public override void Play()
     {
         StartCoroutine(Shaking());
@@ -41,6 +47,7 @@ public class RandomShaker : AnimationScript
 
             bool isSeq = false;
             seq.onComplete += () => isSeq = true;
+            seq.onKill += () => transform.rotation = current;
             seq.Play();
             while (!isSeq) { yield return null; }
 

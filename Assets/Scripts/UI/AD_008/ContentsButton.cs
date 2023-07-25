@@ -5,7 +5,7 @@ public class ContentsButton : BaseContentsButton
 {
     public eContents contents;
     public GameObject imageLock;
-
+    public System.Action beforeOnClick;
     public void Init(eContents contents, Sprite sumnail)
     {
         this.contents = contents;
@@ -21,5 +21,9 @@ public class ContentsButton : BaseContentsButton
         imageLock.gameObject.SetActive(true);
 #endif
     }
-    protected override void LoadScene()=> GJSceneLoader.Instance.LoadScene((eSceneName)System.Enum.Parse(typeof(eSceneName), contents.ToString()), true);
+    protected override void LoadScene()
+    {
+        beforeOnClick?.Invoke();
+        GJSceneLoader.Instance.LoadScene((eSceneName)System.Enum.Parse(typeof(eSceneName), contents.ToString()), true);
+    }
 }

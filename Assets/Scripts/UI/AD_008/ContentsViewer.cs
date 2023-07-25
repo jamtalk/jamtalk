@@ -194,6 +194,35 @@ public class ContentsViewer : MonoBehaviour
         {
             button.Init(contents, sprite.Result);
             button.gameObject.SetActive(true);
+            button.beforeOnClick += () =>
+            {
+                Debug.LogFormat("현재 컨텐츠 : {0}({1})\n단어 : {2}({3})", contents, (int)contents, GameManager.Instance.currentDigrpahs, (int)GameManager.Instance.currentDigrpahs);
+                if ((int)contents >= 300 && (int)contents < 600)
+                {
+                    if((int)contents < 400)
+                    {
+                        //3단계 일때
+                        var dig = (int)GameManager.Instance.currentDigrpahs;
+                        if (dig < 300 || dig >= 400)
+                            GameManager.Instance.currentDigrpahs = (eDigraphs)300;
+                    }
+                    else if((int)contents < 500)
+                    {
+                        //3단계 일때
+                        var dig = (int)GameManager.Instance.currentDigrpahs;
+                        if (dig < 400 || dig >= 500)
+                            GameManager.Instance.currentDigrpahs = (eDigraphs)400;
+                    }
+                    else if((int)contents < 600)
+                    {
+                        //5단계 일때
+                        var dig = (int)GameManager.Instance.currentDigrpahs;
+                        if (dig < 500 || dig >= 600)
+                            GameManager.Instance.currentDigrpahs = (eDigraphs)500;
+                    }
+                }
+                Debug.LogFormat("수정된 컨텐츠 : {0}({1})\n단어 : {2}({3})", contents, (int)contents, GameManager.Instance.currentDigrpahs, (int)GameManager.Instance.currentDigrpahs);
+            };
 #if DEPLOY
             if (UserDataManager.Instance.CurrentChild.GetContents() < contents)
                 button.Disable();

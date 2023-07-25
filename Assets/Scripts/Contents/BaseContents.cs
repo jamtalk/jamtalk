@@ -223,25 +223,39 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
             ShowResult();
         else
         {
+            Debug.Log(isGuide);
             if (isGuide)
                 EndGuidnce();
             else
             {
                 currentQuestionIndex += 1;
+                Debug.LogFormat("({2}문제번호 : {0} -> {1}", currentQuestionIndex - 1, currentQuestionIndex,question.isCorrect);
                 if (question.isCorrect)
-                    audioPlayer.Play(1f, GameManager.Instance.GetClipCorrectEffect(), () =>
-                    {
-                        ShowQeustionAction();
-                        ShowQuestion(questions[currentQuestionIndex]);
-                    });
+                {
+                    Debug.Log("플레이");
+                    StartCoroutine(audioController());
+                }
                 else
                 {
+                    Debug.Log("오답 플레이");
                     audioPlayer.PlayIncorrect();
                     ShowQeustionAction();
                     ShowQuestion(questions[currentQuestionIndex]);
+
+                    Debug.Log("다음문제");
                 }
             }
         }
+    }
+    IEnumerator audioController()
+    {
+        audioPlayer.Stop();
+        audioPlayer.player.clip = GameManager.Instance.GetClipCorrectEffect();
+        audioPlayer.Play();
+        yield return new WaitForSecondsRealtime(1f);
+        Debug.Log("플레이 종료");
+        ShowQeustionAction();
+        ShowQuestion(questions[currentQuestionIndex]);
     }
     protected override eGameResult GetResult()
     {

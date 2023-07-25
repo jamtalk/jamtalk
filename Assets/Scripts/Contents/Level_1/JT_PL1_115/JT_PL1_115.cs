@@ -32,9 +32,6 @@ public class JT_PL1_115 : BaseContents<AlphabetContentsSetting>
         while (!isTurn) yield return null;
         isTurn = false;
 
-        //for (int i = 0; i < (cards.Length / 2); i++)
-        //{
-
         var upper = cards.Where(x => !x.card.IsFornt).ToArray()
             .Where(x => x.alhpabetData.type == eAlphabetType.Upper)
             .OrderBy(x => Random.Range(0, 100))
@@ -108,8 +105,6 @@ public class JT_PL1_115 : BaseContents<AlphabetContentsSetting>
                 .Take(2);
 
             targets = targets.Union(preAlphabets).ToArray();
-
-            Debug.Log(targets.Length);
         }
         else
         {
@@ -124,8 +119,6 @@ public class JT_PL1_115 : BaseContents<AlphabetContentsSetting>
         for (int i = 0; i < cards.Length; i++)
         {
             SetCard(randomCards[i], questions[i].alhpabet, questions[i].type);
-            //SetCard(randomCards[upper], questions[upper],eAlphabetType.Upper);
-            //SetCard(randomCards[lower], questions[lower], eAlphabetType.Lower);
         }
 
         coroutine = StartCoroutine(StartContent());   

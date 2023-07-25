@@ -151,6 +151,7 @@ public class JT_PL2_104 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     protected override void ShowQuestion(Question2_104 question)
     {
+        Debug.Log("@@@@@@@@@@@@@@불러오기");
         Speak();
         for (int i = 0; i < question.totalQuestion.Length; i++)
         {
