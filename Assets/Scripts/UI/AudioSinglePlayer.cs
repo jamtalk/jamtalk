@@ -8,7 +8,7 @@ using UnityEngine;
 public class AudioSinglePlayer : MonoBehaviour
 {
     private string clip;
-    private AudioSource player => GetComponent<AudioSource>();
+    public AudioSource player => GetComponent<AudioSource>();
     private Coroutine stopRoutine = null;
     private Coroutine overRoutine = null;
     private Coroutine delayRoutine = null;
