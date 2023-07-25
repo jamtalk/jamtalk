@@ -223,13 +223,11 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
             ShowResult();
         else
         {
-            Debug.Log(isGuide);
             if (isGuide)
                 EndGuidnce();
             else
             {
                 currentQuestionIndex += 1;
-                Debug.LogFormat("({2}문제번호 : {0} -> {1}", currentQuestionIndex - 1, currentQuestionIndex,question.isCorrect);
                 if (question.isCorrect)
                 {
                     Debug.Log("플레이");
@@ -241,8 +239,6 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
                     audioPlayer.PlayIncorrect();
                     ShowQeustionAction();
                     ShowQuestion(questions[currentQuestionIndex]);
-
-                    Debug.Log("다음문제");
                 }
             }
         }

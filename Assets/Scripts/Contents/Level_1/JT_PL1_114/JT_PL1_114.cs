@@ -13,7 +13,50 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
     protected override int QuestionCount => 4;
 
     protected override eContents contents => eContents.JT_PL1_114;
-
+    protected override void Awake()
+    {
+        base.Awake();
+        ship.button.onClick.AddListener(() =>
+        {
+            if (finger != null)
+            {
+                Destroy(finger);
+                finger = null;
+            }
+        });
+        ship.onInner += (value) =>
+        {
+            AddAnswer(value);
+            //if (!CheckOver())
+                //ship.OutObject(currentQuestion.alphabet, () => SetIntractable(true));
+        };
+        for (int i = 0; i < drags.Length; i++)
+        {
+            drags[i].onDrop += () =>
+            {
+                SetIntractable(false);
+            };
+            drags[i].onDrag += () =>
+            {
+                if (finger != null)
+                    finger.gameObject.SetActive(false);
+            };
+            drags[i].onAnswer += (correct) =>
+            {
+                if (finger != null)
+                    finger.gameObject.SetActive(!correct);
+            };
+            AddDragCallback(drags[i]);
+        }
+    }
+    private void AddDragCallback(DragObject_114 drag)
+    {
+        drag.onAnswer += (value) =>
+        {
+            if(!value)
+                audioPlayer.PlayIncorrect(drag.data.clip);
+        };
+    }
 
 
     protected override IEnumerator ShowGuidnceRoutine()
@@ -43,42 +86,7 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
         });
 
     }
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-        ship.button.onClick.AddListener(() =>
-        {
-            if (finger != null)
-            {
-                Destroy(finger);
-                finger = null;
-            }
-        });
-        ship.onInner += (value) =>
-        {
-            AddAnswer(value);
-            if (!CheckOver())
-                ship.OutObject(currentQuestion.alphabet, () => SetIntractable(true));
-        };
-        for(int i = 0; i< drags.Length; i++)
-        {
-            drags[i].onDrop += () =>
-            {
-                SetIntractable(false);
-            };
-            drags[i].onDrag += () =>
-            {
-                if(finger!=null)
-                    finger.gameObject.SetActive(false);
-            };
-            drags[i].onAnswer += (correct) =>
-            {
-                if (finger != null)
-                    finger.gameObject.SetActive(!correct);
-            };
-        }
 
-    }
     protected override List<Question114> MakeQuestion()
     {
         var correct = GameManager.Instance.alphabets
@@ -112,7 +120,9 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
         //if (isGuide)
             ship.OutObject(question.alphabet, () =>
             {
+                Debug.Log("출력 완료");
                 isNext = true;
+                SetIntractable(true);
             });
         var questions = question.questions.Union(new AlphabetWordsData[] { question.correct })
         .OrderBy(x => UnityEngine.Random.Range(0f, 100f))
@@ -130,6 +140,9 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
     }
     protected override void EndGuidnce()
     {
+        ship.KillTween();
+        ship.SetInner();
+        audioPlayer.Stop();
         foreach (var item in drags)
             item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         base.EndGuidnce();

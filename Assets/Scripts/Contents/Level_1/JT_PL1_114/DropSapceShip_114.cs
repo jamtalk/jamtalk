@@ -13,9 +13,9 @@ public class DropSapceShip_114 : MonoBehaviour
     public AudioSinglePlayer beamPlayer;
     public AudioSinglePlayer alphbetPlayer;
     public event Action<AlphabetWordsData> onInner;
-
     public RectTransform rtObject;
     public eAlphabet alphabet;
+    private Tween tween;
     public void Awake()
     {
         button.onClick.AddListener(() => alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2));
@@ -45,8 +45,15 @@ public class DropSapceShip_114 : MonoBehaviour
     {
         rtObject.anchoredPosition = Vector2.zero;
     }
+    public void KillTween()
+    {
+        if (tween != null)
+            tween.Kill();
+        tween = null;
+    }
     public void OutObject(eAlphabet alphabet, Action onCompleted)
     {
+        Debug.Log("OUT 호출");
         SetInner();
         this.alphabet = alphabet;
         image.sprite = GameManager.Instance.GetAlphbetSprite(eAlphabetStyle.FullColor, eAlphabetType.Upper, alphabet);
@@ -54,9 +61,17 @@ public class DropSapceShip_114 : MonoBehaviour
 
         float duration = 2f;
         beamPlayer.Play(duration);
-        var tween = rtObject.DOAnchorPosY(0, duration);
+        if(tween != null)
+        {
+            tween.Kill();
+            tween = null;
+        }
+        tween = rtObject.DOAnchorPosY(0, duration);
+        tween.onKill += SetOutter;
         tween.onComplete += () =>
         {
+            onCompleted?.Invoke();
+            Debug.Log("오브젝트 나옴");
             alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2, onCompleted);
         };
     }
