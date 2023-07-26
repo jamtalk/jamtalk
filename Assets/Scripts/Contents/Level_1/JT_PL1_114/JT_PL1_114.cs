@@ -135,6 +135,7 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     private void SetIntractable(bool intracable)
     {
+        Debug.LogFormat("Intractable : {0}", intracable);
         for (int i = 0; i < drags.Length; i++)
             drags[i].intracable = intracable;
     }
