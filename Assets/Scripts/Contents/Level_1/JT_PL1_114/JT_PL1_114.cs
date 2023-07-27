@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.AddressableAssets;
 
 public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question114, AlphabetWordsData>
 {
@@ -32,10 +32,6 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
         };
         for (int i = 0; i < drags.Length; i++)
         {
-            drags[i].onDrop += () =>
-            {
-                SetIntractable(false);
-            };
             drags[i].onDrag += () =>
             {
                 if (finger != null)
@@ -48,11 +44,16 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
             };
             AddDragCallback(drags[i]);
         }
+
+        var tmp = questions.SelectMany(x => x.questions).Select(x => x.clip).ToArray();
+        for (int i = 0;i < tmp.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(tmp));
     }
     private void AddDragCallback(DragObject_114 drag)
     {
         drag.onAnswer += (value) =>
         {
+            SetIntractable(false);
             if(!value)
                 audioPlayer.PlayIncorrect(drag.data.clip);
         };
@@ -78,7 +79,6 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
                 {
                     guideFinger.gameObject.SetActive(false);
                     target.gameObject.SetActive(false);
-                    SetIntractable(false);
                     ship.InObject(target.data);
                     target.rt.anchoredPosition = Vector2.zero;
                 });
@@ -116,11 +116,12 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     protected override void ShowQuestion(Question114 question)
     {
+        SetIntractable(false);
         ship.SetInner();
         //if (isGuide)
             ship.OutObject(question.alphabet, () =>
             {
-                Debug.Log("출력 완료");
+                Debug.Log("????");
                 isNext = true;
                 SetIntractable(true);
             });

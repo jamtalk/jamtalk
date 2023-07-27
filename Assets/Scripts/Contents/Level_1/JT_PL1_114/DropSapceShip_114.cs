@@ -70,7 +70,6 @@ public class DropSapceShip_114 : MonoBehaviour
         tween.onKill += SetOutter;
         tween.onComplete += () =>
         {
-            onCompleted?.Invoke();
             Debug.Log("오브젝트 나옴");
             alphbetPlayer.Play(GameManager.Instance.GetResources(alphabet).AudioData.act2, onCompleted);
         };
