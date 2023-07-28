@@ -53,9 +53,11 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
     {
         drag.onAnswer += (value) =>
         {
-            SetIntractable(false);
-            if(!value)
+            audioPlayer.Stop();
+            if (!value)
                 audioPlayer.PlayIncorrect(drag.data.clip);
+            else
+                SetIntractable(false);
         };
     }
 
@@ -138,13 +140,16 @@ public class JT_PL1_114 : SingleAnswerContents<AlphabetContentsSetting, Question
     {
         Debug.LogFormat("Intractable : {0}", intracable);
         for (int i = 0; i < drags.Length; i++)
+        {
             drags[i].intracable = intracable;
+        }
     }
     protected override void EndGuidnce()
     {
         ship.KillTween();
         ship.SetInner();
         audioPlayer.Stop();
+        SetIntractable(false);
         foreach (var item in drags)
             item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         base.EndGuidnce();

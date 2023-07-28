@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
 {
     public GraphicRaycaster caster;
-    public AudioSinglePlayer audioPlayer;
     public Image image=>button.image;
     public Button button;
     public RectTransform rt => GetComponent<RectTransform>();
@@ -69,8 +68,7 @@ public class DragObject_114:MonoBehaviour,IDragHandler,IDropHandler
             onAnswer?.Invoke(correct);
         }
         else
-            audioPlayer.PlayIncorrect(data.clip);
-
+            onAnswer?.Invoke(false);
         rt.anchoredPosition = Vector2.zero;
     }
 }
