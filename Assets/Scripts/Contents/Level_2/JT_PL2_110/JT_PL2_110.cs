@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class JT_PL2_110 : BingoContents<AlphabetContentsSetting, AlphabetWordsData, WordBingoButton, Text, WordBingoBoard>
@@ -29,7 +30,7 @@ public class JT_PL2_110 : BingoContents<AlphabetContentsSetting, AlphabetWordsDa
 
     public override AlphabetWordsData[] GetQuestionType()
     {
-        return GameManager.Instance.alphabets
+        var result = GameManager.Instance.alphabets
             .Select(x => GameManager.Instance.GetResources(x))
             .Where(x => !correctsTarget.Select(y => y.Key).Contains(x.Alphabet))
             .SelectMany(x=>x.Words)
@@ -37,7 +38,13 @@ public class JT_PL2_110 : BingoContents<AlphabetContentsSetting, AlphabetWordsDa
             .Distinct()
             .Take((int)Mathf.Pow(board.size, 2f))
             .OrderBy(x => Random.Range(0f, 100f))
-            .ToArray(); 
+            .ToArray();
+
+        var sounds = result.Select(x => x.clip).Distinct().ToArray();
+        for (int i = 0; i < sounds.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(sounds[i]));
+
+        return result;
     }
 
     protected override void PlayClip() => audioPlayer.Play(currentQuestion.clip, () => isNext = true);

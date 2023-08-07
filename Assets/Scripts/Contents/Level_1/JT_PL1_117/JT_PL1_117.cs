@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+
 public class JT_PL1_117 : BingoContents<AlphabetContentsSetting,AlphabetData, BingoButton, Image, BingoBoard>
 {
     protected override eContents contents => eContents.JT_PL1_117;
@@ -54,12 +56,16 @@ public class JT_PL1_117 : BingoContents<AlphabetContentsSetting,AlphabetData, Bi
 
     public override AlphabetData[] GetQuestionType()
     {
-        return GameManager.Instance.alphabets
+        var result = GameManager.Instance.alphabets
             .Where(x => !correctsTarget.Select(y => y.Alphabet).Contains(x))
             .Take((int)Mathf.Pow(board.size, 2f))
             .OrderBy(x => Random.Range(0f, 100f))
             .Select(x => GameManager.Instance.GetResources(x))
             .ToArray();
+        var sounds = result.Select(x => x.AudioData.clip).Distinct().ToArray();
+        for (int i = 0; i < sounds.Length; i++)
+            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(sounds[i]));
+        return result;
     }
 
     protected override void PlayClip() => audioPlayer.Play(currentQuestion.AudioData.clip, () => isNext = true);

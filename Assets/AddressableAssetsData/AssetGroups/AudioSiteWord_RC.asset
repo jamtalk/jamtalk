@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AudioSiteWord_RC
+  m_EditorClassIdentifier: 
+  m_GroupName: AudioSiteWord_RC
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d6e0780f37cc7b140b3cbc12bfd4abbd
+  m_SerializeEntries:
+  - m_GUID: 3172db26c95342644a27dd13e08b5ac9
+    m_Address: RC-SW-001
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 133ac9662c8f14142835a76a29b63971
+    m_Address: RC-SW-002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bcacc7b022a1c6e48863ce6acdae19a1
+    m_Address: RC-SW-003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 46375491d0fd2eb45b630f3f80b4c39b
+    m_Address: RC-SW-004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe7450da233c3d443b73d45906935cc7
+    m_Address: RC-SW-005
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 89cbd6b8f1ab7b044a2bfb04e9233d20
+    m_Address: RC-SW-006
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b315e7b6014c0c04cb08125beff3d601, type: 2}
+    - {fileID: 11400000, guid: e390f459ecaa66e4d925c22cac9b187d, type: 2}

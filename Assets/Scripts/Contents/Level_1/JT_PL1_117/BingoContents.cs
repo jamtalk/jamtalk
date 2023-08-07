@@ -61,6 +61,11 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
                 PlaySound();
         }
     }
+    protected override void Awake()
+    {
+        base.Awake();
+        questions = GetQuestion();
+    }
     protected abstract string GetValue();
     protected override void OnAwake()
     {
@@ -73,8 +78,6 @@ public abstract class BingoContents<TTestSetting,TValue, TButton, TViewer, TBoar
                 isFailed = true;
                 ShowResult();
             };
-
-            questions = GetQuestion();
 
             currentIndex = 0;
             PlaySound();

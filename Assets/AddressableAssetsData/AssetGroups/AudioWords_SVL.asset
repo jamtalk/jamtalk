@@ -1,0 +1,433 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AudioWords_SVL
+  m_EditorClassIdentifier: 
+  m_GroupName: AudioWords_SVL
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6bf6ab7e5b27cda449329b15755458c7
+  m_SerializeEntries:
+  - m_GUID: 1ef1dd465be65594d92a2efa3e3b0107
+    m_Address: SLV-VOC-001
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 22664e7d4e8eaf8488f6e57a0325e6fa
+    m_Address: SLV-VOC-002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a850d2c9b41924d40be3a2ef421c36ee
+    m_Address: SLV-VOC-003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d3bc959c37cf5054a9e9f315d029b61a
+    m_Address: SLV-VOC-004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1c14a33d1006b7d48b17192d6523d51b
+    m_Address: SLV-VOC-005
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4498cb1c7c5a95b4686f04e4cf4c0cfe
+    m_Address: SLV-VOC-006
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 579fdb5edddbdfa4aa2b0b57ddd01f3f
+    m_Address: SLV-VOC-007
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 112a3d23cf07d1b4a8cd1391c7f37f99
+    m_Address: SLV-VOC-008
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5ae5ec6eba54d4f08aa49d139c6b1c66
+    m_Address: SLV-VOC-009
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e54590ceb24e746d78ba1d362098ac56
+    m_Address: SLV-VOC-010
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: de020a0851be05f4b97df25796b8fab4
+    m_Address: SLV-VOC-011
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e246ba1df55edc840a294ae46a9277dc
+    m_Address: SLV-VOC-012
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 48dcc46121e19fa4194b8ca8c6173fd2
+    m_Address: SLV-VOC-013
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7085b02a0bd7ad544a85952f664c495a
+    m_Address: SLV-VOC-014
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: eff5ba85675d7cf4e93a81a88873e4d3
+    m_Address: SLV-VOC-015
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6981d867c680d2c419e32bd73bff55f5
+    m_Address: SLV-VOC-016
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c28c6d1f4a1a06b4a8ea894cdc2607de
+    m_Address: SLV-VOC-017
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8af672cd312bae648919772cd62e4c26
+    m_Address: SLV-VOC-018
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f9928390a77af40a192aef1082a1b693
+    m_Address: SLV-VOC-019
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 43979d419fd44485c9b36fba233bd762
+    m_Address: SLV-VOC-020
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 95e7765d73d6ee34485ed28142ab92d1
+    m_Address: SLV-VOC-021
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 57207855e6c6c9d42840d20ef97af23b
+    m_Address: SLV-VOC-022
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bc1ca5398f3ab4744ae2ba5c6bdfd0d3
+    m_Address: SLV-VOC-023
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 91f50cd67c2acf143b25aff7fd6a19b1
+    m_Address: SLV-VOC-024
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7729e2fa444356e4893163079e2ca6da
+    m_Address: SLV-VOC-025
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 453ac0c52ddf76a4a9f908ce00f12e46
+    m_Address: SLV-VOC-026
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f4f204cf6aa723647976163734b9e90f
+    m_Address: SLV-VOC-027
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f016f795fa29e6d429fc1cf70f3c305a
+    m_Address: SLV-VOC-028
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0d3aba2aaa4ca4030938350d2db573da
+    m_Address: SLV-VOC-029
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c59eb552b21c34e96965788ffb5be17f
+    m_Address: SLV-VOC-030
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5c4b04c57ac555b4d935c8225602953e
+    m_Address: SLV-VOC-031
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c906792d123f78f499bdbf26b1000a9d
+    m_Address: SLV-VOC-032
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a0ccc56af30b39b47b38a75be1f91c74
+    m_Address: SLV-VOC-033
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9308b43f4b67b22498e09f89629bfb66
+    m_Address: SLV-VOC-034
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ec3883ae87a73c45bd3df4f0d5e81f2
+    m_Address: SLV-VOC-035
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ed85e5e21b2729945b3b38a1aeb8123a
+    m_Address: SLV-VOC-036
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73d7f1b7ea9119c46a6e84fba0cc19ab
+    m_Address: SLV-VOC-037
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e7f46e7f5e5aa44de88b670b34e3e215
+    m_Address: SLV-VOC-038
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ee024dc128c03427e83576e2180bb57a
+    m_Address: SLV-VOC-039
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 59062c0bf80bf4607a838d83a299571c
+    m_Address: SLV-VOC-040
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 81832e4ec7fe5b1478e69864df957946
+    m_Address: SLV-VOC-041
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4d43d04192eaa69408ec0e4395ba72bf
+    m_Address: SLV-VOC-042
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 146c9d138834ebd429ec2dbe28bfe8d2
+    m_Address: SLV-VOC-043
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3d5c0fbddf6a74240a1b2f88fca4d470
+    m_Address: SLV-VOC-044
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 65ff012f17485d44cbb63353c5ea3459
+    m_Address: SLV-VOC-045
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 17c43231b8792cb4e9ed7e5299d272ee
+    m_Address: SLV-VOC-046
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d37391fa3b99f74448823c9e056174ad
+    m_Address: SLV-VOC-047
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b6506fa5078245a4aa2aaccc4d7fa7aa
+    m_Address: SLV-VOC-048
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8921bbec1c83c470bb914f0a3d78840d
+    m_Address: SLV-VOC-049
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da9616cdf31d447889148265f7d856f6
+    m_Address: SLV-VOC-050
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1389b1616656b7949913afd2618c240c
+    m_Address: SLV-VOC-051
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0c955d2893fc5384aa2f3ffaa38a5ae3
+    m_Address: SLV-VOC-051(1)
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a4d682294fe3e25479917fc23a783885
+    m_Address: SLV-VOC-052
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5762fb501ab4a254e8b12e559f4e94d1
+    m_Address: SLV-VOC-053
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 427589ce2e26e5a4aa9037ab8b595f09
+    m_Address: SLV-VOC-054
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: aef3c7ab6f012d242817bcc9091a7bd4
+    m_Address: SLV-VOC-055
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a451e1cb187d3c84791f8f3ed9f1ab3c
+    m_Address: SLV-VOC-056
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3a7d4f8d173a84995889b2f25d36cbc3
+    m_Address: SLV-VOC-057
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fa90a058a5f752540a2895548499b81e
+    m_Address: SLV-VOC-058
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ce4d4f8d9d06941f8a0afe0d5a2f2dce
+    m_Address: SLV-VOC-059
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2930479bda58d479a9d07a9778ef5bfd
+    m_Address: SLV-VOC-060
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 23eee888591875b4db34f1b66e30c396
+    m_Address: SLV-VOC-061
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 11b53242d2d35094aa99cf8395a89c26
+    m_Address: SLV-VOC-062
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b260ad2a68de92146a70c424c4f4089f
+    m_Address: SLV-VOC-063
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 747475a9c37beb44491d5c2a6226da72
+    m_Address: SLV-VOC-064
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58e730b86fb119542b4cc0abeb262b18
+    m_Address: SLV-VOC-065
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 975411b7ab1f0a3418bda18bbddcde95
+    m_Address: SLV-VOC-066
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 47c93683beac1634ba5dc4a825ce6064
+    m_Address: SLV-VOC-067
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e4b5d828c8e63434fa9c1d542c88f5d0
+    m_Address: SLV-VOC-068
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7bbf51ea95aac42bdb0c0f91255c62fc
+    m_Address: SLV-VOC-069
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 14968a1248b414cc6b167fe8ebc5af28
+    m_Address: SLV-VOC-070
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: febbb9acd64a3de48a99dfa0ec5f29bd
+    m_Address: SLV-VOC-071
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0431b5c939cfc374480bb64771e63b7c
+    m_Address: SLV-VOC-072
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8904461028a9baf4ab8c39fdffd371b4
+    m_Address: SLV-VOC-073
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 06bd8fca5c1396b4091212d33f0cbbb8
+    m_Address: SLV-VOC-074
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 564a8430e07a7a7458598a3fdfc6ea11
+    m_Address: SLV-VOC-075
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ceb9cdcd28ecab248b7a29bb168a3d44
+    m_Address: SLV-VOC-076
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 877ae5b065608094295b64ec3c4aa4eb
+    m_Address: SLV-VOC-077
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 30dd62ad29ef3894a8927bf55c494d7a
+    m_Address: SLV-VOC-078
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dabe68f4767fa40139cdef0fae44ab40
+    m_Address: SLV-VOC-079
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5867b2dbe3fc54a12b267ec825a1a1d3
+    m_Address: SLV-VOC-080
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 41f676651ba3ecd41a5986f9e2350801
+    m_Address: SLV-VOC-081
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7d140b31c9b669d4a9b59725e0f0f9c0
+    m_Address: SLV-VOC-082
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73447e6d49286cc478b00e7050449ff0
+    m_Address: SLV-VOC-083
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4cbf09706a5f64e4097bbd7407f2c042
+    m_Address: SLV-VOC-084
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c232e4d21e64d349af973890d6ad425
+    m_Address: SLV-VOC-085
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fed03605dfa759047ad397fe1d370212
+    m_Address: SLV-VOC-086
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f6ed494081664c449d4dbf18bcc8957
+    m_Address: SLV-VOC-087
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9e5f77d88e1597c40a77b8a5b9655c14
+    m_Address: SLV-VOC-088
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0d0f88d4bb4c2e046aee6c2be735cd34
+    m_Address: SLV-VOC-089
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 79d9dbae691d14cafa2cdc2ff6ffeaa9
+    m_Address: SLV-VOC-090
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 302982c18cbd53445a3ba466d8ad3cbc
+    m_Address: SLV-VOC-091
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f32d8eacf38566749a4a845d177ea865
+    m_Address: SLV-VOC-092
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cad7dd00b1b14c3428275241a4074b1b
+    m_Address: SLV-VOC-093
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c605eff91c7e3eb45900030f5b673b7e
+    m_Address: SLV-VOC-094
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fdab804bb5526434ea4d4afab9804258
+    m_Address: SLV-VOC-095
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b1085095206447747be651f3b627c02f
+    m_Address: SLV-VOC-096
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d1d32f46000040f4caf0514427d6406f
+    m_Address: SLV-VOC-097
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3761ef0bf36584991b4bd44ea7b7b058
+    m_Address: SLV-VOC-097
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4a2f97ae5db4f4a419b243c49d084692
+    m_Address: SLV-VOC-098
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 05b81c11cd90045bf8aa150a6f778f51
+    m_Address: SLV-VOC-099
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a013761f857c34b2f8ddd63168472e6e
+    m_Address: SLV-VOC-100
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: adf664cf28e12264c8c651e12d56337d, type: 2}
+    - {fileID: 11400000, guid: f57eaa8df4aa92f4ca183d71d5452105, type: 2}

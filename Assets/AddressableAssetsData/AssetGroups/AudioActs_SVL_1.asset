@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AudioActs_SVL_1
+  m_EditorClassIdentifier: 
+  m_GroupName: AudioActs_SVL_1
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8cbbc10490b85c746a161bde4b3658cf
+  m_SerializeEntries:
+  - m_GUID: 237e71e3b1af89c449b950a1e132fc7a
+    m_Address: SLV-ACT-01-001
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 46f514beb7c3d3b48ada79fa36a57ffc
+    m_Address: SLV-ACT-01-002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe233415446e6454aaf3cc6e1a408b0d
+    m_Address: SLV-ACT-01-003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73c748c2a141a67438c4cf299c61aa98
+    m_Address: SLV-ACT-01-004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b7ebc534bee00f44f8fc4a0110625a98
+    m_Address: SLV-ACT-01-005
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9ade697e81aa5fb448c564fbec4cd49c
+    m_Address: SLV-ACT-01-006
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dd1dd69fe0967394b8bac115e6eb120f
+    m_Address: SLV-ACT-01-007
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 012d338388b8b304eaaacdc3378755ed
+    m_Address: SLV-ACT-01-008
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 91196d011a102eb449616f5e836bc9a1
+    m_Address: SLV-ACT-01-009
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f698567e05195414ebbb758207713902
+    m_Address: SLV-ACT-01-010
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 27c926ae63721704183cd209b9cc96f2
+    m_Address: SLV-ACT-01-011
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cc3d4830fc44a6643925efaf8380f8a6
+    m_Address: SLV-ACT-01-012
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3c6a80d723b116a4b90045ed62d9017c, type: 2}
+    - {fileID: 11400000, guid: 82772def766e91e49843d5dcf147a43b, type: 2}
