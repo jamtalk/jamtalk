@@ -10,7 +10,7 @@ using UnityEngine.AddressableAssets;
 public class JT_PL4_105 : BaseContents<DigraphsContentsSetting>
 {
     protected override eContents contents => eContents.JT_PL4_105;
-    protected override bool CheckOver() => questionCount == index;
+    protected override bool CheckOver() => datas.Length-1 <= index;
     protected override int GetTotalScore() => questionCount;
     private int questionCount = 3;
     private int index = 0;

@@ -103,7 +103,7 @@ public class JT_PL1_109 : BaseContents<AlphabetContentsSetting>
         }
 
         for (int i = 0; i < toggles.Length; i++)
-            toggles[i].onEndDrag += OnEndDrag;
+            toggles[i].onEndDrag = OnEndDrag;
 
         ShowQuestion();
 
@@ -145,7 +145,9 @@ public class JT_PL1_109 : BaseContents<AlphabetContentsSetting>
         var word = currentQuestion.word.key
             .Select(x => x.ToString().ToUpper())
             .ToArray();
-
+        Debug.LogFormat("현재단어 : {0}({1}글자)\n정답 단어 : {2}({3}글자)",
+            string.Join("", selected), selected.Length,
+            string.Join("", word), word.Length);
         if (selected.Length == word.Length)
         {
             var result = true;

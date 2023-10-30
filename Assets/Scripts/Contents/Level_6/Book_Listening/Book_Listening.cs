@@ -32,11 +32,17 @@ public class Book_Listening : BaseContents<BookContentsSetting>
     {
         base.Awake();
         base.OnAwake();
-        data = GameManager.Instance.GetCurrentBooks().SelectMany(x => x.sentances).OrderBy(x => x.priority).ToArray();
+        data = GameManager.Instance.GetCurrentBooks()
+            .SelectMany(x => x.sentances)
+            .OrderBy(x => x.priority)
+            //.Where(x=>!string.IsNullOrEmpty(x.clip))
+            .ToArray();
+
         for (int i = 0; i < data.Length; i++)
         {
             SceneLoadingPopup.SpriteLoader.Add(data[i].spriteAsync);
-            SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data[i].clip));
+            if(!string.IsNullOrEmpty(data[i].clip))
+                SceneLoadingPopup.SpriteLoader.Add(Addressables.LoadAssetAsync<AudioClip>(data[i].clip));
         }
     }
     protected override void OnAwake()
@@ -63,7 +69,7 @@ public class Book_Listening : BaseContents<BookContentsSetting>
         var currentData = this.data[index];
         if (string.IsNullOrEmpty(currentData.clip))
         {
-            AndroidPluginManager.Instance.PlayTTS(currentData.en);
+            AndroidPluginManager.Instance.PlayTTS(currentData.value);
         }
         else
             player.Play(currentData.clip);

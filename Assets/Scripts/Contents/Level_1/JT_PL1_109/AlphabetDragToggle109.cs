@@ -12,7 +12,7 @@ public class AlphabetDragToggle109 : MonoBehaviour,IBeginDragHandler,IDragHandle
     private Sprite spriteOff;
     private Sprite spriteOn;
     private bool _isOn = false;
-    public event System.Action onEndDrag;
+    public System.Action onEndDrag;
     public int index { get; private set; }
     public bool isOn
     {
@@ -56,6 +56,7 @@ public class AlphabetDragToggle109 : MonoBehaviour,IBeginDragHandler,IDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log(name + "≈‰±€");
         onEndDrag?.Invoke();
     }
 }

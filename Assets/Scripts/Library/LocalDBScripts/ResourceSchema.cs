@@ -21,18 +21,19 @@ public class ResourceSchema : ScriptableObject
     private TextAsset bookJson;
     public AudioClip correctSound;
     private ResourceData _data = null;
-    public ResourceData data=> JObject.Parse(orizinal.text).ToObject<ResourceData>();
-    //{
-    //    get
-    //    {
-    //        if (_data == null)
-    //        {
-    //            _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
-    //            Debug.Log("데이터 신규 로딩");
-    //        }
-    //        return _data;
-    //    }
-    //}
+    public ResourceData data//=> JObject.Parse(orizinal.text).ToObject<ResourceData>();
+    {
+        get
+        {
+            if (_data == null)
+            {
+                _data = JObject.Parse(orizinal.text).ToObject<ResourceData>();
+                Debug.Log("데이터 신규 로딩");
+            }
+
+            return _data;
+        }
+    }
     public Dictionary<eBookType, Dictionary<int, int[]>> _bookPageData;
     public Dictionary<eBookType, Dictionary<int, int[]>> bookPageData
     {
@@ -105,9 +106,11 @@ public class ResourceSchema : ScriptableObject
             return GetVowelAudio(eAlphabet.A).phanics_short;
         else
         {
-            var word = this.data.vowelWords.Select(x => (ResourceWordsElement)x)
-                .Union(this.data.digraphsWords.Select(x => (ResourceWordsElement)x))
-                .Union(this.data.alphabetWords.Select(x => (ResourceWordsElement)x))
+            var word = this.data.vowelWords
+                .Select(x => (ResourceWordsElement)x)
+                .Where(x=>x.key.ToLower() == value.ToLower())
+                .Union(this.data.digraphsWords.Select(x => (ResourceWordsElement)x).Where(x => x.key.ToLower() == value.ToLower()))
+                .Union(this.data.alphabetWords.Select(x => (ResourceWordsElement)x).Where(x => x.key.ToLower() == value.ToLower()))
                 .ToList()
                 .Find(x => x.key.ToLower() == value.ToLower());
 
@@ -611,18 +614,139 @@ public class CommentData
 [Serializable]
 public class ResourceData
 {
-    public AlphabetWordsData[] alphabetWords;
-    public AlphabetAudioData[] alphabetAudio;
-    public VowelWordsData[] vowelWords;
-    public VowelAudioData[] vowelAudio;
-    public DigraphsWordsData[] digraphsWords;
-    public DigraphsAudioData[] digraphsAudio;
-    public AlphabetSentanceData[] alphabetSentaces;
-    public DigraphsSentanceData[] digraphsSentances;
-    public SiteWordData[] siteWords;
-    public CommentData[] commentData;
-    public BookCommentData[] bookComments;
-    public BookLevelData[] bookLevels;
+    private AlphabetWordsData[] _alphabetWords = null;
+    private AlphabetAudioData[] _alphabetAudio = null;
+    private VowelWordsData[] _vowelWords = null;
+    private VowelAudioData[] _vowelAudio = null;
+    private DigraphsWordsData[] _digraphsWords = null;
+    private DigraphsAudioData[] _digraphsAudio = null;
+    private AlphabetSentanceData[] _alphabetSentaces = null;
+    private DigraphsSentanceData[] _digraphsSentances = null;
+    private SiteWordData[] _siteWords = null;
+    private CommentData[] _commentData = null;
+    private BookCommentData[] _bookComments = null;
+    private BookLevelData[] _bookLevels = null;
+
+    public AlphabetWordsData[] alphabetWords
+    {
+        get
+        {
+            if(_alphabetWords == null)
+                _alphabetWords = JArray.Parse(Resources.Load<TextAsset>("Data/alphabetWords").text).Select(x => x.ToObject<AlphabetWordsData>()).ToArray();
+
+            return _alphabetWords;
+        }
+    }
+    
+    public AlphabetAudioData[] alphabetAudio
+    {
+        get
+        {
+            if(_alphabetAudio == null)
+                _alphabetAudio = JArray.Parse(Resources.Load<TextAsset>("Data/alphabetAudio").text).Select(x => x.ToObject<AlphabetAudioData>()).ToArray();
+
+            return _alphabetAudio;
+        }
+    }
+    public VowelWordsData[] vowelWords
+    {
+        get
+        {
+            if(_vowelWords == null)
+                _vowelWords = JArray.Parse(Resources.Load<TextAsset>("Data/vowelWords").text).Select(x => x.ToObject<VowelWordsData>()).ToArray();
+
+            return vowelWords;
+        }
+    }
+    public VowelAudioData[] vowelAudio
+    {
+        get
+        {
+            if(_vowelAudio == null)
+                _vowelAudio = JArray.Parse(Resources.Load<TextAsset>("Data/vowelAudio").text).Select(x => x.ToObject<VowelAudioData>()).ToArray();
+
+            return _vowelAudio;
+        }
+    }
+    public DigraphsWordsData[] digraphsWords
+    {
+        get
+        {
+            if(_digraphsWords == null)
+                _digraphsWords = JArray.Parse(Resources.Load<TextAsset>("Data/digraphsWords").text).Select(x => x.ToObject<DigraphsWordsData>()).ToArray();
+
+            return _digraphsWords;
+        }
+    }
+    public DigraphsAudioData[] digraphsAudio
+    {
+        get
+        {
+            if(_digraphsAudio == null)
+                _digraphsAudio = JArray.Parse(Resources.Load<TextAsset>("Data/digraphsAudio").text).Select(x => x.ToObject<DigraphsAudioData>()).ToArray();
+
+            return _digraphsAudio;
+        }
+    }
+    public AlphabetSentanceData[] alphabetSentaces
+    {
+        get
+        {
+            if(_alphabetSentaces == null)
+                _alphabetSentaces = JArray.Parse(Resources.Load<TextAsset>("Data/alphabetSentaces").text).Select(x => x.ToObject<AlphabetSentanceData>()).ToArray(); ;
+
+            return _alphabetSentaces;
+        }
+    }
+    public DigraphsSentanceData[] digraphsSentances
+    {
+        get
+        {
+            if(_digraphsSentances == null)
+                _digraphsSentances = JArray.Parse(Resources.Load<TextAsset>("Data/digraphsSentances").text).Select(x => x.ToObject<DigraphsSentanceData>()).ToArray();
+
+            return _digraphsSentances;
+        }
+    }
+    public SiteWordData[] siteWords
+    {
+        get
+        {
+            if(_siteWords == null)
+                _siteWords = JArray.Parse(Resources.Load<TextAsset>("Data/siteWords").text).Select(x => x.ToObject<SiteWordData>()).ToArray();
+
+            return _siteWords;
+        }
+    }
+    public CommentData[] commentData
+    {
+        get
+        {
+            if(_commentData == null)
+                _commentData = JArray.Parse(Resources.Load<TextAsset>("Data/commentData").text).Select(x => x.ToObject<CommentData>()).ToArray();
+
+            return _commentData;
+        }
+    }
+    public BookCommentData[] bookComments
+    {
+        get
+        {
+            if(_bookComments == null)
+                _bookComments = JArray.Parse(Resources.Load<TextAsset>("Data/bookComments").text).Select(x => x.ToObject<BookCommentData>()).ToArray();
+
+            return _bookComments;
+        }
+    }
+    public BookLevelData[] bookLevels
+    {
+        get
+        {
+            if(_bookLevels == null)
+                _bookLevels = JArray.Parse(Resources.Load<TextAsset>("Data/bookLevels").text).Select(x => x.ToObject<BookLevelData>()).ToArray();
+            return _bookLevels;
+        }
+    }
     public string[] inCorrectClips;
     public string[] correctPerfectClip;
     public string[] correctGreatClip;

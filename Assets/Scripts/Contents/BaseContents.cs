@@ -197,7 +197,6 @@ public abstract class SingleAnswerContents<TTestSetting,TQuestion, TAnswer> : Ba
     {
         base.Awake();
         questions = MakeQuestion();
-
     }
     protected override void OnAwake()
     {

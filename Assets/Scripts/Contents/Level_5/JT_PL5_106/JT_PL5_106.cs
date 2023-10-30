@@ -4,10 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class JT_PL5_106 : SingleAnswerContents<AlphabetContentsSetting, Question_PL5_106, DigraphsWordsData>
 {
     public float duration;
+    public EventSystem eventsystem;
     protected override int QuestionCount => 3;
     protected override eContents contents => eContents.JT_PL5_106;
     public StarElement506 orizinal;
@@ -85,6 +87,7 @@ public class JT_PL5_106 : SingleAnswerContents<AlphabetContentsSetting, Question
 
     private void CorrectMotion(string value)
     {
+        eventsystem.enabled = false;
         resultStar.gameObject.SetActive(true);
         var seq = resultStar.Show(value, 1f);
         seq.onComplete += () =>
@@ -136,6 +139,7 @@ public class JT_PL5_106 : SingleAnswerContents<AlphabetContentsSetting, Question
             //Debug.Log(question.words[i] + " : "+ i );
         }
         isNext = true;
+        eventsystem.enabled = true;
     }
 }
 public class Question_PL5_106 : SingleQuestion<DigraphsWordsData>

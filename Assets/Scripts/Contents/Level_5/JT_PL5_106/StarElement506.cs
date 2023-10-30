@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
 {
+    public bool connected=false;
     public CanvasScaler scaler;
     public GraphicRaycaster caster;
     public bool intractable = true;
@@ -40,10 +41,12 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         orizinalValue = value;
         ResetLine();
         Debug.Log(value);
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        connected = true;
         if (!intractable)
             return;
         dragLine.fillAmount = 1;
@@ -52,6 +55,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         var targets = result
             .Select(x => x.gameObject.GetComponent<StarElement506>())
             .Where(x => x != null)
+            .Where(x=>!x.connected)
             .ToList();
 
         if (targets.Count() > 0)
@@ -105,6 +109,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         SetLine(Camera.main.WorldToScreenPoint(target.line_rt.position));
         dragLine = target.dragLine;
         value += target.orizinalValue;
+        target.connected = true;
     }
 
     public void ResetLine()
@@ -112,6 +117,7 @@ public class StarElement506 : MonoBehaviour, IDragHandler, IEndDragHandler
         dragLine = orizinalLine;
         value = orizinalValue;
         line_rt.sizeDelta = new Vector2(0, line_rt.sizeDelta.y);
+        connected = false;
     }
     public Sequence Show(float duration)
     {

@@ -1312,6 +1312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab153899b07b74beb8683ea66a7f0fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connected: 0
   scaler: {fileID: 1794185751}
   caster: {fileID: 1794185750}
   intractable: 1
@@ -2407,12 +2408,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddff1479620a49a4b3548187f498eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetAlphabet: 0
   popupResult: {fileID: 3511430310918570104, guid: 391b4156b8d8b3941baf4d4b76bcb201, type: 3}
   audioPlayer: {fileID: 1391875293}
   guide: {fileID: 1440374604033508686, guid: 8df98b1ccfbf54665ac4714b4bfb3dce, type: 3}
   exitButton: {fileID: 2261298197544679515, guid: 529b92c76b7c5409e80951b480346975, type: 3}
+  animationCharactors: []
   duration: 1
+  eventsystem: {fileID: 1120384082}
   orizinal: {fileID: 1156439616}
   elementsParent: {fileID: 2055556920}
   elements:
