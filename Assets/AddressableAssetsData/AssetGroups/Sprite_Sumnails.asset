@@ -229,10 +229,6 @@ MonoBehaviour:
     m_Address: JT_PL3_105
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2e3a011079fa88949879da151b7d5c59
-    m_Address: JT_PL4_107
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: dece614cd24ab744583681cfe9a1eed4
     m_Address: JT_PL1_118
     m_ReadOnly: 0
@@ -277,9 +273,11 @@ MonoBehaviour:
     m_Address: JT_PL5_111
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 2e3a011079fa88949879da151b7d5c59
+    m_Address: JT_PL4_107
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cd4eb852d94dc6b4694ac70cc1e4b8c2, type: 2}
   m_SchemaSet:
-    m_Schemas:
-    - {fileID: 11400000, guid: 9ff4d44de9690094d9f43e1a00da7e3d, type: 2}
-    - {fileID: 11400000, guid: 2bed32e8317cbbe4686d498c5e09670c, type: 2}
+    m_Schemas: []
